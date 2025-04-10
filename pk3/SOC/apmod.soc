@@ -1,0 +1,2603 @@
+MainCfg
+GameData = apgamedat.dat
+SPStage_Start = 125
+Clear Unlockables
+Clear ExtraEmblems
+Clear ConditionSets
+Clear All
+
+Unlockable 1
+Type = Skin
+NoCecho = true
+NoChecklist = true
+Var = amy
+ConditionSet = -1
+
+Unlockable 2
+Type = Skin
+NoCecho = true
+NoChecklist = true
+Var = fang
+ConditionSet = -1
+
+Unlockable 3
+Type = Skin
+NoCecho = true
+NoChecklist = true
+Var = metalsonic
+ConditionSet = -1
+
+Unlockable 4
+Type = RecordAttack
+NoCecho = true
+NoChecklist = true
+ConditionSet = -1
+
+Unlockable 5
+Type = EmblemHints
+Name = Emblem Hints
+ConditionSet = 1
+
+ConditionSet 1
+Condition1 = Trigger 1
+
+Unlockable 6
+Type = ItemFinder
+Name = Emblem Radar
+ConditionSet = 2
+
+ConditionSet 2
+Condition1 = Trigger 2
+
+ExtraEmblem 1
+Name = GFZ1
+Objective = Beat GFZ1
+ConditionSet = 41
+
+ConditionSet 41
+Condition1 = MapBeaten 1
+
+ExtraEmblem 2
+Name = GFZ2
+Objective = Beat GFZ2
+ConditionSet = 42
+
+ConditionSet 42
+Condition1 = MapBeaten 2
+
+ExtraEmblem 3
+Name = GFZ3
+Objective = Beat GFZ3
+ConditionSet = 3
+
+ConditionSet 3
+Condition1 = MapBeaten 3
+
+ExtraEmblem 4
+Name = THZ1
+Objective = Beat THZ1
+ConditionSet = 4
+
+ConditionSet 4
+Condition1 = MapBeaten 4
+
+ExtraEmblem 5
+Name = THZ2
+Objective = Beat THZ2
+ConditionSet = 5
+
+ConditionSet 5
+Condition1 = MapBeaten 5
+
+ExtraEmblem 6
+Name = THZ3
+Objective = Beat THZ3
+ConditionSet = 6
+
+ConditionSet 6
+Condition1 = MapBeaten 6
+
+ExtraEmblem 7
+Name = DSZ1
+Objective = Beat DSZ1
+ConditionSet = 7
+
+ConditionSet 7
+Condition1 = MapBeaten 7
+
+ExtraEmblem 8
+Name = DSZ2
+Objective = Beat DSZ2
+ConditionSet = 8
+
+ConditionSet 8
+Condition1 = MapBeaten 8
+
+ExtraEmblem 9
+Name = DSZ3
+Objective = Beat DSZ3
+ConditionSet = 9
+
+ConditionSet 9
+Condition1 = MapBeaten 9
+
+ExtraEmblem 10
+Name = CEZ1
+Objective = Beat CEZ1
+ConditionSet = 10
+
+ConditionSet 10
+Condition1 = MapBeaten 10
+
+
+ExtraEmblem 11
+Name = CEZ2
+Objective = Beat CEZ2
+ConditionSet = 11
+
+ConditionSet 11
+Condition1 = MapBeaten 11
+
+
+ExtraEmblem 12
+Name = CEZ3
+Objective = Beat CEZ3
+ConditionSet = 12
+
+ConditionSet 12
+Condition1 = MapBeaten 12
+
+
+ExtraEmblem 13
+Name = ACZ1
+Objective = Beat ACZ1
+ConditionSet = 13
+
+ConditionSet 13
+Condition1 = MapBeaten 13
+
+
+ExtraEmblem 14
+Name = ACZ2
+Objective = Beat ACZ2
+ConditionSet = 14
+
+ConditionSet 14
+Condition1 = MapBeaten 14
+
+ExtraEmblem 15
+Name = ACZ3
+Objective = Beat ACZ3
+ConditionSet = 15
+
+ConditionSet 15
+Condition1 = MapBeaten 15
+
+ExtraEmblem 16
+Name = RVZ1
+Objective = Beat RVZ1
+ConditionSet = 16
+
+ConditionSet 16
+Condition1 = MapBeaten 16
+
+ExtraEmblem 17
+Name = ERZ1
+Objective = Beat ERZ1
+ConditionSet = 17
+
+ConditionSet 17
+Condition1 = MapBeaten 22
+
+ExtraEmblem 18
+Name = ERZ2
+Objective = Beat ERZ2
+ConditionSet = 18
+
+ConditionSet 18
+Condition1 = MapBeaten 23
+
+ExtraEmblem 19
+Name = BCZ1
+Objective = Beat BCZ1
+ConditionSet = 19
+
+ConditionSet 19
+Condition1 = MapBeaten 25
+
+ExtraEmblem 20
+Name = BCZ2
+Objective = Beat BCZ2
+ConditionSet = 20
+
+ConditionSet 20
+Condition1 = MapBeaten 26
+
+ExtraEmblem 21
+Name = BCZ3
+Objective = Beat BCZ3
+ConditionSet = 21
+
+ConditionSet 21
+Condition1 = MapBeaten 27
+
+ExtraEmblem 22
+Name = FHZ
+Objective = Beat FHZ
+ConditionSet = 22
+
+ConditionSet 22
+Condition1 = MapBeaten 30
+
+ExtraEmblem 23
+Name = PTZ
+Objective = Beat PTZ
+ConditionSet = 23
+
+ConditionSet 23
+Condition1 = MapBeaten 31
+
+ExtraEmblem 24
+Name = FFZ
+Objective = Beat FFZ
+ConditionSet = 24
+
+ConditionSet 24
+Condition1 = MapBeaten 32
+
+ExtraEmblem 25
+Name = FDZ
+Objective = Beat FDZ
+ConditionSet = 25
+
+ConditionSet 25
+Condition1 = MapBeaten 33
+
+ExtraEmblem 26
+Name = HHZ
+Objective = Beat HHZ
+ConditionSet = 26
+
+ConditionSet 26
+Condition1 = MapBeaten 40
+
+ExtraEmblem 27
+Name = AGZ
+Objective = Beat AGZ
+ConditionSet = 27
+
+ConditionSet 27
+Condition1 = MapBeaten 41
+
+ExtraEmblem 28
+Name = ATZ
+Objective = Beat ATZ
+ConditionSet = 28
+
+ConditionSet 28
+Condition1 = MapBeaten 42
+
+
+ExtraEmblem 29
+Name = FFZ
+Objective = Beat FFZ
+ConditionSet = 29
+
+ConditionSet 29
+Condition1 = MapBeaten 50
+
+ExtraEmblem 30
+Name = TPZ
+Objective = Beat TPZ
+ConditionSet = 30
+
+ConditionSet 30
+Condition1 = MapBeaten 51
+
+ExtraEmblem 31
+Name = FCZ
+Objective = Beat FCZ
+ConditionSet = 31
+
+ConditionSet 31
+Condition1 = MapBeaten 52
+
+
+ExtraEmblem 32
+Name = CFZ
+Objective = Beat CFZ
+ConditionSet = 32
+
+ConditionSet 32
+Condition1 = MapBeaten 53
+
+
+ExtraEmblem 33
+Name = DWZ
+Objective = Beat DWZ
+ConditionSet = 33
+
+ConditionSet 33
+Condition1 = MapBeaten 54
+
+
+ExtraEmblem 34
+Name = MCZ
+Objective = Beat MCZ
+ConditionSet = 34
+
+ConditionSet 34
+Condition1 = MapBeaten 55
+
+
+ExtraEmblem 35
+Name = ESZ
+Objective = Beat ESZ
+ConditionSet = 35
+
+ConditionSet 35
+Condition1 = MapBeaten 56
+
+
+ExtraEmblem 36
+Name = BHZ
+Objective = Beat BHZ
+ConditionSet = 36
+
+ConditionSet 36
+Condition1 = MapBeaten 57
+
+ExtraEmblem 37
+Name = CCZ
+Objective = Beat CCZ
+ConditionSet = 37
+
+ConditionSet 37
+Condition1 = NightsScore 70 1
+
+ExtraEmblem 38
+Name = DHZ
+Objective = Beat DHZ
+ConditionSet = 38
+
+ConditionSet 38
+Condition1 = NightsScore 71 1
+
+ExtraEmblem 39
+Name = APZ1
+Objective = Beat APZ1
+ConditionSet = 39
+
+ConditionSet 39
+Condition1 = NightsScore 72 1
+
+ExtraEmblem 40
+Name = APZ2
+Objective = Beat APZ2
+ConditionSet = 40
+
+ConditionSet 40
+Condition1 = NightsScore 73 1
+
+ExtraEmblem 41
+Name = Good Ending
+Objective = Beat BCZ3 with all 7 chaos emeralds
+ConditionSet = 41
+
+ConditionSet 41
+Condition1 = MapAllEmeralds 27
+
+Level 125
+Levelname = Multiworld
+TypeOfLevel = Singleplayer,Co-op
+SaveGame = true
+
+Level 1
+Levelname = Greenflower
+Act = 1
+Keywords = GFZ1
+Music = GFZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 1
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 64
+FlickyList = Bluebird,Chipmunk
+#Flicky selection is final.
+
+Level 2
+Levelname = Greenflower
+Act = 2
+Keywords = GFZ2
+Music = GFZ2
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 1
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 64
+FlickyList = Bluebird,Chipmunk
+#see act 1
+
+Level 3
+Levelname = Greenflower
+Act = 3
+Keywords = GFZ3
+Music = VSBOSS
+MusicPostBoss = GFZ1
+TypeOfLevel = Singleplayer,Co-op
+NextLevel = 125
+SkyNum = 1
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 64
+BonusType = Boss
+FlickyList = Bluebird,Chipmunk
+StartRings = 10
+ForceResetMusic = On
+WarningTitle = true
+#see act 1
+
+Level 4
+Levelname = Techno Hill
+Act = 1
+Keywords = THZ1
+Music = THZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 4
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+FlickyList = Rabbit,Chicken
+#Flicky selection is final.
+
+Level 5
+Levelname = Techno Hill
+Act = 2
+Keywords = THZ2
+Music = THZ2
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 6
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 16
+FlickyList = Rabbit,Chicken
+#see act 1
+
+Level 6
+Levelname = Techno Hill
+Act = 3
+Keywords = THZ3
+Music = VSBOSS
+MusicPostBoss = THZ2
+TypeOfLevel = Singleplayer,Co-op
+NextLevel = 125
+SkyNum = 4
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+BonusType = Boss
+FlickyList = Rabbit,Chicken
+StartRings = 10
+ForceResetMusic = On
+WarningTitle = true
+#see act 1
+
+Level 7
+Levelname = Deep Sea
+Act = 1
+Keywords = DSZ1
+Music = DSZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 8
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 32
+FlickyList = Fish,Fish,Seal
+#Flicky selection is final. Two sets of fish because they come in two colours.
+
+Level 8
+Levelname = Deep Sea
+Act = 2
+Keywords = DSZ2
+Music = DSZ2
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 8
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 32
+FlickyList = Fish,Fish,Seal
+#see act 1
+
+Level 9
+Levelname = Deep Sea
+Act = 3
+Keywords = DSZ3
+Music = VSBOSS
+MusicPostBoss = DSZ1
+TypeOfLevel = Singleplayer,Co-op
+NextLevel = 125
+SkyNum = 8
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 32
+BonusType = Boss
+FlickyList = Fish,Fish,Seal
+StartRings = 10
+ForceResetMusic = On
+WarningTitle = true
+#see act 1
+
+Level 10
+Levelname = Castle Eggman
+Act = 1
+Keywords = CEZ1
+Music = CEZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 10
+RecordAttack = true
+LevelSelect = 1
+Weather = PRECIP_STORM
+SkyboxScale = 64
+SaveGame = true
+FlickyList = Rat,Bear
+#Flicky selection is final.
+
+Level 11
+Levelname = Castle Eggman
+Act = 2
+Keywords = CEZ2
+Music = CEZ2
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 11
+Weather = PRECIP_STORM_NORAIN
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 16
+FlickyList = Rat,Bear
+#Flicky selection is final.
+
+Level 12
+Levelname = Castle Eggman
+Act = 3
+Keywords = CEZ3
+Music = VSBOSS
+MusicPostBoss = CEZ2
+TypeOfLevel = Singleplayer,Co-op
+NextLevel = 125
+Weather = 1
+SkyNum = 10
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+BonusType = Boss
+FlickyList = Rat,Bear
+StartRings = 10
+ForceResetMusic = On
+WarningTitle = true
+#see act 1
+
+Level 13
+Levelname = Arid Canyon
+Act = 1
+Keywords = ACZ1
+Music = ACZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 13
+RecordAttack = true
+LevelSelect = 1
+SkyboxScale = 64
+SaveGame = true
+FlickyList = Canary,Ram
+#Flicky selection is final.
+
+Level 14
+Levelname = Arid Canyon
+Act = 2
+Keywords = ACZ2
+Music = ACZ2
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 14
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+SkyboxScale = 32
+FlickyList = Canary,Ram
+
+Level 15
+Levelname = Arid Canyon
+Act = 3
+Keywords = ACZ3
+Music = VSFANG
+MusicPostBoss = ACZ1
+TypeOfLevel = Singleplayer,Co-op
+NextLevel = 125
+SkyNum = 15
+SkyboxScale = 16
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+FlickyList = Canary,Ram
+BonusType = Boss
+StartRings = 10
+ForceResetMusic = On
+WarningTitle = true
+
+Level 16
+Levelname = Red Volcano
+Act = 1
+Keywords = RVZ1
+Music = RVZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 159
+SkyboxScaleZ = 32
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+FlickyList = Pig,Cat
+#Cow and Pig will be replaced with Monkey and Iguana when complete.
+
+Level 22
+Levelname = Egg Rock
+Act = 1
+Keywords = ERZ1
+Music = ERZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 22
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+FlickyList = All
+#Probably final.
+
+Level 23
+Levelname = Egg Rock
+Act = 2
+Keywords = ERZ2
+Music = ERZ2
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 22
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+FlickyList = All
+
+Level 25
+Levelname = Black Core
+Act = 1
+Keywords = BCZ1
+Music = BCZ1
+NextLevel = 26
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+SkyNum = 22
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+FlickyList = All
+SaveGame = true
+ForceResetMusic = On
+WarningTitle = true
+
+Level 26
+Levelname = Black Core
+Act = 2
+Keywords = BCZ2
+Music = VSMETL
+MusicPostBoss = BCZ2
+TypeOfLevel = Singleplayer,Co-op
+NextLevel = 27
+SkyNum = 22
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+BonusType = Boss
+StartRings = 10
+ForceResetMusic = On
+WarningTitle = true
+
+Level 27
+Levelname = Black Core
+Act = 3
+Keywords = BCZ3
+Music = VSBRAK
+TypeOfLevel = Singleplayer,Co-op
+NextLevel = 125
+SkyNum = 22
+RecordAttack = true
+LevelSelect = 1
+SaveGame = true
+BonusType = Boss
+SkyboxScale = 64
+StartRings = 10
+ForceResetMusic = On
+WarningTitle = true
+
+#Bonus Levels
+
+Level 30
+Levelname = Frozen Hillside
+Act = 0
+Keywords = FHZ
+Music = FHZ
+NextLevel = 125
+RecordAttack = true
+Unlockable = 21
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+SkyNum = 30
+LevelSelect = 2
+SelectHeading = Bonus Stages
+Weather = 2
+FlickyList = Penguin,Seal
+
+Level 31
+LevelName = Pipe Towers
+Keywords = PTZ
+Music = MARIO1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race,Mario
+NextLevel = 125
+RecordAttack = true
+Unlockable = 22
+SkyNum = 31
+LevelSelect = 2
+SelectHeading = Bonus Stages
+
+Level 32
+Levelname = Forest Fortress
+Keywords = FFZ
+Music = CEZ1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 20
+Weather = 3
+RecordAttack = true
+Unlockable = 25
+LevelSelect = 2
+SelectHeading = Bonus Stages
+SkyboxScale = 64
+FlickyList = Rat,Bear
+
+Level 33
+Levelname = Final Demo
+Act = 0
+Music = FDEMO1
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 2
+RecordAttack = true
+Unlockable = 27
+NoReload = 1
+LevelSelect = 2
+SelectHeading = Bonus Stages
+WideIcon = 1
+InterScreen = INTERSCR
+FlickyList = Demo
+
+#Challenge Stages
+
+level 40
+levelname = Haunted Heights
+Keywords = HHZ
+music = HAUNTD
+skynum = 172
+nextlevel = 125
+RecordAttack = true
+Unlockable = 4
+LevelSelect = 2
+SelectHeading = Challenge Stages
+typeoflevel = Solo,Co-op,Competition,Race
+SkyboxScale = 0
+flickylist = Spider,Bat
+
+Level 41
+Levelname = Aerial Garden
+Keywords = AGZ
+Music = AGZ
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 40
+RecordAttack = true
+Unlockable = 5
+LevelSelect = 2
+SelectHeading = Challenge Stages
+SaveGame = true
+FlickyList = Puffin,Dove
+#Flicky selection is final.
+
+Level 42
+Levelname = Azure Temple
+Keywords = ATZ
+Music = ATZ
+TypeOfLevel = Singleplayer,Co-op,Competition,Race
+NextLevel = 125
+SkyNum = 35
+RecordAttack = true
+Unlockable = 6
+LevelSelect = 2
+SelectHeading = Challenge Stages
+SaveGame = true
+FlickyList = Fish,Bluebird
+#Bluebird will be replaced with Flicky's Island Redbird when complete.
+
+Level 50
+LevelName = Floral Field
+Subtitle = Special Stage 1
+Music = SPEC1
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+SelectHeading = Special Stages
+NoVisitNeeded = true
+SkyNum = 1
+Grades1 = 0,20000,30000,90000,180000,260000
+
+Level 51
+LevelName = Toxic Plateau
+Subtitle = Special Stage 2
+Music = SPEC2
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+BonusType = NiGHTS
+SelectHeading = Special Stages
+NoVisitNeeded = true
+SkyNum = 6
+Grades1 = 0,35000,50000,100000,190000,300000
+
+
+Level 52
+LevelName = Flooded Cove
+Subtitle = Special Stage 3
+Music = SPEC3
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+SelectHeading = Special Stages
+NoVisitNeeded = true
+SkyNum = 8
+Grades1 = 0,70000,90000,180000,270000,360000
+
+Level 53
+LevelName = Cavern Fortress
+Subtitle = Special Stage 4
+Music = SPEC4
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+SelectHeading = Special Stages
+NoVisitNeeded = true
+Weather = 1
+SkyNum = 10
+Grades1 = 0,40000,60000,140000,240000,300000
+
+Level 54
+LevelName = Dusty Wasteland
+Subtitle = Special Stage 5
+Music = SPEC5
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+SelectHeading = Special Stages
+NoVisitNeeded = true
+SkyNum = 15
+Grades1 = 0,35000,50000,80000,120000,150000
+
+Level 55
+LevelName = Magma Caves
+Subtitle = Special Stage 6
+Music = SPEC6
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+SelectHeading = Special Stages
+NoVisitNeeded = true
+SkyNum = 20
+Grades1 = 0,30000,45000,60000,90000,110000
+
+Level 56
+LevelName = Egg Satellite
+Subtitle = Special Stage 7
+Music = SPEC7
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+SelectHeading = Special Stages
+NoVisitNeeded = true
+SkyNum = 22
+Grades1 = 0,60000,70000,80000,90000,140000
+
+Level 57
+LevelName = Black Hole
+Subtitle = Special Stage 8
+Music = BHZ
+NextLevel = 125
+TypeOfLevel = Singleplayer,NiGHTS
+NiGHTSAttack = true
+SelectHeading = Special Stages
+NoVisitNeeded = true
+SkyNum = 99
+Unlockable = 16
+Hidden = true
+Grades1 = 0,50000,60000,70000,80000,140000
+
+Level 70
+Levelname = Christmas Chime
+Music = CCZ
+MixNightsCountdown = 1
+MusicInterFadeOut = 5*MUSICRATE
+TypeOfLevel = Singleplayer,Xmas,NiGHTS
+NextLevel = 125
+SkyNum = 17
+Hidden = true
+LevelSelect = 2
+SelectHeading = NiGHTS Bonus Stages
+NiGHTSAttack = true
+NoVisitNeeded = true
+Unlockable = 15
+BonusType = NiGHTS
+MaxBonusLives = 0
+Grades1 = 0,30000,40000,60000,90000,110000
+FlickyList = Bluebird,Canary,Puffin,Dove
+#Canary, Puffin and Dove will be replaced with the Redbird, Pinkbird and Greenbird from Flickies Island when complete.
+
+Level 71
+Levelname = Dream Hill
+SubTitle = ^1~The Slumber~
+NoZone = true
+Act = 0
+Music = DHZ
+TypeOfLevel = Singleplayer,NiGHTS
+NextLevel = 125
+SkyNum = 40
+Hidden = true
+LevelSelect = 2
+SelectHeading = NiGHTS Bonus Stages
+NiGHTSAttack = true
+NoVisitNeeded = true
+Unlockable = 12
+Grades1 = 0,10000,15000,50000,80000,120000
+Grades2 = 0,5000,10000,30000,40000,60000
+Grades3 = 0,10000,15000,40000,50000,60000
+Grades4 = 0,15000,20000,25000,40000,60000
+BonusType = NiGHTS
+MaxBonusLives = 0
+MixNightsCountdown = 1
+MusicInterFadeOut = 5000
+
+LEVEL 72
+LEVELNAME = Alpine Paradise
+ACT = 1
+NEXTLEVEL = 125
+MUSIC = APZ1
+WEATHER = 0
+SKYNUM = 300
+TYPEOFLEVEL = Singleplayer,Co-op,NiGHTS
+Hidden = true
+LevelSelect = 2
+SelectHeading = NiGHTS Bonus Stages
+NiGHTSAttack = true
+NoVisitNeeded = true
+Unlockable = 13
+BONUSTYPE = NIGHTS
+MAXBONUSLIVES = 0
+MIXNIGHTSCOUNTDOWN = 1
+MUSICINTERFADEOUT = 5*MUSICRATE
+Grades1 = 0,40000,60000,80000,120000,160000
+
+LEVEL 73
+LEVELNAME = Alpine Paradise
+ACT = 2
+NEXTLEVEL = 125
+MUSIC = APZ2
+WEATHER = 0
+SKYNUM = 301
+TYPEOFLEVEL = Singleplayer,Co-op,NiGHTS
+Hidden = true
+LevelSelect = 2
+SelectHeading = NiGHTS Bonus Stages
+NiGHTSAttack = true
+NoVisitNeeded = true
+Unlockable = 14
+BONUSTYPE = NIGHTS
+MAXBONUSLIVES = 0
+MIXNIGHTSCOUNTDOWN = 1
+MUSICINTERFADEOUT = 5*MUSICRATE
+Grades1 = 0,15000,20000,35000,50000,70000
+Grades2 = 0,15000,20000,35000,50000,70000
+Grades3 = 0,15000,20000,35000,50000,80000
+Grades4 = 0,15000,20000,35000,50000,60000
+
+Emblem
+Hint = This one's in plain sight.\\Why haven't you claimed it yet?\\Surely you saw it.
+Type = Global
+Tag = 0
+MapNum = 1
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = To find this emblem,\\You will have to take a dive.\\Check behind the spring.
+Type = Global
+Tag = 1
+MapNum = 1
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Tails can be helpful\\To fly you under the arch\\And find the entrance.
+Type = Global
+Tag = 2
+MapNum = 1
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = On top of a box,\\Above the narrow pathways.\\Spring to get up there.
+Type = Global
+Tag = 3
+MapNum = 1
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Up high on a ledge,\\There is a breakable wall.\\Smash it for the prize.
+Type = Global
+Tag = 4
+MapNum = 1
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 30*TICRATE
+MapNum = 1
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 1
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Greenflower Zone Act 2
+
+Emblem
+Hint = Near the giant lake\\lies a cave with a 1-Up.\\An emblem's there, too!
+Type = Global
+Tag = 0
+MapNum = 2
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Such a wet level.\\Find the source of the water\\Atop of the falls.
+Type = Global
+Tag = 1
+MapNum = 2
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Backtrack a blocked path\\Then go through another one\\To prove you love him.
+Type = Global
+Tag = 2
+MapNum = 2
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = It's under a bridge,\\Right behind a large pillar.\\Echidnas Only!
+Type = Global
+Tag = 3
+MapNum = 2
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = High in the canyon,\\There's a house with a garden.\\Check inside the fence.
+Type = Global
+Tag = 4
+MapNum = 2
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 60*TICRATE
+MapNum = 2
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 2
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Greenflower Zone Act 3
+
+Emblem
+Type = Time
+Var = 30*TICRATE
+MapNum = 3
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Score
+Var = 10000
+MapNum = 3
+Sprite = S
+Color = SKINCOLOR_BROWN
+
+# Techno Hill Zone Act 1
+
+Emblem
+Hint = Ya can't miss it, Tails!\\It's right on top of the cliff.\\Just fly and get it.
+Type = Global
+Tag = 0
+MapNum = 4
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = The slime lake is deep,\\but reaching the floor takes height.\\Scream Geronimo!...
+Type = Global
+Tag = 1
+MapNum = 4
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Climbing yields great range.\\Yet, on a path for climbers,\\flying is the key.
+Type = Global
+Tag = 2
+MapNum = 4
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = That's a lot of slime.\\Say, do you ever wonder\\what's dumping it all?
+Type = Global
+Tag = 3
+MapNum = 4
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Knuckles can't go up.\\Well, at least not directly.\\Come back the wrong way.
+Type = Global
+Tag = 4
+MapNum = 4
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 75*TICRATE
+MapNum = 4
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 4
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Techno Hill Zone Act 2
+
+Emblem
+Hint = Near the first checkpoint,\\take a look through the windows.\\See something you want?
+Type = Global
+Tag = 0
+MapNum = 5
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Behind the windows,\\near crushers, ever smashing\\a conveyor belt.
+Type = Global
+Tag = 1
+MapNum = 5
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = A button under slime\\near the end of the level\\will open the door.
+Type = Global
+Tag = 2
+MapNum = 5
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = There is a hallway\\that a button floods with slime.\\Go through it again!
+Type = Global
+Tag = 3
+MapNum = 5
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Jumping on turtles\\will send you springing skyward.\\Now, do that six times...
+Type = Global
+Tag = 4
+MapNum = 5
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 120*TICRATE
+MapNum = 5
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 5
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Techno Hill Zone Act 3
+
+Emblem
+Type = Time
+Var = 30*TICRATE
+MapNum = 6
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Score
+Var = 10000
+MapNum = 6
+Sprite = S
+Color = SKINCOLOR_BROWN
+
+# Deep Sea Zone Act 1
+
+Emblem
+Hint = Tails can't break the block,\\Knuckles can't climb up that high,\\Who can tackle both?
+Type = Global
+Tag = 0
+MapNum = 7
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Bridge with a closed door.\\Don't bother going inside.\\Check the falls instead.
+Type = Global
+Tag = 1
+MapNum = 7
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = There are three closed doors.\\They all lead to a statue.\\Open all of them.
+Type = Global
+Tag = 2
+MapNum = 7
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = The blue switch is stuck\\Behind a broken blue door.\\Jump through the small hole.
+Type = Global
+Tag = 3
+MapNum = 7
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Push the gargoyle switch\\To find the purple button\\Near the beginning
+Type = Global
+Tag = 4
+MapNum = 7
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 75*TICRATE
+MapNum = 7
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 150
+MapNum = 7
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Deep Sea Zone Act 2
+
+Emblem
+Hint = A fast waterslide\\That is filled with many spikes.\\Jump before the end.
+Type = Global
+Tag = 0
+MapNum = 8
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Up on the high cliff\\Before reaching the locked gate\\Just out of your view
+Type = Global
+Tag = 1
+MapNum = 8
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Through the fence you see\\An azure room in a wall\\Find a way inside.
+Type = Global
+Tag = 2
+MapNum = 8
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Mount a spinning wheel\\Then turn around and look up\\Climb to claim your prize
+Type = Global
+Tag = 3
+MapNum = 8
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Crushing from above.\\However, there is a hole.\\Go see where it leads.
+Type = Global
+Tag = 4
+MapNum = 8
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 135*TICRATE
+MapNum = 8
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 8
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Deep Sea Zone Act 3
+
+Emblem
+Type = Time
+Var = 40*TICRATE
+MapNum = 9
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Score
+Var = 10000
+MapNum = 9
+Sprite = S
+Color = SKINCOLOR_BROWN
+
+# Castle Eggman Zone Act 1
+
+Emblem
+Hint = A tall bell tower.\\The only way to get up\\Is to fly or climb.
+Type = Global
+Tag = 0
+MapNum = 10
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Locked in a tower.\\What's that behind the banner?\\Is it a way in?
+Type = Global
+Tag = 1
+MapNum = 10
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Circle of pillars\\Wait, is one of them missing?\\Wonder where it is...
+Type = Global
+Tag = 2
+MapNum = 10
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = A super tight squeeze\\between the wall and a spring\\hides a secret path.
+Type = Global
+Tag = 3
+MapNum = 10
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Trees growing in caves?\\It's more likely than you think.\\Go pay a visit.
+Type = Global
+Tag = 4
+MapNum = 10
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 120*TICRATE
+MapNum = 10
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 10
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Castle Eggman Zone Act 2
+
+Emblem
+Hint = Outside the castle,\\hop along the support beams\\over the brambles.
+Type = Global
+Tag = 0
+MapNum = 11
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = The eye of the storm\\in a vortex of platforms\\high above the ground.
+Type = Global
+Tag = 1
+MapNum = 11
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Launch from the large wall,\\stop before the shaft of rings.\\See something moving?
+Type = Global
+Tag = 2
+MapNum = 11
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = The goal's within sight!\\But there's something else above...\\Soar to greater heights!
+Type = Global
+Tag = 3
+MapNum = 11
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = In a rocky cave,\\on top of a grassy hill,\\the emblem awaits.
+Type = Global
+Tag = 4
+MapNum = 11
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 165*TICRATE
+MapNum = 11
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 350
+MapNum = 11
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Castle Eggman Zone Act 3
+
+Emblem
+Type = Time
+Var = 105*TICRATE
+MapNum = 12
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Score
+Var = 10000
+MapNum = 12
+Sprite = S
+Color = SKINCOLOR_BROWN
+
+# Arid Canyon Zone Act 1
+
+Emblem
+Hint = Some falling boulders\\Next to a large wooden plank.\\Check the cliffs above.
+Type = Global
+Tag = 0
+MapNum = 13
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Can't go on the ramp?\\Hop the fence and tread slowly.\\It's a long way down!
+Type = Global
+Tag = 1
+MapNum = 13
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = It gets annoying\\hearing traffic all the time\\right above my head.
+Type = Global
+Tag = 2
+MapNum = 13
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = A crack in the cliff\\near the end of the highway\\contains the emblem.
+Type = Global
+Tag = 3
+MapNum = 13
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Try to grab the rope\\When you launch up the big ramp.\\Ride it all the way.
+Type = Global
+Tag = 4
+MapNum = 13
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 105*TICRATE
+MapNum = 13
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 13
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Arid Canyon Zone Act 2
+Emblem
+Hint = Hey! I can see it!\\But the mine cart can't go there...\\Get in here on foot.
+Type = Global
+Tag = 0
+MapNum = 14
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = A crack in the box.\\You can see inside the top.\\Just smash it open.
+Type = Global
+Tag = 1
+MapNum = 14
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = An X marks the spot\\Where Knuckles will need to climb\\To reach this emblem.
+Type = Global
+Tag = 2
+MapNum = 14
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = The water's all gone\\All that is left is cracked sand.\\Leave it to the boss!
+Type = Global
+Tag = 3
+MapNum = 14
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Hooray, you made it!\\But instead of finishing\\Why don't you explore?
+Type = Global
+Tag = 4
+MapNum = 14
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 150*TICRATE
+MapNum = 14
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 14
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Arid Canyon Zone Act 3
+
+Emblem
+Type = Time
+Var = 90*TICRATE
+MapNum = 15
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Score
+Var = 10000
+MapNum = 15
+Sprite = S
+Color = SKINCOLOR_BROWN
+
+# Red Volcano Zone Act 1
+
+Emblem
+Hint = Look around the room,\\just before you clear the stage;\\something's hidden there!
+Type = Global
+Tag = 0
+MapNum = 16
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Ever look upwards\\when you're traversing across\\collapsing platforms?
+Type = Global
+Tag = 1
+MapNum = 16
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = A lake of magma\\ebbs and flows unendingly.\\Wait for its nadir.
+Type = Global
+Tag = 2
+MapNum = 16
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Where fire revolves,\\bring a sparkling gold key.\\No rocks can enter.
+Type = Global
+Tag = 3
+MapNum = 16
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Bring a stone somewhere\\you would not think it belongs,\\then ride carefully...
+Type = Global
+Tag = 4
+MapNum = 16
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 150*TICRATE
+MapNum = 16
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 16
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Egg Rock Zone Act 1
+
+Emblem
+Hint = Vanishing platforms,\\then collapsing ones herald\\a last-second jump.
+Type = Global
+Tag = 0
+MapNum = 22
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = What is this red stuff?\\You can't breathe it in, but look!\\It can't reach up there...
+Type = Global
+Tag = 1
+MapNum = 22
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = The team's paths diverge.\\Should Tails run the crusher path?\\No! Fly outside it!
+Type = Global
+Tag = 2
+MapNum = 22
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Don't jump too high here!\\No conveyor will catch you;\\you'd fall to your death.
+Type = Global
+Tag = 3
+MapNum = 22
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Conveyors! Magma!\\What an intense room this is!\\But, what brought you here?
+Type = Global
+Tag = 4
+MapNum = 22
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 120*TICRATE
+MapNum = 22
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 100
+MapNum = 22
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Egg Rock Zone Act 2
+
+Emblem
+Hint = Walk on the ceiling;\\resist the urge to flip back!\\Find the cyan path...
+Type = Global
+Tag = 0
+MapNum = 23
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = X marks the spot? Nope!\\Try standing further away\\when the timer flips.
+Type = Global
+Tag = 1
+MapNum = 23
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = There is more than one\\method to going up the\\elevator shaft...
+Type = Global
+Tag = 2
+MapNum = 23
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Gears with missing teeth\\can hide a clever secret!\\Take them for a spin.
+Type = Global
+Tag = 3
+MapNum = 23
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Just before you reach\\the defective cargo bay,\\fly under a bridge.
+Type = Global
+Tag = 4
+MapNum = 23
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 240*TICRATE
+MapNum = 23
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 150
+MapNum = 23
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Black Core Zone Act 1
+
+Emblem
+Type = Time
+Var = 80*TICRATE
+MapNum = 25
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 50
+MapNum = 25
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Black Core Zone Act 2
+
+Emblem
+Type = Time
+Var = 100*TICRATE
+MapNum = 26
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Score
+Var = 10000
+MapNum = 26
+Sprite = S
+Color = SKINCOLOR_BROWN
+
+# Black Core Zone Act 3
+
+Emblem
+Type = Time
+Var = 100*TICRATE
+MapNum = 27
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Score
+Var = 10000
+MapNum = 27
+Sprite = S
+Color = SKINCOLOR_BROWN
+
+# Frozen Hillside Zone
+
+Emblem
+Hint = What once was moving,\\Has now become motionless.\\It no longer falls.
+Type = Global
+Tag = 0
+MapNum = 30
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Below frozen ice.\\A waterfall makes a hole\\You can go under.
+Type = Global
+Tag = 1
+MapNum = 30
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = A cold, frozen heart.\\Free it from the cavern depths\\and its icy cage.
+Type = Global
+Tag = 2
+MapNum = 30
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Atop a pillar,\\Resting in a place where the\\Snow flows like water.
+Type = Global
+Tag = 3
+MapNum = 30
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Somewhere near the end,\\There lies a cave blocked by ice.\\Defeat the penguin.
+Type = Global
+Tag = 4
+MapNum = 30
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 60*TICRATE
+MapNum = 30
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 30
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Pipe Towers Zone
+
+Emblem
+Hint = High up in the air,\\a cave exposed to the sky.\\One tree lies below.
+Type = Global
+Tag = 0
+MapNum = 31
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Down a pipe, you'll find\\fancy halls and waterfalls.\\Take the clouds outside.
+Type = Global
+Tag = 1
+MapNum = 31
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = In the underground,\\there is a pipe and emblem\\having a staredown.
+Type = Global
+Tag = 2
+MapNum = 31
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Thwomp atop a shroom.\\Take the thwomp to its apex\\And jump to the springs.
+Type = Global
+Tag = 3
+MapNum = 31
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Thank you Sonic! But\\the green-colored emblem is\\behind the castle!
+Type = Global
+Tag = 4
+MapNum = 31
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 100*TICRATE
+MapNum = 31
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 31
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Forest Fortress Zone
+
+Emblem
+Hint = Fortress far away.\\Jump the fence, but not too far\\Or else you will fall!
+Type = Global
+Tag = 0
+MapNum = 32
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Search shallow water\\Surrounding the stronghold wall.\\Surely you'll see it.
+Type = Global
+Tag = 1
+MapNum = 32
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Heavily guarded.\\Look for the secret passage\\To drop in unseen.
+Type = Global
+Tag = 2
+MapNum = 32
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Springing through the air.\\Was there something in the trees?\\Turn around and look.
+Type = Global
+Tag = 3
+MapNum = 32
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Near the last starpost...\\Look through the gate, to the tree.\\Is there a way out?
+Type = Global
+Tag = 4
+MapNum = 32
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 110*TICRATE
+MapNum = 32
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 32
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Techno Legacy Zone
+# No emblems for this level
+
+# Haunted Heights Zone
+
+Emblem
+Hint = Get a running start,\\Then jump, bounce, and bounce again,\\On hills near the start.
+Type = Global
+Tag = 0
+MapNum = 40
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = Eggman's waist is not\\the only thing that is fat.\\His head is big too!
+Type = Global
+Tag = 1
+MapNum = 40
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Spikes, spikeballs, and springs.\\And a whole lot of goop too!\\Most of this room hurts!
+Type = Global
+Tag = 2
+MapNum = 40
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Take a leap of faith!\\The spirit will lift you up\\to find greater heights.
+Type = Global
+Tag = 3
+MapNum = 40
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = Behind a goop fall.\\Can echidnas breathe in goop?\\With a shield they can!
+Type = Global
+Tag = 4
+MapNum = 40
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 120*TICRATE
+MapNum = 40
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 40
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Aerial Garden Zone
+
+Emblem
+Hint = A central tower,\\one with many waterfalls,\\hides a secret room.
+Type = Global
+Tag = 0
+MapNum = 41
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = The path Knuckles takes\\leads to a floor he can't break.\\Be brave, bouncy one.
+Type = Global
+Tag = 1
+MapNum = 41
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = Find all four buttons\\that sink when you stand on them.\\They'll open a door...
+Type = Global
+Tag = 2
+MapNum = 41
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = Much like the last one,\\you need to find some switches.\\Only two, this time.
+Type = Global
+Tag = 3
+MapNum = 41
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = The inner sanctum!\\Teleport to its switches;\\then, check near the goal.
+Type = Global
+Tag = 4
+MapNum = 41
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 210*TICRATE
+MapNum = 41
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 500
+MapNum = 41
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Azure Temple Zone
+
+Emblem
+Hint = For those who can swim,\\a long tunnel hides rewards.\\Do mind the Buggles!
+Type = Global
+Tag = 0
+MapNum = 42
+Sprite = A
+Color = SKINCOLOR_BLUE
+
+Emblem
+Hint = So many skylights!\\A markedly large one hides\\behind a starpost...
+Type = Global
+Tag = 1
+MapNum = 42
+Sprite = B
+Color = SKINCOLOR_LAVENDER
+
+Emblem
+Hint = When you reach gauntlets\\of diagonal fire,\\check out the corners.
+Type = Global
+Tag = 2
+MapNum = 42
+Sprite = C
+Color = SKINCOLOR_RED
+
+Emblem
+Hint = A room of currents;\\most of them are marked by flames.\\This one? A corner.
+Type = Global
+Tag = 3
+MapNum = 42
+Sprite = D
+Color = SKINCOLOR_ORANGE
+
+Emblem
+Hint = The only way to hit\\all those gems at once is with\\a radial blast.
+Type = Global
+Tag = 4
+MapNum = 42
+Sprite = E
+Color = SKINCOLOR_SHAMROCK
+
+Emblem
+Type = Time
+Var = 240*TICRATE
+MapNum = 42
+Sprite = T
+Color = SKINCOLOR_GREY
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 42
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+# Floral Field Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 50
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 50
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 50
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 40*TICRATE
+MapNum = 50
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Toxic Plateau Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 51
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 51
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 51
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 50*TICRATE
+MapNum = 51
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Flooded Cove Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 52
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 52
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 52
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 75*TICRATE
+MapNum = 52
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Cavern Fortress Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 53
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 53
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 53
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 75*TICRATE
+MapNum = 53
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Dusty Wasteland Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 54
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 54
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 54
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 75*TICRATE
+MapNum = 54
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Magma Caves Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 55
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 55
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 55
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 75*TICRATE
+MapNum = 55
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Egg Satellite Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 56
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 56
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 56
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 105*TICRATE
+MapNum = 56
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Black Hole Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 57
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 57
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 57
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 150*TICRATE
+MapNum = 57
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Christmas Chime Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 70
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 70
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 70
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 75*TICRATE
+MapNum = 70
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Dream Hill Zone
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 71
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 71
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 71
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 150*TICRATE
+MapNum = 71
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Alpine Paradise Zone Act 1
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 72
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 72
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 72
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 90*TICRATE
+MapNum = 72
+Sprite = T
+Color = SKINCOLOR_GREY
+
+# Alpine Paradise Zone Act 2
+
+Emblem
+Type = Global
+Var = GE_NIGHTSPULL
+Tag = 0
+MapNum = 73
+Sprite = L
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Global
+Var = GE_NIGHTSITEM|GE_NIGHTSPULL
+Tag = 1
+MapNum = 73
+Sprite = M
+Color = SKINCOLOR_PURPLE
+
+Emblem
+Type = NGrade
+Var = GRADE_A
+MapNum = 73
+Sprite = Q
+Color = SKINCOLOR_CYAN
+
+Emblem
+Type = NTime
+Var = 240*TICRATE
+MapNum = 73
+Sprite = T
+Color = SKINCOLOR_GREY

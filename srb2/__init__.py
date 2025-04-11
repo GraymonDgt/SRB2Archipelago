@@ -152,7 +152,7 @@ class SRB2World(World):
         self.multiworld.itempool += [self.create_item("Ring Loss") for i in range(6)]
         self.multiworld.itempool += [self.create_item("& Knuckles") for i in range(6)]#non functional
 
-        self.multiworld.itempool += [self.create_item("1UP") for i in range(8)]
+        self.multiworld.itempool += [self.create_item("1UP") for i in range(7)]
         self.multiworld.itempool += [self.create_item("50 Rings") for i in range(4)]
         #if "wincon string" in self.options.win_condition.value:
 

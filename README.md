@@ -11,11 +11,17 @@ Place ArchipelagoSRB2.pk3 into your SRB2 addons folder to have the mod loaded up
 # SETUP GUIDE
 
 Download srb2 here: https://www.srb2.org/download/
+
 Put the included .pk3 in your addons folder
+
 Install the srb2 apworld
+
 There will be a new client in the archipelago launcher named "Sonic Robo Blast 2 Client"
+
 When opening that, a dialogue will open asking for your SRB2 directory (the same folder as srb2win.exe)
+
 Connect to archipelago and srb2 will automatically Open with the AP mod loaded
+
 
 
 # ADDITIONAL NOTES

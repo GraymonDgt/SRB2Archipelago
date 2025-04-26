@@ -1,5 +1,37 @@
 
+addHook("PlayerThink", function()-- stupid dumb idiot code
+for player in players.iterate() do
+
+	if player.forcestrap>0 then
+		local angle = player.mo.angle
+		player.mo.momx = FixedMul(36*FRACUNIT, cos(angle))  -- Knockback in facing direction
+        player.mo.momy = FixedMul(36*FRACUNIT, sin(angle))
+		player.drawangle = angle
+		player.forcestrap = player.forcestrap - 1
+	end
+	
+	if player.frictiontrap>0 then
+		player.mo.friction = 63815
+		player.mo.movefactor = FRACUNIT/2
+		player.frictiontrap = player.frictiontrap - 1
+		if player.frictiontrap == 0 then
+			player.mo.friction = 59392
+			player.mo.movefactor = FRACUNIT
+		end
+	end
+	
+
+end
+end)
+
+addHook("PlayerSpawn",function(player)
+if player.startingrings then
+player.rings = player.startingrings
+end
+end)
+
 addHook("MobjDeath", function(object, source, inflictor)
+if not isserver and multiplayer then return end
 local f = assert(io.openlocal("APTokens.txt","a"))
 f:write(gamemap)
 f:write(object.x)
@@ -12,11 +44,26 @@ token = 0
 f:close()
 end, MT_TOKEN)
 
-
+addHook("MobjDeath", function(object, source, inflictor)
+if not isserver and multiplayer then return end
+local f = assert(io.openlocal("APTokens.txt","a"))
+f:write(gamemap)
+f:write(":")
+f:write(object.x)
+f:write(object.y)
+local stringma = [[ 
+]]
+f:write(stringma)
+token = 0
+f:close()
+end, MT_1UP_BOX)
 
 
 
 local function HUDstuff(v)
+if not isserver and multiplayer then return end
+
+
 local f = assert(io.openlocal("APTranslator.dat","r+b"))
 f:seek("set",0)
 local bytes = {}
@@ -103,6 +150,8 @@ addHook("LinedefExecute", beMetal, "BE_METAL")
 
 
 local function readupdates()
+
+if not isserver and multiplayer then return end
 local f = assert(io.openlocal("APTranslator.dat","r+b"))
 f:seek("set",0)
 local bytes = {}
@@ -176,7 +225,7 @@ end
 if bytes[3] == 4 then --replay tutorial
 	    print("Replay the Tutorial IDIOT")
 	    G_SetCustomExitVars(1000, 1)
-            G_ExitLevel()
+        G_ExitLevel()
 end
 if bytes[3] == 5 then --ring drain
 for player in players.iterate() do
@@ -212,6 +261,68 @@ for player in players.iterate() do
         if player and player.valid and player.mo then
 	        player.rings = $ + 50
 	    	S_StartSound(player.mo, sfx_kc5c)
+        end
+    end
+end
+
+if bytes[3] == 9 then --20 rings
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+	        player.rings = $ + 20
+	    	S_StartSound(player.mo, sfx_kc5c)
+        end
+    end
+end
+
+if bytes[3] == 10 then --10 rings
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+	        player.rings = $ + 10
+	    	S_StartSound(player.mo, sfx_kc5c)
+        end
+    end
+end
+if bytes[3] == 11 then --icy floors
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+	        player.frictiontrap = TICRATE*60
+
+        end
+    end
+end
+
+if bytes[3] == 12 then --1000 points
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+			P_AddPlayerScore(player, 1000)
+
+        end
+    end
+end
+
+if bytes[3] == 13 then --sonic forces
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+			player.forcestrap = TICRATE*20
+        end
+    end
+end
+
+
+if bytes[3] == 14 then --invincibility
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+		player.powers[pw_invulnerability] = 20*TICRATE
+
+        end
+    end
+end
+
+if bytes[3] == 15 then --speed shoes
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+		player.powers[pw_sneakers] = 20*TICRATE
+
         end
     end
 end
@@ -300,6 +411,18 @@ for player in players.iterate() do
         end
     end
 end
+
+   for player in players.iterate() do
+        if player and player.valid and player.mo then
+		player.startingrings = bytes[24]*5
+		
+		
+		
+		end
+	end
+
+
+
 if gamemap == 125 then
   if (bytes[12] & 1) == 1 then
   P_LinedefExecute(100)
@@ -403,6 +526,7 @@ end
   if bytes[21]>1 then
     P_LinedefExecute(42)
     end
+
 end
 
 addHook("ThinkFrame", readupdates,"DEATHL")

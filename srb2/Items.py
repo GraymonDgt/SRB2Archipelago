@@ -25,21 +25,51 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     "Dropped Inputs": SRB2ItemData(9, ItemClassification.trap),
     "& Knuckles": SRB2ItemData(70, ItemClassification.filler),
     "50 Rings": SRB2ItemData(71, ItemClassification.filler),
+    "20 Rings": SRB2ItemData(72, ItemClassification.filler),
+    "10 Rings": SRB2ItemData(73, ItemClassification.filler),
+    "+5 Starting Rings": SRB2ItemData(74, ItemClassification.useful),
+    "Slippery Floors": SRB2ItemData(75, ItemClassification.trap),
+    "1000 Points": SRB2ItemData(76, ItemClassification.filler),
+    "Sonic Forces": SRB2ItemData(77, ItemClassification.trap),
+    "Temporary Invincibility": SRB2ItemData(78, ItemClassification.filler),
+    "Temporary Super Sneakers": SRB2ItemData(79, ItemClassification.filler),
+
+    "Extended Invincibility": SRB2ItemData(90, ItemClassification.useful),
+    "Extended Super Sneakers": SRB2ItemData(91, ItemClassification.useful),
+
+
+
+# sound test
+# temporary invincibility
+
+
+
+# play credits
+# double rings
+
+
+# turn all monitors to eggman
+# flashbang
+# killing dead
+# green demon
+
+
+
+
 # super ring drain - drains rings and kills you when you run out
 # no character ability - no thok, no flying, no player.charability
-# turn all monitors to eggman
-# sonic forces - constantly moving forward
-# quit game - brings up the "press y to quit" screen
-# &Knuckles
-# blast jump - get knocked back very far
-    #start at id 70 for new traps/ items
 # get made fun of - hud element that makes fun of you
+# toss flag or die
+
+# quit game - brings up the "press y to quit" screen
+# blast jump - get knocked back very far
+#start at id 70 for new traps/ items
+
 
 # Spindash
 # progressive tails flight
 # progressive force shield
 # shield spike protection (shields now protect from spikes)
-# +10 Starting Rings
 # +10 Max Rings
 
 
@@ -110,6 +140,11 @@ other_item_table:dict[str, SRB2ItemData] = {
     "Flame Shield": SRB2ItemData(61, ItemClassification.useful),
     "Bubble Shield": SRB2ItemData(62),
     "Lightning Shield": SRB2ItemData(63),
+    #"Super Paraloop": SRB2ItemData(64),
+    #"Drill Refill": SRB2ItemData(65),
+    #"Nightopian Helper": SRB2ItemData(66),
+    #"Extra Time (NiGHTS)": SRB2ItemData(67),
+    #"Link Freeze": SRB2ItemData(68),
 }
 
 item_data_table = {

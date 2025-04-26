@@ -4,35 +4,60 @@ from Options import DefaultOnToggle, Range, Toggle, DeathLink, Choice, PerGameCo
 
 
 class TimeEmblems(DefaultOnToggle):
-    """Enable record attack time emblems"""
+    """Enable record attack time emblems (27 Locations)"""
     display_name = "Time Emblems"
 class RingEmblems(DefaultOnToggle):
-    """Enable record attack Ring emblems"""
+    """Enable record attack Ring emblems (20 Locations)"""
     display_name = "Ring Emblems"
 class ScoreEmblems(DefaultOnToggle):
-    """Enable record attack Score emblems"""
+    """Enable record attack Score emblems (7 Locations)"""
     display_name = "Score Emblems"
 class RankEmblems(DefaultOnToggle):
-    """Enable NiGHTS A Rank emblems"""
+    """Enable NiGHTS A Rank emblems (12 Locations)"""
     display_name = "NiGHTS Rank Emblems"
 class NTimeEmblems(DefaultOnToggle):
-    """Enable NiGHTS Time emblems"""
+    """Enable NiGHTS Time emblems (12 Locations)"""
     display_name = "NiGHTS Time Emblems"
 
+
+class RadarStart(Toggle):
+    """Start with Emblem Hints + Radar, useful if you don't know where all the emblems are"""
+    display_name = "Start with Emblem Radar"
+
+class LogicDifficulty(Choice):
+    """Difficulty of logic required to get items
+    Normal - Tails/Knuckles required for difficult emblems, no badnik bouncing
+    Hard - If it's possible, it's in logic
+    Custom - Disables logic for custom character use"""
+    option_normal = 0
+    option_hard = 1
+    option_custom = 2
+    default = 0
+
+
+
+class OneUpSanity(Toggle):
+    """Enable 1UP Monitors as checks (247 Locations)"""
+    display_name = "1UP-Sanity"
+
+
+
+
 class BlackCoreEmblemCost(Range):
-    """Amount of emblems needed for black core zone to be unlocked
+    """Percentage of emblems needed for black core zone to be unlocked
     Putting 0 will make Black Core Zone an item in the multiworld like the rest of the zones"""
     display_name = "Emblems for Black Core"
     range_start = 0
-    range_end = 120
-    default = 80
+    range_end = 100
+    default = 50
 
 class EmblemNumber(Range):
-    """Total Number of emblems (DOESN'T WORK CURRENTLY)"""
+    """Total Number of emblems
+    (There are about 250 locations with all emblems turned on)"""
     display_name = "Total Emblems"
-    range_start = 120
-    range_end = 200
-    default = 200
+    range_start = 50
+    range_end = 300
+    default = 180
 
 
 class CompletionType(Choice):
@@ -53,8 +78,11 @@ srb2_options_groups = [
         ScoreEmblems,
         RankEmblems,
         NTimeEmblems,
+        OneUpSanity,
     ]),
     OptionGroup("Meta Options", [
+        LogicDifficulty,
+        RadarStart,
         BlackCoreEmblemCost,
         EmblemNumber,
     ]),
@@ -62,11 +90,15 @@ srb2_options_groups = [
 
 @dataclass
 class SRB2Options(PerGameCommonOptions):
+
     time_emblems: TimeEmblems
     ring_emblems: RingEmblems
     score_emblems: ScoreEmblems
     rank_emblems: RankEmblems
     ntime_emblems: NTimeEmblems
+    difficulty: LogicDifficulty
+    oneup_sanity: OneUpSanity
+    radar_start: RadarStart
     num_emblems: EmblemNumber
     bcz_emblems:BlackCoreEmblemCost
     death_link: DeathLink

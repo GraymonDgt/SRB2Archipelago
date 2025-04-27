@@ -201,6 +201,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Frozen Hillside Diamond Emblem", "TAILS | KNUCKLES | WIND")
         if options.difficulty == 0:
             rf.assign_rule("Frozen Hillside Club Emblem", "TAILS | KNUCKLES | WIND")
+            
         if options.oneup_sanity:
             if options.difficulty == 0:
                 rf.assign_rule("Frozen Hillside Monitor - x:-2944 y:-19168", "TAILS | KNUCKLES | WIND")#remove for hard
@@ -250,8 +251,10 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Aerial Garden Emerald Token - Diamond Emblem 3", "TAILS | METAL SONIC") # easy
             rf.assign_rule("Aerial Garden Emerald Token - Diamond Emblem 4", "TAILS | METAL SONIC") # easy
             rf.assign_rule("Aerial Garden Heart Emblem", "TAILS | METAL SONIC") # easy
-            rf.assign_rule("Aerial Garden Time Emblem", "TAILS | METAL SONIC | LIGHTNING") #BS as sonic
-            rf.assign_rule("Aerial Garden Ring Emblem", "TAILS | METAL SONIC | LIGHTNING") #BS as sonic
+            if options.time_emblems:
+                rf.assign_rule("Aerial Garden Time Emblem", "TAILS | METAL SONIC | LIGHTNING") #BS as sonic
+            if options.ring_emblems:
+                rf.assign_rule("Aerial Garden Ring Emblem", "TAILS | METAL SONIC | LIGHTNING") #BS as sonic
 
         if options.oneup_sanity:
             if options.difficulty == 0:
@@ -274,17 +277,14 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Azure Temple Star Emblem", "TAILS | KNUCKLES & BUBBLE")
         rf.assign_rule("Azure Temple Spade Emblem", "TAILS")
         if options.difficulty == 0:
-            rf.assign_rule("Azure Temple Time Emblem", "TAILS | METAL SONIC")
-            rf.assign_rule("Azure Temple Ring Emblem","TAILS/METAL SONIC & FORCE/BUBBLE | KNUCKLES+BUBBLE")
+            if options.time_emblems:
+                rf.assign_rule("Azure Temple Time Emblem", "TAILS | METAL SONIC")
+            if options.ring_emblems:
+                rf.assign_rule("Azure Temple Ring Emblem","TAILS/METAL SONIC & FORCE/BUBBLE | KNUCKLES+BUBBLE")
             rf.assign_rule("Azure Temple Club Emblem", "ARMAGEDDON & EMERALD")  # easy version
-            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344", "ARMAGEDDON & EMERALD")
-            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280", "ARMAGEDDON & EMERALD")
-            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408", "ARMAGEDDON & EMERALD")
         else:
             rf.assign_rule("Azure Temple Club Emblem", "ARMAGEDDON")
-            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344", "ARMAGEDDON")
-            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280", "ARMAGEDDON")
-            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408", "ARMAGEDDON")
+
 
         if options.oneup_sanity:
             rf.assign_rule("Azure Temple Monitor - x:512 y:14016", "TAILS | KNUCKLES")
@@ -294,10 +294,16 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
                 rf.assign_rule("Azure Temple Monitor - x:-2272 y:12864", "TAILS | KNUCKLES+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:-3232 y:14112", "TAILS | KNUCKLES | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:3648 y:25888", "TAILS | KNUCKLES | FANG")
+                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344", "ARMAGEDDON & EMERALD")
+                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280", "ARMAGEDDON & EMERALD")
+                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408", "ARMAGEDDON & EMERALD")
             else:
                 rf.assign_rule("Azure Temple Monitor - x:-2272 y:12864","TAILS | KNUCKLES+BUBBLE) | AMY+BUBBLE) | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:-3232 y:14112", "TAILS | KNUCKLES | AMY+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:3648 y:25888", "TAILS | KNUCKLES | AMY+BUBBLE | FANG")
+                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344", "ARMAGEDDON")
+                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280", "ARMAGEDDON")
+                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408", "ARMAGEDDON")
 
 
 

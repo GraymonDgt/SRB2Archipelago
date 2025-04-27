@@ -212,7 +212,8 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Pipe Towers Heart Emblem", "KNUCKLES")
 
         if options.difficulty == 0:
-            rf.assign_rule("Pipe Towers Monitor - x:7000 y:6520", "TAILS")
+            if options.oneup_sanity:
+                rf.assign_rule("Pipe Towers Monitor - x:7000 y:6520", "TAILS")
 
 
 

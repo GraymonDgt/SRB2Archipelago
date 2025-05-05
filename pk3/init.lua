@@ -1,17 +1,49 @@
+COM_AddCommand("hub", function(player)
+if not isServer and multiplayer then 
+print("You must be the server host to run this command")
+return end
+G_SetCustomExitVars(125, 1)
+G_ExitLevel()
+end)
+
+addHook("MobjSpawn", function(object)
+object.collected = 0
+end,MT_TOKEN)
+
+
+addHook("TouchSpecial", function(object,toucher)
+if object.collected then 
+object.collected = object.collected +1
+if object.collected >10 then
+P_RemoveMobj(object) end
+return end
+object.collected = 1
+if toucher == players[0].mo then return end
+if not multiplayer then return end
+S_StartSound(toucher.mo, sfx_ncitem)
+P_SetOrigin(object,players[0].mo.x,players[0].mo.y,players[0].mo.z)
+
+
+
+end,MT_EMBLEM)
+
+addHook("ThinkFrame", function()
+if gamemap >49 and gamemap <60 then
+G_SetCustomExitVars(125, 0)
+end
+end)
+
+
+
+
+
+
 
 addHook("PlayerThink", function()-- stupid dumb idiot code
 for player in players.iterate() do
-
-	if player.forcestrap>0 then
-		local angle = player.mo.angle
-		player.mo.momx = FixedMul(36*FRACUNIT, cos(angle))  -- Knockback in facing direction
-        player.mo.momy = FixedMul(36*FRACUNIT, sin(angle))
-		player.drawangle = angle
-		player.forcestrap = player.forcestrap - 1
-	end
-	
+if player.frictiontrap then
 	if player.frictiontrap>0 then
-		player.mo.friction = 63815
+		player.mo.friction = 63820
 		player.mo.movefactor = FRACUNIT/2
 		player.frictiontrap = player.frictiontrap - 1
 		if player.frictiontrap == 0 then
@@ -19,8 +51,24 @@ for player in players.iterate() do
 			player.mo.movefactor = FRACUNIT
 		end
 	end
-	
+	end
+end
+end)
 
+
+
+
+addHook("PlayerThink", function()-- stupid dumb idiot code
+for player in players.iterate() do
+if player.forcestrap then
+	if player.forcestrap>0 then
+		local angle = player.mo.angle
+		player.mo.momx = FixedMul(36*FRACUNIT, cos(angle))  -- Knockback in facing direction
+        player.mo.momy = FixedMul(36*FRACUNIT, sin(angle))
+		player.drawangle = angle
+		player.forcestrap = player.forcestrap - 1
+	end
+end
 end
 end)
 
@@ -61,35 +109,21 @@ end, MT_1UP_BOX)
 
 
 local function HUDstuff(v)
-if not isserver and multiplayer then return end
+if not players[0].currentemblems then return end
+local curembl = players[0].currentemblems
+local goalembl = players[0].goalemblems
 
-
-local f = assert(io.openlocal("APTranslator.dat","r+b"))
-f:seek("set",0)
-local bytes = {}
-while true do
-    local byte = f:read(1)
-    if byte == nil then
-        break
-    else
-        bytes[#bytes+1] = string.byte(byte)
-    end
-end
-if bytes[23] != 0 then
+if goalembl != 0 then
 for player in players.iterate() do
 if player and player.valid then
 
-
-
-
 v.drawString(16*v.dupx(), 54*v.dupy(), "Emblems:",V_NOSCALESTART)
-v.drawString(16*v.dupx(), 64*v.dupy(), bytes[22],V_NOSCALESTART)
+v.drawString(16*v.dupx(), 64*v.dupy(), curembl,V_NOSCALESTART)
 v.drawString(42*v.dupx(), 64*v.dupy(), "/",V_NOSCALESTART)
-v.drawString(50*v.dupx(), 64*v.dupy(), bytes[23],V_NOSCALESTART)
+v.drawString(50*v.dupx(), 64*v.dupy(), goalembl,V_NOSCALESTART)
 end
 end
 end
-f:close()
 end
 
 hud.add(HUDstuff,score)
@@ -103,13 +137,6 @@ local function beSonic(line, mo)
 end
 
 addHook("LinedefExecute", beSonic, "BE_SONIC")
-
-
-
-
-
-
-
 
 
 local function beTails(line, mo)
@@ -153,6 +180,7 @@ local function readupdates()
 
 if not isserver and multiplayer then return end
 local f = assert(io.openlocal("APTranslator.dat","r+b"))
+
 f:seek("set",0)
 local bytes = {}
 while true do
@@ -181,6 +209,7 @@ for player in players.iterate() do
 f:seek("set",0)
 f:write("\0")
 f:flush()
+print("Recieved Deathlink")
 end
 
 for player in players.iterate() do
@@ -206,6 +235,10 @@ for player in players.iterate() do
 	    P_PlayLivesJingle(player)
         end
     end
+--if not multiplayer then print("Recieved 1UP")
+--else COM_BufInsertText(server, "say Recieved 1UP") end
+
+
 end
 if bytes[3] == 2 then --force pity shield
 for player in players.iterate() do
@@ -224,8 +257,16 @@ for player in players.iterate() do
 end
 if bytes[3] == 4 then --replay tutorial
 	    print("Replay the Tutorial IDIOT")
+		if multiplayer then
+		G_SetCustomExitVars(125, 1)
+        G_ExitLevel()
+		COM_BufInsertText(server, "say Replay Tutorial is currently broken in multiplayer")
+		end
+		
+		if not multiplayer then
 	    G_SetCustomExitVars(1000, 1)
         G_ExitLevel()
+		end
 end
 if bytes[3] == 5 then --ring drain
 for player in players.iterate() do
@@ -258,18 +299,16 @@ end
 
 if bytes[3] == 8 then --50 rings
 for player in players.iterate() do
-        if player and player.valid and player.mo then
-	        player.rings = $ + 50
-	    	S_StartSound(player.mo, sfx_kc5c)
-        end
+	        player.rings = player.rings + 50
+	    	S_StartSound(player.mo, sfx_kc60)
     end
 end
 
 if bytes[3] == 9 then --20 rings
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.rings = $ + 20
-	    	S_StartSound(player.mo, sfx_kc5c)
+	        player.rings = player.rings + 20
+	    	S_StartSound(player.mo, sfx_kc60)
         end
     end
 end
@@ -277,8 +316,8 @@ end
 if bytes[3] == 10 then --10 rings
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.rings = $ + 10
-	    	S_StartSound(player.mo, sfx_kc5c)
+	        player.rings = player.rings + 10
+	    	S_StartSound(player.mo, sfx_kc60)
         end
     end
 end
@@ -293,10 +332,9 @@ end
 
 if bytes[3] == 12 then --1000 points
 for player in players.iterate() do
-        if player and player.valid and player.mo then
+
 			P_AddPlayerScore(player, 1000)
 
-        end
     end
 end
 
@@ -316,6 +354,8 @@ for player in players.iterate() do
 
         end
     end
+
+S_ChangeMusic("_INV", true)
 end
 
 if bytes[3] == 15 then --speed shoes
@@ -325,13 +365,30 @@ for player in players.iterate() do
 
         end
     end
+	S_ChangeMusic("_SHOES", true)
+
 end
 
 f:seek("set",2)
 f:write("\0")
 f:flush()
 end
+  if bytes[25]>0 then
+    local g = assert(io.openlocal("APTextTransfer.txt","r+"))
+g:seek("set",0)
+local string = g:read()
+while (string != nil) do
+if not multiplayer then print(string)
+else COM_BufInsertText(server, "say "..string) end
+string = g:read()
+ end
+f:seek("set",24)
+f:write("\0")
+f:flush()
+    end	
 
+players[0].currentemblems = bytes[22]
+players[0].goalemblems = bytes[23]
 
 
 f:close()
@@ -517,15 +574,18 @@ if gamemap == 125 then
   if (bytes[15] & 64) == 64 then
   P_LinedefExecute(130)
   end
-end
-  emeralds = emeralds | bytes[16]
-  emeralds = emeralds & bytes[16]
-  if bytes[21]>0 then
+    if bytes[21]>0 then
     P_LinedefExecute(41)
     end
   if bytes[21]>1 then
     P_LinedefExecute(42)
     end
+end
+  emeralds = emeralds | bytes[16]
+  emeralds = emeralds & bytes[16]
+
+
+	
 
 end
 

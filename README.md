@@ -17,11 +17,13 @@ There will be a new client in the archipelago launcher named "Sonic Robo Blast 2
 
 When opening that, a dialogue will open asking for your SRB2 directory (the same folder as srb2win.exe)
 
-Connect to archipelago and srb2 will automatically open with the AP mod loaded
+Connect to archipelago and SRB2 will automatically open with the AP mod loaded
 
 
 
 # ADDITIONAL NOTES
+
+type "hub" into the console to return to the hub at any time
 
 IF YOU USE autoexec.cfg BACK IT UP BEFORE LOADING THE AP CLIENT, IT WILL BE CLEARED UPON JOINING
 

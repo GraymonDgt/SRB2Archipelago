@@ -12,6 +12,7 @@ import functools
 import warnings
 import sys
 import ModuleUpdate
+
 ModuleUpdate.update()
 from tkinter import filedialog
 import websockets
@@ -19,20 +20,19 @@ import Utils
 import struct
 import math
 
-
-
-
 if __name__ == "__main__":
     Utils.init_logging("TextClient", exception_logger="Client")
 
 from MultiServer import CommandProcessor
 from NetUtils import (Endpoint, decode, NetworkItem, encode, JSONtoTextParser, ClientStatus, Permission, NetworkSlot,
-                      RawJSONtoTextParser, add_json_text, add_json_location, add_json_item, JSONTypes, SlotType)#HintStatus
+                      RawJSONtoTextParser, add_json_text, add_json_location, add_json_item, JSONTypes,
+                      SlotType)  # HintStatus
 from Utils import Version, stream_input, async_start, ByValue
 from worlds import network_data_package, AutoWorldRegister
 import os
 import ssl
 import enum
+
 
 class HintStatus(ByValue, enum.IntEnum):
     HINT_UNSPECIFIED = 0
@@ -40,6 +40,7 @@ class HintStatus(ByValue, enum.IntEnum):
     HINT_AVOID = 20
     HINT_PRIORITY = 30
     HINT_FOUND = 40
+
 
 if typing.TYPE_CHECKING:
     import kvui
@@ -68,6 +69,7 @@ class ClientCommandProcessor(CommandProcessor):
 
     In addition all docstrings for command methods will be displayed to the user on launch and when using "/help"
     """
+
     def __init__(self, ctx: CommonContext):
         self.ctx = ctx
 
@@ -111,7 +113,7 @@ class ClientCommandProcessor(CommandProcessor):
             self.ctx.on_print_json({"data": parts, "cmd": "PrintJSON"})
         return True
 
-    def _cmd_missing(self, filter_text = "") -> bool:
+    def _cmd_missing(self, filter_text="") -> bool:
         """List all missing location checks, from your local game state.
         Can be given text, which will be used as filter."""
         if not self.ctx.game:
@@ -204,6 +206,7 @@ class CommonContext:
 
     class NameLookupDict:
         """A specialized dict, with helper methods, for id -> name item/location data package lookups by game."""
+
         def __init__(self, ctx: CommonContext, lookup_type: typing.Literal["item", "location"]):
             self.ctx: CommonContext = ctx
             self.lookup_type: typing.Literal["item", "location"] = lookup_type
@@ -289,7 +292,7 @@ class CommonContext:
     server_version: Version = Version(0, 0, 0)
     generator_version: Version = Version(0, 0, 0)
     current_energy_link_value: typing.Optional[int] = None  # to display in UI, gets set by server
-    max_size: int = 16*1024*1024  # 16 MB of max incoming packet size
+    max_size: int = 16 * 1024 * 1024  # 16 MB of max incoming packet size
 
     last_death_link: float = time.time()  # last send/received death link on AP layer
     death_link: float = time.time()
@@ -374,6 +377,8 @@ class CommonContext:
         self.location_names = self.NameLookupDict(self, "location")
         self.versions = {}
         self.checksums = {}
+        self.texttransfer = []
+
 
         self.jsontotextparser = JSONtoTextParser(self)
         self.rawjsontotextparser = RawJSONtoTextParser(self)
@@ -425,15 +430,15 @@ class CommonContext:
             self.disconnected_intentionally = True
             if self.cancel_autoreconnect():
                 logger.info("Cancelled auto-reconnect.")
-        #if self.server and not self.server.socket.closed:
+        # if self.server and not self.server.socket.closed:
         #    await self.server.socket.close()
         if self.server_task is not None:
             await self.server_task
-        #self.ui.update_hints()
+        # self.ui.update_hints()
 
     async def send_msgs(self, msgs: typing.List[typing.Any]) -> None:
         """ `msgs` JSON serializable """
-        #if not self.server or not self.server.socket.open or self.server.socket.closed:
+        # if not self.server or not self.server.socket.open or self.server.socket.closed:
         #    return
         await self.server.socket.send(encode(msgs))
 
@@ -476,7 +481,6 @@ class CommonContext:
             payload.update(kwargs)
         await self.send_msgs([payload])
         await self.send_msgs([{"cmd": "Get", "keys": ["_read_race_mode"]}])
-
 
     async def check_locations(self, locations: typing.Collection[int]) -> set[int]:
         """Send new location checks to the server. Returns the set of actually new locations that were sent."""
@@ -530,7 +534,8 @@ class CommonContext:
         if self.ui:
             # send copy to UI
             self.ui.print_json(copy.deepcopy(args["data"]))
-
+            print(args["data"])
+            self.texttransfer = (copy.deepcopy(args["data"]))
         logging.getLogger("FileLog").info(self.rawjsontotextparser(copy.deepcopy(args["data"])),
                                           extra={"NoStream": True})
         logging.getLogger("StreamLog").info(self.jsontotextparser(copy.deepcopy(args["data"])),
@@ -549,6 +554,7 @@ class CommonContext:
         """Gets called by kivy when the user executes a command starting with `/` or `!`.
         The command processor is still called; this is just intended for command echoing."""
         self.ui.print_json([{"text": text, "type": "color", "color": "orange"}])
+        print([{"text": text, "type": "color", "color": "orange"}])
 
     def update_permissions(self, permissions: typing.Dict[str, int]):
         """Internal method to parse and save server permissions from RoomInfo"""
@@ -750,8 +756,7 @@ class CommonContext:
         ui_class = self.make_gui()
         self.ui = ui_class(self)
         self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
-        #self.save_watcher = asyncio.create_task(SaveFileWatcher(), name="SW")
-
+        # self.save_watcher = asyncio.create_task(SaveFileWatcher(), name="SW")
 
     def run_cli(self):
         if sys.stdin:
@@ -765,6 +770,7 @@ class CommonContext:
                 logger.info("Skipping terminal input, due to conflicting Steam Overlay detected. Please use GUI only.")
             else:
                 self.input_task = asyncio.create_task(console_loop(self), name="Input")
+
 
 async def SaveFileWatcher():
     while True:
@@ -870,7 +876,6 @@ async def process_server_cmd(ctx: CommonContext, args: dict):
         logger.exception(f"Could not get command from {args}")
         raise
 
-
     if cmd == 'RoomInfo':
         if ctx.seed_name and ctx.seed_name != args["seed_name"]:
             msg = "The server is running a different multiworld than your client is. (invalid seed_name)"
@@ -967,7 +972,6 @@ async def process_server_cmd(ctx: CommonContext, args: dict):
         else:
             ctx.death_link = False
 
-
         msgs = []
         if ctx.locations_checked:
             msgs.append({"cmd": "LocationChecks",
@@ -991,12 +995,13 @@ async def process_server_cmd(ctx: CommonContext, args: dict):
         # when /missing is used for the client side view of what is missing.
         ctx.missing_locations = set(args["missing_locations"])
         ctx.checked_locations = set(args["checked_locations"])
-        ctx.server_locations = ctx.missing_locations | ctx. checked_locations
+        ctx.server_locations = ctx.missing_locations | ctx.checked_locations
 
         server_url = urllib.parse.urlparse(ctx.server_address)
         Utils.persistent_store("client", "last_server_address", server_url.netloc)
 
     elif cmd == 'ReceivedItems':
+
         start_index = args["index"]
 
         if start_index == 0:
@@ -1010,6 +1015,15 @@ async def process_server_cmd(ctx: CommonContext, args: dict):
         if start_index == len(ctx.items_received):
             for item in args['items']:
                 ctx.items_received.append(NetworkItem(*item))
+                str_itemname = ctx.item_names.lookup_in_game(item.item)
+                str_senderloc = ctx.location_names.lookup_in_slot(item.location, item.player)
+                str_sendername = ctx.slot_info[item.player].name
+
+                #str_final = str_sendername+" sent "+str_itemname+" to "+ctx.slot_info[ctx.slot].name+" ("+str_senderloc+")\n"
+                #if str_sendername == ctx.slot_info[ctx.slot].name:
+                #    str_final = ctx.slot_info[ctx.slot].name+" found their "+str_itemname+" ("+str_senderloc+")\n"
+                #ctx.texttransfer.append(str_final)
+                #do something like ctx.texttransfer.append(str_final) and in file_watcher, write to all the files
         ctx.watcher_event.set()
 
     elif cmd == 'LocationInfo':
@@ -1139,7 +1153,6 @@ def run_as_textclient(*args):
             if cmd == "Connected":
                 self.game = self.slot_info[self.slot].game
 
-
         async def disconnect(self, allow_autoreconnect: bool = False):
             self.game = ""
             await super().disconnect(allow_autoreconnect)
@@ -1178,29 +1191,50 @@ def run_as_textclient(*args):
     colorama.deinit()
 
 
-async def item_handler(ctx,file_path):
-    file_path2 = file_path+"/apgamedat1.ssg"
+async def item_handler(ctx, file_path):
+    file_path2 = file_path + "/apgamedat1.ssg"
 
-    f = open(file_path+"/luafiles/APTranslator.dat", 'w+b')
+    f = open(file_path + "/luafiles/APTranslator.dat", 'w+b')
 
-
-
-
-    #set up new save file here
-    #dont need to zero anything out because the first write will overwrite everything wrong
+    # set up new save file here
+    # dont need to zero anything out because the first write will overwrite everything wrong
 
     locs_received = []
     final_write = [0, 0, 0, 0]
     sent_shields = [0, 0, 0, 0, 0, 0, 0, 0]
 
-
-
-
-
     while True:
         while ctx.total_locations is None:
             await asyncio.sleep(1)
             continue
+
+
+
+
+
+        if len(ctx.texttransfer) > 0:
+            h = open(file_path + "/luafiles/APTextTransfer.txt", 'w+')
+            for strings in ctx.texttransfer:
+#TODO implement colors here
+                try:
+                    type = strings["type"]
+                    if type == "player_id":
+                        h.write(ctx.slot_info[int(strings["text"])].name)
+                    elif type == "item_id":
+                        h.write(ctx.item_names.lookup_in_game(int(strings["text"]), ctx.slot_info[int(strings["player"])].game))#int(strings["player"])))
+                    elif type == "location_id":
+                        h.write(ctx.location_names.lookup_in_slot(int(strings["text"]), int(strings["player"])))
+                except KeyError:
+                    h.write(strings["text"])
+
+            ctx.texttransfer = []
+            f.seek(0x18)
+            f.write(0x01.to_bytes(1, byteorder="little"))#let srb2 know to read the texttransfer file
+            h.close()
+
+
+
+
         traps = 0
         emeralds = 0
         emblemhints = 0
@@ -1209,173 +1243,168 @@ async def item_handler(ctx,file_path):
         f.seek(0x12)
         num_traps = int.from_bytes(f.read(2), 'little')
 
-
-
-        #read characters until null terminator in g
-        #compare string/number to token list
-        #if found, send respective check
-        #repeat until end of file
-        #clear file g
-
+        # read characters until null terminator in g
+        # compare string/number to token list
+        # if found, send respective check
+        # repeat until end of file
+        # clear file g
 
         for i in ctx.items_received:
             id = i[0]
             if id == 2:
-                emeralds+=1
+                emeralds += 1
                 continue
-            if id==1:
+            if id == 1:
                 emblems += 1
                 continue
             if id == 3:
-                emblemhints+=1
+                emblemhints += 1
             if id == 74:
-                startrings +=1
-            if id==4 or id==5 or id==6 or id==7 or id == 8 or id==9 or id == 70 or id==71 or id==72 or id==73 or id==75 or id==76 or id ==77 or id==78 or id==79:
+                startrings += 1
+            if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79:
                 traps += 1
-                if traps==num_traps+1:
+                if traps == num_traps + 1:
 
                     f.seek(0x02)
-                    if id == 4: #1up
-                        f.write(0x01.to_bytes(2,byteorder="little"))
-                    if id == 6:# pity shield
-                        f.write(0x02.to_bytes(2,byteorder="little"))
-                    if id == 5:# gravity boots
-                        f.write(0x03.to_bytes(2,byteorder="little"))
-                    if id == 7:#replay tutorial
+                    if id == 4:  # 1up
+                        f.write(0x01.to_bytes(2, byteorder="little"))
+                    if id == 6:  # pity shield
+                        f.write(0x02.to_bytes(2, byteorder="little"))
+                    if id == 5:  # gravity boots
+                        f.write(0x03.to_bytes(2, byteorder="little"))
+                    if id == 7:  # replay tutorial
                         f.write(0x04.to_bytes(2, byteorder="little"))
-                    if id == 8:#ring loss
+                    if id == 8:  # ring loss
                         f.write(0x05.to_bytes(2, byteorder="little"))
-                    if id == 9:#drop inputs
+                    if id == 9:  # drop inputs
                         f.write(0x07.to_bytes(2, byteorder="little"))
-                    if id == 70:#& knuckles
+                    if id == 70:  # & knuckles
                         f.write(0x06.to_bytes(2, byteorder="little"))
-                    if id == 71:#50 rings
+                    if id == 71:  # 50 rings
                         f.write(0x08.to_bytes(2, byteorder="little"))
-                    if id == 72:#20 rings
+                    if id == 72:  # 20 rings
                         f.write(0x09.to_bytes(2, byteorder="little"))
-                    if id == 73:#10 rings
+                    if id == 73:  # 10 rings
                         f.write(0x0A.to_bytes(2, byteorder="little"))
-                    if id == 75:#slippery floors
+                    if id == 75:  # slippery floors
                         f.write(0x0B.to_bytes(2, byteorder="little"))
-                    if id == 76:#1000 points
+                    if id == 76:  # 1000 points
                         f.write(0x0C.to_bytes(2, byteorder="little"))
-                    if id == 77:#sonic forces
+                    if id == 77:  # sonic forces
                         f.write(0x0D.to_bytes(2, byteorder="little"))
-                    if id == 78:#temp invincibility
+                    if id == 78:  # temp invincibility
                         f.write(0x0E.to_bytes(2, byteorder="little"))
-                    if id == 79:#temp speed shoes
+                    if id == 79:  # temp speed shoes
                         f.write(0x0F.to_bytes(2, byteorder="little"))
 
-
-
                     f.seek(0x12)
-                    f.write((num_traps+1).to_bytes(2,byteorder="little"))
+                    f.write((num_traps + 1).to_bytes(2, byteorder="little"))
 
                 continue
-                #in the future it would be efficient to always hold a list of sent items so the file doesnt
-            if id in locs_received:#have to be read every second
+                # in the future it would be efficient to always hold a list of sent items so the file doesnt
+            if id in locs_received:  # have to be read every second
                 continue
 
-            if id == 10:#greenflower
+            if id == 10:  # greenflower
                 final_write[0] = final_write[0] + 1
-            if id == 11:#techno hill
+            if id == 11:  # techno hill
                 final_write[0] = final_write[0] + 2
-            if id == 12:#deep sea
+            if id == 12:  # deep sea
                 final_write[0] = final_write[0] + 4
-            if id == 13:#castle eggman
+            if id == 13:  # castle eggman
                 final_write[0] = final_write[0] + 8
-            if id == 14:#arid canyon
+            if id == 14:  # arid canyon
                 final_write[0] = final_write[0] + 16
-            if id == 15:#red volcano
+            if id == 15:  # red volcano
                 final_write[0] = final_write[0] + 32
-            if id == 16:#egg rock
+            if id == 16:  # egg rock
                 final_write[0] = final_write[0] + 64
-            if id == 17 and ctx.bcz_emblems==0:#black core
+            if id == 17 and ctx.bcz_emblems == 0:  # black core
                 final_write[0] = final_write[0] + 128
-            if id == 18: #frozen hillside
+            if id == 18:  # frozen hillside
                 final_write[1] = final_write[1] + 8
-            if id == 19: #pipe towers
+            if id == 19:  # pipe towers
                 final_write[1] = final_write[1] + 16
-            if id == 20: #forest fortress
+            if id == 20:  # forest fortress
                 final_write[1] = final_write[1] + 32
-            if id == 21: #final demo
+            if id == 21:  # final demo
                 final_write[1] = final_write[1] + 64
-            if id == 22: #haunted heights
+            if id == 22:  # haunted heights
                 final_write[1] = final_write[1] + 1
-            if id == 23: #aerial garden
+            if id == 23:  # aerial garden
                 final_write[1] = final_write[1] + 2
-            if id == 24: #azure temple
+            if id == 24:  # azure temple
                 final_write[1] = final_write[1] + 4
-            if id == 50: #tails
+            if id == 50:  # tails
                 final_write[1] = final_write[1] + 128
-            if id == 51: #knuckles
+            if id == 51:  # knuckles
                 final_write[2] = final_write[2] + 1
-            if id == 53: #fang
+            if id == 53:  # fang
                 final_write[2] = final_write[2] + 2
-            if id == 52: #amy
+            if id == 52:  # amy
                 final_write[2] = final_write[2] + 4
-            if id == 54: #metal sonic
+            if id == 54:  # metal sonic
                 final_write[2] = final_write[2] + 8
-            if id == 25: #floral fields
+            if id == 25:  # floral fields
                 final_write[2] = final_write[2] + 16
-            if id == 26: #toxic plateau
+            if id == 26:  # toxic plateau
                 final_write[2] = final_write[2] + 32
-            if id == 27: #flooded cove
+            if id == 27:  # flooded cove
                 final_write[2] = final_write[2] + 64
-            if id == 28: #cavern fortress
+            if id == 28:  # cavern fortress
                 final_write[2] = final_write[2] + 128
-            if id == 29: #dusty wasteland
+            if id == 29:  # dusty wasteland
                 final_write[3] = final_write[3] + 1
-            if id == 30: #magma caves
+            if id == 30:  # magma caves
                 final_write[3] = final_write[3] + 2
-            if id == 31: #egg satellite
+            if id == 31:  # egg satellite
                 final_write[3] = final_write[3] + 4
-            if id == 32: #black hole
+            if id == 32:  # black hole
                 final_write[3] = final_write[3] + 8
-            if id == 33: #christmas chime
+            if id == 33:  # christmas chime
                 final_write[3] = final_write[3] + 16
-            if id == 34: #dream hill
+            if id == 34:  # dream hill
                 final_write[3] = final_write[3] + 32
-            if id == 35: #alpine praradise
+            if id == 35:  # alpine praradise
                 final_write[3] = final_write[3] + 64
-            if id == 56: #whirlwind
+            if id == 56:  # whirlwind
                 sent_shields[0] = 1
-            if id == 57: #armageddon
+            if id == 57:  # armageddon
                 sent_shields[1] = 1
-            if id == 58: #elemental
+            if id == 58:  # elemental
                 sent_shields[2] = 1
-            if id == 59: #attraction
+            if id == 59:  # attraction
                 sent_shields[3] = 1
-            if id == 60: #force
+            if id == 60:  # force
                 sent_shields[4] = 1
-            if id == 61: #flame
+            if id == 61:  # flame
                 sent_shields[5] = 1
-            if id == 62: #bubble
+            if id == 62:  # bubble
                 sent_shields[6] = 1
-            if id == 56: #lightning
+            if id == 56:  # lightning
                 sent_shields[7] = 1
             locs_received.append(id)
         if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems) and 17 not in locs_received:
             locs_received.append(17)
             final_write[0] = final_write[0] + 128
-         #this would be so much better if i made a list of everything and then wrote it to the file all at once
+        # this would be so much better if i made a list of everything and then wrote it to the file all at once
         f.seek(0x14)
         f.write(emblemhints.to_bytes(1, byteorder="little"))  # this sucks
-        if emeralds>7: #just in case someone cheats in more emeralds
+        if emeralds > 7:  # just in case someone cheats in more emeralds
             emeralds = 7
         f.seek(0x0F)
         if emeralds == 0:
-            f.write(0x00.to_bytes(2,byteorder="little")) #this sucks
+            f.write(0x00.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 1:
-            f.write(0x01.to_bytes(2,byteorder="little")) #this sucks
+            f.write(0x01.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 2:
-            f.write(0x03.to_bytes(2,byteorder="little")) #this sucks
+            f.write(0x03.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 3:
-            f.write(0x07.to_bytes(2,byteorder="little")) #this sucks
+            f.write(0x07.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 4:
-            f.write(0x0F.to_bytes(2,byteorder="little")) #this sucks
+            f.write(0x0F.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 5:
-            f.write(0x1F.to_bytes(2,byteorder="little")) #this sucks
+            f.write(0x1F.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 6:
             f.write(0x3F.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 7:
@@ -1387,11 +1416,11 @@ async def item_handler(ctx,file_path):
             if final_write[i] > 255:
                 final_write[i] = 255
         f.seek(0x0B)
-        f.write(bytes(final_write))#TODO change to only write on startup, file close, or new item received
+        f.write(bytes(final_write))  # TODO change to only write on startup, file close, or new item received
         f.seek(0x15)
-        f.write(emblems.to_bytes(1,byteorder="little"))
+        f.write(emblems.to_bytes(1, byteorder="little"))
         f.seek(0x16)
-        f.write(ctx.bcz_emblems.to_bytes(1,byteorder="little"))
+        f.write(ctx.bcz_emblems.to_bytes(1, byteorder="little"))
         f.seek(0x17)
         f.write(startrings.to_bytes(1, byteorder="little"))
 
@@ -1403,100 +1432,105 @@ async def item_handler(ctx,file_path):
         except:
             print("save file 1 not found, create it to more easily return to the multiworld hub")
 
-        #todo handle deathlink traps and 1ups
+        # todo handle deathlink traps and 1ups
         f.seek(0x01)
         is_dead = int.from_bytes(f.read(1), 'little')
         if ctx.death_link == True:
-            if ctx.death_link_lockout+4<=time.time():
+            if ctx.death_link_lockout + 4 <= time.time():
 
-                if ctx.last_death_link+3.5>= time.time():#if a deathlink happened less than 2 seconds ago, kill yourself
-                    f.seek(0x00)#received deathlink
-                    f.write(0x01.to_bytes(1,byteorder="little"))
+                if ctx.last_death_link + 3.5 >= time.time():  # if a deathlink happened less than 2 seconds ago, kill yourself
+                    f.seek(0x00)  # received deathlink
+                    f.write(0x01.to_bytes(1, byteorder="little"))
                     ctx.death_link_lockout = time.time()
                     print("kill yourself")
 
-                if is_dead!=0: #outgoing deathlink
+                if is_dead != 0:  # outgoing deathlink
                     f.seek(0x01)
                     f.write(0x00.to_bytes(1, byteorder="little"))
-                    messages = ["Egg Rock Zone was too hard for "+ctx.player_names[ctx.slot]]
+                    messages = ["Egg Rock Zone was too hard for " + ctx.player_names[ctx.slot]]
 
                     await ctx.send_death("Egg Rock Zone was too hard for SRB2 Player")
                     ctx.death_link_lockout = time.time()
                     print("killed myself")
             else:
-                #write 0s to both slots if conditions havent been met
+                # write 0s to both slots if conditions havent been met
                 f.seek(0x01)
                 f.write(0x00.to_bytes(1, byteorder="little"))
-        #print("wrote new file data")
+        # print("wrote new file data")
         await asyncio.sleep(1)
 
 
-async def file_watcher(ctx,file_path):
+async def file_watcher(ctx, file_path):
     locs_to_send = set()
     num_sent = 0
     locs_sent = set()
-    file_path2 = file_path+"/apgamedat.dat"
+    file_path2 = file_path + "/apgamedat.dat"
 
     while ctx.total_locations is None:
         await asyncio.sleep(1)
         continue
 
     await ctx.send_msgs([{"cmd": "ConnectUpdate", "tags": ctx.tags}])
-    #wait to connect
-    try:# once connected verify apgamedat exists
+    # wait to connect
+
+
+
+    try:  # once connected verify apgamedat exists
+
         if not os.path.isfile(file_path2):
-            raise FileNotFoundError #stupid code
+            raise FileNotFoundError  # stupid code
         f = open(file_path2, 'r+b')
-        checkma = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]#1 extra value because ??????????
-        levelclears = [0,0,0,0,0,0]
+        checkma = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0]  # 1 extra value because ??????????
+        levelclears = [0, 0, 0, 0, 0, 0]
         for i in ctx.checked_locations:
-            if i >197 and i<240:
-                x = i -198
+            if i > 197 and i < 240:
+                x = i - 198
                 r1 = math.floor(x / 8)
                 r2 = x % 8
                 if r2 == 0:
-                    levelclears[r1]+=1
+                    levelclears[r1] += 1
                 if r2 == 1:
-                    levelclears[r1]+=2
+                    levelclears[r1] += 2
                 if r2 == 2:
-                    levelclears[r1]+=4
+                    levelclears[r1] += 4
                 if r2 == 3:
-                    levelclears[r1]+=8
+                    levelclears[r1] += 8
                 if r2 == 4:
-                    levelclears[r1]+=16
+                    levelclears[r1] += 16
                 if r2 == 5:
-                    levelclears[r1]+=32
+                    levelclears[r1] += 32
                 if r2 == 6:
-                    levelclears[r1]+=64
+                    levelclears[r1] += 64
                 if r2 == 7:
-                    levelclears[r1]+=128
-            if i <198:
-                i=i-1
-                r1 = math.floor(i/8)
+                    levelclears[r1] += 128
+            if i < 198:
+                i = i - 1
+                r1 = math.floor(i / 8)
                 r2 = i % 8
 
-                #divide then floor to get byte number
-                #modulo to get byte value to set
+                # divide then floor to get byte number
+                # modulo to get byte value to set
                 if r2 == 0:
-                    checkma[r1]+=1
+                    checkma[r1] += 1
                 if r2 == 1:
-                    checkma[r1]+=2
+                    checkma[r1] += 2
                 if r2 == 2:
-                    checkma[r1]+=4
+                    checkma[r1] += 4
                 if r2 == 3:
-                    checkma[r1]+=8
+                    checkma[r1] += 8
                 if r2 == 4:
-                    checkma[r1]+=16
+                    checkma[r1] += 16
                 if r2 == 5:
-                    checkma[r1]+=32
+                    checkma[r1] += 32
                 if r2 == 6:
-                    checkma[r1]+=64
+                    checkma[r1] += 64
                 if r2 == 7:
-                    checkma[r1]+=128
+                    checkma[r1] += 128
         f.seek(0x10)
-        f.write(0x00.to_bytes(16*61,byteorder="little"))
+        f.write(0x00.to_bytes(16 * 61, byteorder="little"))
         f.seek(0x450)
-        f.write(0x00.to_bytes(0x1000,byteorder="little"))
+        f.write(0x00.to_bytes(0x1000, byteorder="little"))
         f.seek(0x417)
         f.write(bytes(checkma))
         f.seek(0x457)
@@ -1511,18 +1545,19 @@ async def file_watcher(ctx,file_path):
     except PermissionError:
         print("could not overwrite old save data (lack of permission). Try closing the file in HXD you dumbass")
 
-    cfg = open(file_path+"/AUTOEXEC.CFG","w")
-    cfg.write("addfile addons/ArchipelagoSRB2.pk3")
+    cfg = open(file_path + "/AUTOEXEC.CFG", "w")
+    cfg.write("addfile addons/SL_ArchipelagoSRB2_v110.pk3")
     cfg.close()
     os.chdir(file_path)
     try:
         os.startfile("srb2win.exe")
         await asyncio.sleep(10)
     except:
-        logger.info('Could not open srb2win.exe. If you are using Linux, you must open the game and load the addon manually')
-    #look into subprocess.Popen, if used correctly, i might be able to acess srb2's console output for commands and
+        logger.info(
+            'Could not open srb2win.exe. If you are using Linux, you must open the game and load the addon manually')
+    # look into subprocess.Popen, if used correctly, i might be able to acess srb2's console output for commands and
     # use COM_BufInsertText(server, "command") to type in console
-    #recieved notifications
+    # recieved notifications
 
     cfg = open(file_path + "/AUTOEXEC.CFG", "w")
     cfg.write("")
@@ -1534,65 +1569,65 @@ async def file_watcher(ctx,file_path):
     # launch srb2
     # clear AUTOEXEC.CFG so people dont get confused when they cant uninstall the ap mod
     while not os.path.isfile(file_path2):
-        await asyncio.sleep(1) # wait for srb2 to make new apgamedat if it doesnt exist
+        await asyncio.sleep(1)  # wait for srb2 to make new apgamedat if it doesnt exist
     previous = os.stat(file_path2).st_mtime
-    token_numbers = ["1111149056392167424","1205520896132120576",
-"2429916160140509184",
-"2-134217728-658505728",
-"2-360185856-495452160",
-"4979369984-525336576",
-"41241513984-335544320",
-"554525952-457179136",
-"5-1048576000-398458880",
-"741313894458720256",
-"7763363328442499072",
-"7125829120645922816",
-"7838860800929038336",
-"767528294458720256",
-"81522532352-880803840",
-"8964689920541065216",
-"8635437056-434110464",
-"8579862528461373440",
-"1016777216-880803840",
-"10352321536-434110464",
-"10752877568264241152",
-"11-587202560-1132462080",
-"11362807296-650117120",
-"11-318767104-1040187392",
-"11-738197504-213909504",
-"11452984832115343360",
-"13-263192576-510132224",
-"13-805306368-415236096",
-"13184549376-75497472",
-"148388608-1247805440",
-"14514850816-429391872",
-"14589299712-1384120320",
-"161562378240243269632",
-"16232783872557842432",
-"163019898881172307968",
-"16-158007296-949813248",
-"22312475648-427819008",
-"22-878706688-677380096",
-"2325165824633339904",
-"23664797184679477248",
-"23-742391808266338304",
-"33-1742733312-1530920960",
-"33-662700032-1296039936",
-"33-585629696-1988624384",
-"331482686464-1557135360",
-"331577058304-1828716544",
-"331665138688-243269632",
-"331694498816-494927872",
-"331811939328754974720",
-"331728053248436207616",
-"3316714301441484783616",
-"411069547520-618659840",
-"41-576716800-681574400",
-"41-576716800-694157312",
-"41-589299712-694157312",
-"41-589299712-681574400",
-"411614807041367343104"
-]
+    token_numbers = ["1111149056392167424", "1205520896132120576",
+                     "2429916160140509184",
+                     "2-134217728-658505728",
+                     "2-360185856-495452160",
+                     "4979369984-525336576",
+                     "41241513984-335544320",
+                     "554525952-457179136",
+                     "5-1048576000-398458880",
+                     "741313894458720256",
+                     "7763363328442499072",
+                     "7125829120645922816",
+                     "7838860800929038336",
+                     "767528294458720256",
+                     "81522532352-880803840",
+                     "8964689920541065216",
+                     "8635437056-434110464",
+                     "8579862528461373440",
+                     "1016777216-880803840",
+                     "10352321536-434110464",
+                     "10752877568264241152",
+                     "11-587202560-1132462080",
+                     "11362807296-650117120",
+                     "11-318767104-1040187392",
+                     "11-738197504-213909504",
+                     "11452984832115343360",
+                     "13-263192576-510132224",
+                     "13-805306368-415236096",
+                     "13184549376-75497472",
+                     "148388608-1247805440",
+                     "14514850816-429391872",
+                     "14589299712-1384120320",
+                     "161562378240243269632",
+                     "16232783872557842432",
+                     "163019898881172307968",
+                     "16-158007296-949813248",
+                     "22312475648-427819008",
+                     "22-878706688-677380096",
+                     "2325165824633339904",
+                     "23664797184679477248",
+                     "23-742391808266338304",
+                     "33-1742733312-1530920960",
+                     "33-662700032-1296039936",
+                     "33-585629696-1988624384",
+                     "331482686464-1557135360",
+                     "331577058304-1828716544",
+                     "331665138688-243269632",
+                     "331694498816-494927872",
+                     "331811939328754974720",
+                     "331728053248436207616",
+                     "3316714301441484783616",
+                     "411069547520-618659840",
+                     "41-576716800-681574400",
+                     "41-576716800-694157312",
+                     "41-589299712-694157312",
+                     "41-589299712-681574400",
+                     "411614807041367343104"
+                     ]
     oneupids = ["1:354418688199229440",
                 "1:692060160146800640",
                 "1:77594624381681664",
@@ -1840,16 +1875,15 @@ async def file_watcher(ctx,file_path):
                 "42:-69206016270532608",
                 "42:-1803550721306525696",
                 "42:2390753281696595968"]
-    #todo find a not stupid way of differentiating objects - currently the format is "[Map#][object.z] "
-    #probably do "[Map#][object.x][object.y] " and if theres objects on top of each other i guess i can go fuck myself
+    # todo find a not stupid way of differentiating objects - currently the format is "[Map#][object.z] "
+    # probably do "[Map#][object.x][object.y] " and if theres objects on top of each other i guess i can go fuck myself
 
     while True:
-        #run the console command to get recieved items
+        # run the console command to get recieved items
         try:
             g = open(file_path + "/luafiles/APTokens.txt", 'r+')
             for lines in g:
                 lines = lines.strip()
-                print(lines)
                 if lines is None:
                     break
                 for i in token_numbers:
@@ -1866,43 +1900,39 @@ async def file_watcher(ctx,file_path):
         except FileNotFoundError:
             print("APTokens.txt not found, collect an emerald token to create it")
 
-
-
-
         current = os.stat(file_path2).st_mtime
         if current != previous:
 
             previous = current
             with open(file_path2, 'rb') as f:
-                f.seek(0x417)# start of the emblem save file
-                for i in range(0,0x19):
+                f.seek(0x417)  # start of the emblem save file
+                for i in range(0, 0x19):
                     byte = int.from_bytes(f.read(1), 'little')
-                    #convert each check into corresponding location number
+                    # convert each check into corresponding location number
                     for j in range(8):
                         bit = (byte >> j) & 1
-                        if bit==1:
-                            locs_to_send.add(8*i + j+1)
+                        if bit == 1:
+                            locs_to_send.add(8 * i + j + 1)
                 f.seek(0x457)
                 for i in range(0, 0x5):
                     byte = int.from_bytes(f.read(1), 'little')
                     for j in range(8):
                         bit = (byte >> j) & 1
-                        if bit==1:
-                            locs_to_send.add(197+(8*i + j)+1)
-                            if 197+(8*i + j) == 217 and ctx.goal_type == 0: #bcz3 clear (bad ending)
+                        if bit == 1:
+                            locs_to_send.add(197 + (8 * i + j) + 1)
+                            if 197 + (8 * i + j) == 217 and ctx.goal_type == 0:  # bcz3 clear (bad ending)
                                 ctx.finished_game = True
                                 await ctx.send_msgs([{
                                     "cmd": "StatusUpdate",
                                     "status": ClientStatus.CLIENT_GOAL
                                 }])
 
-                            if 197+(8*i + j) == 237 and ctx.goal_type == 1: #good ending
+                            if 197 + (8 * i + j) == 237 and ctx.goal_type == 1:  # good ending
                                 ctx.finished_game = True
                                 await ctx.send_msgs([{
                                     "cmd": "StatusUpdate",
                                     "status": ClientStatus.CLIENT_GOAL
                                 }])
-
 
             f.close()
             # Compare locs_to_send to locations already sent
@@ -1913,12 +1943,10 @@ async def file_watcher(ctx,file_path):
         await asyncio.sleep(1)
 
 
-
-
-
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
-    #t = threading.Thread(target=file_watcher)
-    #t.daemon = True
-    #t.start()
+    # t = threading.Thread(target=file_watcher)
+    # t.daemon = True
+    # t.start()
     run_as_textclient(*sys.argv[1:])
+ 

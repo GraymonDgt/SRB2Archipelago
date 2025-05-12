@@ -111,82 +111,86 @@ class SRB2World(World):
         return item
 
     def create_items(self):
-        # 1Up Mushrooms
+            # 1Up Mushrooms
 
-        Valid_starts = ["Greenflower Zone", "Techno Hill Zone", "Deep Sea Zone", "Castle Eggman Zone",
-                        "Arid Canyon Zone", "Red Volcano Zone", "Egg Rock Zone"]
-        rand_idx = random.randrange(len(Valid_starts))
+            Valid_starts = ["Greenflower Zone", "Techno Hill Zone", "Deep Sea Zone", "Castle Eggman Zone",
+                            "Arid Canyon Zone", "Red Volcano Zone", "Egg Rock Zone"]
+            rand_idx = random.randrange(len(Valid_starts))
 
-        Starting_zone = Valid_starts[rand_idx]
-        self.multiworld.push_precollected(self.create_item(Starting_zone))
-        slots_to_fill = self.number_of_locations
-        for zone_name in zones_item_data_table.keys():
-            if zone_name == Starting_zone:
-                continue
-            if zone_name == "Black Core Zone" and self.options.bcz_emblems > 0:
-                self.multiworld.itempool += [self.create_item("1UP")] #replace bcz with a 1up to match item numbers
-                continue
-            slots_to_fill-=1
-            self.multiworld.itempool += [self.create_item(zone_name)]#and != starting_zone
-        #not concise because I need to keep track of slots_to_fill
-        for char_name in character_item_data_table.keys():
-            self.multiworld.itempool += [self.create_item(char_name)]
-            slots_to_fill -=1
-        for shield in other_item_table.keys():
-            self.multiworld.itempool += [self.create_item(shield)]
-            slots_to_fill -=1
+            Starting_zone = Valid_starts[rand_idx]
+            self.multiworld.push_precollected(self.create_item(Starting_zone))
+            slots_to_fill = self.number_of_locations
+            for zone_name in zones_item_data_table.keys():
+                if zone_name == Starting_zone:
+                    continue
+                if zone_name == "Black Core Zone" and self.options.bcz_emblems > 0:
+                    self.multiworld.itempool += [self.create_item("1UP")] #replace bcz with a 1up to match item numbers
+                    continue
+                slots_to_fill-=1
+                self.multiworld.itempool += [self.create_item(zone_name)]#and != starting_zone
+            #not concise because I need to keep track of slots_to_fill
+            for char_name in character_item_data_table.keys():
+                self.multiworld.itempool += [self.create_item(char_name)]
+                slots_to_fill -=1
+            for shield in other_item_table.keys():
+                self.multiworld.itempool += [self.create_item(shield)]
+                slots_to_fill -=1
 
-        self.multiworld.itempool += [self.create_item("Chaos Emerald") for i in range(7)]
-        slots_to_fill -= 7
+            self.multiworld.itempool += [self.create_item("Chaos Emerald") for i in range(7)]
+            slots_to_fill -= 7
 
-        if self.options.radar_start:
-            self.multiworld.push_precollected(self.create_item("Progressive Emblem Hint"))
-            self.multiworld.push_precollected(self.create_item("Progressive Emblem Hint"))
-        else:
-            self.multiworld.itempool += [self.create_item("Progressive Emblem Hint")]
-            self.multiworld.itempool += [self.create_item("Progressive Emblem Hint")]
-            slots_to_fill -= 2
+            if self.options.radar_start:
+                self.multiworld.push_precollected(self.create_item("Progressive Emblem Hint"))
+                self.multiworld.push_precollected(self.create_item("Progressive Emblem Hint"))
+            else:
+                self.multiworld.itempool += [self.create_item("Progressive Emblem Hint")]
+                self.multiworld.itempool += [self.create_item("Progressive Emblem Hint")]
+                slots_to_fill -= 2
 
-        self.multiworld.itempool += [self.create_item("+5 Starting Rings") for i in range(4)]
-        slots_to_fill -= 4
-
-
-        target_emblems = self.options.num_emblems
-
-        if target_emblems > slots_to_fill:
-            target_emblems = slots_to_fill
-
-        for i in range(0,target_emblems):
-            self.multiworld.itempool += [self.create_item("Emblem")]
-            slots_to_fill -=1
+            self.multiworld.itempool += [self.create_item("+5 Starting Rings") for i in range(4)]
+            slots_to_fill -= 4
 
 
-        self.options.bcz_emblems.value = round(target_emblems * (self.options.bcz_emblems.value/100))
+            target_emblems = self.options.num_emblems
 
-        if slots_to_fill!= 0:
+            if target_emblems > slots_to_fill:
+                target_emblems = slots_to_fill
 
-            spread = int(slots_to_fill/15)
-            print(spread)
-            if spread != 0:
-                self.multiworld.itempool += [self.create_item("Forced Pity Shield") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Forced Gravity Boots") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Dropped Inputs") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Replay Tutorial") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Ring Loss") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("& Knuckles") for i in range(spread)]#non functional
-                self.multiworld.itempool += [self.create_item("1UP") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("50 Rings") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("20 Rings") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("10 Rings") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Slippery Floors") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("1000 Points") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Sonic Forces") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Temporary Invincibility") for i in range(spread)]
-                self.multiworld.itempool += [self.create_item("Temporary Super Sneakers") for i in range(spread)]
+            for i in range(0,target_emblems):
+                self.multiworld.itempool += [self.create_item("Emblem")]
+                slots_to_fill -=1
 
-            slots_to_fill = slots_to_fill % 15
-            if slots_to_fill > 0:
-                self.multiworld.itempool += [self.create_item("1UP") for i in range(slots_to_fill)]
+
+            self.options.bcz_emblems.value = round(target_emblems * (self.options.bcz_emblems.value/100))
+
+            if slots_to_fill != 0:
+                self.multiworld.itempool += [self.create_item("Sound Test")]
+                slots_to_fill -= 1
+
+            if slots_to_fill!= 0:
+
+                spread = int(slots_to_fill/15)
+                print(spread)
+                if spread != 0:
+                    self.multiworld.itempool += [self.create_item("Forced Pity Shield") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Forced Gravity Boots") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Dropped Inputs") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Replay Tutorial") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Ring Loss") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("& Knuckles") for i in range(spread)]#non functional
+                    self.multiworld.itempool += [self.create_item("1UP") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("50 Rings") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("20 Rings") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("10 Rings") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Slippery Floors") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("1000 Points") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Sonic Forces") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Temporary Invincibility") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Temporary Super Sneakers") for i in range(spread)]
+
+                slots_to_fill = slots_to_fill % 15
+                if slots_to_fill > 0:
+                    self.multiworld.itempool += [self.create_item("1UP") for i in range(slots_to_fill)]
 
     def generate_basic(self): #use to force items in a specific location
         return

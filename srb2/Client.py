@@ -535,7 +535,7 @@ class CommonContext:
             # send copy to UI
             self.ui.print_json(copy.deepcopy(args["data"]))
             print(args["data"])
-            self.texttransfer = (copy.deepcopy(args["data"]))
+            self.texttransfer.append(copy.deepcopy(args["data"]))
         logging.getLogger("FileLog").info(self.rawjsontotextparser(copy.deepcopy(args["data"])),
                                           extra={"NoStream": True})
         logging.getLogger("StreamLog").info(self.jsontotextparser(copy.deepcopy(args["data"])),
@@ -1213,20 +1213,38 @@ async def item_handler(ctx, file_path):
 
 
         if len(ctx.texttransfer) > 0:
-            h = open(file_path + "/luafiles/APTextTransfer.txt", 'w+')
-            for strings in ctx.texttransfer:
-#TODO implement colors here
-                try:
-                    type = strings["type"]
-                    if type == "player_id":
-                        h.write(ctx.slot_info[int(strings["text"])].name)
-                    elif type == "item_id":
-                        h.write(ctx.item_names.lookup_in_game(int(strings["text"]), ctx.slot_info[int(strings["player"])].game))#int(strings["player"])))
-                    elif type == "location_id":
-                        h.write(ctx.location_names.lookup_in_slot(int(strings["text"]), int(strings["player"])))
-                except KeyError:
-                    h.write(strings["text"])
+            h = open(file_path + "/luafiles/APTextTransfer.txt", 'w+b')#i love character 81 not fucking existing so i cant use the python string stuf :))))))
+            for jsons in ctx.texttransfer:
+                for strings in jsons:
+                    try:
+                        type = strings["type"]
+                        if type == "player_id":
+                            if int(strings["text"]) == ctx.slot:
+                                h.write(0x81.to_bytes(1, byteorder="little"))
+                            else:
+                                h.write(0x82.to_bytes(1, byteorder="little"))
+                            h.write((ctx.slot_info[int(strings["text"])].name).encode("ascii"))
+                        elif type == "item_id":
+                            if int(strings["flags"])==0:#filler
+                                h.write(0x88.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==1:#important
+                                h.write(0x89.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==2:#useful
+                                h.write(0x84.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==3:#no clue
+                                h.write(0x8F.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==4:#trap
+                                h.write(0x87.to_bytes(1, byteorder="little"))
+                            h.write((ctx.item_names.lookup_in_game(int(strings["text"]), ctx.slot_info[int(strings["player"])].game)).encode("ascii"))#int(strings["player"])))
 
+                        elif type == "location_id":
+                            h.write(0x83.to_bytes(1, byteorder="little"))
+                            h.write((ctx.location_names.lookup_in_slot(int(strings["text"]), int(strings["player"]))).encode("ascii"))
+
+                    except KeyError:
+                        h.write(0x80.to_bytes(1, byteorder="little"))
+                        h.write((strings["text"].encode("ascii"))) #stupid
+                h.write(0x0A.to_bytes(1, byteorder="little"))
             ctx.texttransfer = []
             f.seek(0x18)
             f.write(0x01.to_bytes(1, byteorder="little"))#let srb2 know to read the texttransfer file
@@ -1240,6 +1258,7 @@ async def item_handler(ctx, file_path):
         emblemhints = 0
         emblems = 0
         startrings = 0
+        soundtest = 0
         f.seek(0x12)
         num_traps = int.from_bytes(f.read(2), 'little')
 
@@ -1259,6 +1278,8 @@ async def item_handler(ctx, file_path):
                 continue
             if id == 3:
                 emblemhints += 1
+            if id == 80:
+                soundtest = 1
             if id == 74:
                 startrings += 1
             if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79:
@@ -1370,7 +1391,18 @@ async def item_handler(ctx, file_path):
             if id == 56:  # whirlwind
                 sent_shields[0] = 1
             if id == 57:  # armageddon
-                sent_shields[1] = 1
+                sent_shields[1] = sent_shields[1]+1
+            if id == 100: #paraloop
+                sent_shields[1] = sent_shields[1] + 2
+            if id == 101: #night helper
+                sent_shields[1] = sent_shields[1] + 4
+            if id == 102: #link freeze
+                sent_shields[1] = sent_shields[1] + 8
+            if id == 103: #extra time
+                sent_shields[1] = sent_shields[1] + 16
+            if id == 104: #drill refill
+                sent_shields[1] = sent_shields[1] + 32
+
             if id == 58:  # elemental
                 sent_shields[2] = 1
             if id == 59:  # attraction
@@ -1383,16 +1415,23 @@ async def item_handler(ctx, file_path):
                 sent_shields[6] = 1
             if id == 56:  # lightning
                 sent_shields[7] = 1
+
+
             locs_received.append(id)
         if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems) and 17 not in locs_received:
             locs_received.append(17)
             final_write[0] = final_write[0] + 128
         # this would be so much better if i made a list of everything and then wrote it to the file all at once
         f.seek(0x14)
+        if emblemhints >= 2:
+            emblemhints = 3 #bits 1 and 2 set
+        if soundtest!= 0:
+            emblemhints += 4 #sound test bullshit
         f.write(emblemhints.to_bytes(1, byteorder="little"))  # this sucks
-        if emeralds > 7:  # just in case someone cheats in more emeralds
+        if emeralds > 7:
             emeralds = 7
         f.seek(0x0F)
+
         if emeralds == 0:
             f.write(0x00.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 1:
@@ -1409,6 +1448,7 @@ async def item_handler(ctx, file_path):
             f.write(0x3F.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 7:
             f.write(0x7F.to_bytes(2, byteorder="little"))  # this sucks
+
 
         f.seek(0x03)
         f.write(bytes(sent_shields))
@@ -1481,30 +1521,9 @@ async def file_watcher(ctx, file_path):
             raise FileNotFoundError  # stupid code
         f = open(file_path2, 'r+b')
         checkma = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0]  # 1 extra value because ??????????
-        levelclears = [0, 0, 0, 0, 0, 0]
+                   0,0,0,0,0,0]
         for i in ctx.checked_locations:
-            if i > 197 and i < 240:
-                x = i - 198
-                r1 = math.floor(x / 8)
-                r2 = x % 8
-                if r2 == 0:
-                    levelclears[r1] += 1
-                if r2 == 1:
-                    levelclears[r1] += 2
-                if r2 == 2:
-                    levelclears[r1] += 4
-                if r2 == 3:
-                    levelclears[r1] += 8
-                if r2 == 4:
-                    levelclears[r1] += 16
-                if r2 == 5:
-                    levelclears[r1] += 32
-                if r2 == 6:
-                    levelclears[r1] += 64
-                if r2 == 7:
-                    levelclears[r1] += 128
-            if i < 198:
+            if i < 240:
                 i = i - 1
                 r1 = math.floor(i / 8)
                 r2 = i % 8
@@ -1533,10 +1552,7 @@ async def file_watcher(ctx, file_path):
         f.write(0x00.to_bytes(0x1000, byteorder="little"))
         f.seek(0x417)
         f.write(bytes(checkma))
-        f.seek(0x457)
-        f.write(bytes(levelclears))
-        f.seek(0x467)
-        f.write(bytes(levelclears))
+
 
         f.close()
     except FileNotFoundError:
@@ -1546,7 +1562,7 @@ async def file_watcher(ctx, file_path):
         print("could not overwrite old save data (lack of permission). Try closing the file in HXD you dumbass")
 
     cfg = open(file_path + "/AUTOEXEC.CFG", "w")
-    cfg.write("addfile addons/SL_ArchipelagoSRB2_v110.pk3")
+    cfg.write("addfile addons/SL_ArchipelagoSRB2_v120.pk3")
     cfg.close()
     os.chdir(file_path)
     try:
@@ -1906,33 +1922,30 @@ async def file_watcher(ctx, file_path):
             previous = current
             with open(file_path2, 'rb') as f:
                 f.seek(0x417)  # start of the emblem save file
-                for i in range(0, 0x19):
+                for i in range(0, 0x1E):
                     byte = int.from_bytes(f.read(1), 'little')
                     # convert each check into corresponding location number
                     for j in range(8):
                         bit = (byte >> j) & 1
                         if bit == 1:
                             locs_to_send.add(8 * i + j + 1)
-                f.seek(0x457)
-                for i in range(0, 0x5):
-                    byte = int.from_bytes(f.read(1), 'little')
-                    for j in range(8):
-                        bit = (byte >> j) & 1
-                        if bit == 1:
-                            locs_to_send.add(197 + (8 * i + j) + 1)
-                            if 197 + (8 * i + j) == 217 and ctx.goal_type == 0:  # bcz3 clear (bad ending)
+                            if (8 * i + j + 1) == 128 and ctx.goal_type == 0:
                                 ctx.finished_game = True
                                 await ctx.send_msgs([{
                                     "cmd": "StatusUpdate",
                                     "status": ClientStatus.CLIENT_GOAL
                                 }])
 
-                            if 197 + (8 * i + j) == 237 and ctx.goal_type == 1:  # good ending
-                                ctx.finished_game = True
-                                await ctx.send_msgs([{
-                                    "cmd": "StatusUpdate",
-                                    "status": ClientStatus.CLIENT_GOAL
-                                }])
+                f.seek(0x457)
+                byte = int.from_bytes(f.read(1), 'little')
+                if byte != 0 and ctx.goal_type == 1:
+                    ctx.finished_game = True
+                    locs_to_send.add(238)
+                    await ctx.send_msgs([{
+                        "cmd": "StatusUpdate",
+                        "status": ClientStatus.CLIENT_GOAL
+                    }])
+
 
             f.close()
             # Compare locs_to_send to locations already sent
@@ -1949,4 +1962,3 @@ if __name__ == '__main__':
     # t.daemon = True
     # t.start()
     run_as_textclient(*sys.argv[1:])
- 

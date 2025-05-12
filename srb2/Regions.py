@@ -33,10 +33,27 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regCredits = create_region("Credits", player, world)
     create_locs(regCredits,"Good Ending")
 
+    regATZC = create_region("Azure Temple Club", player, world)
+    create_locs(regATZC, "Azure Temple Club Emblem")
+    if options.oneup_sanity:
+        create_locs(regATZC,"Azure Temple Monitor - x:-4192 y:21344",
+        "Azure Temple Monitor - x:-4192 y:21280",
+        "Azure Temple Monitor - x:-4192 y:21408")
+
+    if options.oneup_sanity:
+        regDSFD = create_region("Deep Sea Fast Door", player, world)
+        create_locs(regDSFD, "Deep Sea (Act 1) Monitor - x:3104 y:15520","Deep Sea (Act 1) Monitor - x:3296 y:15520")
+
+
+
+
+
+
+
     regGFZ = create_region("Greenflower Zone", player, world)
     create_locs(regGFZ, "Greenflower (Act 1) Star Emblem", "Greenflower (Act 1) Spade Emblem","Greenflower (Act 1) Heart Emblem", "Greenflower (Act 1) Diamond Emblem",
                         "Greenflower (Act 1) Club Emblem","Greenflower (Act 2) Star Emblem", "Greenflower (Act 2) Spade Emblem","Greenflower (Act 2) Heart Emblem", "Greenflower (Act 2) Diamond Emblem",
-                        "Greenflower (Act 2) Club Emblem","Greenflower Act 1 Clear","Greenflower Act 2 Clear","Greenflower Act 3 Clear","Greenflower (Act 1) Emerald Token - Breakable Wall Near Bridge",
+                        "Greenflower (Act 2) Club Emblem","Greenflower (Act 1) Clear","Greenflower (Act 2) Clear","Greenflower (Act 3) Clear","Greenflower (Act 1) Emerald Token - Breakable Wall Near Bridge",
                 "Greenflower (Act 1) Emerald Token - Midair Top Path","Greenflower (Act 2) Emerald Token - Main Path Cave","Greenflower (Act 2) Emerald Token - Under Bridge Near End",
                 "Greenflower (Act 2) Emerald Token - No Spin High on Ledge")
     if options.time_emblems:
@@ -53,7 +70,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regTHZ = create_region("Techno Hill Zone", player, world)
     create_locs(regTHZ, "Techno Hill (Act 1) Star Emblem", "Techno Hill (Act 1) Spade Emblem","Techno Hill (Act 1) Heart Emblem", "Techno Hill (Act 1) Diamond Emblem",
                         "Techno Hill (Act 1) Club Emblem","Techno Hill (Act 2) Star Emblem", "Techno Hill (Act 2) Spade Emblem","Techno Hill (Act 2) Heart Emblem", "Techno Hill (Act 2) Diamond Emblem",
-                        "Techno Hill (Act 2) Club Emblem","Techno Hill Act 1 Clear","Techno Hill Act 2 Clear","Techno Hill Act 3 Clear","Techno Hill (Act 1) Emerald Token - On Pipes",
+                        "Techno Hill (Act 2) Club Emblem","Techno Hill (Act 1) Clear","Techno Hill (Act 2) Clear","Techno Hill (Act 3) Clear","Techno Hill (Act 1) Emerald Token - On Pipes",
                 "Techno Hill (Act 1) Emerald Token - Alt Path Under Slime","Techno Hill (Act 2) Emerald Token - Deep in Slime","Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack as Amy")
     if options.time_emblems:
         create_locs(regTHZ, "Techno Hill (Act 1) Time Emblem","Techno Hill (Act 2) Time Emblem","Techno Hill (Act 3) Time Emblem")
@@ -72,7 +89,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regDSZ = create_region("Deep Sea Zone", player, world)
     create_locs(regDSZ, "Deep Sea (Act 1) Star Emblem", "Deep Sea (Act 1) Spade Emblem","Deep Sea (Act 1) Heart Emblem", "Deep Sea (Act 1) Diamond Emblem",
                         "Deep Sea (Act 1) Club Emblem","Deep Sea (Act 2) Star Emblem", "Deep Sea (Act 2) Spade Emblem","Deep Sea (Act 2) Heart Emblem", "Deep Sea (Act 2) Diamond Emblem",
-                        "Deep Sea (Act 2) Club Emblem","Deep Sea Act 1 Clear","Deep Sea Act 2 Clear","Deep Sea Act 3 Clear","Deep Sea (Act 1) Emerald Token - V on Right Path",
+                        "Deep Sea (Act 2) Club Emblem","Deep Sea (Act 1) Clear","Deep Sea (Act 2) Clear","Deep Sea (Act 3) Clear","Deep Sea (Act 1) Emerald Token - V on Right Path",
                 "Deep Sea (Act 1) Emerald Token - Underwater Air Pocket on Right Path","Deep Sea (Act 1) Emerald Token - Yellow Doors",
     "Deep Sea (Act 1) Emerald Token - Large Underwater Curve", "Deep Sea (Act 1) Emerald Token - Waterslide Gargoyles", "Deep Sea (Act 2) Emerald Token - Near Heart Emblem",
     "Deep Sea (Act 2) Emerald Token - Red and Yellow Springs", "Deep Sea (Act 2) Emerald Token - Down Right From Goal", "Deep Sea (Act 2) Emerald Token - No Spin Spring Turnaround")
@@ -84,8 +101,8 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         create_locs(regDSZ, "Deep Sea (Act 3) Score Emblem")
     if options.oneup_sanity:
         create_locs(regDSZ,"Deep Sea (Act 1) Monitor - x:3008 y:3392","Deep Sea (Act 1) Monitor - x:2944 y:5248","Deep Sea (Act 1) Monitor - x:11008 y:5696","Deep Sea (Act 1) Monitor - x:8640 y:3168","Deep Sea (Act 1) Monitor - x:9920 y:896",
-    "Deep Sea (Act 1) Monitor - x:2048 y:720","Deep Sea (Act 1) Monitor - x:15616 y:896","Deep Sea (Act 1) Monitor - x:-3296 y:6784","Deep Sea (Act 1) Monitor - x:5088 y:11872","Deep Sea (Act 1) Monitor - x:10880 y:5568","Deep Sea (Act 1) Monitor - x:20000 y:15136","Deep Sea (Act 1) Monitor - x:320 y:4544","Deep Sea (Act 1) Monitor - x:3104 y:15520",
-    "Deep Sea (Act 1) Monitor - x:3296 y:15520","Deep Sea (Act 1) Monitor - x:17584 y:-5544","Deep Sea (Act 1) Monitor - x:17792 y:12160","Deep Sea (Act 1) Monitor - x:64 y:12224","Deep Sea (Act 1) Monitor - x:13952 y:-2112","Deep Sea (Act 1) Monitor - x:10304 y:-736",
+    "Deep Sea (Act 1) Monitor - x:2048 y:720","Deep Sea (Act 1) Monitor - x:15616 y:896","Deep Sea (Act 1) Monitor - x:-3296 y:6784","Deep Sea (Act 1) Monitor - x:5088 y:11872","Deep Sea (Act 1) Monitor - x:10880 y:5568","Deep Sea (Act 1) Monitor - x:20000 y:15136","Deep Sea (Act 1) Monitor - x:320 y:4544",
+    "Deep Sea (Act 1) Monitor - x:17584 y:-5544","Deep Sea (Act 1) Monitor - x:17792 y:12160","Deep Sea (Act 1) Monitor - x:64 y:12224","Deep Sea (Act 1) Monitor - x:13952 y:-2112","Deep Sea (Act 1) Monitor - x:10304 y:-736",
     "Deep Sea (Act 2) Monitor - x:15104 y:6128","Deep Sea (Act 2) Monitor - x:26848 y:11584","Deep Sea (Act 2) Monitor - x:15104 y:6032","Deep Sea (Act 2) Monitor - x:19264 y:-5888","Deep Sea (Act 2) Monitor - x:19072 y:-10816","Deep Sea (Act 2) Monitor - x:9696 y:-3328",
     "Deep Sea (Act 2) Monitor - x:8672 y:12960","Deep Sea (Act 2) Monitor - x:15808 y:2816","Deep Sea (Act 2) Monitor - x:25856 y:256","Deep Sea (Act 2) Monitor - x:19008 y:9344","Deep Sea (Act 2) Monitor - x:5776 y:10304","Deep Sea (Act 2) Monitor - x:9568 y:16992",
     "Deep Sea (Act 2) Monitor - x:1952 y:-2192","Deep Sea (Act 2) Monitor - x:1696 y:2592","Deep Sea (Act 2) Monitor - x:15104 y:6080")
@@ -93,7 +110,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regCEZ = create_region("Castle Eggman Zone", player, world)
     create_locs(regCEZ, "Castle Eggman (Act 1) Star Emblem", "Castle Eggman (Act 1) Spade Emblem", "Castle Eggman (Act 1) Heart Emblem", "Castle Eggman (Act 1) Diamond Emblem",
                 "Castle Eggman (Act 1) Club Emblem", "Castle Eggman (Act 2) Star Emblem", "Castle Eggman (Act 2) Spade Emblem", "Castle Eggman (Act 2) Heart Emblem", "Castle Eggman (Act 2) Diamond Emblem",
-                "Castle Eggman (Act 2) Club Emblem","Castle Eggman Act 1 Clear","Castle Eggman Act 2 Clear","Castle Eggman Act 3 Clear","Castle Eggman (Act 1) Emerald Token - Behind Fence Near Start",
+                "Castle Eggman (Act 2) Club Emblem","Castle Eggman (Act 1) Clear","Castle Eggman (Act 2) Clear","Castle Eggman (Act 3) Clear","Castle Eggman (Act 1) Emerald Token - Behind Fence Near Start",
     "Castle Eggman (Act 1) Emerald Token - Spring Side Path","Castle Eggman (Act 1) Emerald Token - Inside Castle","Castle Eggman (Act 2) Emerald Token - First Outside Area","Castle Eggman (Act 2) Emerald Token - Corner of Right Courtyard",
     "Castle Eggman (Act 2) Emerald Token - Window of Back Left Courtyard","Castle Eggman (Act 2) Emerald Token - Spring Near Club Emblem","Castle Eggman (Act 2) Emerald Token - High Ledge Before Final Tower")
     if options.time_emblems:
@@ -113,7 +130,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regACZ = create_region("Arid Canyon Zone", player, world)
     create_locs(regACZ, "Arid Canyon (Act 1) Star Emblem", "Arid Canyon (Act 1) Spade Emblem", "Arid Canyon (Act 1) Heart Emblem", "Arid Canyon (Act 1) Diamond Emblem",
                 "Arid Canyon (Act 1) Club Emblem", "Arid Canyon (Act 2) Star Emblem", "Arid Canyon (Act 2) Spade Emblem", "Arid Canyon (Act 2) Heart Emblem", "Arid Canyon (Act 2) Diamond Emblem",
-                "Arid Canyon (Act 2) Club Emblem","Arid Canyon Act 1 Clear","Arid Canyon Act 2 Clear","Arid Canyon Act 3 Clear","Arid Canyon (Act 1) Emerald Token - Speed Shoes Central Pillar",
+                "Arid Canyon (Act 2) Club Emblem","Arid Canyon (Act 1) Clear","Arid Canyon (Act 2) Clear","Arid Canyon (Act 3) Clear","Arid Canyon (Act 1) Emerald Token - Speed Shoes Central Pillar",
     "Arid Canyon (Act 1) Emerald Token - Behind Pillar Before Exploding Ramp","Arid Canyon (Act 1) Emerald Token - Behind Wall and Spikes","Arid Canyon (Act 2) Emerald Token - Left No Spin Path Minecarts",
     "Arid Canyon (Act 2) Emerald Token - Large Arch Cave Right Ledge","Arid Canyon (Act 2) Emerald Token - Knuckles Dark Path Around Wall")
     if options.time_emblems:
@@ -131,7 +148,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
 
     regRVZ = create_region("Red Volcano Zone", player, world)
     create_locs(regRVZ, "Red Volcano (Act 1) Star Emblem", "Red Volcano (Act 1) Spade Emblem", "Red Volcano (Act 1) Heart Emblem", "Red Volcano (Act 1) Diamond Emblem",
-                "Red Volcano (Act 1) Club Emblem","Red Volcano Act 1 Clear","Red Volcano (Act 1) Emerald Token - First Outside Area","Red Volcano (Act 1) Emerald Token - Hidden Ledge Near 4th Checkpoint",
+                "Red Volcano (Act 1) Club Emblem","Red Volcano (Act 1) Clear","Red Volcano (Act 1) Emerald Token - First Outside Area","Red Volcano (Act 1) Emerald Token - Hidden Ledge Near 4th Checkpoint",
     "Red Volcano (Act 1) Emerald Token - Rollout Rock Lavafall","Red Volcano (Act 1) Emerald Token - Behind Ending Rocket")
     if options.time_emblems:
         create_locs(regRVZ, "Red Volcano (Act 1) Time Emblem")
@@ -144,7 +161,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regERZ = create_region("Egg Rock Zone", player, world)
     create_locs(regERZ, "Egg Rock (Act 1) Star Emblem", "Egg Rock (Act 1) Spade Emblem", "Egg Rock (Act 1) Heart Emblem", "Egg Rock (Act 1) Diamond Emblem",
                 "Egg Rock (Act 1) Club Emblem", "Egg Rock (Act 2) Star Emblem", "Egg Rock (Act 2) Spade Emblem", "Egg Rock (Act 2) Heart Emblem", "Egg Rock (Act 2) Diamond Emblem",
-                "Egg Rock (Act 2) Club Emblem","Egg Rock Act 1 Clear","Egg Rock Act 2 Clear","Egg Rock (Act 1) Emerald Token - Gravity Conveyor Belts",
+                "Egg Rock (Act 2) Club Emblem","Egg Rock (Act 1) Clear","Egg Rock (Act 2) Clear","Egg Rock (Act 1) Emerald Token - Gravity Conveyor Belts",
     "Egg Rock (Act 1) Emerald Token - Moving Platforms","Egg Rock (Act 2) Emerald Token - Outside on Metal Beam","Egg Rock (Act 2) Emerald Token - Skip Gravity Pad",
     "Egg Rock (Act 2) Emerald Token - Disco Room")
     if options.time_emblems:
@@ -159,7 +176,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
 
 
     regBCZ = create_region("Black Core Zone", player, world)
-    create_locs(regBCZ, "Black Core Act 1 Clear","Black Core Act 2 Clear","Black Core Act 3 Clear")
+    create_locs(regBCZ, "Black Core (Act 1) Clear","Black Core (Act 2) Clear","Black Core (Act 3) Clear")
     if options.time_emblems:
         create_locs(regBCZ, "Black Core (Act 1) Time Emblem", "Black Core (Act 2) Time Emblem", "Black Core (Act 3) Time Emblem")
     if options.ring_emblems:
@@ -252,14 +269,14 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
 
     regATZ = create_region("Azure Temple Zone", player, world)
     create_locs(regATZ, "Azure Temple Star Emblem", "Azure Temple Spade Emblem", "Azure Temple Heart Emblem", "Azure Temple Diamond Emblem",
-                "Azure Temple Club Emblem","Azure Temple Clear")
+                "Azure Temple Clear")
     if options.time_emblems:
         create_locs(regATZ, "Azure Temple Time Emblem")
     if options.ring_emblems:
         create_locs(regATZ, "Azure Temple Ring Emblem")
     if options.oneup_sanity:
         create_locs(regATZ,"Azure Temple Monitor - x:1824 y:8608","Azure Temple Monitor - x:-32 y:6688","Azure Temple Monitor - x:1856 y:9952","Azure Temple Monitor - x:512 y:14016","Azure Temple Monitor - x:-2272 y:12864",
-"Azure Temple Monitor - x:-3232 y:14112","Azure Temple Monitor - x:1440 y:14688","Azure Temple Monitor - x:-2528 y:7296","Azure Temple Monitor - x:-2976 y:17888","Azure Temple Monitor - x:-4192 y:21344","Azure Temple Monitor - x:-4192 y:21280","Azure Temple Monitor - x:-4192 y:21408",
+"Azure Temple Monitor - x:-3232 y:14112","Azure Temple Monitor - x:1440 y:14688","Azure Temple Monitor - x:-2528 y:7296","Azure Temple Monitor - x:-2976 y:17888",
 "Azure Temple Monitor - x:-1216 y:22528","Azure Temple Monitor - x:4160 y:12384","Azure Temple Monitor - x:3648 y:25696","Azure Temple Monitor - x:-1056 y:4128","Azure Temple Monitor - x:-2752 y:19936","Azure Temple Monitor - x:3648 y:25888")
         
     regSPFFZ = create_region("Floral Field Zone", player, world)
@@ -283,7 +300,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regSPDHZ = create_region("Dream Hill Zone", player, world)
     create_locs(regSPDHZ, "Dream Hill Sun Emblem", "Dream Hill Moon Emblem","Dream Hill Clear")
     regSPAPZ = create_region("Alpine Paradise Zone", player, world)
-    create_locs(regSPAPZ, "Alpine Paradise (Act 1) Sun Emblem", "Alpine Paradise (Act 1) Moon Emblem","Alpine Paradise Act 1 Clear","Alpine Paradise (Act 2) Sun Emblem", "Alpine Paradise (Act 2) Moon Emblem","Alpine Paradise Act 2 Clear")
+    create_locs(regSPAPZ, "Alpine Paradise (Act 1) Sun Emblem", "Alpine Paradise (Act 1) Moon Emblem","Alpine Paradise (Act 1) Clear","Alpine Paradise (Act 2) Sun Emblem", "Alpine Paradise (Act 2) Moon Emblem","Alpine Paradise (Act 2) Clear")
     
     if options.ntime_emblems:
         create_locs(regSPFFZ, "Floral Field Time Emblem")

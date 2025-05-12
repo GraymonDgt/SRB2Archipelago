@@ -2,13 +2,38 @@ COM_AddCommand("hub", function(player)
 if not isServer and multiplayer then 
 print("You must be the server host to run this command")
 return end
+if gamemap == 1000 then
+print("Nope, you have to complete the tutorial to go back")
+return end
 G_SetCustomExitVars(125, 1)
 G_ExitLevel()
 end)
 
-addHook("MobjSpawn", function(object)
-object.collected = 0
-end,MT_TOKEN)
+--addHook("MobjSpawn", function(object)
+--P_SpawnMobjFromMobj(object,0,0,0,MT_CUSTOMRING_BOX)
+--P_RemoveMobj(object)
+--end,MT_1UP_BOX)
+--removed until i find a way to distribute 3d models in a pk3
+
+local enabledrill = 0
+local enabletime = 0
+
+addHook("PlayerSpawn",function(player)
+player.extrarings = 0
+player.startingrings = 0
+end)
+
+
+addHook("NetVars",function(network)
+for player in players.iterate()
+        if player and player.valid then
+            player.extrarings = network($)
+			player.startingrings = network($)
+        end
+    end
+end)
+
+
 
 
 addHook("TouchSpecial", function(object,toucher)
@@ -17,13 +42,10 @@ object.collected = object.collected +1
 if object.collected >10 then
 P_RemoveMobj(object) end
 return end
-object.collected = 1
-if toucher == players[0].mo then return end
 if not multiplayer then return end
+object.collected = 1
 S_StartSound(toucher.mo, sfx_ncitem)
 P_SetOrigin(object,players[0].mo.x,players[0].mo.y,players[0].mo.z)
-
-
 
 end,MT_EMBLEM)
 
@@ -34,9 +56,20 @@ end
 end)
 
 
+addHook("TouchSpecial", function(object,toucher)
+if not isServer and multiplayer then return false end
+print("herema")
+if enabledrill == 0 then
+P_RemoveMobj(object)
+return false end
+end,MT_NIGHTSDRILLREFILL)
 
-
-
+addHook("TouchSpecial", function(object,toucher)
+if not isServer and multiplayer then return false end
+if enabletime == 0 then
+P_RemoveMobj(object)
+return false end
+end,MT_NIGHTSEXTRATIME)
 
 
 addHook("PlayerThink", function()-- stupid dumb idiot code
@@ -55,7 +88,16 @@ if player.frictiontrap then
 end
 end)
 
-
+addHook("PlayerThink", function()-- stupid dumb idiot code
+for player in players.iterate() do
+if player.extrarings then
+	if player.extrarings>0 then
+		player.rings = $ + player.extrarings
+		player.extrarings = 0
+		end
+	end
+	end
+end)
 
 
 addHook("PlayerThink", function()-- stupid dumb idiot code
@@ -109,6 +151,7 @@ end, MT_1UP_BOX)
 
 
 local function HUDstuff(v)
+
 if not players[0].currentemblems then return end
 local curembl = players[0].currentemblems
 local goalembl = players[0].goalemblems
@@ -177,7 +220,6 @@ addHook("LinedefExecute", beMetal, "BE_METAL")
 
 
 local function readupdates()
-
 if not isserver and multiplayer then return end
 local f = assert(io.openlocal("APTranslator.dat","r+b"))
 
@@ -231,7 +273,7 @@ if bytes[3] != 0 then --traps
 if bytes[3] == 1 then --1up
 for player in players.iterate() do
         if player and player.valid then
-            player.lives = $ + 1  -- Adds 1 extra life
+            player.lives = $ + 1
 	    P_PlayLivesJingle(player)
         end
     end
@@ -256,23 +298,16 @@ for player in players.iterate() do
     end
 end
 if bytes[3] == 4 then --replay tutorial
-	    print("Replay the Tutorial IDIOT")
-		if multiplayer then
-		G_SetCustomExitVars(125, 1)
-        G_ExitLevel()
-		COM_BufInsertText(server, "say Replay Tutorial is currently broken in multiplayer")
-		end
-		
-		if not multiplayer then
+
 	    G_SetCustomExitVars(1000, 1)
         G_ExitLevel()
-		end
+	    print("Replay the Tutorial IDIOT")
+
 end
 if bytes[3] == 5 then --ring drain
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	   player.rings = $ - 100
-	   S_StartSound(player.mo, sfx_oneup)
+	   player.extrarings = -100
         end
     end
 end
@@ -299,16 +334,15 @@ end
 
 if bytes[3] == 8 then --50 rings
 for player in players.iterate() do
-	        player.rings = player.rings + 50
-	    	S_StartSound(player.mo, sfx_kc60)
+	        player.extrarings = 50
     end
 end
 
 if bytes[3] == 9 then --20 rings
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.rings = player.rings + 20
-	    	S_StartSound(player.mo, sfx_kc60)
+	        player.extrarings = 20
+
         end
     end
 end
@@ -316,8 +350,7 @@ end
 if bytes[3] == 10 then --10 rings
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.rings = player.rings + 10
-	    	S_StartSound(player.mo, sfx_kc60)
+	        player.extrarings = 10
         end
     end
 end
@@ -379,13 +412,16 @@ g:seek("set",0)
 local string = g:read()
 while (string != nil) do
 if not multiplayer then print(string)
-else COM_BufInsertText(server, "say "..string) end
+else COM_BufInsertText(players[0], "say "..string)
+end
+
 string = g:read()
  end
 f:seek("set",24)
 f:write("\0")
 f:flush()
     end	
+
 
 players[0].currentemblems = bytes[22]
 players[0].goalemblems = bytes[23]
@@ -401,7 +437,7 @@ for player in players.iterate() do
         end
     end
 end
-if bytes[5] == 0 then --armageddon
+if (bytes[5] & 1) == 0 then --armageddon
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_ARMAGEDDON then
@@ -410,6 +446,43 @@ for player in players.iterate() do
         end
     end
 end
+if (bytes[5] & 2) == 0 then --super paraloop
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+	    if player.powers[pw_nights_superloop] != 0 then
+		player.powers[pw_nights_superloop] = 0
+		end
+        end
+    end
+end
+if (bytes[5] & 4) == 0 then --nightopian helper
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+	    if player.powers[pw_nights_helper] != 0 then
+		player.powers[pw_nights_helper] = 0
+		end
+        end
+    end
+end
+if (bytes[5] & 8) == 0 then --link freeze
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+	    if player.powers[pw_nights_linkfreeze] != 0 then
+		player.powers[pw_nights_linkfreeze] = 0
+		end
+        end
+    end
+end
+if (bytes[5] & 16) != 0 then
+enabletime = 1
+
+end
+if (bytes[5] & 32) != 0 then
+enabledrill = 1
+end
+
+
+
 if bytes[6] == 0 then --elemental
 for player in players.iterate() do
         if player and player.valid and player.mo then
@@ -574,12 +647,17 @@ if gamemap == 125 then
   if (bytes[15] & 64) == 64 then
   P_LinedefExecute(130)
   end
-    if bytes[21]>0 then
+    if (bytes[21] & 1) then
     P_LinedefExecute(41)
     end
-  if bytes[21]>1 then
+  if (bytes[21] & 2) then -- emblemhints
     P_LinedefExecute(42)
     end
+	if (bytes[21] & 4) then--soundtest
+    P_LinedefExecute(43)
+    end
+	
+	
 end
   emeralds = emeralds | bytes[16]
   emeralds = emeralds & bytes[16]

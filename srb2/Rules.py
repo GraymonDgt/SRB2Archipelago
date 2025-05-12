@@ -64,6 +64,20 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
     connect_regions(world, player, "Menu", "Christmas Chime Zone", lambda state: state.has("Christmas Chime Zone", player))
     connect_regions(world, player, "Menu", "Dream Hill Zone", lambda state: state.has("Dream Hill Zone", player))
     connect_regions(world, player, "Menu", "Alpine Paradise Zone", lambda state: state.has("Alpine Paradise Zone", player))
+
+    if options.difficulty == 0:
+        connect_regions(world, player, "Azure Temple Zone", "Azure Temple Club",
+                        lambda state: state.has("Chaos Emerald", player, 7))
+    else:
+        connect_regions(world, player, "Azure Temple Zone", "Azure Temple Club")
+
+    if options.oneup_sanity:
+        if options.difficulty !=2:
+            connect_regions(world, player, "Deep Sea Zone", "Deep Sea Fast Door",
+                        lambda state: state.has("Chaos Emerald", player, 7))
+        else:
+            connect_regions(world, player, "Deep Sea Zone", "Deep Sea Fast Door")
+
     # TODO add emerald token logic and other zones
     if options.difficulty != 2:
         # Greenflower
@@ -124,8 +138,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Deep Sea (Act 1) Heart Emblem", "TAILS | KNUCKLES")
         if options.oneup_sanity:
 
-            rf.assign_rule("Deep Sea (Act 1) Monitor - x:3104 y:15520", "METAL SONIC & EMERALD")
-            rf.assign_rule("Deep Sea (Act 1) Monitor - x:3296 y:15520", "METAL SONIC & EMERALD")
+
             rf.assign_rule("Deep Sea (Act 1) Monitor - x:10304 y:-736", "TAILS | KNUCKLES | FANG | WIND")
             rf.assign_rule("Deep Sea (Act 1) Monitor - x:5088 y:11872", "TAILS | KNUCKLES | METAL SONIC | WIND")
             #"Deep Sea (Act 1) Monitor - x:8640 y:3168" - maybe at least require wind for normal - have to check other emblems if so (Club emblem) (NAH)
@@ -136,7 +149,8 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
                 rf.assign_rule("Deep Sea (Act 1) Monitor - x:11008 y:5696","TAILS | KNUCKLES")  # heart emblem club emblem opened bullshit
                 rf.assign_rule("Deep Sea (Act 1) Monitor - x:10880 y:5568","TAILS | KNUCKLES")  # heart emblem club emblem opened bullshit
                 rf.assign_rule("Deep Sea (Act 2) Monitor - x:9568 y:16992", "TAILS | KNUCKLES | FANG")
-
+                rf.assign_rule("Deep Sea (Act 1) Monitor - x:3104 y:15520", "METAL SONIC")
+                rf.assign_rule("Deep Sea (Act 1) Monitor - x:3296 y:15520","METAL SONIC")
 
 
 
@@ -189,6 +203,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         # Egg Rock
         rf.assign_rule("Egg Rock (Act 1) Spade Emblem", "TAILS")
         rf.assign_rule("Egg Rock (Act 1) Heart Emblem", "TAILS")
+        rf.assign_rule("Egg Rock (Act 2) Heart Emblem", "TAILS | KNUCKLES")
         if options.oneup_sanity:
             rf.assign_rule("Egg Rock (Act 1) Monitor - x:6144 y:-2112", "TAILS")
             rf.assign_rule("Egg Rock (Act 2) Monitor - x:11136 y:15456", "TAILS | KNUCKLES | FANG")
@@ -201,7 +216,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Frozen Hillside Diamond Emblem", "TAILS | KNUCKLES | WIND")
         if options.difficulty == 0:
             rf.assign_rule("Frozen Hillside Club Emblem", "TAILS | KNUCKLES | WIND")
-            
+
         if options.oneup_sanity:
             if options.difficulty == 0:
                 rf.assign_rule("Frozen Hillside Monitor - x:-2944 y:-19168", "TAILS | KNUCKLES | WIND")#remove for hard
@@ -276,36 +291,46 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
         rf.assign_rule("Azure Temple Star Emblem", "TAILS | KNUCKLES & BUBBLE")
         rf.assign_rule("Azure Temple Spade Emblem", "TAILS")
+        rf.assign_rule("Azure Temple Club Emblem", "ARMAGEDDON")
         if options.difficulty == 0:
             if options.time_emblems:
                 rf.assign_rule("Azure Temple Time Emblem", "TAILS | METAL SONIC")
             if options.ring_emblems:
                 rf.assign_rule("Azure Temple Ring Emblem","TAILS/METAL SONIC & FORCE/BUBBLE | KNUCKLES+BUBBLE")
-            rf.assign_rule("Azure Temple Club Emblem", "ARMAGEDDON & EMERALD")  # easy version
-        else:
-            rf.assign_rule("Azure Temple Club Emblem", "ARMAGEDDON")
+
+            # easy version
 
 
         if options.oneup_sanity:
             rf.assign_rule("Azure Temple Monitor - x:512 y:14016", "TAILS | KNUCKLES")
             rf.assign_rule("Azure Temple Monitor - x:-2528 y:7296", "TAILS | KNUCKLES & BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344","ARMAGEDDON")
+            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280","ARMAGEDDON")
+            rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408","ARMAGEDDON")
             if options.difficulty == 0:
                 rf.assign_rule("Azure Temple Monitor - x:1440 y:14688", "TAILS | KNUCKLES+BUBBLE | METAL SONIC")
                 rf.assign_rule("Azure Temple Monitor - x:-2272 y:12864", "TAILS | KNUCKLES+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:-3232 y:14112", "TAILS | KNUCKLES | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:3648 y:25888", "TAILS | KNUCKLES | FANG")
-                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344", "ARMAGEDDON & EMERALD")
-                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280", "ARMAGEDDON & EMERALD")
-                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408", "ARMAGEDDON & EMERALD")
+
             else:
-                rf.assign_rule("Azure Temple Monitor - x:-2272 y:12864","TAILS | KNUCKLES+BUBBLE) | AMY+BUBBLE) | FANG")
+                rf.assign_rule("Azure Temple Monitor - x:-2272 y:12864","TAILS | KNUCKLES+BUBBLE | AMY+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:-3232 y:14112", "TAILS | KNUCKLES | AMY+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:3648 y:25888", "TAILS | KNUCKLES | AMY+BUBBLE | FANG")
-                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344", "ARMAGEDDON")
-                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280", "ARMAGEDDON")
-                rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408", "ARMAGEDDON")
 
 
+
+        #special stages
+        if options.difficulty == 0:
+            rf.assign_rule("Flooded Cove Sun Emblem", "PARALOOP")
+            rf.assign_rule("Magma Caves Moon Emblem", "PARALOOP")
+        rf.assign_rule("Egg Satellite Sun Emblem", "PARALOOP")
+        rf.assign_rule("Black Hole Sun Emblem", "PARALOOP")
+        if options.ntime_emblems:
+            rf.assign_rule("Magma Caves Time Emblem", "PARALOOP")
+        if options.rank_emblems:
+            rf.assign_rule("Egg Satellite A Rank Emblem", "EXTIME")
+            rf.assign_rule("Black Hole A Rank Emblem", "EXTIME")
 
 
     if options.completion_type == 0:
@@ -344,7 +369,16 @@ class RuleFactory:
         "BUBBLE": "Bubble Shield",
         "FORCE": "Force Shield",
         "LIGHTNING": "Lightning Shield",
-        "EMERALD": "Chaos Emerald",
+        "PARALOOP": "Super Paraloop",
+        "EXTIME" : "Extra Time",
+        "EM1": "Green Chaos Emerald",
+        "EM2": "Pink Chaos Emerald",
+        "EM3": "Blue Chaos Emerald",
+        "EM4": "Cyan Chaos Emerald",
+        "EM5": "Yellow Chaos Emerald",
+        "EM6": "Red Chaos Emerald",
+        "EM7": "Gray Chaos Emerald"
+
         #"INVINCIBILITY": "Invincibility Monitors"
         # all other shields arent used in getting emblems directly
         # speed shoes, Attraction, Force, lightning, fire, bubble?

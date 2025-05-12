@@ -33,24 +33,34 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     "Sonic Forces": SRB2ItemData(77, ItemClassification.trap),
     "Temporary Invincibility": SRB2ItemData(78, ItemClassification.filler),
     "Temporary Super Sneakers": SRB2ItemData(79, ItemClassification.filler),
+    "Sound Test": SRB2ItemData(80, ItemClassification.filler),
+
+
 
     "Extended Invincibility": SRB2ItemData(90, ItemClassification.useful),
     "Extended Super Sneakers": SRB2ItemData(91, ItemClassification.useful),
+    "Max Drill Increase": SRB2ItemData(92, ItemClassification.useful),
 
+    "Green Chaos Emerald": SRB2ItemData(100),
+    "Pink Chaos Emerald": SRB2ItemData(101),
+    "Blue Chaos Emerald": SRB2ItemData(102),
+    "Cyan Chaos Emerald": SRB2ItemData(103),
+    "Yellow Chaos Emerald": SRB2ItemData(104),
+    "Red Chaos Emerald": SRB2ItemData(105),
+    "Gray Chaos Emerald": SRB2ItemData(106),
 
-
-# sound test
-# temporary invincibility
-
-
+# double rings
+# killing dead
+# self-propelled bomb
+# toss flag or die
+# eggman virus
 
 # play credits
-# double rings
+
 
 
 # turn all monitors to eggman
 # flashbang
-# killing dead
 # green demon
 
 
@@ -59,7 +69,7 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
 # super ring drain - drains rings and kills you when you run out
 # no character ability - no thok, no flying, no player.charability
 # get made fun of - hud element that makes fun of you
-# toss flag or die
+
 
 # quit game - brings up the "press y to quit" screen
 # blast jump - get knocked back very far
@@ -140,11 +150,11 @@ other_item_table:dict[str, SRB2ItemData] = {
     "Flame Shield": SRB2ItemData(61, ItemClassification.useful),
     "Bubble Shield": SRB2ItemData(62),
     "Lightning Shield": SRB2ItemData(63),
-    #"Super Paraloop": SRB2ItemData(64),
-    #"Drill Refill": SRB2ItemData(65),
-    #"Nightopian Helper": SRB2ItemData(66),
-    #"Extra Time (NiGHTS)": SRB2ItemData(67),
-    #"Link Freeze": SRB2ItemData(68),
+    "Super Paraloop": SRB2ItemData(100, ItemClassification.progression),
+    "Nightopian Helper": SRB2ItemData(101, ItemClassification.useful),
+    "Link Freeze": SRB2ItemData(102, ItemClassification.useful),
+    "Extra Time": SRB2ItemData(103, ItemClassification.progression),
+    "Drill Refill": SRB2ItemData(104, ItemClassification.useful),
 }
 
 item_data_table = {

@@ -6,6 +6,7 @@ Clear ExtraEmblems
 Clear ConditionSets
 Clear All
 
+
 Unlockable 1
 Type = Skin
 NoCecho = true
@@ -33,11 +34,6 @@ NoCecho = true
 NoChecklist = true
 ConditionSet = -1
 
-Unlockable 5
-Type = EmblemHints
-Name = Emblem Hints
-ConditionSet = 1
-
 Character 2
 Status = 0
 
@@ -56,6 +52,11 @@ Status = 0
 Character 0
 Status = 0
 
+Unlockable 5
+Type = EmblemHints
+Name = Emblem Hints
+ConditionSet = 1
+
 ConditionSet 1
 Condition1 = Trigger 1
 
@@ -67,337 +68,17 @@ ConditionSet = 2
 ConditionSet 2
 Condition1 = Trigger 2
 
-ExtraEmblem 1
-Name = GFZ1
-Objective = Beat GFZ1
-ConditionSet = 42
-
-ConditionSet 42
-Condition1 = MapBeaten 1
-
-ExtraEmblem 2
-Name = GFZ2
-Objective = Beat GFZ2
-ConditionSet = 43
-
-ConditionSet 43
-Condition1 = MapBeaten 2
-
-ExtraEmblem 3
-Name = GFZ3
-Objective = Beat GFZ3
+Unlockable 7
+Type = SoundTest
+Name = Sound Test
 ConditionSet = 3
 
 ConditionSet 3
-Condition1 = MapBeaten 3
+Condition1 = Trigger 3
 
-ExtraEmblem 4
-Name = THZ1
-Objective = Beat THZ1
-ConditionSet = 4
 
-ConditionSet 4
-Condition1 = MapBeaten 4
 
-ExtraEmblem 5
-Name = THZ2
-Objective = Beat THZ2
-ConditionSet = 5
-
-ConditionSet 5
-Condition1 = MapBeaten 5
-
-ExtraEmblem 6
-Name = THZ3
-Objective = Beat THZ3
-ConditionSet = 6
-
-ConditionSet 6
-Condition1 = MapBeaten 6
-
-ExtraEmblem 7
-Name = DSZ1
-Objective = Beat DSZ1
-ConditionSet = 7
-
-ConditionSet 7
-Condition1 = MapBeaten 7
-
-ExtraEmblem 8
-Name = DSZ2
-Objective = Beat DSZ2
-ConditionSet = 8
-
-ConditionSet 8
-Condition1 = MapBeaten 8
-
-ExtraEmblem 9
-Name = DSZ3
-Objective = Beat DSZ3
-ConditionSet = 9
-
-ConditionSet 9
-Condition1 = MapBeaten 9
-
-ExtraEmblem 10
-Name = CEZ1
-Objective = Beat CEZ1
-ConditionSet = 10
-
-ConditionSet 10
-Condition1 = MapBeaten 10
-
-
-ExtraEmblem 11
-Name = CEZ2
-Objective = Beat CEZ2
-ConditionSet = 11
-
-ConditionSet 11
-Condition1 = MapBeaten 11
-
-
-ExtraEmblem 12
-Name = CEZ3
-Objective = Beat CEZ3
-ConditionSet = 12
-
-ConditionSet 12
-Condition1 = MapBeaten 12
-
-
-ExtraEmblem 13
-Name = ACZ1
-Objective = Beat ACZ1
-ConditionSet = 13
-
-ConditionSet 13
-Condition1 = MapBeaten 13
-
-
-ExtraEmblem 14
-Name = ACZ2
-Objective = Beat ACZ2
-ConditionSet = 14
-
-ConditionSet 14
-Condition1 = MapBeaten 14
-
-ExtraEmblem 15
-Name = ACZ3
-Objective = Beat ACZ3
-ConditionSet = 15
-
-ConditionSet 15
-Condition1 = MapBeaten 15
-
-ExtraEmblem 16
-Name = RVZ1
-Objective = Beat RVZ1
-ConditionSet = 16
-
-ConditionSet 16
-Condition1 = MapBeaten 16
-
-ExtraEmblem 17
-Name = ERZ1
-Objective = Beat ERZ1
-ConditionSet = 17
-
-ConditionSet 17
-Condition1 = MapBeaten 22
-
-ExtraEmblem 18
-Name = ERZ2
-Objective = Beat ERZ2
-ConditionSet = 18
-
-ConditionSet 18
-Condition1 = MapBeaten 23
-
-ExtraEmblem 19
-Name = BCZ1
-Objective = Beat BCZ1
-ConditionSet = 19
-
-ConditionSet 19
-Condition1 = MapBeaten 25
-
-ExtraEmblem 20
-Name = BCZ2
-Objective = Beat BCZ2
-ConditionSet = 20
-
-ConditionSet 20
-Condition1 = MapBeaten 26
-
-ExtraEmblem 21
-Name = BCZ3
-Objective = Beat BCZ3
-ConditionSet = 21
-
-ConditionSet 21
-Condition1 = MapBeaten 27
-
-ExtraEmblem 22
-Name = FHZ
-Objective = Beat FHZ
-ConditionSet = 22
-
-ConditionSet 22
-Condition1 = MapBeaten 30
-
-ExtraEmblem 23
-Name = PTZ
-Objective = Beat PTZ
-ConditionSet = 23
-
-ConditionSet 23
-Condition1 = MapBeaten 31
-
-ExtraEmblem 24
-Name = FFZ
-Objective = Beat FFZ
-ConditionSet = 24
-
-ConditionSet 24
-Condition1 = MapBeaten 32
-
-ExtraEmblem 25
-Name = FDZ
-Objective = Beat FDZ
-ConditionSet = 25
-
-ConditionSet 25
-Condition1 = MapBeaten 33
-
-ExtraEmblem 26
-Name = HHZ
-Objective = Beat HHZ
-ConditionSet = 26
-
-ConditionSet 26
-Condition1 = MapBeaten 40
-
-ExtraEmblem 27
-Name = AGZ
-Objective = Beat AGZ
-ConditionSet = 27
-
-ConditionSet 27
-Condition1 = MapBeaten 41
-
-ExtraEmblem 28
-Name = ATZ
-Objective = Beat ATZ
-ConditionSet = 28
-
-ConditionSet 28
-Condition1 = MapBeaten 42
-
-
-ExtraEmblem 29
-Name = FFZ
-Objective = Beat FFZ
-ConditionSet = 29
-
-ConditionSet 29
-Condition1 = MapBeaten 50
-
-ExtraEmblem 30
-Name = TPZ
-Objective = Beat TPZ
-ConditionSet = 30
-
-ConditionSet 30
-Condition1 = MapBeaten 51
-
-ExtraEmblem 31
-Name = FCZ
-Objective = Beat FCZ
-ConditionSet = 31
-
-ConditionSet 31
-Condition1 = MapBeaten 52
-
-
-ExtraEmblem 32
-Name = CFZ
-Objective = Beat CFZ
-ConditionSet = 32
-
-ConditionSet 32
-Condition1 = MapBeaten 53
-
-
-ExtraEmblem 33
-Name = DWZ
-Objective = Beat DWZ
-ConditionSet = 33
-
-ConditionSet 33
-Condition1 = MapBeaten 54
-
-
-ExtraEmblem 34
-Name = MCZ
-Objective = Beat MCZ
-ConditionSet = 34
-
-ConditionSet 34
-Condition1 = MapBeaten 55
-
-
-ExtraEmblem 35
-Name = ESZ
-Objective = Beat ESZ
-ConditionSet = 35
-
-ConditionSet 35
-Condition1 = MapBeaten 56
-
-
-ExtraEmblem 36
-Name = BHZ
-Objective = Beat BHZ
-ConditionSet = 36
-
-ConditionSet 36
-Condition1 = MapBeaten 57
-
-ExtraEmblem 37
-Name = CCZ
-Objective = Beat CCZ
-ConditionSet = 37
-
-ConditionSet 37
-Condition1 = NightsScore 70 1
-
-ExtraEmblem 38
-Name = DHZ
-Objective = Beat DHZ
-ConditionSet = 38
-
-ConditionSet 38
-Condition1 = NightsScore 71 1
-
-ExtraEmblem 39
-Name = APZ1
-Objective = Beat APZ1
-ConditionSet = 39
-
-ConditionSet 39
-Condition1 = NightsScore 72 1
-
-ExtraEmblem 40
-Name = APZ2
-Objective = Beat APZ2
-ConditionSet = 40
-
-ConditionSet 40
-Condition1 = NightsScore 73 1
-
-ExtraEmblem 41
+ExtraEmblem 1
 Name = Good Ending
 Objective = Beat BCZ3 with all 7 chaos emeralds
 ConditionSet = 41
@@ -409,6 +90,7 @@ Level 125
 Levelname = Multiworld
 TypeOfLevel = Singleplayer,Co-op
 SaveGame = true
+Music = ARCPLG
 
 Level 1
 Levelname = Greenflower
@@ -1048,7 +730,7 @@ Level Z0
 Levelname = Tutorial
 Act = 0
 Music = TUTORL
-NextLevel = 1
+NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op
 HideInStats = true
 SkyNum = 99
@@ -1107,6 +789,13 @@ MapNum = 1
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 1
+Sprite = F
+Color = SKINCOLOR_GOLD
+
+
 # Greenflower Zone Act 2
 
 Emblem
@@ -1163,6 +852,12 @@ MapNum = 2
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 2
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Greenflower Zone Act 3
 
 Emblem
@@ -1179,6 +874,11 @@ MapNum = 3
 Sprite = S
 Color = SKINCOLOR_BROWN
 
+Emblem
+Type = Map
+MapNum = 3
+Sprite = F
+Color = SKINCOLOR_GOLD
 # Techno Hill Zone Act 1
 
 Emblem
@@ -1233,6 +933,12 @@ Type = Rings
 Var = 250
 MapNum = 4
 Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Map
+MapNum = 4
+Sprite = F
 Color = SKINCOLOR_GOLD
 
 # Techno Hill Zone Act 2
@@ -1291,6 +997,12 @@ MapNum = 5
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 5
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Techno Hill Zone Act 3
 
 Emblem
@@ -1306,6 +1018,12 @@ Var = 10000
 MapNum = 6
 Sprite = S
 Color = SKINCOLOR_BROWN
+
+Emblem
+Type = Map
+MapNum = 6
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Deep Sea Zone Act 1
 
@@ -1361,6 +1079,12 @@ Type = Rings
 Var = 150
 MapNum = 7
 Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Map
+MapNum = 7
+Sprite = F
 Color = SKINCOLOR_GOLD
 
 # Deep Sea Zone Act 2
@@ -1419,6 +1143,12 @@ MapNum = 8
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 8
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Deep Sea Zone Act 3
 
 Emblem
@@ -1434,6 +1164,12 @@ Var = 10000
 MapNum = 9
 Sprite = S
 Color = SKINCOLOR_BROWN
+
+Emblem
+Type = Map
+MapNum = 9
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Castle Eggman Zone Act 1
 
@@ -1489,6 +1225,12 @@ Type = Rings
 Var = 200
 MapNum = 10
 Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Map
+MapNum = 10
+Sprite = F
 Color = SKINCOLOR_GOLD
 
 # Castle Eggman Zone Act 2
@@ -1547,6 +1289,12 @@ MapNum = 11
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 11
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Castle Eggman Zone Act 3
 
 Emblem
@@ -1562,6 +1310,12 @@ Var = 10000
 MapNum = 12
 Sprite = S
 Color = SKINCOLOR_BROWN
+
+Emblem
+Type = Map
+MapNum = 12
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Arid Canyon Zone Act 1
 
@@ -1619,6 +1373,12 @@ MapNum = 13
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 13
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Arid Canyon Zone Act 2
 Emblem
 Hint = Hey! I can see it!\\But the mine cart can't go there...\\Get in here on foot.
@@ -1674,6 +1434,12 @@ MapNum = 14
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 14
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Arid Canyon Zone Act 3
 
 Emblem
@@ -1689,6 +1455,12 @@ Var = 10000
 MapNum = 15
 Sprite = S
 Color = SKINCOLOR_BROWN
+
+Emblem
+Type = Map
+MapNum = 15
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Red Volcano Zone Act 1
 
@@ -1744,6 +1516,12 @@ Type = Rings
 Var = 200
 MapNum = 16
 Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Map
+MapNum = 16
+Sprite = F
 Color = SKINCOLOR_GOLD
 
 # Egg Rock Zone Act 1
@@ -1802,6 +1580,12 @@ MapNum = 22
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 22
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Egg Rock Zone Act 2
 
 Emblem
@@ -1858,6 +1642,12 @@ MapNum = 23
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 23
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Black Core Zone Act 1
 
 Emblem
@@ -1872,6 +1662,12 @@ Type = Rings
 Var = 50
 MapNum = 25
 Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Map
+MapNum = 25
+Sprite = F
 Color = SKINCOLOR_GOLD
 
 # Black Core Zone Act 2
@@ -1890,6 +1686,12 @@ MapNum = 26
 Sprite = S
 Color = SKINCOLOR_BROWN
 
+Emblem
+Type = Map
+MapNum = 26
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Black Core Zone Act 3
 
 Emblem
@@ -1905,6 +1707,12 @@ Var = 10000
 MapNum = 27
 Sprite = S
 Color = SKINCOLOR_BROWN
+
+Emblem
+Type = Map
+MapNum = 27
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Frozen Hillside Zone
 
@@ -1960,6 +1768,12 @@ Type = Rings
 Var = 300
 MapNum = 30
 Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Map
+MapNum = 30
+Sprite = F
 Color = SKINCOLOR_GOLD
 
 # Pipe Towers Zone
@@ -2018,6 +1832,12 @@ MapNum = 31
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 31
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Forest Fortress Zone
 
 Emblem
@@ -2074,8 +1894,18 @@ MapNum = 32
 Sprite = R
 Color = SKINCOLOR_GOLD
 
-# Techno Legacy Zone
-# No emblems for this level
+Emblem
+Type = Map
+MapNum = 32
+Sprite = F
+Color = SKINCOLOR_GOLD
+
+# Final Demo Zone
+Emblem
+Type = Map
+MapNum = 33
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Haunted Heights Zone
 
@@ -2131,6 +1961,12 @@ Type = Rings
 Var = 250
 MapNum = 40
 Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Map
+MapNum = 40
+Sprite = F
 Color = SKINCOLOR_GOLD
 
 # Aerial Garden Zone
@@ -2189,6 +2025,12 @@ MapNum = 41
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 41
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Azure Temple Zone
 
 Emblem
@@ -2245,6 +2087,12 @@ MapNum = 42
 Sprite = R
 Color = SKINCOLOR_GOLD
 
+Emblem
+Type = Map
+MapNum = 42
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Floral Field Zone
 
 Emblem
@@ -2276,6 +2124,12 @@ Var = 40*TICRATE
 MapNum = 50
 Sprite = T
 Color = SKINCOLOR_GREY
+
+Emblem
+Type = Map
+MapNum = 50
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Toxic Plateau Zone
 
@@ -2309,6 +2163,12 @@ MapNum = 51
 Sprite = T
 Color = SKINCOLOR_GREY
 
+Emblem
+Type = Map
+MapNum = 51
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Flooded Cove Zone
 
 Emblem
@@ -2340,6 +2200,12 @@ Var = 75*TICRATE
 MapNum = 52
 Sprite = T
 Color = SKINCOLOR_GREY
+
+Emblem
+Type = Map
+MapNum = 52
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Cavern Fortress Zone
 
@@ -2373,6 +2239,12 @@ MapNum = 53
 Sprite = T
 Color = SKINCOLOR_GREY
 
+Emblem
+Type = Map
+MapNum = 53
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Dusty Wasteland Zone
 
 Emblem
@@ -2404,6 +2276,12 @@ Var = 75*TICRATE
 MapNum = 54
 Sprite = T
 Color = SKINCOLOR_GREY
+
+Emblem
+Type = Map
+MapNum = 54
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Magma Caves Zone
 
@@ -2437,6 +2315,12 @@ MapNum = 55
 Sprite = T
 Color = SKINCOLOR_GREY
 
+Emblem
+Type = Map
+MapNum = 55
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Egg Satellite Zone
 
 Emblem
@@ -2468,6 +2352,12 @@ Var = 105*TICRATE
 MapNum = 56
 Sprite = T
 Color = SKINCOLOR_GREY
+
+Emblem
+Type = Map
+MapNum = 56
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Black Hole Zone
 
@@ -2501,6 +2391,12 @@ MapNum = 57
 Sprite = T
 Color = SKINCOLOR_GREY
 
+Emblem
+Type = Map
+MapNum = 57
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Christmas Chime Zone
 
 Emblem
@@ -2532,6 +2428,12 @@ Var = 75*TICRATE
 MapNum = 70
 Sprite = T
 Color = SKINCOLOR_GREY
+
+Emblem
+Type = Map
+MapNum = 70
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Dream Hill Zone
 
@@ -2565,6 +2467,12 @@ MapNum = 71
 Sprite = T
 Color = SKINCOLOR_GREY
 
+Emblem
+Type = Map
+MapNum = 71
+Sprite = F
+Color = SKINCOLOR_GOLD
+
 # Alpine Paradise Zone Act 1
 
 Emblem
@@ -2596,6 +2504,12 @@ Var = 90*TICRATE
 MapNum = 72
 Sprite = T
 Color = SKINCOLOR_GREY
+
+Emblem
+Type = Map
+MapNum = 72
+Sprite = F
+Color = SKINCOLOR_GOLD
 
 # Alpine Paradise Zone Act 2
 
@@ -2629,701 +2543,8 @@ MapNum = 73
 Sprite = T
 Color = SKINCOLOR_GREY
 
-###################
-# AREA 1
-# MOVEMENT
-###################
-
-# Pre-text
-PROMPT 201
-NumPages 4
-PAGE 1
-Tag = TAMPre
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = Welcome to the tutorial! \baTo continue, \b6press the \82Space Bar\80, \b6or the \83A button\80.
-        #
-PAGE 2
-MetaPage = 1
-Icon = AMYRTALK
-HideHud = All
-NumberOfPics = 8
-PicMode = Loop
-Pic1Name = MVUPFPS
-Pic1Hires = True
-Pic1Duration = 26
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = MVNTFPS
-Pic2Hires = True
-Pic2Duration = 18
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = MVDNFPS
-Pic3Hires = True
-Pic3Duration = 26
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = MVNTFPS
-Pic4Hires = True
-Pic4Duration = 18
-Pic4XCoord = 0
-Pic4YCoord = 48
-Pic5Name = MVLFFPS
-Pic5Hires = True
-Pic5Duration = 26
-Pic5XCoord = 0
-Pic5YCoord = 48
-Pic6Name = MVNTFPS
-Pic6Hires = True
-Pic6Duration = 18
-Pic6XCoord = 0
-Pic6YCoord = 48
-Pic7Name = MVRGFPS
-Pic7Hires = True
-Pic7Duration = 26
-Pic7XCoord = 0
-Pic7YCoord = 48
-Pic8Name = MVNTFPS
-Pic8Hires = True
-Pic8Duration = 18
-Pic8XCoord = 0
-Pic8YCoord = 48
-PageText = To move around, \b6press the \82WASD\80 keys on your keyboard.
-        #
-PAGE 3
-MetaPage = 1
-Icon = AMYRTALK
-HideHud = All
-NumberOfPics = 8
-PicMode = Loop
-Pic1Name = MVUPGAMP
-Pic1Hires = True
-Pic1Duration = 26
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = MVNTGAMP
-Pic2Hires = True
-Pic2Duration = 18
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = MVDNGAMP
-Pic3Hires = True
-Pic3Duration = 26
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = MVNTGAMP
-Pic4Hires = True
-Pic4Duration = 18
-Pic4XCoord = 0
-Pic4YCoord = 48
-Pic5Name = MVLFGAMP
-Pic5Hires = True
-Pic5Duration = 26
-Pic5XCoord = 0
-Pic5YCoord = 48
-Pic6Name = MVNTGAMP
-Pic6Hires = True
-Pic6Duration = 18
-Pic6XCoord = 0
-Pic6YCoord = 48
-Pic7Name = MVRGGAMP
-Pic7Hires = True
-Pic7Duration = 26
-Pic7XCoord = 0
-Pic7YCoord = 48
-Pic8Name = MVNTGAMP
-Pic8Hires = True
-Pic8Duration = 18
-Pic8XCoord = 0
-Pic8YCoord = 48
-PageText = If you're using a gamepad, \b6move the \83left control stick\80.
-        #
-PAGE 4
-MetaPage = 1
-Icon = AMYRTALK
-PageText = Move around to reach the exit!
-        #
-
-# HUD prompt
-PROMPT 202
-NumPages 3
-PAGE 1
-Tag = TAMHint
-Name = Move_Around
-Icon = STARORB
-Lines = 3
-TextSpeed = TICRATE/5
-TimeToNext = TICRATE*3
-PageText = Use the \82WASD\80 keys, \b6or the \83left stick\80 to move.
-        #
-PAGE 2
-MetaPage = 1
-TimeToNext = TICRATE*4
-PageText = Automatic braking is on by default, \b6which causes you to slow down quickly
-        #
-PAGE 3
-MetaPage = 1
-NextPage = 1
-TimeToNext = TICRATE*3
-PageText = when you release the controls.
-        #
-
-###################
-# AREA 2
-# CAMERA ROTATION
-###################
-
-# Pre-text
-PROMPT 204
-NumPages 4
-PAGE 1
-Tag = TACPre
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = By default, \b6the camera rotates when moving left or right, \b6but it can also be controlled manually. 
-        #
-PAGE 2
-MetaPage = 1
-HideHud = All
-NumberOfPics = 4
-PicMode = Loop
-Pic1Name = CMLFFPS
-Pic1Hires = True
-Pic1Duration = 26
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = CMNTFPS
-Pic2Hires = True
-Pic2Duration = 18
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = CMRGFPS
-Pic3Hires = True
-Pic3Duration = 26
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = CMNTFPS
-Pic4Hires = True
-Pic4Duration = 18
-Pic4XCoord = 0
-Pic4YCoord = 48
-PageText = To control the camera, \b6use the \82Mouse\80. \baFor keyboard-only play, \b6the \82Arrow keys\80 also control the camera.
-        #
-PAGE 3
-MetaPage = 1
-HideHud = All
-NumberOfPics = 4
-PicMode = Loop
-Pic1Name = CMLFGAMP
-Pic1Hires = True
-Pic1Duration = 26
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = CMNTGAMP
-Pic2Hires = True
-Pic2Duration = 18
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = CMRGGAMP
-Pic3Hires = True
-Pic3Duration = 26
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = CMNTGAMP
-Pic4Hires = True
-Pic4Duration = 18
-Pic4XCoord = 0
-Pic4YCoord = 48
-PageText = When using a gamepad, \b6use the \83right stick\80 to control the camera.
-        #
-PAGE 4
-MetaPage = 1
-PageText = Use the camera controls to look in the direction you want to travel in, \b6and find the exit!
-        #
-
-# HUD prompt
-PROMPT 205
-NumPages 3
-PAGE 1
-Tag = TACHint
-Name = Camera_Control
-Icon = STARORB
-Lines = 3
-TextSpeed = TICRATE/5
-TimeToNext = TICRATE*4
-PageText = Use the \82Mouse\80, \b6\82Arrow keys\80 \b6or \83right stick\80 to control the camera.
-        #
-PAGE 2
-MetaPage = 1
-TimeToNext = TICRATE*3
-PageText = If moving the camera feels too fast or slow,
-        #
-PAGE 3
-MetaPage = 1
-NextPage = 1
-TimeToNext = TICRATE*4
-PageText = you can adjust the rotation speed in the camera options.
-        #
-
-###################
-# AREA 3
-# MOVEMENT AND CAMERA
-###################
-
-# Pre-text
-PROMPT 206
-NumPages 4
-PAGE 1
-Tag = TADPre
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = You can use \82Center View\80 to reposition the camera behind you, if needed.
-        #
-PAGE 2
-MetaPage = 1
-PageText = When using a keyboard, \b6press \82Ctrl\80. \baOn a gamepad, \b6press the \83right bumper\80.
-        #
-PAGE 3
-MetaPage = 1
-PageText = Additionally, \b6you can \82target\80 enemies in front of you by holding \82Center View\80!
-        #
-PAGE 4
-MetaPage = 1
-PageText = To practice this, \b6try to reach the goal here while always seeing the Jetty-Syn on the screen.
-        #
-
-# HUD prompt
-PROMPT 207
-NumPages 3
-PAGE 1
-Tag = TADHint
-Name = Move_&_Look
-Icon = STARORB
-Lines = 3
-TimeToNext = TICRATE*4
-PageText = Use \82Ctrl\80 or the \83right bumper\80 to keep an eye on the robot!
-        #
-PAGE 2
-MetaPage = 1
-TimeToNext = TICRATE*3
-PageText = If it feels uncomfortable to hold, \b6check out the camera options,
-        #
-PAGE 3
-MetaPage = 1
-TimeToNext = TICRATE*3
-NextPage = 1
-PageText = where you can change the \82lock button behavior\80 to a toggle.
-        #
-
-# Failure
-PROMPT 208
-NumPages 2
-PAGE 1
-Tag = TADFail
-Name = Amy_Rose
-Icon = AMYRCONC
-IconAlign = Left
-Lines = 4
-PageText = Oops, \b6you lost track of the Jetty-Syn. \baRemember to keep it on the screen while moving past!
-        #
-PAGE 2
-MetaPage = 1
-Icon = AMYRTALK
-PageText = It might be easier to take it slowly.
-        #
-
-# Post-text
-PROMPT 209
-NumPages 4
-PAGE 1
-Tag = TADPost
-Name = Amy_Rose
-Icon = AMYRJOYS
-IconAlign = Left
-Lines = 4
-PageText = Well done! 
-        #
-PAGE 2
-MetaPage = 1
-Icon = AMYRTALK
-PageText = When using a mouse and keyboard, \b6you might prefer controlling the camera all by yourself. 
-        #
-PAGE 3
-MetaPage = 1
-Icon = AMYRTALK
-PageText = To disable automatic camera movement, \b6check out the \82Manual\80 playstyle in the control options.
-        #
-PAGE 4
-MetaPage = 1
-Icon = AMYRTALK
-PageText = This is recommended for more experienced players, \b6as it gives you the most control!
-        #
-
-###################
-# AREA 4
-# JUMPING
-###################
-
-# Pre-text
-PROMPT 210
-NumPages 2
-PAGE 1
-Tag = TAJPre
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = You won't get far if you can't jump! \baTo jump, \b6press the \82Space Bar\80, \b6or the \83A button\80.
-        #
-PAGE 2
-MetaPage = 1
-PageText = Holding it down makes you jump higher than releasing it early. \baJump to reach the next area!
-        #
-
-# HUD prompt
-PROMPT 211
-NumPages 1
-PAGE 1
-Tag = TAJHint
-Name = Jump
-Icon = STARORB
-Lines = 3
-PageText = Press the \82Space Bar\80 or the \83A button\80 to jump.
-        #
-
-###################
-# AREA 5
-# SPINNING
-###################
-
-# Pre-text
-PROMPT 212
-NumPages 4
-PAGE 1
-Tag = TASPre
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = You can also spin dash and roll, \b6by pressing \82Left Shift\80, \b6or the \83X button\80.
-        #
-PAGE 2
-MetaPage = 1
-HideHud = All
-NumberOfPics = 4
-PicMode = Loop
-PicToLoop = 2
-Pic1Name = SDA1FPS
-Pic1Hires = True
-Pic1Duration = 34
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = SDA2FPS
-Pic2Hires = True
-Pic2Duration = 9
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = SDA3FPS
-Pic3Hires = True
-Pic3Duration = 9
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = SDA4FPS
-Pic4Hires = True
-Pic4Duration = 9
-Pic4XCoord = 0
-Pic4YCoord = 48
-Pic5Name = SDA5FPS
-Pic5Hires = True
-Pic5Duration = 5
-Pic5XCoord = 0
-Pic5YCoord = 48
-Pic6Name = SDA6FPS
-Pic6Hires = True
-Pic6Duration = 5
-Pic6XCoord = 0
-Pic6YCoord = 48
-Pic7Name = SDA7FPS
-Pic7Hires = True
-Pic7Duration = 5
-Pic7XCoord = 0
-Pic7YCoord = 48
-Pic8Name = SDA8FPS
-Pic8Hires = True
-Pic8Duration = 34
-Pic8XCoord = 0
-Pic8YCoord = 48
-PageText = Pressing and holding it down while standing still will charge the spin dash.
-        #
-PAGE 3
-MetaPage = 1
-HideHud = All
-NumberOfPics = 8
-PicMode = Loop
-Pic1Name = SDA5FPS
-Pic1Hires = True
-Pic1Duration = 5
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = SDA6FPS
-Pic2Hires = True
-Pic2Duration = 5
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = SDA7FPS
-Pic3Hires = True
-Pic3Duration = 5
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = SDA8FPS
-Pic4Hires = True
-Pic4Duration = 34
-Pic4XCoord = 0
-Pic4YCoord = 48
-Pic5Name = SDA1FPS
-Pic5Hires = True
-Pic5Duration = 34
-Pic5XCoord = 0
-Pic5YCoord = 48
-Pic6Name = SDA2FPS
-Pic6Hires = True
-Pic6Duration = 9
-Pic6XCoord = 0
-Pic6YCoord = 48
-Pic7Name = SDA3FPS
-Pic7Hires = True
-Pic7Duration = 9
-Pic7XCoord = 0
-Pic7YCoord = 48
-Pic8Name = SDA4FPS
-Pic8Hires = True
-Pic8Duration = 9
-Pic8XCoord = 0
-Pic8YCoord = 48
-PageText = When the button is released, \b6you roll forward, \b6with more speed the longer the spin dash was charged.
-        #
-PAGE 4
-MetaPage = 1
-HideHud = All
-NumberOfPics = 5
-PicMode = Loop
-Pic1Name = SPN1FPS
-Pic1Hires = True
-Pic1Duration = 17
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = SPN2FPS
-Pic2Hires = True
-Pic2Duration = 17
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = SPN3FPS
-Pic3Hires = True
-Pic3Duration = 17
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = SPN4FPS
-Pic4Hires = True
-Pic4Duration = 17
-Pic4XCoord = 0
-Pic4YCoord = 48
-Pic5Name = SPN5FPS
-Pic5Hires = True
-Pic5Duration = 17
-Pic5XCoord = 0
-Pic5YCoord = 48
-PageText = Pressing the button while moving makes you roll with the speed you already have.
-        #
-
-# HUD prompt
-PROMPT 213
-NumPages 1
-PAGE 1
-Tag = TASHint
-Name = Spin_Dash_and_Roll
-Icon = STARORB
-Lines = 3
-TextSpeed = TICRATE/5
-PageText = Hit \82Left Shift\80 or the \83X button\80 to spin dash or roll under the obstacles.
-        #
-
-# Post-text
-PROMPT 214
-NumPages 2
-PAGE 1
-Tag = TASPost
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = While rolling, \b6sloped ground has a stronger influence.
-        #
-PAGE 2
-MetaPage = 1
-PageText = It's also far harder to control while rolling, \b6so plan ahead!
-        #
-
-###################
-# AREA 6
-# SPECIAL ABILITIES
-###################
-
-# Pre-text
-PROMPT 215
-NumPages 4
-PAGE 1
-Tag = TAAPre
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = Each character has a special ability, \b6used by \82Jumping\80 then pressing \82Jump\80 again in midair.
-        #
-PAGE 2
-MetaPage = 1
-PageText = Sonic, your ability is called the \82speed thok\80, \b6named for the sound it makes. 
-        #
-PAGE 3
-MetaPage = 1
-PageText = It launches you in the direction you're moving, \b6which is useful for crossing large gaps.
-        #
-PAGE 4
-MetaPage = 1
-PageText = Use the jump and thok to reach the exit!
-        #
-
-# HUD prompt
-PROMPT 216
-NumPages 1
-PAGE 1
-Tag = TAAHint
-Name = Special_Ability
-Icon = STARORB
-Lines = 3
-TextSpeed = TICRATE/5
-PageText = Hit \82Jump twice\80 to thok.
-        #
-
-# Post-text
-PROMPT 217
-NumPages 2
-PAGE 1
-Tag = TAAPost
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = The thok is extremely powerful, \b6but stopping afterwards can be hard.
-        #
-PAGE 2
-MetaPage = 1
-PageText = Like the spin dash, \b6make sure to plan ahead, \b6or you'll soar off directly into danger!
-        #
-
-###################
-# AREA 7
-# SHIELDS
-###################
-
-# Pre-text
-PROMPT 218
-NumPages 3
-PAGE 1
-Tag = TAWPre
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = Finally, \b6shields in this game all have a special ability you can activate.
-        #
-PAGE 2
-MetaPage = 1
-HideHud = All
-NumberOfPics = 5
-PicMode = Loop
-Pic1Name = SHL1FPS
-Pic1Hires = 1
-Pic1Duration = 17
-Pic1XCoord = 0
-Pic1YCoord = 48
-Pic2Name = SHL2FPS
-Pic2Hires = 1
-Pic2Duration = 17
-Pic2XCoord = 0
-Pic2YCoord = 48
-Pic3Name = SHL3FPS
-Pic3Hires = 1
-Pic3Duration = 34
-Pic3XCoord = 0
-Pic3YCoord = 48
-Pic4Name = SHL4FPS
-Pic4Hires = 1
-Pic4Duration = 17
-Pic4XCoord = 0
-Pic4YCoord = 48
-Pic5Name = SHL5FPS
-Pic5Hires = 1
-Pic5Duration = 34
-Pic5XCoord = 0
-Pic5YCoord = 48
-PageText = To use a shield's special ability, \b6\82Jump\80 and then press \82Spin\80 in midair.
-        #
-PAGE 3
-MetaPage = 1
-HideHud = All
-PicsMetaPage = 2
-PageText = The Whirlwind shield's special ability is a double jump. \baUse it to finish the tutorial!
-        #
-
-# HUD prompt - Pre-shield
-PROMPT 219
-NumPages 1
-PAGE 1
-Tag = TAWHint
-Name = Get_the_Shield
-Icon = STARORB
-Lines = 3
-TextSpeed = TICRATE/5
-PageText = \82Jump\80 or \82Spin\80 into the Whirlwind shield monitor.
-        #
-
-# HUD prompt - Post-shield
-PROMPT 220
-NumPages 1
-PAGE 1
-Tag = TAWHint2
-Name = Shield_Ability
-Icon = STARORB
-Lines = 3
-TextSpeed = TICRATE/5
-PageText = Hit \82Jump\80, \b6then \82Spin\80 to double jump.
-        #
-
-###################
-# ENDING
-###################
-
-# Post-text
-PROMPT 221
-NumPages 2
-PAGE 1
-Tag = TAWPost
-Name = Amy_Rose
-Icon = AMYRTALK
-IconAlign = Left
-Lines = 4
-PageText = Each shield's special ability is different. \baTry them all out!
-        #
-PAGE 2
-MetaPage = 1
-Icon = AMYRJOYS
-TimeToNext = TICRATE*4
-PageText = You've finished the tutorial! \baI hope you enjoy this game as much as they did making it!
-        #
+Emblem
+Type = Map
+MapNum = 73
+Sprite = F
+Color = SKINCOLOR_GOLD

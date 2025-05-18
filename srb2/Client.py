@@ -297,6 +297,7 @@ class CommonContext:
     last_death_link: float = time.time()  # last send/received death link on AP layer
     death_link: float = time.time()
     death_link_lockout: float = time.time()
+    activate_death: bool = False
     goal_type: int = None
     bcz_emblems: int = 0
     # remaining type info
@@ -676,7 +677,7 @@ class CommonContext:
         """Gets dispatched when a new DeathLink is triggered by another linked player."""
         self.last_death_link = max(data["time"], self.last_death_link)
         text = data.get("cause", "")
-
+        self.activate_death = True
         if text:
             logger.info(f"DeathLink: {text}")
         else:
@@ -1195,7 +1196,7 @@ async def item_handler(ctx, file_path):
     file_path2 = file_path + "/apgamedat1.ssg"
 
     f = open(file_path + "/luafiles/APTranslator.dat", 'w+b')
-
+    f.close()
     # set up new save file here
     # dont need to zero anything out because the first write will overwrite everything wrong
 
@@ -1207,9 +1208,11 @@ async def item_handler(ctx, file_path):
         while ctx.total_locations is None:
             await asyncio.sleep(1)
             continue
-
-
-
+        try:
+            f = open(file_path + "/luafiles/APTranslator.dat", 'r+b')
+        except PermissionError:
+            await asyncio.sleep(1)
+            continue
 
 
         if len(ctx.texttransfer) > 0:
@@ -1474,29 +1477,34 @@ async def item_handler(ctx, file_path):
 
         # todo handle deathlink traps and 1ups
         f.seek(0x01)
-        is_dead = int.from_bytes(f.read(1), 'little')
+        is_dead = f.read(1)
         if ctx.death_link == True:
             if ctx.death_link_lockout + 4 <= time.time():
 
-                if ctx.last_death_link + 3.5 >= time.time():  # if a deathlink happened less than 2 seconds ago, kill yourself
+                if ctx.activate_death == True:
                     f.seek(0x00)  # received deathlink
                     f.write(0x01.to_bytes(1, byteorder="little"))
                     ctx.death_link_lockout = time.time()
                     print("kill yourself")
+                    ctx.activate_death = False
 
-                if is_dead != 0:  # outgoing deathlink
+                elif is_dead != b'\x00':  # outgoing deathlink
                     f.seek(0x01)
                     f.write(0x00.to_bytes(1, byteorder="little"))
-                    messages = ["Egg Rock Zone was too hard for " + ctx.player_names[ctx.slot]]
+                    message = [ctx.player_names[ctx.slot] + " wasn't able to retry in time"]
 
-                    await ctx.send_death("Egg Rock Zone was too hard for SRB2 Player")
+                    await ctx.send_death(message)
                     ctx.death_link_lockout = time.time()
                     print("killed myself")
+
             else:
+                ctx.activate_death = False
+                print("in lockout")
                 # write 0s to both slots if conditions havent been met
-                f.seek(0x01)
-                f.write(0x00.to_bytes(1, byteorder="little"))
+                f.seek(0x00)
+                f.write(0x00.to_bytes(2, byteorder="little"))
         # print("wrote new file data")
+        f.close()
         await asyncio.sleep(1)
 
 
@@ -1546,8 +1554,9 @@ async def file_watcher(ctx, file_path):
                     checkma[r1] += 64
                 if r2 == 7:
                     checkma[r1] += 128
-        f.seek(0x10)
-        f.write(0x00.to_bytes(16 * 61, byteorder="little"))
+        f.seek(0x0C)
+        for i in range(0x50):
+            f.write(0x01.to_bytes(1, byteorder="little")) #set level visited flags
         f.seek(0x450)
         f.write(0x00.to_bytes(0x1000, byteorder="little"))
         f.seek(0x417)

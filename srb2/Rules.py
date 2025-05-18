@@ -106,9 +106,9 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Techno Hill (Act 1) Heart Emblem", "TAILS")
         rf.assign_rule("Techno Hill (Act 1) Diamond Emblem", "TAILS | KNUCKLES")
         rf.assign_rule("Techno Hill (Act 1) Club Emblem", "KNUCKLES")
-        rf.assign_rule("Techno Hill (Act 2) Emerald Token - Deep in Slime", "ELEMENTAL")
         rf.assign_rule("Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack as Amy", "AMY")
         if options.difficulty == 0:
+            rf.assign_rule("Techno Hill (Act 2) Emerald Token - Deep in Slime", "ELEMENTAL")
             rf.assign_rule("Techno Hill (Act 1) Star Emblem", "TAILS | KNUCKLES")  # INTENDED SONIC PATH FOR THIS BTW
 
         if options.oneup_sanity:

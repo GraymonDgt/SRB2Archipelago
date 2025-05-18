@@ -76,7 +76,7 @@ class SRB2World(World):
     def generate_early(self):
 
         #TODO rewrite this to calculate max locations then add filler based on emblem numbers
-        max_locations = 540#TODO up this once i have enough locations
+        max_locations = 541#TODO up this once i have enough locations
         if not self.options.time_emblems:
             max_locations -= 27
         if not self.options.ring_emblems:
@@ -125,6 +125,7 @@ class SRB2World(World):
                     continue
                 if zone_name == "Black Core Zone" and self.options.bcz_emblems > 0:
                     self.multiworld.itempool += [self.create_item("1UP")] #replace bcz with a 1up to match item numbers
+                    slots_to_fill -= 1
                     continue
                 slots_to_fill-=1
                 self.multiworld.itempool += [self.create_item(zone_name)]#and != starting_zone

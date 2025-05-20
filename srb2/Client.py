@@ -1491,7 +1491,7 @@ async def item_handler(ctx, file_path):
                 elif is_dead != b'\x00':  # outgoing deathlink
                     f.seek(0x01)
                     f.write(0x00.to_bytes(1, byteorder="little"))
-                    message = [ctx.player_names[ctx.slot] + " wasn't able to retry in time"]
+                    message = ctx.player_names[ctx.slot] + " wasn't able to retry in time"
 
                     await ctx.send_death(message)
                     ctx.death_link_lockout = time.time()

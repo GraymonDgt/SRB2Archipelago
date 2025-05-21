@@ -967,6 +967,7 @@ async def process_server_cmd(ctx: CommonContext, args: dict):
         ctx.stored_data_notification_keys.add(f"_read_hints_{ctx.team}_{ctx.slot}")
         ctx.goal_type = args["slot_data"]["CompletionType"]
         ctx.bcz_emblems = args["slot_data"]["BlackCoreEmblems"]
+        ctx.matchmaps = args["slot_data"]["EnableMatchMaps"]
         if args["slot_data"]["DeathLink"] != 0:
             ctx.death_link = True
             ctx.tags.add("DeathLink")
@@ -1285,7 +1286,7 @@ async def item_handler(ctx, file_path):
                 soundtest = 1
             if id == 74:
                 startrings += 1
-            if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79:
+            if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79 or id==84 or id == 81 or id ==82 or id==83:
                 traps += 1
                 if traps == num_traps + 1:
 
@@ -1320,6 +1321,15 @@ async def item_handler(ctx, file_path):
                         f.write(0x0E.to_bytes(2, byteorder="little"))
                     if id == 79:  # temp speed shoes
                         f.write(0x0F.to_bytes(2, byteorder="little"))
+                    if id == 81:  # spb
+                        f.write(0x10.to_bytes(2, byteorder="little"))
+                    if id == 82:  # shrink
+                        f.write(0x11.to_bytes(2, byteorder="little"))
+                    if id == 83:  # grow
+                        f.write(0x12.to_bytes(2, byteorder="little"))
+                    if id == 84:  # double rings
+                        f.write(0x13.to_bytes(2, byteorder="little"))
+
 
                     f.seek(0x12)
                     f.write((num_traps + 1).to_bytes(2, byteorder="little"))
@@ -1411,13 +1421,56 @@ async def item_handler(ctx, file_path):
             if id == 59:  # attraction
                 sent_shields[3] = 1
             if id == 60:  # force
-                sent_shields[4] = 1
+                sent_shields[4] = sent_shields[4] + 1
             if id == 61:  # flame
-                sent_shields[5] = 1
+                sent_shields[4] = sent_shields[4] + 2
             if id == 62:  # bubble
-                sent_shields[6] = 1
+                sent_shields[4] = sent_shields[4] + 4
             if id == 56:  # lightning
-                sent_shields[7] = 1
+                sent_shields[4] = sent_shields[4] + 8
+
+            if id == 200:#jade valley
+                sent_shields[5] = sent_shields[5] + 2
+            if id == 201:#toxic plateau
+                sent_shields[5] = sent_shields[5] + 4
+            if id == 202:#fuckass water map
+                sent_shields[5] = sent_shields[5] + 8
+            if id == 203:#thunder citedel
+                sent_shields[5] = sent_shields[5] + 16
+            if id == 204:#desolate twilight
+                sent_shields[5] = sent_shields[5] + 32
+            if id == 205:#frigid mountain
+                sent_shields[5] = sent_shields[5] + 64
+            if id == 206:#orbital hangar
+                sent_shields[5] = sent_shields[5] + 128
+            if id == 207:#sapphire falls
+                sent_shields[6] = sent_shields[6] + 1
+            if id == 208:#diamond blizzard
+                sent_shields[6] = sent_shields[6] + 2
+            if id == 209:#Celestial Sanctuary
+                sent_shields[6] = sent_shields[6] + 4
+            if id == 210:#frost columns
+                sent_shields[6] = sent_shields[6] + 8
+            if id == 211:#Meadow Match Zone
+                sent_shields[6] = sent_shields[6] + 16
+            if id == 212:#granite lake
+                sent_shields[6] = sent_shields[6] + 32
+            if id == 213:#summit showdown
+                sent_shields[6] = sent_shields[6] + 64
+            if id == 214:#Silver Shiver
+                sent_shields[6] = sent_shields[6] + 128
+            if id == 215:#uncharted badlands
+                sent_shields[7] = sent_shields[7] + 1
+            if id == 216:#Pristine Shores
+                sent_shields[7] = sent_shields[7] + 2
+            if id == 217:#crystalline heights
+                sent_shields[7] = sent_shields[7] + 4
+            if id == 218:#starlit warehouse
+                sent_shields[7] = sent_shields[7] + 8
+            if id == 219:#fuckass space map
+                sent_shields[7] = sent_shields[7] + 16
+            if id == 220:#airborne temple
+                sent_shields[7] = sent_shields[7] + 32
 
 
             locs_received.append(id)
@@ -1425,6 +1478,9 @@ async def item_handler(ctx, file_path):
             locs_received.append(17)
             final_write[0] = final_write[0] + 128
         # this would be so much better if i made a list of everything and then wrote it to the file all at once
+        if ctx.matchmaps:
+            sent_shields[5] = sent_shields[5] | 1
+
         f.seek(0x14)
         if emblemhints >= 2:
             emblemhints = 3 #bits 1 and 2 set
@@ -1529,9 +1585,9 @@ async def file_watcher(ctx, file_path):
             raise FileNotFoundError  # stupid code
         f = open(file_path2, 'r+b')
         checkma = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0,0,0,0,0,0]
+                   0,0,0,0,0,0,0,0,0]
         for i in ctx.checked_locations:
-            if i < 240:
+            if i < 260:
                 i = i - 1
                 r1 = math.floor(i / 8)
                 r2 = i % 8
@@ -1558,11 +1614,16 @@ async def file_watcher(ctx, file_path):
         for i in range(0x50):
             f.write(0x01.to_bytes(1, byteorder="little")) #set level visited flags
         f.seek(0x450)
-        f.write(0x00.to_bytes(0x1000, byteorder="little"))
+        f.write(0x00.to_bytes(0x3000, byteorder="little"))
         f.seek(0x417)
         f.write(bytes(checkma))
-
-
+        f.seek(0x220)
+        if ctx.matchmaps:
+            for i in range(0x30):
+                f.write(0x01.to_bytes(1, byteorder="little"))  # set level visited flags
+        else:
+            for i in range(0x30):
+                f.write(0x00.to_bytes(1, byteorder="little"))  # set level visited flags
         f.close()
     except FileNotFoundError:
 
@@ -1913,11 +1974,11 @@ async def file_watcher(ctx, file_path):
                     break
                 for i in token_numbers:
                     if lines == i:
-                        locs_to_send.add(token_numbers.index(i) + 240)
+                        locs_to_send.add(token_numbers.index(i) + 260)
                         break
                 for i in oneupids:
                     if lines == i:
-                        locs_to_send.add(oneupids.index(i) + 300)
+                        locs_to_send.add(oneupids.index(i) + 320)
                         break
 
             g.truncate(0)
@@ -1931,7 +1992,7 @@ async def file_watcher(ctx, file_path):
             previous = current
             with open(file_path2, 'rb') as f:
                 f.seek(0x417)  # start of the emblem save file
-                for i in range(0, 0x1E):
+                for i in range(0, 0x21):
                     byte = int.from_bytes(f.read(1), 'little')
                     # convert each check into corresponding location number
                     for j in range(8):
@@ -1949,7 +2010,7 @@ async def file_watcher(ctx, file_path):
                 byte = int.from_bytes(f.read(1), 'little')
                 if byte != 0 and ctx.goal_type == 1:
                     ctx.finished_game = True
-                    locs_to_send.add(238)
+                    locs_to_send.add(259)
                     await ctx.send_msgs([{
                         "cmd": "StatusUpdate",
                         "status": ClientStatus.CLIENT_GOAL

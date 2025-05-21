@@ -34,36 +34,28 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     "Temporary Invincibility": SRB2ItemData(78, ItemClassification.filler),
     "Temporary Super Sneakers": SRB2ItemData(79, ItemClassification.filler),
     "Sound Test": SRB2ItemData(80, ItemClassification.filler),
-
+    "Self-Propelled Bomb": SRB2ItemData(81, ItemClassification.trap),
+    "Shrink Monitor": SRB2ItemData(82, ItemClassification.trap),
+    "Grow Monitor": SRB2ItemData(83, ItemClassification.trap),
+    "Double Rings": SRB2ItemData(84, ItemClassification.trap),
 
 
     "Extended Invincibility": SRB2ItemData(90, ItemClassification.useful),
     "Extended Super Sneakers": SRB2ItemData(91, ItemClassification.useful),
     "Max Drill Increase": SRB2ItemData(92, ItemClassification.useful),
 
-    "Green Chaos Emerald": SRB2ItemData(100),
-    "Pink Chaos Emerald": SRB2ItemData(101),
-    "Blue Chaos Emerald": SRB2ItemData(102),
-    "Cyan Chaos Emerald": SRB2ItemData(103),
-    "Yellow Chaos Emerald": SRB2ItemData(104),
-    "Red Chaos Emerald": SRB2ItemData(105),
-    "Gray Chaos Emerald": SRB2ItemData(106),
 
-# double rings
+
 # killing dead
-# self-propelled bomb
+# 1 ring
+
+# gambling
+
 # toss flag or die
 # eggman virus
 
 # play credits
-
-
-
-# turn all monitors to eggman
 # flashbang
-# green demon
-
-
 
 
 # super ring drain - drains rings and kills you when you run out
@@ -93,11 +85,7 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     # mace swing
     # minecarts
     # rollout rocks
-
-
 # lock thz slime
-#
-# explosive barrels - spawn exploding barrels
 
 }
 
@@ -156,12 +144,41 @@ other_item_table:dict[str, SRB2ItemData] = {
     "Extra Time": SRB2ItemData(103, ItemClassification.progression),
     "Drill Refill": SRB2ItemData(104, ItemClassification.useful),
 }
+mpmatch_item_table:dict[str, SRB2ItemData] = {
+"Jade Valley Zone":SRB2ItemData(200),
+"Noxious Factory Zone":SRB2ItemData(201),
+"Tidal Palace Zone":SRB2ItemData(202),
+"Thunder Citadel Zone":SRB2ItemData(203),
+"Desolate Twilight Zone":SRB2ItemData(204),
+"Frigid Mountain Zone":SRB2ItemData(205),
+"Orbital Hangar Zone":SRB2ItemData(206),
+"Sapphire Falls Zone":SRB2ItemData(207),
+"Diamond Blizzard Zone":SRB2ItemData(208),
+"Celestial Sanctuary Zone":SRB2ItemData(209),
+"Frost Columns Zone":SRB2ItemData(210),
+"Meadow Match Zone":SRB2ItemData(211),
+"Granite Lake Zone":SRB2ItemData(212),
+"Summit Showdown Zone":SRB2ItemData(213),
+"Silver Shiver Zone":SRB2ItemData(214),
+"Uncharted Badlands Zone":SRB2ItemData(215),
+"Pristine Shores Zone":SRB2ItemData(216),
+"Crystalline Heights Zone":SRB2ItemData(217),
+"Starlit Warehouse Zone":SRB2ItemData(218),
+"Midnight Abyss Zone":SRB2ItemData(219),
+"Airborne Temple Zone":SRB2ItemData(220),
+
+}
+
+
+
+
 
 item_data_table = {
     **generic_item_data_table,
     **zones_item_data_table,
     **character_item_data_table,
-    **other_item_table
+    **other_item_table,
+    **mpmatch_item_table
 }
 
 item_table = {name: data.code for name, data in item_data_table.items() if data.code is not None}

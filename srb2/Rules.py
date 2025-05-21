@@ -65,6 +65,29 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
     connect_regions(world, player, "Menu", "Dream Hill Zone", lambda state: state.has("Dream Hill Zone", player))
     connect_regions(world, player, "Menu", "Alpine Paradise Zone", lambda state: state.has("Alpine Paradise Zone", player))
 
+    if options.match_maps:
+        connect_regions(world, player, "Menu", "Jade Valley Zone", lambda state: state.has("Jade Valley Zone", player))
+        connect_regions(world, player, "Menu", "Noxious Factory Zone", lambda state: state.has("Noxious Factory Zone", player))
+        connect_regions(world, player, "Menu", "Tidal Palace Zone", lambda state: state.has("Tidal Palace Zone", player))
+        connect_regions(world, player, "Menu", "Thunder Citadel Zone",lambda state: state.has("Thunder Citadel Zone", player))
+        connect_regions(world, player, "Menu", "Desolate Twilight Zone", lambda state: state.has("Desolate Twilight Zone", player))
+        connect_regions(world, player, "Menu", "Frigid Mountain Zone", lambda state: state.has("Frigid Mountain Zone", player))
+        connect_regions(world, player, "Menu", "Orbital Hangar Zone", lambda state: state.has("Orbital Hangar Zone", player))
+        connect_regions(world, player, "Menu", "Sapphire Falls Zone",lambda state: state.has("Sapphire Falls Zone", player))
+        connect_regions(world, player, "Menu", "Diamond Blizzard Zone", lambda state: state.has("Diamond Blizzard Zone", player))
+        connect_regions(world, player, "Menu", "Celestial Sanctuary Zone", lambda state: state.has("Celestial Sanctuary Zone", player))
+        connect_regions(world, player, "Menu", "Frost Columns Zone", lambda state: state.has("Frost Columns Zone", player))
+        connect_regions(world, player, "Menu", "Meadow Match Zone",lambda state: state.has("Meadow Match Zone" , player))
+        connect_regions(world, player, "Menu", "Granite Lake Zone", lambda state: state.has("Granite Lake Zone", player))
+        connect_regions(world, player, "Menu", "Summit Showdown Zone", lambda state: state.has("Summit Showdown Zone", player))
+        connect_regions(world, player, "Menu", "Silver Shiver Zone", lambda state: state.has("Silver Shiver Zone", player))
+        connect_regions(world, player, "Menu", "Uncharted Badlands Zone",lambda state: state.has("Uncharted Badlands Zone", player))
+        connect_regions(world, player, "Menu", "Pristine Shores Zone",lambda state: state.has("Pristine Shores Zone" , player))
+        connect_regions(world, player, "Menu", "Crystalline Heights Zone", lambda state: state.has("Crystalline Heights Zone", player))
+        connect_regions(world, player, "Menu", "Starlit Warehouse Zone", lambda state: state.has("Starlit Warehouse Zone", player))
+        connect_regions(world, player, "Menu", "Midnight Abyss Zone", lambda state: state.has("Midnight Abyss Zone", player))
+        connect_regions(world, player, "Menu", "Airborne Temple Zone",lambda state: state.has("Airborne Temple Zone", player))
+
     if options.difficulty == 0:
         connect_regions(world, player, "Azure Temple Zone", "Azure Temple Club",
                         lambda state: state.has("Chaos Emerald", player, 7))
@@ -257,10 +280,11 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Haunted Heights Monitor - x:8254 y:11910", "KNUCKLES | FANG | ELEMENTAL")
 
 
-        rf.assign_rule("Aerial Garden Spade Emblem", "FANG")
+
         if options.difficulty == 0:
             rf.assign_rule("Aerial Garden Club Emblem", "TAILS | METAL SONIC") # easy logic
             rf.assign_rule("Aerial Garden Diamond Emblem", "TAILS | METAL SONIC") # easy
+            rf.assign_rule("Aerial Garden Spade Emblem", "FANG & LIGHTNING")
             rf.assign_rule("Aerial Garden Emerald Token - Diamond Emblem 1", "TAILS | METAL SONIC") # easy
             rf.assign_rule("Aerial Garden Emerald Token - Diamond Emblem 2", "TAILS | METAL SONIC") # easy
             rf.assign_rule("Aerial Garden Emerald Token - Diamond Emblem 3", "TAILS | METAL SONIC") # easy
@@ -270,6 +294,10 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
                 rf.assign_rule("Aerial Garden Time Emblem", "TAILS | METAL SONIC | LIGHTNING") #BS as sonic
             if options.ring_emblems:
                 rf.assign_rule("Aerial Garden Ring Emblem", "TAILS | METAL SONIC | LIGHTNING") #BS as sonic
+        else:
+            rf.assign_rule("Aerial Garden Spade Emblem", "FANG")
+
+
 
         if options.oneup_sanity:
             if options.difficulty == 0:

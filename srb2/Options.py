@@ -34,7 +34,9 @@ class LogicDifficulty(Choice):
     option_custom = 2
     default = 0
 
-
+class MPMaps(Toggle):
+    """Enable Ringslinger Maps as items/locations"""
+    display_name = "Multiplayer Maps"
 
 class OneUpSanity(Toggle):
     """Enable 1UP Monitors as checks (247 Locations)"""
@@ -44,7 +46,7 @@ class OneUpSanity(Toggle):
 
 
 class BlackCoreEmblemCost(Range):
-    """Percentage of emblems needed for black core zone to be unlocked
+    """PERCENTAGE of emblems needed for black core zone to be unlocked
     Putting 0 will make Black Core Zone an item in the multiworld like the rest of the zones"""
     display_name = "Emblems for Black Core"
     range_start = 0
@@ -56,7 +58,7 @@ class EmblemNumber(Range):
     (There are about 250 locations with all emblems turned on)"""
     display_name = "Total Emblems"
     range_start = 50
-    range_end = 300
+    range_end = 250
     default = 180
 
 
@@ -79,6 +81,7 @@ srb2_options_groups = [
         RankEmblems,
         NTimeEmblems,
         OneUpSanity,
+        MPMaps
     ]),
     OptionGroup("Meta Options", [
         LogicDifficulty,
@@ -97,6 +100,7 @@ class SRB2Options(PerGameCommonOptions):
     rank_emblems: RankEmblems
     ntime_emblems: NTimeEmblems
     difficulty: LogicDifficulty
+    match_maps: MPMaps
     oneup_sanity: OneUpSanity
     radar_start: RadarStart
     num_emblems: EmblemNumber

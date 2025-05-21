@@ -1,7 +1,7 @@
 import typing
 import os
 import json
-from .Items import item_data_table, zones_item_data_table, character_item_data_table, other_item_table, item_table, SRB2Item
+from .Items import item_data_table, zones_item_data_table, character_item_data_table, other_item_table, item_table, mpmatch_item_table, SRB2Item
 from .Locations import location_table, SRB2Location
 from .Options import srb2_options_groups, SRB2Options
 from .Rules import set_rules
@@ -76,7 +76,7 @@ class SRB2World(World):
     def generate_early(self):
 
         #TODO rewrite this to calculate max locations then add filler based on emblem numbers
-        max_locations = 541#TODO up this once i have enough locations
+        max_locations = 562#TODO up this once i have enough locations
         if not self.options.time_emblems:
             max_locations -= 27
         if not self.options.ring_emblems:
@@ -89,7 +89,8 @@ class SRB2World(World):
             max_locations -= 12
         if not self.options.oneup_sanity:
             max_locations -= 246
-
+        if not self.options.match_maps:
+            max_locations -= 21
         self.number_of_locations = max_locations
         self.move_rando_bitvec = 0
 
@@ -137,6 +138,13 @@ class SRB2World(World):
                 self.multiworld.itempool += [self.create_item(shield)]
                 slots_to_fill -=1
 
+            if self.options.match_maps:
+                for zone in mpmatch_item_table.keys():
+                    self.multiworld.itempool += [self.create_item(zone)]
+                    slots_to_fill -= 1
+
+
+
             self.multiworld.itempool += [self.create_item("Chaos Emerald") for i in range(7)]
             slots_to_fill -= 7
 
@@ -170,7 +178,7 @@ class SRB2World(World):
 
             if slots_to_fill!= 0:
 
-                spread = int(slots_to_fill/15)
+                spread = int(slots_to_fill/19)
                 print(spread)
                 if spread != 0:
                     self.multiworld.itempool += [self.create_item("Forced Pity Shield") for i in range(spread)]
@@ -188,8 +196,12 @@ class SRB2World(World):
                     self.multiworld.itempool += [self.create_item("Sonic Forces") for i in range(spread)]
                     self.multiworld.itempool += [self.create_item("Temporary Invincibility") for i in range(spread)]
                     self.multiworld.itempool += [self.create_item("Temporary Super Sneakers") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Shrink Monitor") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Grow Monitor") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Self-Propelled Bomb") for i in range(spread)]
+                    self.multiworld.itempool += [self.create_item("Double Rings") for i in range(spread)]
 
-                slots_to_fill = slots_to_fill % 15
+                slots_to_fill = slots_to_fill % 19
                 if slots_to_fill > 0:
                     self.multiworld.itempool += [self.create_item("1UP") for i in range(slots_to_fill)]
 
@@ -206,6 +218,7 @@ class SRB2World(World):
             "DeathLink": self.options.death_link.value,
             "CompletionType": self.options.completion_type.value,
             "BlackCoreEmblems": self.options.bcz_emblems.value,
+            "EnableMatchMaps": self.options.match_maps.value
         }
 
     def generate_output(self, output_directory: str):

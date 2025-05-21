@@ -1,3 +1,6 @@
+
+dofile("SPB_Recreation.lua")
+dofile("ExitMPLevels.lua")
 COM_AddCommand("hub", function(player)
 if not isServer and multiplayer then 
 print("You must be the server host to run this command")
@@ -9,6 +12,10 @@ G_SetCustomExitVars(125, 1)
 G_ExitLevel()
 end)
 
+
+
+
+
 --addHook("MobjSpawn", function(object)
 --P_SpawnMobjFromMobj(object,0,0,0,MT_CUSTOMRING_BOX)
 --P_RemoveMobj(object)
@@ -17,6 +24,15 @@ end)
 
 local enabledrill = 0
 local enabletime = 0
+local showcoords = false
+
+
+
+COM_AddCommand("showcoords", function(player)
+showcoords = not showcoords
+print("WIP")
+print("x: "..player.mo.x/FRACUNIT .." y: "..player.mo.y/FRACUNIT)
+end)
 
 addHook("PlayerSpawn",function(player)
 player.extrarings = 0
@@ -26,10 +42,8 @@ end)
 
 addHook("NetVars",function(network)
 for player in players.iterate()
-        if player and player.valid then
             player.extrarings = network($)
 			player.startingrings = network($)
-        end
     end
 end)
 
@@ -71,46 +85,69 @@ P_RemoveMobj(object)
 return false end
 end,MT_NIGHTSEXTRATIME)
 
+addHook("PlayerThink", function(player)-- stupid dumb idiot code
+if player.shrinktrap then
+	if player.shrinktrap>0 then
+		player.mo.destscale = FRACUNIT/2
+		player.shrinktrap = player.shrinktrap - 1
+	end
+	if player.shrinktrap<0 then
+		player.mo.destscale = FRACUNIT*2
+		player.shrinktrap = player.shrinktrap + 1
+	end
+	if player.shrinktrap == 0 then
+		player.mo.destscale = FRACUNIT
+	end
+end
+end)
 
-addHook("PlayerThink", function()-- stupid dumb idiot code
-for player in players.iterate() do
+addHook("PlayerThink", function(player)-- stupid dumb idiot code
+if player.doublerings then
+	if player.doublerings>0 then
+		if player.rings > player.oldrings then
+		player.rings = player.rings+(player.rings-player.oldrings)
+		player.oldrings = player.rings
+		end
+		if player.rings < player.oldrings then
+		player.oldrings = player.rings end
+		player.doublerings = player.doublerings - 1
+	end
+	end
+end)
+
+addHook("PlayerThink", function(player)-- stupid dumb idiot code
 if player.frictiontrap then
 	if player.frictiontrap>0 then
-		player.mo.friction = 63820
-		player.mo.movefactor = FRACUNIT/2
+		player.mo.friction = 63900
+		player.mo.movefactor = FRACUNIT/3
 		player.frictiontrap = player.frictiontrap - 1
 		if player.frictiontrap == 0 then
 			player.mo.friction = 59392
 			player.mo.movefactor = FRACUNIT
 		end
 	end
-	end
 end
 end)
 
-addHook("PlayerThink", function()-- stupid dumb idiot code
-for player in players.iterate() do
+addHook("PlayerThink", function(player)-- stupid dumb idiot code
 if player.extrarings then
 	if player.extrarings>0 then
 		player.rings = $ + player.extrarings
 		player.extrarings = 0
 		end
 	end
-	end
 end)
 
 
-addHook("PlayerThink", function()-- stupid dumb idiot code
-for player in players.iterate() do
+addHook("PlayerThink", function(player)-- stupid dumb idiot code
 if player.forcestrap then
 	if player.forcestrap>0 then
 		local angle = player.mo.angle
-		player.mo.momx = FixedMul(36*FRACUNIT, cos(angle))  -- Knockback in facing direction
+		player.mo.momx = FixedMul(36*FRACUNIT, cos(angle))
         player.mo.momy = FixedMul(36*FRACUNIT, sin(angle))
 		player.drawangle = angle
 		player.forcestrap = player.forcestrap - 1
 	end
-end
 end
 end)
 
@@ -144,13 +181,28 @@ f:write(object.y)
 local stringma = [[ 
 ]]
 f:write(stringma)
-token = 0
 f:close()
 end, MT_1UP_BOX)
 
-
+--addHook("MobjSpawn", function(object)
+--if not isserver and multiplayer then return end
+--local f = assert(io.openlocal("APTokens.txt","a"))
+--f:write("MAP")
+--f:write(gamemap)
+--f:write(" Monitor - x:")
+--f:write(object.x/65536)
+--f:write(" y:")
+--f:write(object.y/65536)
+--local stringma = [[ 
+--]]
+--f:write(stringma)
+--f:close()
+--P_KillMobj(object)
+--end, MT_RING_BOX)
 
 local function HUDstuff(v)
+
+
 
 if not players[0].currentemblems then return end
 local curembl = players[0].currentemblems
@@ -314,15 +366,15 @@ end
 
 
 if bytes[3] == 6 then --& knuckles
-for player in players.iterate() do
-        if player and player.valid and player.mo then
-	    COM_BufInsertText(server, "addbot knuckles")
-
-
+f:seek("set",2)
+f:write("\0")
+f:flush()
+G_AddPlayer(skins[2].name,0,"Knuckles",BOT_2PAI)
+	    --COM_BufInsertText(server, "addbot knuckles")
 	    S_StartSound(player.mo, sfx_bowl)
-        end
-    end
+
 end
+
 if bytes[3] == 7 then --dropped inputs
 for player in players.iterate() do
         if player and player.valid and player.mo then
@@ -357,7 +409,7 @@ end
 if bytes[3] == 11 then --icy floors
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.frictiontrap = TICRATE*60
+	        player.frictiontrap = TICRATE*90
 
         end
     end
@@ -402,6 +454,36 @@ for player in players.iterate() do
 
 end
 
+if bytes[3] == 16 then --self propelled bomb
+P_SpawnMobjFromMobj(players[0].mo,0,0,400*FRACUNIT,MT_SPBM)
+end
+
+if bytes[3] == 17 then --shrink monitor
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+		player.shrinktrap = TICRATE*40
+
+        end
+    end
+end
+if bytes[3] == 18 then --grow monitor
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+		player.shrinktrap = TICRATE*-40
+
+        end
+    end
+end
+if bytes[3] == 19 then --double rings
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+		player.doublerings = 30*TICRATE
+		player.oldrings = player.rings
+        end
+    end
+end
+
+
 f:seek("set",2)
 f:write("\0")
 f:flush()
@@ -434,6 +516,9 @@ for player in players.iterate() do
 	    if player.powers[pw_shield] == SH_WHIRLWIND then
 		player.powers[pw_shield] = SH_NONE
 		end
+		if player.powers[pw_shield] == (SH_WHIRLWIND | SH_FIREFLOWER) then
+		player.powers[pw_shield] = SH_FIREFLOWER
+		end
         end
     end
 end
@@ -442,6 +527,9 @@ for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_ARMAGEDDON then
 		player.powers[pw_shield] = SH_NONE
+		end
+		if player.powers[pw_shield] == (SH_ARMAGEDDON | SH_FIREFLOWER) then
+		player.powers[pw_shield] = SH_FIREFLOWER
 		end
         end
     end
@@ -489,6 +577,9 @@ for player in players.iterate() do
 	    if player.powers[pw_shield] == SH_ELEMENTAL then
 		player.powers[pw_shield] = SH_NONE
 		end
+		if player.powers[pw_shield] == (SH_ELEMENTAL | SH_FIREFLOWER) then
+		player.powers[pw_shield] = SH_FIREFLOWER
+		end
         end
     end
 end
@@ -499,10 +590,13 @@ for player in players.iterate() do
 	    if player.powers[pw_shield] == SH_ATTRACT then
 		player.powers[pw_shield] = SH_NONE
 		end
+		if player.powers[pw_shield] == (SH_ATTRACT | SH_FIREFLOWER) then
+		player.powers[pw_shield] = SH_FIREFLOWER
+		end
         end
     end
 end
-if bytes[8] == 0 then --force
+if (bytes[8] & 1) == 0 then --force
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] & SH_FORCE then
@@ -512,7 +606,7 @@ for player in players.iterate() do
     end
 end
 
-if bytes[9] == 0 then --s3k flame
+if (bytes[8] & 2) == 0 then --s3k flame
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_FLAMEAURA then
@@ -522,7 +616,7 @@ for player in players.iterate() do
     end
 end
 
-if bytes[10] == 0 then --s3k bubble
+if (bytes[8] & 4) == 0 then --s3k bubble
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_BUBBLEWRAP then
@@ -532,7 +626,7 @@ for player in players.iterate() do
     end
 end
 
-if bytes[11] == 0 then --s3k lightning
+if (bytes[8] & 8) == 0 then --s3k lightning
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_THUNDERCOIN then
@@ -554,6 +648,74 @@ end
 
 
 if gamemap == 125 then
+if (bytes[9] & 1) == 1 then--multiplayer stage toggle
+  P_LinedefExecute(131)
+  end
+if (bytes[9] & 2) == 2 then
+  P_LinedefExecute(132)
+  end
+if (bytes[9] & 4) == 4 then
+  P_LinedefExecute(133)
+  end
+if (bytes[9] & 8) == 8 then
+  P_LinedefExecute(134)
+  end
+if (bytes[9] & 16) == 16 then
+  P_LinedefExecute(135)
+  end
+if (bytes[9] & 32) == 32 then
+  P_LinedefExecute(136)
+  end
+if (bytes[9] & 64) == 64 then
+  P_LinedefExecute(137)
+  end
+if (bytes[9] & 128) == 128 then
+  P_LinedefExecute(138)
+  end
+if (bytes[10] & 1) == 1 then--multiplayer stage toggle
+  P_LinedefExecute(139)
+  end
+if (bytes[10] & 2) == 2 then
+  P_LinedefExecute(140)
+  end
+if (bytes[10] & 4) == 4 then
+  P_LinedefExecute(141)
+  end
+if (bytes[10] & 8) == 8 then
+  P_LinedefExecute(142)
+  end
+if (bytes[10] & 16) == 16 then
+  P_LinedefExecute(143)
+  end
+if (bytes[10] & 32) == 32 then
+  P_LinedefExecute(144)
+  end
+if (bytes[10] & 64) == 64 then
+  P_LinedefExecute(145)
+  end
+if (bytes[10] & 128) == 128 then
+  P_LinedefExecute(146)
+  end
+if (bytes[11] & 1) == 1 then
+  P_LinedefExecute(147)
+  end
+if (bytes[11] & 2) == 2 then
+  P_LinedefExecute(148)
+  end
+if (bytes[11] & 4) == 4 then
+  P_LinedefExecute(149)
+  end
+if (bytes[11] & 8) == 8 then
+  P_LinedefExecute(150)
+  end
+if (bytes[11] & 16) == 16 then
+  P_LinedefExecute(151)
+  end
+if (bytes[11] & 32) == 32 then
+  P_LinedefExecute(152)
+  end
+
+
   if (bytes[12] & 1) == 1 then
   P_LinedefExecute(100)
   end

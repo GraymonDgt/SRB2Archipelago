@@ -6,7 +6,6 @@ Clear ExtraEmblems
 Clear ConditionSets
 Clear All
 
-
 Unlockable 1
 Type = Skin
 NoCecho = true
@@ -725,6 +724,213 @@ Grades1 = 0,15000,20000,35000,50000,70000
 Grades2 = 0,15000,20000,35000,50000,70000
 Grades3 = 0,15000,20000,35000,50000,80000
 Grades4 = 0,15000,20000,35000,50000,60000
+
+# Match
+
+Level M0
+LevelName = Jade Valley
+Music = MP_SUN
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 1
+
+Level M1
+LevelName = Noxious Factory
+Music = THZ1
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 4
+
+LEVEL M2
+LevelName = Tidal Palace
+Music = DSZ2
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 7
+
+Level M3
+LevelName = Thunder Citadel
+Music = CEZ2
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+Weather = 1
+SkyNum = 10
+
+Level M4
+LevelName = Desolate Twilight
+Music = MP_DES
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 101
+SkyboxScale = 64
+
+Level M5
+LevelName = Frigid Mountain
+Music = MP_IC2
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 6
+Weather = 2
+
+Level M6
+LevelName = Orbital Hangar
+Music = MP_DOM
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 22
+
+Level M7
+LevelName = Sapphire Falls
+Music = MP_GHZ
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyboxScale = 64
+SkyNum = 502
+
+Level M8
+LevelName = Diamond Blizzard
+Music = MP_AIR
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+Weather = 2
+SkyNum = 55
+
+Level M9
+LevelName = Celestial Sanctuary
+Music = MP_FOR
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+Weather = 3
+SkyboxScaleZ = 16
+SkyNum = 230
+
+Level MA
+LevelName = Frost Columns
+Music = MP_ICE
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+Weather = 2
+SkyNum = 6
+
+Level MB
+LevelName = Meadow Match
+Music = MP_MED
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 2
+
+Level MC
+Levelname = Granite Lake
+Music = MP_GLZ
+TypeOfLevel = Singleplayer,Match,Tag
+NextLevel = 125
+RecordAttack = true
+SkyNum = 16
+SkyboxScale = 32
+SelectHeading = Standard
+
+Level MD
+LevelName = Summit Showdown
+Music = VSAGZ
+TypeOfLevel = Singleplayer,Match,Tag
+NextLevel = 125
+RecordAttack = true
+Weather = PRECIP_SNOW
+SkyNum = 17
+SkyboxScaleX = 64
+SkyboxScaleY = 64
+SelectHeading = Standard
+
+Level ME
+Levelname = Silver Shiver
+Music = MP_WT3
+TypeOfLevel = Singleplayer,Match,Tag
+NextLevel = 125
+RecordAttack = true
+SkyNum = 20
+Weather = PRECIP_SNOW
+SelectHeading = Standard
+
+Level MF
+LevelName = Uncharted Badlands
+Music = SPEC5
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 11
+SkyboxScale = 64
+
+Level MG
+LevelName = Pristine Shores
+Music = MP_GHZ
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 76
+Skyboxscale = 32
+
+Level MH
+LevelName = Crystalline Heights
+Music = MP_CHZ
+TypeOfLevel = Singleplayer,Match,Tag
+SelectHeading = Standard
+NextLevel = 125
+RecordAttack = true
+SkyNum = 69
+Skyboxscale = 256
+
+Level N0
+LevelName = Starlit Warehouse
+Music = DCZ
+NextLevel = 125
+RecordAttack = true
+TypeOfLevel = Singleplayer,Match,Tag
+SkyNum = 21
+SelectHeading = Classic
+
+Level N1
+LevelName = Midnight Abyss
+Music = MP_DM2
+NextLevel = 125
+RecordAttack = true
+TypeOfLevel = Singleplayer,Match,Tag
+SkyNum = 22
+SelectHeading = Classic
+
+Level N2
+LevelName = Airborne Temple
+Music = MP_AI2
+NextLevel = 125
+RecordAttack = true
+TypeOfLevel = Singleplayer,Match,Tag
+SkyNum = 2
+SelectHeading = Classic
 
 Level Z0
 Levelname = Tutorial
@@ -2547,4 +2753,151 @@ Emblem
 Type = Map
 MapNum = 73
 Sprite = F
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 532
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 533
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 534
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 535
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 536
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 537
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 538
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 500
+MapNum = 539
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 540
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 541
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 542
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 150
+MapNum = 543
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 544
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 545
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 500
+MapNum = 546
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 150
+MapNum = 547
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 500
+MapNum = 548
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 549
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 200
+MapNum = 568
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 250
+MapNum = 569
+Sprite = R
+Color = SKINCOLOR_GOLD
+
+Emblem
+Type = Rings
+Var = 300
+MapNum = 570
+Sprite = R
 Color = SKINCOLOR_GOLD

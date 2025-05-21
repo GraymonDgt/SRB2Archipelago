@@ -1632,7 +1632,7 @@ async def file_watcher(ctx, file_path):
         print("could not overwrite old save data (lack of permission). Try closing the file in HXD you dumbass")
 
     cfg = open(file_path + "/AUTOEXEC.CFG", "w")
-    cfg.write("addfile addons/SL_ArchipelagoSRB2_v120.pk3")
+    cfg.write("addfile addons/SL_ArchipelagoSRB2_v130.pk3")
     cfg.close()
     os.chdir(file_path)
     try:

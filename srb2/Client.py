@@ -1197,6 +1197,7 @@ async def item_handler(ctx, file_path):
     file_path2 = file_path + "/apgamedat1.ssg"
 
     f = open(file_path + "/luafiles/APTranslator.dat", 'w+b')
+    f.write(0x69.to_bytes(1, byteorder="little"))
     f.close()
     # set up new save file here
     # dont need to zero anything out because the first write will overwrite everything wrong

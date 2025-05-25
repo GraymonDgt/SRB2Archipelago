@@ -37,7 +37,7 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     "Self-Propelled Bomb": SRB2ItemData(81, ItemClassification.trap),
     "Shrink Monitor": SRB2ItemData(82, ItemClassification.trap),
     "Grow Monitor": SRB2ItemData(83, ItemClassification.trap),
-    "Double Rings": SRB2ItemData(84, ItemClassification.trap),
+    "Double Rings": SRB2ItemData(84, ItemClassification.filler),
 
 
     "Extended Invincibility": SRB2ItemData(90, ItemClassification.useful),

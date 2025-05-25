@@ -308,7 +308,7 @@ end
 
 for player in players.iterate() do
         if player and player.valid and player.mo then
-            if player.deadtimer == 1 then --send a deathlink
+            if player.deadtimer == 1 and player.bot = BOT_NONE then --send a deathlink
 		f:seek("set",1)
 		f:write("x")
 		f:flush()
@@ -830,12 +830,3 @@ end
 end
 
 addHook("ThinkFrame", readupdates,"DEATHL")
-
-
-
-
-
-
-
-
-

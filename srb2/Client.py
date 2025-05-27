@@ -20,6 +20,9 @@ import Utils
 import struct
 import math
 
+
+
+
 if __name__ == "__main__":
     Utils.init_logging("TextClient", exception_logger="Client")
 
@@ -1248,7 +1251,13 @@ async def item_handler(ctx, file_path):
 
                     except KeyError:
                         h.write(0x80.to_bytes(1, byteorder="little"))
-                        h.write((strings["text"].encode("ascii"))) #stupid
+                        try:
+                            h.write((strings["text"].encode("UTF-8"))) #stupid
+                        except UnicodeError:
+                            h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
+                    except UnicodeError:
+                        h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
+
                 h.write(0x0A.to_bytes(1, byteorder="little"))
             ctx.texttransfer = []
             f.seek(0x18)
@@ -1633,7 +1642,7 @@ async def file_watcher(ctx, file_path):
         print("could not overwrite old save data (lack of permission). Try closing the file in HXD you dumbass")
 
     cfg = open(file_path + "/AUTOEXEC.CFG", "w")
-    cfg.write("addfile addons/SL_ArchipelagoSRB2_v130.pk3")
+    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
     cfg.close()
     os.chdir(file_path)
     try:

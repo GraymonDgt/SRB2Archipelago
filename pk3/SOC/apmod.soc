@@ -739,7 +739,7 @@ SkyNum = 1
 Level M1
 LevelName = Noxious Factory
 Music = THZ1
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -748,7 +748,7 @@ SkyNum = 4
 LEVEL M2
 LevelName = Tidal Palace
 Music = DSZ2
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -757,7 +757,7 @@ SkyNum = 7
 Level M3
 LevelName = Thunder Citadel
 Music = CEZ2
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -767,7 +767,7 @@ SkyNum = 10
 Level M4
 LevelName = Desolate Twilight
 Music = MP_DES
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -777,7 +777,7 @@ SkyboxScale = 64
 Level M5
 LevelName = Frigid Mountain
 Music = MP_IC2
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -787,7 +787,7 @@ Weather = 2
 Level M6
 LevelName = Orbital Hangar
 Music = MP_DOM
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -796,7 +796,7 @@ SkyNum = 22
 Level M7
 LevelName = Sapphire Falls
 Music = MP_GHZ
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -806,7 +806,7 @@ SkyNum = 502
 Level M8
 LevelName = Diamond Blizzard
 Music = MP_AIR
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -816,7 +816,7 @@ SkyNum = 55
 Level M9
 LevelName = Celestial Sanctuary
 Music = MP_FOR
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -827,7 +827,7 @@ SkyNum = 230
 Level MA
 LevelName = Frost Columns
 Music = MP_ICE
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -837,7 +837,7 @@ SkyNum = 6
 Level MB
 LevelName = Meadow Match
 Music = MP_MED
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -846,7 +846,7 @@ SkyNum = 2
 Level MC
 Levelname = Granite Lake
 Music = MP_GLZ
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 NextLevel = 125
 RecordAttack = true
 SkyNum = 16
@@ -856,7 +856,7 @@ SelectHeading = Standard
 Level MD
 LevelName = Summit Showdown
 Music = VSAGZ
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 NextLevel = 125
 RecordAttack = true
 Weather = PRECIP_SNOW
@@ -868,7 +868,7 @@ SelectHeading = Standard
 Level ME
 Levelname = Silver Shiver
 Music = MP_WT3
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 NextLevel = 125
 RecordAttack = true
 SkyNum = 20
@@ -878,7 +878,7 @@ SelectHeading = Standard
 Level MF
 LevelName = Uncharted Badlands
 Music = SPEC5
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -888,7 +888,7 @@ SkyboxScale = 64
 Level MG
 LevelName = Pristine Shores
 Music = MP_GHZ
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -898,7 +898,7 @@ Skyboxscale = 32
 Level MH
 LevelName = Crystalline Heights
 Music = MP_CHZ
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SelectHeading = Standard
 NextLevel = 125
 RecordAttack = true
@@ -910,7 +910,7 @@ LevelName = Starlit Warehouse
 Music = DCZ
 NextLevel = 125
 RecordAttack = true
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SkyNum = 21
 SelectHeading = Classic
 
@@ -919,7 +919,7 @@ LevelName = Midnight Abyss
 Music = MP_DM2
 NextLevel = 125
 RecordAttack = true
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SkyNum = 22
 SelectHeading = Classic
 
@@ -928,7 +928,7 @@ LevelName = Airborne Temple
 Music = MP_AI2
 NextLevel = 125
 RecordAttack = true
-TypeOfLevel = Singleplayer,Match,Tag
+TypeOfLevel = Singleplayer,Co-op,Match,Tag
 SkyNum = 2
 SelectHeading = Classic
 

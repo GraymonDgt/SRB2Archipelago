@@ -5,6 +5,10 @@ Avoid mentioning/ linking this on the main AP Discord because of the "no fangame
 All discussion/ development of this APworld will take place here:
 https://discord.gg/kkH4wBUmG9
 
+If you don't already have the standalone Archipelago client installed, download it from here:
+https://github.com/ArchipelagoMW/Archipelago
+
+
 # SETUP GUIDE
 
 Download srb2 here: https://www.srb2.org/download/
@@ -24,10 +28,6 @@ Connect to archipelago and SRB2 will automatically open with the AP mod loaded
 # ADDITIONAL NOTES
 
 type "hub" into the console to return to the hub at any time
-
-IF YOU USE autoexec.cfg BACK IT UP BEFORE LOADING THE AP CLIENT, IT WILL BE CLEARED UPON JOINING
-
-Make sure to delete the file 'apgamedat.dat' before connecting if you have played a different AP game with SRB2 before
 
 If the AP mod didn't load, you can load it yourself and everything will work fine
 

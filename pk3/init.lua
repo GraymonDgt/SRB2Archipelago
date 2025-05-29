@@ -25,6 +25,18 @@ end)
 local enabledrill = 0
 local enabletime = 0
 local showcoords = false
+local monitorid = 0
+
+addHook("MapChange", function()
+monitorid = 0
+end)
+
+addHook("MobjSpawn", function(object)
+object.checkid = monitorid
+monitorid = $ + 1
+
+end,MT_1UP_BOX)
+
 
 
 
@@ -37,6 +49,7 @@ end)
 addHook("PlayerSpawn",function(player)
 player.extrarings = 0
 player.startingrings = 0
+player.shrinktrap = 1
 end)
 
 
@@ -176,8 +189,9 @@ if not isserver and multiplayer then return end
 local f = assert(io.openlocal("APTokens.txt","a"))
 f:write(gamemap)
 f:write(":")
-f:write(object.x)
-f:write(object.y)
+--f:write(object.x)
+--f:write(object.y)
+f:write(object.checkid)
 local stringma = [[ 
 ]]
 f:write(stringma)
@@ -830,3 +844,4 @@ end
 end
 
 addHook("ThinkFrame", readupdates,"DEATHL")
+

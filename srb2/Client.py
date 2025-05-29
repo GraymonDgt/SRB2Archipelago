@@ -19,7 +19,7 @@ import websockets
 import Utils
 import struct
 import math
-
+import subprocess
 
 
 
@@ -1436,7 +1436,7 @@ async def item_handler(ctx, file_path):
                 sent_shields[4] = sent_shields[4] + 2
             if id == 62:  # bubble
                 sent_shields[4] = sent_shields[4] + 4
-            if id == 56:  # lightning
+            if id == 63:  # lightning
                 sent_shields[4] = sent_shields[4] + 8
 
             if id == 200:#jade valley
@@ -1641,23 +1641,29 @@ async def file_watcher(ctx, file_path):
     except PermissionError:
         print("could not overwrite old save data (lack of permission). Try closing the file in HXD you dumbass")
 
-    cfg = open(file_path + "/AUTOEXEC.CFG", "w")
-    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
-    cfg.close()
-    os.chdir(file_path)
-    try:
-        os.startfile("srb2win.exe")
-        await asyncio.sleep(10)
-    except:
-        logger.info(
-            'Could not open srb2win.exe. If you are using Linux, you must open the game and load the addon manually')
+##    cfg = open(file_path + "/AUTOEXEC.CFG", "w")
+##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
+##    cfg.close()
+##    os.chdir(file_path)
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v135.pk3"):
+        try:
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v135.pk3"], cwd=file_path)
+        except:
+            logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
+    else:
+        try:
+            subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
+            logger.info('Could not find SL_ArchipelagoSRB2_v135.pk3 in the addons folder. You must load the addon manually')
+        except:
+            logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
+
     # look into subprocess.Popen, if used correctly, i might be able to acess srb2's console output for commands and
     # use COM_BufInsertText(server, "command") to type in console
     # recieved notifications
 
-    cfg = open(file_path + "/AUTOEXEC.CFG", "w")
-    cfg.write("")
-    cfg.close()
+    #cfg = open(file_path + "/AUTOEXEC.CFG", "w")
+    #cfg.write("")
+    #cfg.close()
     # if not do nothing (srb2 will create an empty gamedat on launch)
     # if it does, get checked locations from the server, and overwrite corresponding bits in apgamedat
 

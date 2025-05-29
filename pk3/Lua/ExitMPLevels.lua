@@ -7,7 +7,7 @@ local totalrings = 0
 local exitlevel = false
 for player in players.iterate() do
 totalrings = $ + player.rings
-
+end
 
 if gamemap == 543 or gamemap == 547 then
 if totalrings >= 150 then
@@ -37,11 +37,13 @@ end
 if exitlevel == true then
 
 		for player in players.iterate() do
+		if player.bot == BOT_NONE then
 		player.rings = totalrings
 		P_DoPlayerFinish(player)
+		end
 		end
 		
 	end
 end
-end
+
 end)

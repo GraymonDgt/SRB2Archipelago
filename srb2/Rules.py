@@ -107,8 +107,10 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         if options.difficulty == 0:
             rf.assign_rule("Greenflower (Act 1) Heart Emblem", "TAILS")
 
+        #rf.assign_rule("Greenflower (Act 2) Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
         rf.assign_rule("Greenflower (Act 2) Heart Emblem", "AMY")
         rf.assign_rule("Greenflower (Act 2) Diamond Emblem", "KNUCKLES")
+        #rf.assign_rule("Greenflower (Act 2) Spade Emblem", "SONIC | TAILS | KNUCKLES | METALSONIC")
         rf.assign_rule("Greenflower (Act 2) Emerald Token - No Spin High on Ledge", "AMY | FANG")
 
         if options.oneup_sanity:
@@ -129,7 +131,8 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Techno Hill (Act 1) Heart Emblem", "TAILS")
         rf.assign_rule("Techno Hill (Act 1) Diamond Emblem", "TAILS | KNUCKLES")
         rf.assign_rule("Techno Hill (Act 1) Club Emblem", "KNUCKLES")
-        rf.assign_rule("Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack as Amy", "AMY")
+        #rf.assign_rule("Techno Hill (Act 2) Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
+        rf.assign_rule("Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack", "AMY")
         if options.difficulty == 0:
             rf.assign_rule("Techno Hill (Act 2) Emerald Token - Deep in Slime", "ELEMENTAL")
             rf.assign_rule("Techno Hill (Act 1) Star Emblem", "TAILS | KNUCKLES")  # INTENDED SONIC PATH FOR THIS BTW
@@ -151,11 +154,18 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         # Deep Sea
         rf.assign_rule("Deep Sea (Act 1) Star Emblem", "AMY")
         rf.assign_rule("Deep Sea (Act 1) Spade Emblem", "TAILS | KNUCKLES | METAL SONIC | WIND")
+        #rf.assign_rule("Deep Sea (Act 1) Emerald Token - Yellow Doors", "SONIC | TAILS | KNUCKLES | METALSONIC")
+
 
         rf.assign_rule("Deep Sea (Act 2) Star Emblem", "AMY | FANG")
         rf.assign_rule("Deep Sea (Act 2) Spade Emblem", "TAILS | KNUCKLES")
+        #rf.assign_rule("Deep Sea (Act 2) Heart Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
         rf.assign_rule("Deep Sea (Act 2) Diamond Emblem", "KNUCKLES")
         rf.assign_rule("Deep Sea (Act 2) Club Emblem", "TAILS | KNUCKLES")
+        #rf.assign_rule("Deep Sea (Act 2) Emerald Token - Near Heart Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
+
+
+
         rf.assign_rule("Deep Sea (Act 2) Emerald Token - No Spin Spring Turnaround", "AMY | FANG")
         if options.difficulty == 0:
             rf.assign_rule("Deep Sea (Act 1) Heart Emblem", "TAILS | KNUCKLES")
@@ -384,6 +394,7 @@ class RuleFactory:
     moveless: bool
 
     token_table = {
+        "SONIC": "Sonic",
         "TAILS": "Tails",
         "KNUCKLES": "Knuckles",
         "AMY": "Amy",

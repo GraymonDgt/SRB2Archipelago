@@ -42,7 +42,11 @@ class OneUpSanity(Toggle):
     """Enable 1UP Monitors as checks (247 Locations)"""
     display_name = "1UP-Sanity"
 
-
+class SuperRingSanity(Toggle):
+    """Enable Ring Monitors as checks
+    Normal - 598 Locations
+    With Ringslinger Maps - 976 Locations"""
+    display_name = "Super Ring-Sanity"
 
 
 class BlackCoreEmblemCost(Range):
@@ -57,10 +61,16 @@ class EmblemNumber(Range):
     """Total Number of emblems
     (There are about 250 locations with all emblems turned on)"""
     display_name = "Total Emblems"
-    range_start = 50
+    range_start = 10
     range_end = 250
     default = 180
 
+class TrapPercentage(Range):
+    """Percentage of filler items to replace with traps"""
+    display_name = "Trap Percentage"
+    range_start = 0
+    range_end = 100
+    default = 30
 
 class CompletionType(Choice):
     """Set goal for Victory Condition
@@ -81,12 +91,14 @@ srb2_options_groups = [
         RankEmblems,
         NTimeEmblems,
         OneUpSanity,
+        SuperRingSanity,
         MPMaps
     ]),
     OptionGroup("Meta Options", [
         LogicDifficulty,
         RadarStart,
         BlackCoreEmblemCost,
+        TrapPercentage,
         EmblemNumber,
     ]),
 ]
@@ -102,8 +114,10 @@ class SRB2Options(PerGameCommonOptions):
     difficulty: LogicDifficulty
     match_maps: MPMaps
     oneup_sanity: OneUpSanity
+    superring_sanity: SuperRingSanity
     radar_start: RadarStart
     num_emblems: EmblemNumber
-    bcz_emblems:BlackCoreEmblemCost
+    bcz_emblem_percent:BlackCoreEmblemCost
+    trap_percentage:TrapPercentage
     death_link: DeathLink
     completion_type: CompletionType

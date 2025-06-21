@@ -15,6 +15,7 @@ end)
 
 
 
+ 
 
 --addHook("MobjSpawn", function(object)
 --P_SpawnMobjFromMobj(object,0,0,0,MT_CUSTOMRING_BOX)
@@ -26,6 +27,16 @@ local enabledrill = 0
 local enabletime = 0
 local showcoords = false
 local monitorid = 0
+--local bytes = {}
+rawset(_G,"bytes",{})
+
+addHook("NetVars", function(network)
+    bytes = network(bytes)
+end)
+
+
+
+
 
 addHook("MapChange", function()
 monitorid = 0
@@ -34,9 +45,13 @@ end)
 addHook("MobjSpawn", function(object)
 object.checkid = monitorid
 monitorid = $ + 1
-
+--P_KillMobj(object)
 end,MT_1UP_BOX)
-
+addHook("MobjSpawn", function(object)
+object.checkid = monitorid
+monitorid = $ + 1
+--P_KillMobj(object)
+end,MT_RING_BOX)
 
 
 
@@ -48,7 +63,6 @@ end)
 
 addHook("PlayerSpawn",function(player)
 player.extrarings = 0
-player.startingrings = 0
 player.shrinktrap = 1
 end)
 
@@ -131,7 +145,7 @@ end)
 addHook("PlayerThink", function(player)-- stupid dumb idiot code
 if player.frictiontrap then
 	if player.frictiontrap>0 then
-		player.mo.friction = 63900
+		player.mo.friction = 63815
 		player.mo.movefactor = FRACUNIT/3
 		player.frictiontrap = player.frictiontrap - 1
 		if player.frictiontrap == 0 then
@@ -144,7 +158,7 @@ end)
 
 addHook("PlayerThink", function(player)-- stupid dumb idiot code
 if player.extrarings then
-	if player.extrarings>0 then
+	if player.extrarings!=0 then
 		player.rings = $ + player.extrarings
 		player.extrarings = 0
 		end
@@ -191,12 +205,28 @@ f:write(gamemap)
 f:write(":")
 --f:write(object.x)
 --f:write(object.y)
+f:write("L")
 f:write(object.checkid)
 local stringma = [[ 
 ]]
 f:write(stringma)
 f:close()
 end, MT_1UP_BOX)
+
+addHook("MobjDeath", function(object, source, inflictor)
+if not isserver and multiplayer then return end
+local f = assert(io.openlocal("APTokens.txt","a"))
+f:write(gamemap)
+f:write(":")
+--f:write(object.x)
+--f:write(object.y)
+f:write("R")
+f:write(object.checkid)
+local stringma = [[ 
+]]
+f:write(stringma)
+f:close()
+end, MT_RING_BOX)
 
 --addHook("MobjSpawn", function(object)
 --if not isserver and multiplayer then return end
@@ -235,7 +265,7 @@ end
 end
 end
 
-hud.add(HUDstuff,score)
+hud.add(HUDstuff,"scores")
 
 --player.exiting force to be lower to exit faster
 
@@ -423,7 +453,7 @@ end
 if bytes[3] == 11 then --icy floors
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.frictiontrap = TICRATE*90
+	        player.frictiontrap = TICRATE*75
 
         end
     end
@@ -839,9 +869,104 @@ end
   emeralds = emeralds & bytes[16]
 
 
-	
-
 end
 
 addHook("ThinkFrame", readupdates,"DEATHL")
+
+addHook("MobjSpawn", function(object)
+if bytes[4] == 0 then --whirlwind
+P_KillMobj(object)
+end
+end,MT_WHIRLWIND_BOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[4] == 0 then --whirlwind
+P_RemoveMobj(object)
+end
+end,MT_WHIRLWIND_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[5] & 1) == 0 then --armageddon
+P_KillMobj(object)
+end
+end,MT_ARMAGEDDON_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[5] & 1) == 0 then --armageddon
+P_RemoveMobj(object)
+end
+end,MT_ARMAGEDDON_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[6] == 0 then --elemental
+P_KillMobj(object)
+end
+end,MT_ELEMENTAL_BOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[6] == 0 then --elemental
+P_RemoveMobj(object)
+end
+end,MT_ELEMENTAL_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[7] == 0 then --attraction
+P_KillMobj(object)
+end
+end,MT_ATTRACT_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 1) == 0 then --attract
+P_RemoveMobj(object)
+end
+end,MT_ATTRACT_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 1) == 0 then --force
+P_KillMobj(object)
+end
+end,MT_FORCE_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 1) == 0 then --force
+P_RemoveMobj(object)
+end
+end,MT_FORCE_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 2) == 0 then --s3k flame
+P_RemoveMobj(object)
+end
+end,MT_FLAMEAURA_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 2) == 0 then --s3k flame
+P_RemoveMobj(object)
+end
+end,MT_FLAMEAURA_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 4) == 0 then --s3k bubble
+P_RemoveMobj(object)
+end
+end,MT_BUBBLEWRAP_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 4) == 0 then --s3k bubble
+P_RemoveMobj(object)
+end
+end,MT_BUBBLEWRAP_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 8) == 0 then --s3k lightning
+P_RemoveMobj(object)
+end
+end,MT_THUNDERCOIN_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[8] & 8) == 0 then --s3k lightning
+P_RemoveMobj(object)
+end
+end,MT_THUNDERCOIN_GOLDBOX)
+
 

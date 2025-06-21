@@ -40,10 +40,10 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
     connect_regions(world, player, "Menu", "Arid Canyon Zone", lambda state: state.has("Arid Canyon Zone", player))
     connect_regions(world, player, "Menu", "Red Volcano Zone", lambda state: state.has("Red Volcano Zone", player))
     connect_regions(world, player, "Menu", "Egg Rock Zone", lambda state: state.has("Egg Rock Zone", player))
-    if options.bcz_emblems==0:
+    if options.bcz_emblem_percent==0:
         connect_regions(world, player, "Menu", "Black Core Zone", lambda state: state.has("Black Core Zone", player))
     else:
-        connect_regions(world, player, "Menu", "Black Core Zone", lambda state: state.has("Emblem", player, options.bcz_emblems))
+        connect_regions(world, player, "Menu", "Black Core Zone", lambda state: state.has("Emblem", player, options.bcz_emblem_percent))
 
     connect_regions(world, player, "Black Core Zone", "Credits", lambda state: state.has("Chaos Emerald", player, 7))
     connect_regions(world, player, "Menu", "Frozen Hillside Zone", lambda state: state.has("Frozen Hillside Zone", player))
@@ -107,20 +107,35 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         if options.difficulty == 0:
             rf.assign_rule("Greenflower (Act 1) Heart Emblem", "TAILS")
 
-        #rf.assign_rule("Greenflower (Act 2) Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
+        rf.assign_rule("Greenflower (Act 2) Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
         rf.assign_rule("Greenflower (Act 2) Heart Emblem", "AMY")
-        rf.assign_rule("Greenflower (Act 2) Diamond Emblem", "KNUCKLES")
-        #rf.assign_rule("Greenflower (Act 2) Spade Emblem", "SONIC | TAILS | KNUCKLES | METALSONIC")
+        rf.assign_rule("Greenflower (Act 2) Diamond Emblem", "KNUCKLES | AMY+WIND")
+        rf.assign_rule("Greenflower (Act 2) Spade Emblem", "SONIC | TAILS | KNUCKLES | METAL SONIC")
         rf.assign_rule("Greenflower (Act 2) Emerald Token - No Spin High on Ledge", "AMY | FANG")
 
         if options.oneup_sanity:
-            rf.assign_rule("Greenflower (Act 1) Monitor - x:1184 y:5824","TAILS | KNUCKLES | WIND")
-            rf.assign_rule("Greenflower (Act 2) Monitor - x:-480 y:-4480", "AMY | FANG")
-            rf.assign_rule("Greenflower (Act 2) Monitor - x:188 y:-347", "TAILS | KNUCKLES")
-            if options.difficulty == 0:
-                rf.assign_rule("Greenflower (Act 2) Monitor - x:3296 y:6624", "TAILS | KNUCKLES | METAL SONIC") #Possible as sonic but stupid
-                rf.assign_rule("Greenflower (Act 2) Monitor - x:720 y:-10320", "TAILS | KNUCKLES") #ditto above
+            rf.assign_rule("Greenflower (Act 1) Monitor - Highest Ledge","TAILS | KNUCKLES | WIND")
+            rf.assign_rule("Greenflower (Act 2) Monitor - Breakable Floor Near Springs 1", "AMY | FANG")
+            rf.assign_rule("Greenflower (Act 2) Monitor - Skylight in 2nd Cave", "TAILS | KNUCKLES")
+            rf.assign_rule("Greenflower (Act 2) Monitor - Near Star Emblem 1", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
 
+
+
+            if options.difficulty == 0:
+                rf.assign_rule("Greenflower (Act 2) Monitor - Waterfall Top Near Start","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND") #Possible as amy but stupid
+                rf.assign_rule("Greenflower (Act 2) Monitor - High Ledge After Final Cave", "TAILS | KNUCKLES") #badnik bounce
+
+        if options.superring_sanity:
+            if options.difficulty == 0:
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 1", "TAILS | KNUCKLES")
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 2", "TAILS | KNUCKLES")
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 3", "TAILS | KNUCKLES")
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 4", "TAILS | KNUCKLES")
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 5", "TAILS | KNUCKLES")
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 6", "TAILS | KNUCKLES")
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 7", "TAILS | KNUCKLES")
+                rf.assign_rule("Greenflower (Act 2) Monitor - Very High Alcove 8", "TAILS | KNUCKLES")
+            rf.assign_rule("Greenflower (Act 2) Monitor - Spin Path Red Springs", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
 
 
 
@@ -131,19 +146,22 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Techno Hill (Act 1) Heart Emblem", "TAILS")
         rf.assign_rule("Techno Hill (Act 1) Diamond Emblem", "TAILS | KNUCKLES")
         rf.assign_rule("Techno Hill (Act 1) Club Emblem", "KNUCKLES")
-        #rf.assign_rule("Techno Hill (Act 2) Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
+        rf.assign_rule("Techno Hill (Act 2) Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
         rf.assign_rule("Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack", "AMY")
         if options.difficulty == 0:
             rf.assign_rule("Techno Hill (Act 2) Emerald Token - Deep in Slime", "ELEMENTAL")
             rf.assign_rule("Techno Hill (Act 1) Star Emblem", "TAILS | KNUCKLES")  # INTENDED SONIC PATH FOR THIS BTW
 
         if options.oneup_sanity:
-            rf.assign_rule("Techno Hill (Act 1) Monitor - x:-3904 y:-12224", "TAILS | KNUCKLES")
-            rf.assign_rule("Techno Hill (Act 1) Monitor - x:14400 y:-6208", "TAILS | KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Spin Under Conveyor Belt Door", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path Highest Ledge", "TAILS | KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Outside Pipe Room High Ledge", "TAILS | KNUCKLES")
             rf.assign_rule("Techno Hill (Act 2) Monitor - x:-11584 y:-4768","KNUCKLES")
             rf.assign_rule("Techno Hill (Act 2) Monitor - x:832 y:-6144", "ELEMENTAL | KNUCKLES | FANG")
             rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16000 y:-6464", "AMY")
             rf.assign_rule("Techno Hill (Act 2) Monitor - x:4128 y:-224", "TAILS | KNUCKLES")#probably possible as sonic
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-18592 y:-4096", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+
             if options.difficulty == 0:
                 rf.assign_rule("Techno Hill (Act 1) Monitor - x:2976 y:4384", "TAILS | KNUCKLES")#INTENDED SONIC PATH FOR THIS BTW
                 rf.assign_rule("Techno Hill (Act 2) Monitor - x:0 y:2240","TAILS | KNUCKLES | FANG | WIND")  # or 7 emeralds
@@ -151,18 +169,44 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             else:
                 rf.assign_rule("Techno Hill (Act 2) Monitor - x:0 y:2240","TAILS | KNUCKLES | AMY | FANG | WIND")  # or 7 emeralds
 
+
+        if options.superring_sanity:
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path Behind Pipe", "TAILS | KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path on Ledge", "TAILS | KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path High Ledge", "TAILS | KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path on Pipes", "TAILS | KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path in Slime", "SONIC+ELEMENTAL | TAILS | KNUCKLES | METAL SONIC+ELEMENTAL")
+
+
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16320 y:-4800", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16832 y:-4544", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16960 y:-5952", "KNUCKLES | AMY+WIND")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-10816 y:-1792", "KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:4320 y:-14168", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-17728 y:2656", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-15936 y:2720", "KNUCKLES | AMY")
+
+
+            if options.difficulty == 0:
+                rf.assign_rule("Techno Hill (Act 1) Monitor - Before End on Crates", "TAILS | KNUCKLES | AMY | FANG | WIND")
+                rf.assign_rule("Techno Hill (Act 2) Monitor - x:64 y:2240", "TAILS | KNUCKLES | FANG | WIND")
+                rf.assign_rule("Techno Hill (Act 2) Monitor - x:-64 y:2240", "TAILS | KNUCKLES | FANG | WIND")
+
+
+
+
         # Deep Sea
         rf.assign_rule("Deep Sea (Act 1) Star Emblem", "AMY")
         rf.assign_rule("Deep Sea (Act 1) Spade Emblem", "TAILS | KNUCKLES | METAL SONIC | WIND")
-        #rf.assign_rule("Deep Sea (Act 1) Emerald Token - Yellow Doors", "SONIC | TAILS | KNUCKLES | METALSONIC")
+        rf.assign_rule("Deep Sea (Act 1) Emerald Token - Yellow Doors", "SONIC | TAILS | KNUCKLES | METAL SONIC")
 
 
         rf.assign_rule("Deep Sea (Act 2) Star Emblem", "AMY | FANG")
         rf.assign_rule("Deep Sea (Act 2) Spade Emblem", "TAILS | KNUCKLES")
-        #rf.assign_rule("Deep Sea (Act 2) Heart Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
-        rf.assign_rule("Deep Sea (Act 2) Diamond Emblem", "KNUCKLES")
+        rf.assign_rule("Deep Sea (Act 2) Heart Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+        rf.assign_rule("Deep Sea (Act 2) Diamond Emblem", "KNUCKLES | AMY")
         rf.assign_rule("Deep Sea (Act 2) Club Emblem", "TAILS | KNUCKLES")
-        #rf.assign_rule("Deep Sea (Act 2) Emerald Token - Near Heart Emblem", "SONIC | TAILS | KNUCKLES | AMY | METALSONIC")
+        rf.assign_rule("Deep Sea (Act 2) Emerald Token - Near Heart Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
 
 
 
@@ -174,20 +218,44 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
             rf.assign_rule("Deep Sea (Act 1) Monitor - x:10304 y:-736", "TAILS | KNUCKLES | FANG | WIND")
             rf.assign_rule("Deep Sea (Act 1) Monitor - x:5088 y:11872", "TAILS | KNUCKLES | METAL SONIC | WIND")
+            rf.assign_rule("Deep Sea (Act 1) Monitor - x:20000 y:15136", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+            rf.assign_rule("Deep Sea (Act 1) Monitor - x:320 y:4544", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Deep Sea (Act 1) Monitor - x:17584 y:-5544", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Deep Sea (Act 1) Monitor - x:64 y:12224", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+
             #"Deep Sea (Act 1) Monitor - x:8640 y:3168" - maybe at least require wind for normal - have to check other emblems if so (Club emblem) (NAH)
+
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:15104 y:6128", "SONIC | KNUCKLES")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:15104 y:6032", "SONIC | KNUCKLES")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:15104 y:6080", "SONIC | KNUCKLES")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:26848 y:11584", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:5776 y:10304", "SONIC | TAILS | KNUCKLES | METAL SONIC")
             rf.assign_rule("Deep Sea (Act 2) Monitor - x:19264 y:-5888", "KNUCKLES | AMY")
             rf.assign_rule("Deep Sea (Act 2) Monitor - x:19072 y:-10816", "KNUCKLES | AMY")
             rf.assign_rule("Deep Sea (Act 2) Monitor - x:15808 y:2816", "TAILS | KNUCKLES")
+
+
             if options.difficulty == 0:
                 rf.assign_rule("Deep Sea (Act 1) Monitor - x:11008 y:5696","TAILS | KNUCKLES")  # heart emblem club emblem opened bullshit
                 rf.assign_rule("Deep Sea (Act 1) Monitor - x:10880 y:5568","TAILS | KNUCKLES")  # heart emblem club emblem opened bullshit
                 rf.assign_rule("Deep Sea (Act 2) Monitor - x:9568 y:16992", "TAILS | KNUCKLES | FANG")
                 rf.assign_rule("Deep Sea (Act 1) Monitor - x:3104 y:15520", "METAL SONIC")
                 rf.assign_rule("Deep Sea (Act 1) Monitor - x:3296 y:15520","METAL SONIC")
+            else:
+                rf.assign_rule("Deep Sea (Act 1) Monitor - x:11008 y:5696","TAILS | KNUCKLES | WIND")  # heart emblem club emblem opened bullshit
+                rf.assign_rule("Deep Sea (Act 1) Monitor - x:10880 y:5568","TAILS | KNUCKLES | WIND")  # heart emblem club emblem opened bullshit
 
-
-
-
+        if options.superring_sanity:
+            if options.difficulty == 0:
+                rf.assign_rule("Deep Sea (Act 1) Monitor - x:2800 y:8368", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:7840 y:96", "AMY | FANG")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:10528 y:5232", "AMY | FANG")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:7680 y:3456", "AMY | FANG")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:7680 y:3328", "AMY | FANG")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:9120 y:3680", "AMY | FANG")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:7776 y:3744", "AMY | FANG")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:7776 y:3680", "AMY | FANG")
+            rf.assign_rule("Deep Sea (Act 2) Monitor - x:9120 y:3744", "AMY | FANG")
 
         # Castle Eggman
         rf.assign_rule("Castle Eggman (Act 1) Star Emblem", "TAILS | KNUCKLES")
@@ -195,29 +263,49 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         rf.assign_rule("Castle Eggman (Act 2) Club Emblem", "TAILS | KNUCKLES | FANG | WIND")
         if options.oneup_sanity:
             rf.assign_rule("Castle Eggman (Act 2) Monitor - x:0 y:-21760", "TAILS | KNUCKLES")
-            rf.assign_rule("Castle Eggman (Act 2) Monitor - x:2112 y:-320", "TAILS | KNUCKLES")
+            rf.assign_rule("Castle Eggman (Act 2) Monitor - x:2112 y:-320", "TAILS | KNUCKLES | AMY")
             rf.assign_rule("Castle Eggman (Act 2) Monitor - x:3072 y:-16128", "TAILS | KNUCKLES")
             rf.assign_rule("Castle Eggman (Act 2) Monitor - x:12416 y:768", "TAILS | KNUCKLES | WIND")
+
+
+        if options.superring_sanity:
+            rf.assign_rule("Castle Eggman (Act 1) Monitor - x:5280 y:-6496", "TAILS | KNUCKLES")
+            rf.assign_rule("Castle Eggman (Act 1) Monitor - x:5472 y:-6496", "TAILS | KNUCKLES")
+            if options.difficulty == 0:
+                rf.assign_rule("Castle Eggman (Act 2) Monitor - x:-544 y:-1328", "TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+                rf.assign_rule("Castle Eggman (Act 2) Monitor - x:-544 y:-1232", "TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+            else:
+                rf.assign_rule("Castle Eggman (Act 2) Monitor - x:-544 y:-1328","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+                rf.assign_rule("Castle Eggman (Act 2) Monitor - x:-544 y:-1232","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+
+
+
 
         #"Castle Eggman (Act 2) Monitor - x:-3584 y:-14720" "directly above another monitor >:("
 
         # Arid Canyon
         rf.assign_rule("Arid Canyon (Act 1) Star Emblem", "TAILS | KNUCKLES | AMY")
+        rf.assign_rule("Arid Canyon (Act 1) Club Emblem", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+
         rf.assign_rule("Arid Canyon (Act 2) Spade Emblem", "AMY | FANG")
-        rf.assign_rule("Arid Canyon (Act 2) Heart Emblem", "KNUCKLES")
+
         rf.assign_rule("Arid Canyon (Act 2) Diamond Emblem", "FANG")
         rf.assign_rule("Arid Canyon (Act 2) Club Emblem", "TAILS | KNUCKLES")
         rf.assign_rule("Arid Canyon (Act 1) Emerald Token - Behind Wall and Spikes", "AMY")
         rf.assign_rule("Arid Canyon (Act 2) Emerald Token - Left No Spin Path Minecarts", "AMY | FANG")
-        rf.assign_rule("Arid Canyon (Act 2) Emerald Token - Knuckles Dark Path Around Wall", "KNUCKLES | AMY & WIND")
+        rf.assign_rule("Arid Canyon (Act 2) Emerald Token - Knuckles Dark Path Around Wall", "TAILS | KNUCKLES | AMY+WIND")
         if options.difficulty == 0:
             rf.assign_rule("Arid Canyon (Act 2) Star Emblem", "AMY | FANG | TAILS | KNUCKLES")#possible as sonic by fucky jump
-
+            rf.assign_rule("Arid Canyon (Act 2) Heart Emblem", "KNUCKLES")#TODO the monitor near here needs a logic update as well
         if options.oneup_sanity:
-            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:-6592 y:-2896", "TAILS | KNUCKLES")
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:5312 y:-5472", "SONIC | TAILS | KNUCKLES | METAL SONIC | WIND")
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:-6592 y:-2896", "TAILS | KNUCKLES | AMY+WIND")
             rf.assign_rule("Arid Canyon (Act 1) Monitor - x:2816 y:-992", "AMY")
             rf.assign_rule("Arid Canyon (Act 1) Monitor - x:-5184 y:14912", "TAILS | KNUCKLES")
             rf.assign_rule("Arid Canyon (Act 1) Monitor - x:-11200 y:992", "TAILS | KNUCKLES")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:4928 y:-21312", "SONIC | TAILS | KNUCKLES | METAL SONIC | WIND")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:6720 y:-22816","SONIC | TAILS | KNUCKLES | METAL SONIC | WIND")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:3888 y:-16448","SONIC | TAILS | KNUCKLES | METAL SONIC")
             rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-10144 y:-4640", "KNUCKLES | AMY")
             rf.assign_rule("Arid Canyon (Act 2) Monitor - x:160 y:-10784", "TAILS | KNUCKLES")
             rf.assign_rule("Arid Canyon (Act 2) Monitor - x:2240 y:-15456", "KNUCKLES | AMY")
@@ -227,32 +315,80 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
                 rf.assign_rule("Arid Canyon (Act 2) Monitor - x:2752 y:-9776","TAILS | KNUCKLES | AMY | FANG")
                 rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-1408 y:-14976", "TAILS | KNUCKLES | AMY | FANG")
 
+        if options.superring_sanity:
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:3568 y:-1824", "TAILS | KNUCKLES | AMY")
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:3904 y:544", "TAILS | KNUCKLES | METAL SONIC | WIND")
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:-7360 y:-2240", "SONIC+WIND | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:3568 y:-1696", "TAILS | KNUCKLES | AMY")
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:-7360 y:-2368", "SONIC+WIND | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Arid Canyon (Act 1) Monitor - x:704 y:-12224", "TAILS | KNUCKLES | AMY | FANG | METAL SONIC | WIND")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:3888 y:-16096", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:3888 y:-16800", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-1776 y:-23296", "TAILS | KNUCKLES | AMY | FANG | WIND")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:2176 y:-15456", "KNUCKLES | AMY")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-7088 y:-13760", "KNUCKLES")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-7088 y:-13888", "KNUCKLES")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:2304 y:-15456", "KNUCKLES | AMY")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:6976 y:-22208", "KNUCKLES | AMY")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:6976 y:-22144", "KNUCKLES | AMY")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:4928 y:-15488", "KNUCKLES | AMY")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-4720 y:-17344", "TAILS | KNUCKLES | AMY | FANG")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-3136 y:-17376", "AMY | FANG")
+            rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-5008 y:-17344", "TAILS | KNUCKLES | AMY | FANG")
+            if options.difficulty == 0:
+                rf.assign_rule("Arid Canyon (Act 2) Monitor - x:-768 y:-16512", "TAILS | KNUCKLES | AMY | FANG")
+
+
         # Red Volcano
         rf.assign_rule("Red Volcano (Act 1) Spade Emblem", "TAILS")
         rf.assign_rule("Red Volcano (Act 1) Emerald Token - First Outside Area", "TAILS | KNUCKLES | METAL SONIC | WIND")
         rf.assign_rule("Red Volcano (Act 1) Emerald Token - Hidden Ledge Near 4th Checkpoint", "TAILS | WIND")
         #no 1up rules in rvz
+        if options.superring_sanity:
+            rf.assign_rule("Red Volcano (Act 1) Monitor - x:22304 y:8192", "SONIC | TAILS | KNUCKLES | METAL SONIC | WIND")
 
         # Egg Rock
-        rf.assign_rule("Egg Rock (Act 1) Spade Emblem", "TAILS")
-        rf.assign_rule("Egg Rock (Act 1) Heart Emblem", "TAILS")
+        rf.assign_rule("Egg Rock (Act 1) Spade Emblem", "TAILS | KNUCKLES")
+        rf.assign_rule("Egg Rock (Act 1) Emerald Token - Moving Platforms", "SONIC | TAILS | KNUCKLES | METAL SONIC")
         rf.assign_rule("Egg Rock (Act 2) Heart Emblem", "TAILS | KNUCKLES")
+        rf.assign_rule("Egg Rock (Act 2) Club Emblem", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+        if options.difficulty == 0:
+            rf.assign_rule("Egg Rock (Act 1) Heart Emblem", "TAILS")
+        else:
+            rf.assign_rule("Egg Rock (Act 1) Heart Emblem", "TAILS | KNUCKLES")
+
         if options.oneup_sanity:
-            rf.assign_rule("Egg Rock (Act 1) Monitor - x:6144 y:-2112", "TAILS")
+
+            rf.assign_rule("Egg Rock (Act 1) Monitor - x:-64 y:-10848", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Egg Rock (Act 1) Monitor - x:-5184 y:-11264", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Egg Rock (Act 1) Monitor - x:6144 y:-2112", "TAILS | FANG")
             rf.assign_rule("Egg Rock (Act 2) Monitor - x:11136 y:15456", "TAILS | KNUCKLES | FANG")
+            rf.assign_rule("Egg Rock (Act 2) Monitor - x:-12032 y:7040", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Egg Rock (Act 2) Monitor - x:-12864 y:7040", "SONIC | TAILS | KNUCKLES | METAL SONIC")
 
-
+        if options.superring_sanity:
+            rf.assign_rule("Egg Rock (Act 1) Monitor - x:384 y:-9952" , "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Egg Rock (Act 1) Monitor - x:384 y:-10912", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Egg Rock (Act 1) Monitor - x:-5376 y:-9760", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Egg Rock (Act 1) Monitor - x:1600 y:-5120", "KNUCKLES")
 
         # Black Core - Nothing until rolling/objects are locked
 
         # Frozen Hillside/ other bonus stages go here
         rf.assign_rule("Frozen Hillside Diamond Emblem", "TAILS | KNUCKLES | WIND")
+        rf.assign_rule("Frozen Hillside Heart Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+        rf.assign_rule("Frozen Hillside Star Emblem", "SONIC | TAILS | KNUCKLES | METAL SONIC")
         if options.difficulty == 0:
-            rf.assign_rule("Frozen Hillside Club Emblem", "TAILS | KNUCKLES | WIND")
-
+            rf.assign_rule("Frozen Hillside Club Emblem", "SONIC+WIND | TAILS | KNUCKLES | AMY+WIND | METAL SONIC+WIND")
+        else:
+            rf.assign_rule("Frozen Hillside Club Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
         if options.oneup_sanity:
+            rf.assign_rule("Frozen Hillside Monitor - First Snow Field Behind Ice", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
             if options.difficulty == 0:
-                rf.assign_rule("Frozen Hillside Monitor - x:-2944 y:-19168", "TAILS | KNUCKLES | WIND")#remove for hard
+                rf.assign_rule("Frozen Hillside Monitor - Final Path Ledge Behind Ice", "SONIC+WIND | TAILS | KNUCKLES | AMY+WIND | METAL SONIC+WIND")#remove for hard
+            else:
+                rf.assign_rule("Frozen Hillside Monitor - Final Path Ledge Behind Ice", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+
 
 
         #pipe towers
@@ -262,33 +398,91 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
         if options.difficulty == 0:
             if options.oneup_sanity:
-                rf.assign_rule("Pipe Towers Monitor - x:7000 y:6520", "TAILS")
+                rf.assign_rule("Pipe Towers ? Block - Ceiling Hole Near Flowing Water", "TAILS")
 
 
 
         #none for forest fortress (yet)
+        rf.assign_rule("Forest Fortress Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+        rf.assign_rule("Forest Fortress Heart Emblem", "SONIC | TAILS | KNUCKLES | METAL SONIC")
         if options.oneup_sanity:
             rf.assign_rule("Forest Fortress Monitor - x:5824 y:8368", "KNUCKLES")
+            rf.assign_rule("Forest Fortress Monitor - x:1024 y:-6528", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+
+        if options.superring_sanity:
+            rf.assign_rule("Forest Fortress Monitor - x:6816 y:6656", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+            rf.assign_rule("Forest Fortress Monitor - x:6776 y:6576", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+
+        rf.assign_rule("Final Demo Emerald Token - Greenflower (Act 1) Breakable Wall Near Bridge", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+        rf.assign_rule("Final Demo Emerald Token - Techno Hill (Act 1) Alt Path Fans","SONIC | TAILS | KNUCKLES | METAL SONIC")
 
         if options.oneup_sanity:
-            rf.assign_rule("Final Demo Monitor - x:-9312 y:-20512", "TAILS | KNUCKLES")
-            rf.assign_rule("Final Demo Monitor - x:27520 y:7552", "TAILS | KNUCKLES")
-            rf.assign_rule("Final Demo Monitor - x:27712 y:7360", "TAILS | KNUCKLES")
-            rf.assign_rule("Final Demo Monitor - x:24448 y:12352", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - Greenflower (Act 2) Skylight in 2nd Cave", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - Castle Eggman (Act 1) High Ledge Near Start", "TAILS | KNUCKLES")
+            if options.difficulty == 0:
+                rf.assign_rule("Final Demo Monitor - Red Volcano (Act 1) Start", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC")
+                rf.assign_rule("Final Demo Monitor - Red Volcano (Act 1) Across Broken Bridge 1", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC")
+                rf.assign_rule("Final Demo Monitor - Red Volcano (Act 1) Cave Near Falling Platforms", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC")
+
+
+
+        if options.superring_sanity:
+            rf.assign_rule("Final Demo Monitor - x:-26848 y:-30720", "TAILS")
+            rf.assign_rule("Final Demo Monitor - x:-26872 y:-30672", "TAILS")
+            rf.assign_rule("Final Demo Monitor - x:-26824 y:-30672", "TAILS")
+
+            rf.assign_rule("Final Demo Monitor - x:-3200 y:-18496", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - x:-3136 y:-18496", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - x:-3136 y:-18560", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - x:-3136 y:-18624", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - x:-3200 y:-18624", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - x:-3264 y:-18624", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - x:-3264 y:-18560", "TAILS | KNUCKLES")
+            rf.assign_rule("Final Demo Monitor - x:-3264 y:-18496", "TAILS | KNUCKLES")
+            if options.difficulty == 0:
+                rf.assign_rule("Final Demo Monitor - x:15792 y:17664", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC")
+                rf.assign_rule("Final Demo Monitor - x:432 y:28416", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC")
+                rf.assign_rule("Final Demo Monitor - x:8016 y:26656", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC")
+
+
+
+
+
+
+
+
+
 
         # haunted heights
         rf.assign_rule("Haunted Heights Star Emblem", "FANG")
         rf.assign_rule("Haunted Heights Spade Emblem", "TAILS | KNUCKLES | FANG")
         rf.assign_rule("Haunted Heights Diamond Emblem", "KNUCKLES")
         rf.assign_rule("Haunted Heights Club Emblem", "KNUCKLES & ELEMENTAL")
+        #heart emblem bullshit as knuckles
         if options.oneup_sanity:
+            rf.assign_rule("Haunted Heights Monitor - x:1408 y:18112", "SONIC | TAILS | METAL SONIC")
             rf.assign_rule("Haunted Heights Monitor - x:4288 y:12240", "KNUCKLES")
             rf.assign_rule("Haunted Heights Monitor - x:6080 y:11872", "KNUCKLES")
-            rf.assign_rule("Haunted Heights Monitor - x:7648 y:24160", "AMY | FANG")
+            rf.assign_rule("Haunted Heights Monitor - x:6080 y:11872", "KNUCKLES")
+            rf.assign_rule("Haunted Heights Monitor - x:-7712 y:18400", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | FLAME") #add amy+wind on hard
+
+
+            rf.assign_rule("Haunted Heights Monitor - x:7648 y:24160", "FANG")
             rf.assign_rule("Haunted Heights Monitor - x:-3008 y:20720", "KNUCKLES")
             rf.assign_rule("Haunted Heights Monitor - x:1792 y:2656", "TAILS | KNUCKLES | FANG") #techincally possible with wind maybe
             rf.assign_rule("Haunted Heights Monitor - x:8254 y:11910", "KNUCKLES | FANG | ELEMENTAL")
 
+        if options.superring_sanity:
+            rf.assign_rule("Haunted Heights Monitor - x:2848 y:12704", "KNUCKLES")
+            rf.assign_rule("Haunted Heights Monitor - x:1056 y:16192", "SONIC | TAILS | METAL SONIC")
+            rf.assign_rule("Haunted Heights Monitor - x:6240 y:21504", "AMY | FANG")
+            rf.assign_rule("Haunted Heights Monitor - x:4976 y:23376", "SONIC | TAILS | METAL SONIC")
+            rf.assign_rule("Haunted Heights Monitor - x:7360 y:17952", "FANG")
+            rf.assign_rule("Haunted Heights Monitor - x:5376 y:20736", "AMY | FANG")
+            if options.difficulty == 0:
+                rf.assign_rule("Haunted Heights Monitor - x:3520 y:20224", "AMY")
+            else:
+                rf.assign_rule("Haunted Heights Monitor - x:3520 y:20224", "AMY | FANG")
 
 
         if options.difficulty == 0:
@@ -310,6 +504,10 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
 
         if options.oneup_sanity:
+            rf.assign_rule("Aerial Garden Monitor - x:-8000 y:-5568", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Aerial Garden Monitor - x:-960 y:9792", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Aerial Garden Monitor - x:-1280 y:-17088", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+
             if options.difficulty == 0:
                 rf.assign_rule("Aerial Garden Monitor - x:-13920 y:5120", "TAILS | METAL SONIC")
                 rf.assign_rule("Aerial Garden Monitor - x:10080 y:-9312", "TAILS | KNUCKLES | METAL SONIC | LIGHTNING")
@@ -324,11 +522,38 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
             else:
                 rf.assign_rule("Aerial Garden Monitor - x:-1184 y:-10592", "TAILS | KNUCKLES | AMY & LIGHTNING | FANG")
+        if options.superring_sanity:
+            rf.assign_rule("Aerial Garden Monitor - x:-960 y:9984", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Aerial Garden Monitor - x:-4288 y:13248", "TAILS | KNUCKLES")
+            rf.assign_rule("Aerial Garden Monitor - x:-960 y:9920", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            if options.difficulty == 0:
+                rf.assign_rule("Aerial Garden Monitor - x:-13920 y:5056", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-13920 y:5184", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8896 y:12416", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8832 y:12480", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8896 y:12544", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8960 y:12480", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-9024 y:12416", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8960 y:12352", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8832 y:12352", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8768 y:12416", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8768 y:12544", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8832 y:12608", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-14176 y:-9504", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-15168 y:-8768", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8960 y:12608", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-14816 y:1888", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-10368 y:-8224", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-10336 y:-8256", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-7424 y:-8224", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-7456 y:-8256", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8960 y:-8128", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-8832 y:-8128", "TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Aerial Garden Monitor - x:-9024 y:12544", "TAILS | KNUCKLES | METAL SONIC")
 
 
-
-        rf.assign_rule("Azure Temple Star Emblem", "TAILS | KNUCKLES & BUBBLE")
-        rf.assign_rule("Azure Temple Spade Emblem", "TAILS")
+        rf.assign_rule("Azure Temple Star Emblem", "TAILS | KNUCKLES+BUBBLE")
+        rf.assign_rule("Azure Temple Spade Emblem", "TAILS")#knuckles+bubble on hard
         rf.assign_rule("Azure Temple Club Emblem", "ARMAGEDDON")
         if options.difficulty == 0:
             if options.time_emblems:
@@ -345,24 +570,95 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Azure Temple Monitor - x:-4192 y:21344","ARMAGEDDON")
             rf.assign_rule("Azure Temple Monitor - x:-4192 y:21280","ARMAGEDDON")
             rf.assign_rule("Azure Temple Monitor - x:-4192 y:21408","ARMAGEDDON")
+            rf.assign_rule("Azure Temple Monitor - x:4160 y:12384", "SONIC | TAILS | KNUCKLES | METAL SONIC")
             if options.difficulty == 0:
+                rf.assign_rule("Azure Temple Monitor - x:-32 y:6688", "TAILS | KNUCKLES | METAL SONIC")
                 rf.assign_rule("Azure Temple Monitor - x:1440 y:14688", "TAILS | KNUCKLES+BUBBLE | METAL SONIC")
                 rf.assign_rule("Azure Temple Monitor - x:-2272 y:12864", "TAILS | KNUCKLES+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:-3232 y:14112", "TAILS | KNUCKLES | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:3648 y:25888", "TAILS | KNUCKLES | FANG")
 
             else:
+
+                rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
                 rf.assign_rule("Azure Temple Monitor - x:-2272 y:12864","TAILS | KNUCKLES+BUBBLE | AMY+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:-3232 y:14112", "TAILS | KNUCKLES | AMY+BUBBLE | FANG")
                 rf.assign_rule("Azure Temple Monitor - x:3648 y:25888", "TAILS | KNUCKLES | AMY+BUBBLE | FANG")
 
+        if options.superring_sanity:
+            rf.assign_rule("Azure Temple Monitor - x:-928 y:8256", "KNUCKLES | AMY")
 
+            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            rf.assign_rule("Azure Temple Monitor - x:2848 y:9312", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:512 y:13952", "TAILS | KNUCKLES")
+            rf.assign_rule("Azure Temple Monitor - x:2752 y:11008", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:-1184 y:11104", "KNUCKLES")
+            rf.assign_rule("Azure Temple Monitor - x:672 y:12544", "TAILS | KNUCKLES | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:224 y:12576", "TAILS | KNUCKLES | AMY | FANG | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:512 y:14080", "TAILS | KNUCKLES")
+            rf.assign_rule("Azure Temple Monitor - x:1248 y:14432", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:384 y:9568", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:320 y:9568", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:3424 y:16528", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
+            rf.assign_rule("Azure Temple Monitor - x:-800 y:9312", "KNUCKLES")
+            rf.assign_rule("Azure Temple Monitor - x:1952 y:11552", "KNUCKLES")
+            rf.assign_rule("Azure Temple Monitor - x:6112 y:22560", "AMY | FANG")
+
+
+            if options.difficulty == 0:
+                rf.assign_rule("Azure Temple Monitor - x:-4000 y:10080","SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-3936 y:10080","SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-2272 y:10432","SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-2944 y:13344", "SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-3232 y:14048", "SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-3232 y:14176", "SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:4192 y:12320", "SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:4096 y:12416", "SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-4768 y:9600", "SONIC | TAILS | KNUCKLES+BUBBLE | METAL SONIC")
+
+            else:
+                rf.assign_rule("Azure Temple Monitor - x:-4000 y:10080","SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-3936 y:10080", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-3328 y:10752", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
+                rf.assign_rule("Azure Temple Monitor - x:-2272 y:10432","SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-2944 y:13344", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-3232 y:14048", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-3232 y:14176", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:4192 y:12320", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:4096 y:12416", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+                rf.assign_rule("Azure Temple Monitor - x:-4768 y:9600", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+
+        if options.superring_sanity and options.match_maps:
+            rf.assign_rule("Noxious Factory Monitor - x:416 y:576", "TAILS | KNUCKLES | FANG")
+            rf.assign_rule("Noxious Factory Monitor - x:736 y:768", "TAILS | KNUCKLES | FANG")
+            rf.assign_rule("Noxious Factory Monitor - x:2112 y:-1920", "TAILS | KNUCKLES | FANG")
+            rf.assign_rule("Noxious Factory Monitor - x:2496 y:3264", "TAILS | KNUCKLES | FANG | WIND")
+            rf.assign_rule("Noxious Factory Monitor - x:2496 y:3136", "TAILS | KNUCKLES | FANG | WIND")
+            rf.assign_rule("Noxious Factory Monitor - x:1440 y:-2336", "TAILS | KNUCKLES | FANG")
+
+            rf.assign_rule("Tidal Palace Monitor - x:-2624 y:-3072", "TAILS")
+            rf.assign_rule("Tidal Palace Monitor - x:-2912 y:-2976", "TAILS")
+            rf.assign_rule("Tidal Palace Monitor - x:-2656 y:-2656", "TAILS")
+            rf.assign_rule("Tidal Palace Monitor - x:1504 y:-96",  "TAILS | KNUCKLES")
+            rf.assign_rule("Tidal Palace Monitor - x:1504 y:-224",  "TAILS | KNUCKLES")
+            rf.assign_rule("Tidal Palace Monitor - x:-224 y:-672", "TAILS | KNUCKLES")
+            rf.assign_rule("Tidal Palace Monitor - x:224 y:-672", "TAILS | KNUCKLES")
+
+            rf.assign_rule("Desolate Twilight Monitor - x:-128 y:-2688", "TAILS | KNUCKLES")
+            rf.assign_rule("Desolate Twilight Monitor - x:2913 y:212", "TAILS | KNUCKLES")
+            rf.assign_rule("Desolate Twilight Monitor - x:2904 y:275", "TAILS | KNUCKLES")
+            rf.assign_rule("Desolate Twilight Monitor - x:0 y:3584", "TAILS | KNUCKLES")
 
         #special stages
         if options.difficulty == 0:
             rf.assign_rule("Flooded Cove Sun Emblem", "PARALOOP")
             rf.assign_rule("Magma Caves Moon Emblem", "PARALOOP")
-        rf.assign_rule("Egg Satellite Sun Emblem", "PARALOOP")
+            rf.assign_rule("Egg Satellite Sun Emblem", "PARALOOP")
+
         rf.assign_rule("Black Hole Sun Emblem", "PARALOOP")
         if options.ntime_emblems:
             rf.assign_rule("Magma Caves Time Emblem", "PARALOOP")
@@ -375,12 +671,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         world.completion_condition[player] = lambda state: state.can_reach("Black Core Zone", 'Region', player)
     else:
         world.completion_condition[player] = lambda state: state.can_reach("Credits", 'Region', player)
-    #if options.completion_type == "last_bowser_stage":
-    #    world.completion_condition[player] = lambda state: state.can_reach("BitS: Top", 'Region', player)
-    #elif options.completion_type == "all_bowser_stages":
-    #    world.completion_condition[player] = lambda state: state.can_reach("Bowser in the Dark World", 'Region', player) and \
-    #                                                       state.can_reach("BitFS: Upper", 'Region', player) and \
-    #                                                       state.can_reach("BitS: Top", 'Region', player)
+
 
 
 class RuleFactory:
@@ -406,6 +697,7 @@ class RuleFactory:
         "ELEMENTAL": "Elemental Shield",
         "ARMAGEDDON": "Armageddon Shield",
         "BUBBLE": "Bubble Shield",
+        "FLAME": "Flame Shield",
         "FORCE": "Force Shield",
         "LIGHTNING": "Lightning Shield",
         "PARALOOP": "Super Paraloop",

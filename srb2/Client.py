@@ -1090,16 +1090,17 @@ async def file_watcher(ctx, file_path):
                 if id == 220:
                     f.seek(0x245)
                     f.write(0x01.to_bytes(1, byteorder="little"))
-
+            else:
+                f.seek(0x21F)
+                for i in range(0x30):
+                    f.write(0x00.to_bytes(1, byteorder="little"))  # set level visited flags
         f.seek(0x450)
         f.write(0x00.to_bytes(0x3000, byteorder="little"))
         f.seek(0x417)
         f.write(bytes(checkma))
         f.seek(0x220)
 
-        else:
-            for i in range(0x30):
-                f.write(0x00.to_bytes(1, byteorder="little"))  # set level visited flags
+
         f.close()
     except FileNotFoundError:
 
@@ -1111,15 +1112,15 @@ async def file_watcher(ctx, file_path):
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v136.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v140.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v136.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v140.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v136.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v140.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 

@@ -1,8 +1,9 @@
 import typing
 import os
 import json
-from .Items import item_data_table, zones_item_data_table, character_item_data_table, other_item_table, item_table, mpmatch_item_table, SRB2Item
-from .Locations import location_table, SRB2Location
+from .Items import (item_data_table, zones_item_data_table, character_item_data_table, other_item_table, item_table, mpmatch_item_table, traps_item_data_table, special_item_data_table,
+                    nights_item_table, SRB2Item)
+from .Locations import location_table, GFZ_table, THZ_table, DSZ_table, CEZ_table,ACZ_table,RVZ_table,ERZ_table,BCZ_table,FHZ_table,PTZ_table,FFZ_table,HHZ_table,AGZ_table,ATZ_table,FFSP_table,TPSP_table,FCSP_table,CFSP_table,DWSP_table,MCSP_table,ESSP_table,BHSP_table,CCSP_table,DHSP_table,APSP_table,EXTRA_table,tokens_table,oneupcoords_table,ringmonitors_table, SRB2Location
 from .Options import srb2_options_groups, SRB2Options
 from .Rules import set_rules
 from .Regions import create_regions, SRB2Zones
@@ -30,8 +31,8 @@ from worlds.LauncherComponents import Component, components, Type, launch_subpro
 option_groups = srb2_options_groups
 
 def launch_client():
-    from .Client import run_as_textclient
-    launch_subprocess(run_as_textclient, name="SRB2Client")
+    from .Client import launch
+    launch_subprocess(launch, name="SRB2Client")
 
 
 components.append(Component(
@@ -51,6 +52,52 @@ class SRB2World(World):
 
     item_name_to_id = item_table
     location_name_to_id = location_table
+
+    item_name_groups = {
+        "Zone":zones_item_data_table,
+        "Character":character_item_data_table,
+        "Match Zone":mpmatch_item_table,
+        "Trap":traps_item_data_table,
+        "Shield":other_item_table,
+        "Powerup":nights_item_table,
+        "Nights Stage":special_item_data_table
+    }
+
+    location_name_groups = {
+        "Greenflower Zone":GFZ_table,
+        "Techno Hill Zone": THZ_table,
+        "Deep Sea Zone": DSZ_table,
+        "Castle Eggman Zone":CEZ_table,
+        "Arid Canyon Zone":ACZ_table,
+        "Red Volcano Zone":RVZ_table,
+        "Egg Rock Zone":ERZ_table,
+        "Black Core Zone":BCZ_table,
+        "Frozen Hillside Zone":FHZ_table,
+        "Pipe Towers Zone":PTZ_table,
+        "Forest Fortress Zone":FFZ_table,
+        #"Final Demo Zone": oh thats non sorted things
+        "Haunted Heights Zone":HHZ_table,
+        "Aerial Garden Zone":AGZ_table,
+        "Azure Temple Zone":ATZ_table,
+        "Floral Field Zone":FFSP_table,
+        "Toxic Plateau Zone":TPSP_table,
+        "Flooded Cove Zone":FCSP_table,
+        "Cavern Fortress Zone":CFSP_table,
+        "Dusty Wasteland Zone":DWSP_table,
+        "Egg Satellite Zone":ESSP_table,
+        "Black Hole Zone":BHSP_table,
+        "Christmas Chime Zone":CCSP_table,
+        "Dream Hill Zone":DHSP_table,
+        "Alpine Paradise Zone":APSP_table,
+        "Emerald Tokens":tokens_table,
+        "1UP Monitors":oneupcoords_table,
+        "Super Ring Monitors":ringmonitors_table
+
+
+
+    }
+
+
 
     required_client_version = (0, 3, 5)
 
@@ -75,8 +122,7 @@ class SRB2World(World):
 
     def generate_early(self):
 
-        #TODO rewrite this to calculate max locations then add filler based on emblem numbers
-        max_locations = 562#TODO up this once i have enough locations
+        max_locations = 259+57+246+597+380#TODO up this once i have enough locations
         if not self.options.time_emblems:
             max_locations -= 27
         if not self.options.ring_emblems:
@@ -91,9 +137,15 @@ class SRB2World(World):
             max_locations -= 246
         if not self.options.match_maps:
             max_locations -= 21
+
+        if not self.options.oneup_sanity or not self.options.match_maps:
+            max_locations -= 1
+        if not self.options.superring_sanity or not self.options.match_maps:
+            max_locations -= 379
+        if not self.options.superring_sanity:
+            max_locations -= 597
         self.number_of_locations = max_locations
         self.move_rando_bitvec = 0
-
 
 
 
@@ -120,11 +172,12 @@ class SRB2World(World):
 
             Starting_zone = Valid_starts[rand_idx]
             self.multiworld.push_precollected(self.create_item(Starting_zone))
+            self.multiworld.push_precollected(self.create_item("Sonic"))
             slots_to_fill = self.number_of_locations
             for zone_name in zones_item_data_table.keys():
                 if zone_name == Starting_zone:
                     continue
-                if zone_name == "Black Core Zone" and self.options.bcz_emblems > 0:
+                if zone_name == "Black Core Zone" and self.options.bcz_emblem_percent > 0:
                     self.multiworld.itempool += [self.create_item("1UP")] #replace bcz with a 1up to match item numbers
                     slots_to_fill -= 1
                     continue
@@ -135,6 +188,12 @@ class SRB2World(World):
                 self.multiworld.itempool += [self.create_item(char_name)]
                 slots_to_fill -=1
             for shield in other_item_table.keys():
+                self.multiworld.itempool += [self.create_item(shield)]
+                slots_to_fill -=1
+            for spstage in special_item_data_table.keys():
+                self.multiworld.itempool += [self.create_item(spstage)]
+                slots_to_fill -=1
+            for shield in nights_item_table.keys():
                 self.multiworld.itempool += [self.create_item(shield)]
                 slots_to_fill -=1
 
@@ -156,8 +215,8 @@ class SRB2World(World):
                 self.multiworld.itempool += [self.create_item("Progressive Emblem Hint")]
                 slots_to_fill -= 2
 
-            self.multiworld.itempool += [self.create_item("+5 Starting Rings") for i in range(4)]
-            slots_to_fill -= 4
+            self.multiworld.itempool += [self.create_item("+5 Starting Rings") for i in range(2)]
+            slots_to_fill -= 2
 
 
             target_emblems = self.options.num_emblems
@@ -170,40 +229,72 @@ class SRB2World(World):
                 slots_to_fill -=1
 
 
-            self.options.bcz_emblems.value = round(target_emblems * (self.options.bcz_emblems.value/100))
+            self.options.bcz_emblem_percent.value = round(target_emblems * (self.options.bcz_emblem_percent.value/100))
 
             if slots_to_fill != 0:
                 self.multiworld.itempool += [self.create_item("Sound Test")]
                 slots_to_fill -= 1
 
+            if slots_to_fill>99:
+                for i in range(int(slots_to_fill/100)):
+                    self.multiworld.itempool += [self.create_item("+5 Starting Rings")]
+                    slots_to_fill -= 1
+
+
             if slots_to_fill!= 0:
+                trap_slots = int(slots_to_fill*self.options.trap_percentage/100)
+                while trap_slots != 0:
+                    trapnum = random.randrange(70)
+                    if trapnum<3:
+                        self.multiworld.itempool += [self.create_item("Replay Tutorial")]#4
+                    elif trapnum<8:
+                        self.multiworld.itempool += [self.create_item("Self-Propelled Bomb")]#5
+                    elif trapnum < 14:
+                        self.multiworld.itempool += [self.create_item("Sonic Forces")]
+                    elif trapnum < 22:
+                        self.multiworld.itempool += [self.create_item("Slippery Floors")]
+                    elif trapnum < 26:
+                        self.multiworld.itempool += [self.create_item("Shrink Monitor")]
+                    elif trapnum < 32:
+                        self.multiworld.itempool += [self.create_item("Grow Monitor")]
+                    #elif trapnum < 42:
+                    #    self.multiworld.itempool += [self.create_item("Reversed Controls")]
+                    elif trapnum < 42:
+                        self.multiworld.itempool += [self.create_item("Dropped Inputs")]
+                    elif trapnum < 52:
+                        self.multiworld.itempool += [self.create_item("Ring Loss")]
+                    elif trapnum < 70:
+                        self.multiworld.itempool += [self.create_item("Forced Pity Shield")]
+                    trap_slots-=1
+                    slots_to_fill-=1
 
-                spread = int(slots_to_fill/19)
-                print(spread)
-                if spread != 0:
-                    self.multiworld.itempool += [self.create_item("Forced Pity Shield") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Forced Gravity Boots") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Dropped Inputs") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Replay Tutorial") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Ring Loss") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("& Knuckles") for i in range(spread)]#non functional
-                    self.multiworld.itempool += [self.create_item("1UP") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("50 Rings") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("20 Rings") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("10 Rings") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Slippery Floors") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("1000 Points") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Sonic Forces") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Temporary Invincibility") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Temporary Super Sneakers") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Shrink Monitor") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Grow Monitor") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Self-Propelled Bomb") for i in range(spread)]
-                    self.multiworld.itempool += [self.create_item("Double Rings") for i in range(spread)]
 
-                slots_to_fill = slots_to_fill % 19
-                if slots_to_fill > 0:
-                    self.multiworld.itempool += [self.create_item("1UP") for i in range(slots_to_fill)]
+
+            if slots_to_fill != 0:
+                filler_slots = slots_to_fill
+                while filler_slots != 0:
+                    fillernum = random.randrange(90)
+                    if fillernum<8:
+                        self.multiworld.itempool += [self.create_item("1UP")]
+                    elif fillernum<28:
+                        self.multiworld.itempool += [self.create_item("10 Rings")]
+                    elif fillernum < 38:
+                        self.multiworld.itempool += [self.create_item("20 Rings")]
+                    elif fillernum < 42:
+                        self.multiworld.itempool += [self.create_item("50 Rings")]
+                    elif fillernum < 48:
+                        self.multiworld.itempool += [self.create_item("& Knuckles")]
+                    elif fillernum < 58:
+                        self.multiworld.itempool += [self.create_item("1000 Points")]
+                    elif fillernum < 68:
+                        self.multiworld.itempool += [self.create_item("Temporary Invincibility")]
+                    elif fillernum < 80:
+                        self.multiworld.itempool += [self.create_item("Temporary Super Sneakers")]
+                    elif fillernum < 90:
+                        self.multiworld.itempool += [self.create_item("Double Rings")]
+                    filler_slots-=1
+                    slots_to_fill-=1
+
 
     def generate_basic(self): #use to force items in a specific location
         return
@@ -217,7 +308,7 @@ class SRB2World(World):
         return {
             "DeathLink": self.options.death_link.value,
             "CompletionType": self.options.completion_type.value,
-            "BlackCoreEmblems": self.options.bcz_emblems.value,
+            "BlackCoreEmblems": self.options.bcz_emblem_percent.value,
             "EnableMatchMaps": self.options.match_maps.value
         }
 

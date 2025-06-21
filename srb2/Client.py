@@ -12,6 +12,7 @@ import functools
 import warnings
 import sys
 import ModuleUpdate
+from typing import Optional
 
 ModuleUpdate.update()
 from tkinter import filedialog
@@ -21,7 +22,14 @@ import struct
 import math
 import subprocess
 
-
+from CommonClient import (
+    CommonContext,
+    ClientCommandProcessor,
+    get_base_parser,
+    logger,
+    server_loop,
+    gui_enabled,
+)
 
 if __name__ == "__main__":
     Utils.init_logging("TextClient", exception_logger="Client")
@@ -61,303 +69,37 @@ def get_ssl_context():
     return ssl.create_default_context(ssl.Purpose.SERVER_AUTH, cafile=certifi.where())
 
 
-class ClientCommandProcessor(CommandProcessor):
-    """
-    The Command Processor will parse every method of the class that starts with "_cmd_" as a command to be called
-    when parsing user input, i.e. _cmd_exit will be called when the user sends the command "/exit".
-
-    The decorator @mark_raw can be imported from MultiServer and tells the parser to only split on the first
-    space after the command i.e. "/exit one two three" will be passed in as method("one two three") with mark_raw
-    and method("one", "two", "three") without.
-
-    In addition all docstrings for command methods will be displayed to the user on launch and when using "/help"
-    """
-
-    def __init__(self, ctx: CommonContext):
-        self.ctx = ctx
-
-    def output(self, text: str):
-        """Helper function to abstract logging to the CommonClient UI"""
-        logger.info(text)
-
-    def _cmd_exit(self) -> bool:
-        """Close connections and client"""
-        self.ctx.exit_event.set()
-        return True
-
-    def _cmd_connect(self, address: str = "") -> bool:
-        """Connect to a MultiWorld Server"""
-        if address:
-            self.ctx.server_address = None
-            self.ctx.username = None
-            self.ctx.password = None
-        elif not self.ctx.server_address:
-            self.output("Please specify an address.")
-            return False
-        async_start(self.ctx.connect(address if address else None), name="connecting")
-        return True
-
-    def _cmd_disconnect(self) -> bool:
-        """Disconnect from a MultiWorld Server"""
-        async_start(self.ctx.disconnect(), name="disconnecting")
-        return True
-
-    def _cmd_received(self) -> bool:
-        """List all received items"""
-        item: NetworkItem
-        self.output(f'{len(self.ctx.items_received)} received items, sorted by time:')
-        for index, item in enumerate(self.ctx.items_received, 1):
-            parts = []
-            add_json_item(parts, item.item, self.ctx.slot, item.flags)
-            add_json_text(parts, " from ")
-            add_json_location(parts, item.location, item.player)
-            add_json_text(parts, " by ")
-            add_json_text(parts, item.player, type=JSONTypes.player_id)
-            self.ctx.on_print_json({"data": parts, "cmd": "PrintJSON"})
-        return True
-
-    def _cmd_missing(self, filter_text="") -> bool:
-        """List all missing location checks, from your local game state.
-        Can be given text, which will be used as filter."""
-        if not self.ctx.game:
-            self.output("No game set, cannot determine missing checks.")
-            return False
-        count = 0
-        checked_count = 0
-        for location, location_id in AutoWorldRegister.world_types[self.ctx.game].location_name_to_id.items():
-            if filter_text and filter_text not in location:
-                continue
-            if location_id < 0:
-                continue
-            if location_id not in self.ctx.locations_checked:
-                if location_id in self.ctx.missing_locations:
-                    self.output('Missing: ' + location)
-                    count += 1
-                elif location_id in self.ctx.checked_locations:
-                    self.output('Checked: ' + location)
-                    count += 1
-                    checked_count += 1
-
-        if count:
-            self.output(
-                f"Found {count} missing location checks{f'. {checked_count} location checks previously visited.' if checked_count else ''}")
-        else:
-            self.output("No missing location checks found.")
-        return True
-
-    def _cmd_items(self):
-        """List all item names for the currently running game."""
-        if not self.ctx.game:
-            self.output("No game set, cannot determine existing items.")
-            return False
-        self.output(f"Item Names for {self.ctx.game}")
-        for item_name in AutoWorldRegister.world_types[self.ctx.game].item_name_to_id:
-            self.output(item_name)
-
-    def _cmd_item_groups(self):
-        """List all item group names for the currently running game."""
-        if not self.ctx.game:
-            self.output("No game set, cannot determine existing item groups.")
-            return False
-        self.output(f"Item Group Names for {self.ctx.game}")
-        for group_name in AutoWorldRegister.world_types[self.ctx.game].item_name_groups:
-            self.output(group_name)
-
-    def _cmd_locations(self):
-        """List all location names for the currently running game."""
-        if not self.ctx.game:
-            self.output("No game set, cannot determine existing locations.")
-            return False
-        self.output(f"Location Names for {self.ctx.game}")
-        for location_name in AutoWorldRegister.world_types[self.ctx.game].location_name_to_id:
-            self.output(location_name)
-
-    def _cmd_location_groups(self):
-        """List all location group names for the currently running game."""
-        if not self.ctx.game:
-            self.output("No game set, cannot determine existing location groups.")
-            return False
-        self.output(f"Location Group Names for {self.ctx.game}")
-        for group_name in AutoWorldRegister.world_types[self.ctx.game].location_name_groups:
-            self.output(group_name)
-
-    def _cmd_ready(self):
-        """Send ready status to server."""
-        self.ctx.ready = not self.ctx.ready
-        if self.ctx.ready:
-            state = ClientStatus.CLIENT_READY
-            self.output("Readied up.")
-        else:
-            state = ClientStatus.CLIENT_CONNECTED
-            self.output("Unreadied.")
-        async_start(self.ctx.send_msgs([{"cmd": "StatusUpdate", "status": state}]), name="send StatusUpdate")
-
-    def default(self, raw: str):
-        """The default message parser to be used when parsing any messages that do not match a command"""
-        raw = self.ctx.on_user_say(raw)
-        if raw:
-            async_start(self.ctx.send_msgs([{"cmd": "Say", "text": raw}]), name="send Say")
+class SRB2ClientCommandProcessor(ClientCommandProcessor):
+    def _cmd_dummy(self):
+        """This is a surprise tool that will help us later"""
+        return
 
 
-class CommonContext:
-    # The following attributes are used to Connect and should be adjusted as needed in subclasses
-    tags: typing.Set[str] = {"AP"}
-    game: typing.Optional[str] = None
-    items_handling: typing.Optional[int] = None
-    items_handling: typing.Optional[int] = None
-    want_slot_data: bool = True  # should slot_data be retrieved via Connect
 
-    class NameLookupDict:
-        """A specialized dict, with helper methods, for id -> name item/location data package lookups by game."""
+class SRB2Context(CommonContext):
 
-        def __init__(self, ctx: CommonContext, lookup_type: typing.Literal["item", "location"]):
-            self.ctx: CommonContext = ctx
-            self.lookup_type: typing.Literal["item", "location"] = lookup_type
-            self._unknown_item: typing.Callable[[int], str] = lambda key: f"Unknown {lookup_type} (ID: {key})"
-            self._archipelago_lookup: typing.Dict[int, str] = {}
-            self._flat_store: typing.Dict[int, str] = Utils.KeyedDefaultDict(self._unknown_item)
-            self._game_store: typing.Dict[str, typing.ChainMap[int, str]] = collections.defaultdict(
-                lambda: collections.ChainMap(self._archipelago_lookup, Utils.KeyedDefaultDict(self._unknown_item)))
-            self.warned: bool = False
+    def __init__(self, server_address: Optional[str], password: Optional[str]) -> None:
+        super().__init__(server_address, password)
 
-        # noinspection PyTypeChecker
-        def __getitem__(self, key: str) -> typing.Mapping[int, str]:
-            # TODO: In a future version (0.6.0?) this should be simplified by removing implicit id lookups support.
-            if isinstance(key, int):
-                if not self.warned:
-                    # Use warnings instead of logger to avoid deprecation message from appearing on user side.
-                    self.warned = True
-                    warnings.warn(f"Implicit name lookup by id only is deprecated and only supported to maintain "
-                                  f"backwards compatibility for now. If multiple games share the same id for a "
-                                  f"{self.lookup_type}, name could be incorrect. Please use "
-                                  f"`{self.lookup_type}_names.lookup_in_game()` or "
-                                  f"`{self.lookup_type}_names.lookup_in_slot()` instead.")
-                return self._flat_store[key]  # type: ignore
-
-            return self._game_store[key]
-
-        def __len__(self) -> int:
-            return len(self._game_store)
-
-        def __iter__(self) -> typing.Iterator[str]:
-            return iter(self._game_store)
-
-        def __repr__(self) -> str:
-            return self._game_store.__repr__()
-
-        def lookup_in_game(self, code: int, game_name: typing.Optional[str] = None) -> str:
-            """Returns the name for an item/location id in the context of a specific game or own game if `game` is
-            omitted.
-            """
-            if game_name is None:
-                game_name = self.ctx.game
-                assert game_name is not None, f"Attempted to lookup {self.lookup_type} with no game name available."
-
-            return self._game_store[game_name][code]
-
-        def lookup_in_slot(self, code: int, slot: typing.Optional[int] = None) -> str:
-            """Returns the name for an item/location id in the context of a specific slot or own slot if `slot` is
-            omitted.
-
-            Use of `lookup_in_slot` should not be used when not connected to a server. If looking in own game, set
-            `ctx.game` and use `lookup_in_game` method instead.
-            """
-            if slot is None:
-                slot = self.ctx.slot
-                assert slot is not None, f"Attempted to lookup {self.lookup_type} with no slot info available."
-
-            return self.lookup_in_game(code, self.ctx.slot_info[slot].game)
-
-        def update_game(self, game: str, name_to_id_lookup_table: typing.Dict[str, int]) -> None:
-            """Overrides existing lookup tables for a particular game."""
-            id_to_name_lookup_table = Utils.KeyedDefaultDict(self._unknown_item)
-            id_to_name_lookup_table.update({code: name for name, code in name_to_id_lookup_table.items()})
-            self._game_store[game] = collections.ChainMap(self._archipelago_lookup, id_to_name_lookup_table)
-            self._flat_store.update(id_to_name_lookup_table)  # Only needed for legacy lookup method.
-            if game == "Archipelago":
-                # Keep track of the Archipelago data package separately so if it gets updated in a custom datapackage,
-                # it updates in all chain maps automatically.
-                self._archipelago_lookup.clear()
-                self._archipelago_lookup.update(id_to_name_lookup_table)
-
-    # defaults
-    starting_reconnect_delay: int = 5
-    current_reconnect_delay: int = starting_reconnect_delay
-    command_processor: typing.Type[CommandProcessor] = ClientCommandProcessor
-    ui: typing.Optional["kvui.GameManager"] = None
-    ui_task: typing.Optional["asyncio.Task[None]"] = None
-    input_task: typing.Optional["asyncio.Task[None]"] = None
-    keep_alive_task: typing.Optional["asyncio.Task[None]"] = None
-    server_task: typing.Optional["asyncio.Task[None]"] = None
-    autoreconnect_task: typing.Optional["asyncio.Task[None]"] = None
-    disconnected_intentionally: bool = False
-    server: typing.Optional[Endpoint] = None
-    server_version: Version = Version(0, 0, 0)
-    generator_version: Version = Version(0, 0, 0)
-    current_energy_link_value: typing.Optional[int] = None  # to display in UI, gets set by server
-    max_size: int = 16 * 1024 * 1024  # 16 MB of max incoming packet size
-
-    last_death_link: float = time.time()  # last send/received death link on AP layer
-    death_link: float = time.time()
-    death_link_lockout: float = time.time()
-    activate_death: bool = False
-    goal_type: int = None
-    bcz_emblems: int = 0
-    # remaining type info
-    slot_info: typing.Dict[int, NetworkSlot]
-    server_address: typing.Optional[str]
-    password: typing.Optional[str]
-    hint_cost: typing.Optional[int]
-    hint_points: typing.Optional[int]
-    player_names: typing.Dict[int, str]
-
-    finished_game: bool
-    ready: bool
-    team: typing.Optional[int]
-    slot: typing.Optional[int]
-    auth: typing.Optional[str]
-    seed_name: typing.Optional[str]
-
-    # locations
-    locations_checked: typing.Set[int]  # local state
-    locations_scouted: typing.Set[int]
-    items_received: typing.List[NetworkItem]
-    missing_locations: typing.Set[int]  # server state
-    checked_locations: typing.Set[int]  # server state
-    server_locations: typing.Set[int]  # all locations the server knows of, missing_location | checked_locations
-    locations_info: typing.Dict[int, NetworkItem]
-
-    # data storage
-    stored_data: typing.Dict[str, typing.Any]
-    stored_data_notification_keys: typing.Set[str]
-
-    # internals
-    # current message box through kvui
-    _messagebox: typing.Optional["kvui.MessageBox"] = None
-    # message box reporting a loss of connection
-    _messagebox_connection_loss: typing.Optional["kvui.MessageBox"] = None
-
-    def __init__(self, server_address: typing.Optional[str] = None, password: typing.Optional[str] = None) -> None:
-        # server state
-        self.server_address = server_address
-        self.username = None
-        self.password = password
-        self.hint_cost = None
-        self.slot_info = {}
-        self.permissions = {
-            "release": "disabled",
-            "collect": "disabled",
-            "remaining": "disabled",
-        }
-
-        # own state
-        self.finished_game = False
-        self.ready = False
-        self.team = None
-        self.slot = None
-        self.auth = None
+        self.game = "Sonic Robo Blast 2"
+        self.missing_checks = None
+        self.prev_found = None
+        self.location_ids = None
         self.seed_name = None
-
+        self.activate_death: bool = False
+        self.last_death_link = None
+        self.death_link: float = time.time()
+        self.death_link_lockout: float = time.time()
+        self.goal_type: int = None
+        self.bcz_emblems: int = 0
+        self.matchmaps = None
+        self.items_handling = 0b001 | 0b010 | 0b100  # Receive items from other worlds, starting inv, and own items
+        self.location_name_to_ap_id = None
+        self.location_ap_id_to_name = None
+        self.item_name_to_ap_id = None
+        self.item_ap_id_to_name = None
+        self.prev_found = []
+        self.texttransfer = []
         self.locations_checked = set()  # local state
         self.locations_scouted = set()
         self.items_received = []
@@ -366,315 +108,45 @@ class CommonContext:
         self.server_locations = set()  # all locations the server knows of, missing_location | checked_locations
         self.locations_info = {}
 
-        self.stored_data = {}
-        self.stored_data_notification_keys = set()
 
-        self.input_queue = asyncio.Queue()
-        self.input_requests = 0
+        #default settings to be overwritten in connected
 
-        # game state
-        self.player_names = {0: "Archipelago"}
-        self.exit_event = asyncio.Event()
-        self.watcher_event = asyncio.Event()
-
-        self.item_names = self.NameLookupDict(self, "item")
-        self.location_names = self.NameLookupDict(self, "location")
-        self.versions = {}
-        self.checksums = {}
-        self.texttransfer = []
-
-
-        self.jsontotextparser = JSONtoTextParser(self)
-        self.rawjsontotextparser = RawJSONtoTextParser(self)
-        self.update_data_package(network_data_package)
-
-        # execution
-        self.keep_alive_task = asyncio.create_task(keep_alive(self), name="Bouncy")
-
-    @property
-    def suggested_address(self) -> str:
-        if self.server_address:
-            return self.server_address
-        return Utils.persistent_load().get("client", {}).get("last_server_address", "")
-
-    @functools.cached_property
-    def raw_text_parser(self) -> RawJSONtoTextParser:
-        return RawJSONtoTextParser(self)
-
-    @property
-    def total_locations(self) -> typing.Optional[int]:
-        """Will return None until connected."""
-        if self.checked_locations or self.missing_locations:
-            return len(self.checked_locations | self.missing_locations)
-
-    async def connection_closed(self):
-        if self.server and self.server.socket is not None:
-            await self.server.socket.close()
-        self.reset_server_state()
-
-    def reset_server_state(self):
-        self.auth = None
-        self.slot = None
-        self.team = None
-        self.items_received = []
-        self.locations_info = {}
-        self.server_version = Version(0, 0, 0)
-        self.generator_version = Version(0, 0, 0)
-        self.server = None
-        self.server_task = None
-        self.hint_cost = None
-        self.permissions = {
-            "release": "disabled",
-            "collect": "disabled",
-            "remaining": "disabled",
-        }
-
-    async def disconnect(self, allow_autoreconnect: bool = False):
-        if not allow_autoreconnect:
-            self.disconnected_intentionally = True
-            if self.cancel_autoreconnect():
-                logger.info("Cancelled auto-reconnect.")
-        # if self.server and not self.server.socket.closed:
-        #    await self.server.socket.close()
-        if self.server_task is not None:
-            await self.server_task
-        # self.ui.update_hints()
-
-    async def send_msgs(self, msgs: typing.List[typing.Any]) -> None:
-        """ `msgs` JSON serializable """
-        # if not self.server or not self.server.socket.open or self.server.socket.closed:
-        #    return
-        await self.server.socket.send(encode(msgs))
-
-    def consume_players_package(self, package: typing.List[tuple]):
-        self.player_names = {slot: name for team, slot, name, orig_name in package if self.team == team}
-        self.player_names[0] = "Archipelago"
-
-    def event_invalid_slot(self):
-        raise Exception('Invalid Slot; please verify that you have connected to the correct world.')
-
-    def event_invalid_game(self):
-        raise Exception('Invalid Game; please verify that you connected with the right game to the correct world.')
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
-            logger.info('Enter the password required to join this game:')
-            self.password = await self.console_input()
-            return self.password
-
-    async def get_username(self):
-        if not self.auth:
-            self.auth = self.username
-            if not self.auth:
-                logger.info('Enter slot name:')
-                self.auth = await self.console_input()
-
-    async def send_connect(self, **kwargs: typing.Any) -> None:
-        """
-        Send a `Connect` packet to log in to the server,
-        additional keyword args can override any value in the connection packet
-        """
-        payload = {
-            'cmd': 'Connect',
-            'password': self.password, 'name': self.auth, 'version': Utils.version_tuple,
-            'tags': self.tags, 'items_handling': self.items_handling,
-            'uuid': Utils.get_unique_identifier(), 'game': self.game, "slot_data": self.want_slot_data,
-        }
-
-        if kwargs:
-            payload.update(kwargs)
-        await self.send_msgs([payload])
-        await self.send_msgs([{"cmd": "Get", "keys": ["_read_race_mode"]}])
-
-    async def check_locations(self, locations: typing.Collection[int]) -> set[int]:
-        """Send new location checks to the server. Returns the set of actually new locations that were sent."""
-        locations = set(locations) & self.missing_locations
-        if locations:
-            await self.send_msgs([{"cmd": 'LocationChecks', "locations": tuple(locations)}])
-        return locations
-
-    async def console_input(self) -> str:
-        if self.ui:
-            self.ui.focus_textinput()
-        self.input_requests += 1
-        return await self.input_queue.get()
-
-    async def connect(self, address: typing.Optional[str] = None) -> None:
-        """ disconnect any previous connection, and open new connection to the server """
-        await self.disconnect()
-        self.server_task = asyncio.create_task(server_loop(self, address), name="server loop")
-
-    def cancel_autoreconnect(self) -> bool:
-        if self.autoreconnect_task:
-            self.autoreconnect_task.cancel()
-            self.autoreconnect_task = None
-            return True
-        return False
-
-    def slot_concerns_self(self, slot) -> bool:
-        """Helper function to abstract player groups, should be used instead of checking slot == self.slot directly."""
-        if slot == self.slot:
-            return True
-        if slot in self.slot_info:
-            return self.slot in self.slot_info[slot].group_members
-        return False
-
-    def is_echoed_chat(self, print_json_packet: dict) -> bool:
-        """Helper function for filtering out messages sent by self."""
-        return print_json_packet.get("type", "") == "Chat" \
-            and print_json_packet.get("team", None) == self.team \
-            and print_json_packet.get("slot", None) == self.slot
-
-    def is_uninteresting_item_send(self, print_json_packet: dict) -> bool:
-        """Helper function for filtering out ItemSend prints that do not concern the local player."""
-        return print_json_packet.get("type", "") == "ItemSend" \
-            and not self.slot_concerns_self(print_json_packet["receiving"]) \
-            and not self.slot_concerns_self(print_json_packet["item"].player)
-
-    def on_print(self, args: dict):
-        logger.info(args["text"])
-
-    def on_print_json(self, args: dict):
-        if self.ui:
-            # send copy to UI
-            self.ui.print_json(copy.deepcopy(args["data"]))
-            print(args["data"])
-            self.texttransfer.append(copy.deepcopy(args["data"]))
-        logging.getLogger("FileLog").info(self.rawjsontotextparser(copy.deepcopy(args["data"])),
-                                          extra={"NoStream": True})
-        logging.getLogger("StreamLog").info(self.jsontotextparser(copy.deepcopy(args["data"])),
-                                            extra={"NoFile": True})
+            await super().server_auth(password_requested)
+        await self.get_username()
+        await self.send_connect()
 
     def on_package(self, cmd: str, args: dict):
-        """For custom package handling in subclasses."""
-        pass
 
-    def on_user_say(self, text: str) -> typing.Optional[str]:
-        """Gets called before sending a Say to the server from the user.
-        Returned text is sent, or sending is aborted if None is returned."""
-        return text
+        if cmd == "Connected":
 
-    def on_ui_command(self, text: str) -> None:
-        """Gets called by kivy when the user executes a command starting with `/` or `!`.
-        The command processor is still called; this is just intended for command echoing."""
-        self.ui.print_json([{"text": text, "type": "color", "color": "orange"}])
-        print([{"text": text, "type": "color", "color": "orange"}])
 
-    def update_permissions(self, permissions: typing.Dict[str, int]):
-        """Internal method to parse and save server permissions from RoomInfo"""
-        for permission_name, permission_flag in permissions.items():
-            try:
-                flag = Permission(permission_flag)
-                logger.info(f"{permission_name.capitalize()} permission: {flag.name}")
-                self.permissions[permission_name] = flag.name
-            except Exception as e:  # safeguard against permissions that may be implemented in the future
-                logger.exception(e)
+            self.missing_checks = args["missing_locations"]
+            self.prev_found = args["checked_locations"]
+            self.location_ids = set(args["missing_locations"] + args["checked_locations"])
+            #set up save file checking tasks here
+            self.bcz_emblems = args["slot_data"]["BlackCoreEmblems"]
+            self.matchmaps = args["slot_data"]["EnableMatchMaps"]
+            if args["slot_data"]["DeathLink"] != 0:
+                self.death_link = True
+                self.tags.add("DeathLink")
+            else:
+                self.death_link = False
 
-    async def shutdown(self):
-        self.server_address = ""
-        self.username = None
-        self.password = None
-        self.cancel_autoreconnect()
-        if self.server and not self.server.socket.closed:
-            await self.server.socket.close()
-        if self.server_task:
-            await self.server_task
+            # if we don't have the seed name from the RoomInfo packet, wait until we do.
+            while not self.seed_name:
+                time.sleep(1)
 
-        while self.input_requests > 0:
-            self.input_queue.put_nowait(None)
-            self.input_requests -= 1
-        self.keep_alive_task.cancel()
-        if self.ui_task:
-            await self.ui_task
-        if self.input_task:
-            self.input_task.cancel()
 
-    # Hints
-    def update_hint(self, location: int, finding_player: int, status: typing.Optional[HintStatus]) -> None:
-        msg = {"cmd": "UpdateHint", "location": location, "player": finding_player}
-        if status is not None:
-            msg["status"] = status
-        async_start(self.send_msgs([msg]), name="update_hint")
+        if cmd == "RoomInfo":
+            self.seed_name = args['seed_name']
 
-    # DataPackage
-    async def prepare_data_package(self, relevant_games: typing.Set[str],
-                                   remote_date_package_versions: typing.Dict[str, int],
-                                   remote_data_package_checksums: typing.Dict[str, str]):
-        """Validate that all data is present for the current multiworld.
-        Download, assimilate and cache missing data from the server."""
-        # by documentation any game can use Archipelago locations/items -> always relevant
-        relevant_games.add("Archipelago")
 
-        needed_updates: typing.Set[str] = set()
-        for game in relevant_games:
-            if game not in remote_date_package_versions and game not in remote_data_package_checksums:
-                continue
 
-            remote_version: int = remote_date_package_versions.get(game, 0)
-            remote_checksum: typing.Optional[str] = remote_data_package_checksums.get(game)
-
-            if remote_version == 0 and not remote_checksum:  # custom data package and no checksum for this game
-                needed_updates.add(game)
-                continue
-
-            cached_version: int = self.versions.get(game, 0)
-            cached_checksum: typing.Optional[str] = self.checksums.get(game)
-            # no action required if cached version is new enough
-            if (not remote_checksum and (remote_version > cached_version or remote_version == 0)) \
-                    or remote_checksum != cached_checksum:
-                local_version: int = network_data_package["games"].get(game, {}).get("version", 0)
-                local_checksum: typing.Optional[str] = network_data_package["games"].get(game, {}).get("checksum")
-                if ((remote_checksum or remote_version <= local_version and remote_version != 0)
-                        and remote_checksum == local_checksum):
-                    self.update_game(network_data_package["games"][game], game)
-                else:
-                    cached_game = Utils.load_data_package_for_checksum(game, remote_checksum)
-                    cache_version: int = cached_game.get("version", 0)
-                    cache_checksum: typing.Optional[str] = cached_game.get("checksum")
-                    # download remote version if cache is not new enough
-                    if (not remote_checksum and (remote_version > cache_version or remote_version == 0)) \
-                            or remote_checksum != cache_checksum:
-                        needed_updates.add(game)
-                    else:
-                        self.update_game(cached_game, game)
-        if needed_updates:
-            await self.send_msgs([{"cmd": "GetDataPackage", "games": [game_name]} for game_name in needed_updates])
-
-    def update_game(self, game_package: dict, game: str):
-        self.item_names.update_game(game, game_package["item_name_to_id"])
-        self.location_names.update_game(game, game_package["location_name_to_id"])
-        self.versions[game] = game_package.get("version", 0)
-        self.checksums[game] = game_package.get("checksum")
-
-    def update_data_package(self, data_package: dict):
-        for game, game_data in data_package["games"].items():
-            self.update_game(game_data, game)
-
-    def consume_network_data_package(self, data_package: dict):
-        self.update_data_package(data_package)
-        current_cache = Utils.persistent_load().get("datapackage", {}).get("games", {})
-        current_cache.update(data_package["games"])
-        Utils.persistent_store("datapackage", "games", current_cache)
-        logger.info(f"Got new ID/Name DataPackage for {', '.join(data_package['games'])}")
-        for game, game_data in data_package["games"].items():
-            Utils.store_data_package_for_checksum(game, game_data)
-
-    # data storage
-
-    def set_notify(self, *keys: str) -> None:
-        """Subscribe to be notified of changes to selected data storage keys.
-
-        The values can be accessed via the "stored_data" attribute of this context, which is a dictionary mapping the
-        names of the data storage keys to the latest values received from the server.
-        """
-        if new_keys := (set(keys) - self.stored_data_notification_keys):
-            self.stored_data_notification_keys.update(new_keys)
-            async_start(self.send_msgs([{"cmd": "Get",
-                                         "keys": list(new_keys)},
-                                        {"cmd": "SetNotify",
-                                         "keys": list(new_keys)}]))
-
-    # DeathLink hooks
+            # If receiving data package, resync previous items
+            #asyncio.create_task(self.receive_item())#probably important
 
     def on_deathlink(self, data: typing.Dict[str, typing.Any]) -> None:
         """Gets dispatched when a new DeathLink is triggered by another linked player."""
@@ -686,100 +158,15 @@ class CommonContext:
         else:
             logger.info(f"DeathLink: Received from {data['source']}")
 
-    async def send_death(self, death_text: str = ""):
-        """Helper function to send a deathlink using death_text as the unique death cause string."""
-        if self.server and self.server.socket:
-            logger.info("DeathLink: Sending death to your friends...")
-            self.last_death_link = time.time()
-            await self.send_msgs([{
-                "cmd": "Bounce", "tags": ["DeathLink"],
-                "data": {
-                    "time": self.last_death_link,
-                    "source": self.player_names[self.slot],
-                    "cause": death_text
-                }
-            }])
-
-    async def update_death_link(self, death_link: bool):
-        """Helper function to set Death Link connection tag on/off and update the connection if already connected."""
-        old_tags = self.tags.copy()
-        if death_link:
-            self.tags.add("DeathLink")
-        else:
-            self.tags -= {"DeathLink"}
-        if old_tags != self.tags and self.server and not self.server.socket.closed:
-            await self.send_msgs([{"cmd": "ConnectUpdate", "tags": self.tags}])
-
-    def gui_error(self, title: str, text: typing.Union[Exception, str]) -> typing.Optional["kvui.MessageBox"]:
-        """Displays an error messagebox in the loaded Kivy UI. Override if using a different UI framework"""
-        if not self.ui:
-            return None
-        title = title or "Error"
-        from kvui import MessageBox
-        if self._messagebox:
-            self._messagebox.dismiss()
-        # make "Multiple exceptions" look nice
-        text = str(text).replace('[Errno', '\n[Errno').strip()
-        # split long messages into title and text
-        parts = title.split('. ', 1)
-        if len(parts) == 1:
-            parts = title.split(', ', 1)
-        if len(parts) > 1:
-            text = parts[1] + '\n\n' + text
-            title = parts[0]
-        # display error
-        self._messagebox = MessageBox(title, text, error=True)
-        self._messagebox.open()
-        return self._messagebox
-
-    def handle_connection_loss(self, msg: str) -> None:
-        """Helper for logging and displaying a loss of connection. Must be called from an except block."""
-        exc_info = sys.exc_info()
-        logger.exception(msg, exc_info=exc_info, extra={'compact_gui': True})
-        self._messagebox_connection_loss = self.gui_error(msg, exc_info[1])
-
-    def make_gui(self) -> "type[kvui.GameManager]":
-        """
-        To return the Kivy `App` class needed for `run_gui` so it can be overridden before being built
-
-        Common changes are changing `base_title` to update the window title of the client and
-        updating `logging_pairs` to automatically make new tabs that can be filled with their respective logger.
-
-        ex. `logging_pairs.append(("Foo", "Bar"))`
-        will add a "Bar" tab which follows the logger returned from `logging.getLogger("Foo")`
-        """
-        from kvui import GameManager
-
-        class TextManager(GameManager):
-            base_title = "Sonic Robo Blast 2 Client"
-
-        return TextManager
-
-    def run_gui(self):
-        """Import kivy UI system from make_gui() and start running it as self.ui_task."""
-        ui_class = self.make_gui()
-        self.ui = ui_class(self)
-        self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
-        # self.save_watcher = asyncio.create_task(SaveFileWatcher(), name="SW")
-
-    def run_cli(self):
-        if sys.stdin:
-            if sys.stdin.fileno() != 0:
-                from multiprocessing import parent_process
-                if parent_process():
-                    return  # ignore MultiProcessing pipe
-
-            # steam overlay breaks when starting console_loop
-            if 'gameoverlayrenderer' in os.environ.get('LD_PRELOAD', ''):
-                logger.info("Skipping terminal input, due to conflicting Steam Overlay detected. Please use GUI only.")
-            else:
-                self.input_task = asyncio.create_task(console_loop(self), name="Input")
-
-
-async def SaveFileWatcher():
-    while True:
-        print("watching save file...")
-
+    def on_print_json(self, args: dict):
+        if self.ui:
+            # send copy to UI
+            self.ui.print_json(copy.deepcopy(args["data"]))
+            self.texttransfer.append(copy.deepcopy(args["data"]))
+        logging.getLogger("FileLog").info(self.rawjsontotextparser(copy.deepcopy(args["data"])),
+                                          extra={"NoStream": True})
+        logging.getLogger("StreamLog").info(self.jsontotextparser(copy.deepcopy(args["data"])),
+                                            extra={"NoFile": True})
 
 async def keep_alive(ctx: CommonContext, seconds_between_checks=100):
     """some ISPs/network configurations drop TCP connections if no payload is sent (ignore TCP-keep-alive)
@@ -793,78 +180,6 @@ async def keep_alive(ctx: CommonContext, seconds_between_checks=100):
                 await ctx.send_msgs([{"cmd": "Bounce", "slots": [ctx.slot]}])
                 seconds_elapsed = 0
 
-
-async def server_loop(ctx: CommonContext, address: typing.Optional[str] = None) -> None:
-    if ctx.server and ctx.server.socket:
-        logger.error('Already connected')
-        return
-
-    if address is None:  # set through CLI or APBP
-        address = ctx.server_address
-
-    # Wait for the user to provide a multiworld server address
-    if not address:
-        logger.info('Please connect to an Archipelago server.')
-        return
-
-    ctx.cancel_autoreconnect()
-    if ctx._messagebox_connection_loss:
-        ctx._messagebox_connection_loss.dismiss()
-        ctx._messagebox_connection_loss = None
-
-    address = f"ws://{address}" if "://" not in address \
-        else address.replace("archipelago://", "ws://")
-
-    server_url = urllib.parse.urlparse(address)
-    if server_url.username:
-        ctx.username = server_url.username
-    if server_url.password:
-        ctx.password = server_url.password
-
-    def reconnect_hint() -> str:
-        return ", type /connect to reconnect" if ctx.server_address else ""
-
-    logger.info(f'Connecting to Archipelago server at {address}')
-    try:
-        port = server_url.port or 38281  # raises ValueError if invalid
-        socket = await websockets.connect(address, port=port, ping_timeout=None, ping_interval=None,
-                                          ssl=get_ssl_context() if address.startswith("wss://") else None,
-                                          max_size=ctx.max_size)
-        if ctx.ui is not None:
-            ctx.ui.update_address_bar(server_url.netloc)
-        ctx.server = Endpoint(socket)
-        logger.info('Connected')
-        ctx.server_address = address
-        ctx.current_reconnect_delay = ctx.starting_reconnect_delay
-        ctx.disconnected_intentionally = False
-        async for data in ctx.server.socket:
-            for msg in decode(data):
-                await process_server_cmd(ctx, msg)
-        logger.warning(f"Disconnected from multiworld server{reconnect_hint()}")
-    except websockets.InvalidMessage:
-        # probably encrypted
-        if address.startswith("ws://"):
-            # try wss
-            await server_loop(ctx, "ws" + address[1:])
-        else:
-            ctx.handle_connection_loss(f"Lost connection to the multiworld server due to InvalidMessage"
-                                       f"{reconnect_hint()}")
-    except ConnectionRefusedError:
-        ctx.handle_connection_loss("Connection refused by the server. "
-                                   "May not be running Archipelago on that address or port.")
-    except websockets.InvalidURI:
-        ctx.handle_connection_loss("Failed to connect to the multiworld server (invalid URI)")
-    except OSError:
-        ctx.handle_connection_loss("Failed to connect to the multiworld server")
-    except Exception:
-        ctx.handle_connection_loss(f"Lost connection to the multiworld server{reconnect_hint()}")
-    finally:
-        await ctx.connection_closed()
-        if ctx.server_address and ctx.username and not ctx.disconnected_intentionally:
-            logger.info(f"... automatically reconnecting in {ctx.current_reconnect_delay} seconds")
-            assert ctx.autoreconnect_task is None
-            ctx.autoreconnect_task = asyncio.create_task(server_autoreconnect(ctx), name="server auto reconnect")
-        ctx.current_reconnect_delay *= 2
 
 
 async def server_autoreconnect(ctx: CommonContext):
@@ -1103,16 +418,6 @@ async def console_loop(ctx: CommonContext):
             logger.exception(e)
 
 
-def get_base_parser(description: typing.Optional[str] = None):
-    """Base argument parser to be reused for components subclassing off of CommonClient"""
-    import argparse
-    parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('--connect', default=None, help='Address of the multiworld host.')
-    parser.add_argument('--password', default=None, help='Password of the multiworld host.')
-    if sys.stdout:  # If terminal output exists, offer gui-less mode
-        parser.add_argument('--nogui', default=False, action='store_true', help="Turns off Client GUI.")
-    return parser
-
 
 def handle_url_arg(args: "argparse.Namespace",
                    parser: "typing.Optional[argparse.ArgumentParser]" = None) -> "argparse.Namespace":
@@ -1140,30 +445,10 @@ def handle_url_arg(args: "argparse.Namespace",
     return args
 
 
-def run_as_textclient(*args):
-    class TextContext(CommonContext):
-        # Text Mode to use !hint and such with games that have no text entry
-        tags = CommonContext.tags
-        game = "Sonic Robo Blast 2"  # empty matches any game since 0.3.2
-        items_handling = 0b111  # receive all items for /received
-        want_slot_data = True  # Can't use game specific slot_data
-
-        async def server_auth(self, password_requested: bool = False):
-            if password_requested and not self.password:
-                await super(TextContext, self).server_auth(password_requested)
-            await self.get_username()
-            await self.send_connect(game="Sonic Robo Blast 2")
-
-        def on_package(self, cmd: str, args: dict):
-            if cmd == "Connected":
-                self.game = self.slot_info[self.slot].game
-
-        async def disconnect(self, allow_autoreconnect: bool = False):
-            self.game = ""
-            await super().disconnect(allow_autoreconnect)
+def launch(*args):
 
     async def main(args):
-        ctx = TextContext(args.connect, args.password)
+        ctx = SRB2Context(args.connect, args.password)
         ctx.auth = args.name
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="server loop")
         loop = asyncio.get_running_loop()
@@ -1181,7 +466,7 @@ def run_as_textclient(*args):
 
     import colorama
 
-    parser = get_base_parser(description="Gameless Archipelago Client, for text interfacing.")
+    parser = get_base_parser(description="SRB2 Archipelago Client")
     parser.add_argument('--name', default=None, help="Slot Name to connect as.")
     parser.add_argument("url", nargs="?", help="Archipelago connection url")
     args = parser.parse_args(args)
@@ -1192,15 +477,16 @@ def run_as_textclient(*args):
     colorama.init()
 
     asyncio.run(main(args))
-    print("got to the funny place")
     colorama.deinit()
 
 
 async def item_handler(ctx, file_path):
     file_path2 = file_path + "/apgamedat1.ssg"
-
-    f = open(file_path + "/luafiles/APTranslator.dat", 'w+b')
-    f.write(0x69.to_bytes(1, byteorder="little"))
+    try:
+        f = open(file_path + "/luafiles/APTranslator.dat", 'r+b')#TODO check for file and get num traps if needed
+    except FileNotFoundError:
+        f = open(file_path + "/luafiles/APTranslator.dat", 'w+b')  # TODO check for file and get num traps if needed
+        f.write(0x69.to_bytes(1, byteorder="little"))
     f.close()
     # set up new save file here
     # dont need to zero anything out because the first write will overwrite everything wrong
@@ -1298,6 +584,7 @@ async def item_handler(ctx, file_path):
                 startrings += 1
             if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79 or id==84 or id == 81 or id ==82 or id==83:
                 traps += 1
+
                 if traps == num_traps + 1:
 
                     f.seek(0x02)
@@ -1517,8 +804,9 @@ async def item_handler(ctx, file_path):
             f.write(0x3F.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 7:
             f.write(0x7F.to_bytes(2, byteorder="little"))  # this sucks
-
-
+        if traps < num_traps:
+            f.seek(0x12)
+            f.write(traps.to_bytes(1, byteorder="little"))
         f.seek(0x03)
         f.write(bytes(sent_shields))
         for i in range(len(final_write)):
@@ -1620,17 +908,195 @@ async def file_watcher(ctx, file_path):
                     checkma[r1] += 64
                 if r2 == 7:
                     checkma[r1] += 128
-        f.seek(0x0C)
+        f.seek(0x0C)##TODO check whats unlocked then reveal zones here
         for i in range(0x50):
-            f.write(0x01.to_bytes(1, byteorder="little")) #set level visited flags
+            f.write(0x00.to_bytes(1, byteorder="little")) #set level visited flags
+        for i in ctx.items_received:
+            id = i[0]
+            if id == 10:
+                f.seek(0x0C)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x0D)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x0E)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 11:#techno hill
+                f.seek(0x0F)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x10)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x11)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 12:#deep sea
+                f.seek(0x12)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x13)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x14)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 13:  # CASTLE EGGMAN
+                f.seek(0x15)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x16)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x17)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 14:  # arid canyon
+                f.seek(0x18)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x19)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x1A)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 15:  # RED VOLCANO
+                f.seek(0x1B)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x1C)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x1D)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 16:  # egg rock
+                f.seek(0x21)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x22)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x23)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 17:#black core
+                f.seek(0x24)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x25)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x26)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+
+            if id == 18: #fhz
+                f.seek(0x29)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 19: #ptz
+                f.seek(0x2A)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 20: #ffz
+                f.seek(0x2B)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 21: #fdz
+                f.seek(0x2C)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 22: #hhz
+                f.seek(0x33)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 23: #agz
+                f.seek(0x34)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 24: #atz
+                f.seek(0x35)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 25: #sp1
+                f.seek(0x3D)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 26: #sp2
+                f.seek(0x3E)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 27:#sp3
+                f.seek(0x3F)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 28:#sp4
+                f.seek(0x40)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 29:#sp5
+                f.seek(0x41)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 30:#sp6
+                f.seek(0x42)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 31:#sp7
+                f.seek(0x43)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 32:#sp8
+                f.seek(0x44)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 33: #ccz
+                f.seek(0x51)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 34: #dhz
+                f.seek(0x52)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if id == 35: #apz:
+                f.seek(0x53)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+                f.seek(0x54)
+                f.write(0x01.to_bytes(1, byteorder="little"))
+            if ctx.matchmaps:
+                if id == 200:
+                    f.seek(0x21F)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 201:
+                    f.seek(0x220)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 202:
+                    f.seek(0x221)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 203:
+                    f.seek(0x222)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 204:
+                    f.seek(0x223)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 205:
+                    f.seek(0x224)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 206:
+                    f.seek(0x225)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 207:
+                    f.seek(0x226)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 208:
+                    f.seek(0x227)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 209:
+                    f.seek(0x228)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 210:
+                    f.seek(0x229)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 211:
+                    f.seek(0x22A)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 212:
+                    f.seek(0x22B)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 213:
+                    f.seek(0x22C)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 214:
+                    f.seek(0x22D)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 215:
+                    f.seek(0x22E)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 216:
+                    f.seek(0x22F)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 217:
+                    f.seek(0x230)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 218:
+                    f.seek(0x243)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 219:
+                    f.seek(0x244)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+                if id == 220:
+                    f.seek(0x245)
+                    f.write(0x01.to_bytes(1, byteorder="little"))
+
         f.seek(0x450)
         f.write(0x00.to_bytes(0x3000, byteorder="little"))
         f.seek(0x417)
         f.write(bytes(checkma))
         f.seek(0x220)
-        if ctx.matchmaps:
-            for i in range(0x30):
-                f.write(0x01.to_bytes(1, byteorder="little"))  # set level visited flags
+
         else:
             for i in range(0x30):
                 f.write(0x00.to_bytes(1, byteorder="little"))  # set level visited flags
@@ -1730,255 +1196,110 @@ async def file_watcher(ctx, file_path):
                      "41-589299712-681574400",
                      "411614807041367343104"
                      ]
-    oneupids = ["1:354418688199229440",
-                "1:692060160146800640",
-                "1:77594624381681664",
-                "2:-31457280-293601280",
-                "2:188743680-406847488",
-                "2:-195035136-306184192",
-                "2:12320768-22740992",
-                "2:-7759462433554432",
-                "2:216006656434110464",
-                "2:-463470592-635437056",
-                "2:47185920-676331520",
-                "2:-260046848314572800",
-                "4:364904448-220200960",
-                "4:-255852544-801112064",
-                "4:197132288-599785472",
-                "4:-62914560-794820608",
-                "4:1069547520-620756992",
-                "4:1321205760-517996544",
-                "4:717225984-759169024",
-                "4:943718400-406847488",
-                "4:195035136287309824",
-                "5:-1149239296134217728",
-                "5:0146800640",
-                "5:-861929472522190848",
-                "5:-205520896-29360128",
-                "5:115343360358612992",
-                "5:-1218445312-268435456",
-                "5:-759169024-312475648",
-                "5:-134217728-515899392",
-                "5:367001600-731906048",
-                "5:54525952-402653184",
-                "5:-1048576000-423624704",
-                "5:270532608-14680064",
-                "7:197132288222298112",
-                "7:192937984343932928",
-                "7:721420288373293056",
-                "7:566231040207618048",
-                "7:65011712058720256",
-                "7:13421772847185920",
-                "7:102341017658720256",
-                "7:-216006656444596224",
-                "7:333447168778043392",
-                "7:713031680364904448",
-                "7:1310720000991952896",
-                "7:20971520297795584",
-                "7:2034237441017118720",
-                "7:2160066561017118720",
-                "7:1152385024-363331584",
-                "7:1166016512796917760",
-                "7:4194304801112064",
-                "7:914358272-138412032",
-                "7:675282944-48234496",
-                "8:989855744401604608",
-                "8:1759510528759169024",
-                "8:989855744395313152",
-                "8:1262485504-385875968",
-                "8:1249902592-708837376",
-                "8:635437056-218103808",
-                "8:568328192849346560",
-                "8:1035993088184549376",
-                "8:169449881616777216",
-                "8:1245708288612368384",
-                "8:378535936675282944",
-                "8:6270484481113587712",
-                "8:127926272-143654912",
-                "8:111149056169869312",
-                "8:989855744398458880",
-                "10:-530579456-564133888",
-                "10:-8912896-645922816",
-                "10:73400320-423624704",
-                "10:677380096398458880",
-                "10:-264241152-729808896",
-                "10:33554432012582912",
-                "10:-122683392-403701760",
-                "10:192937984446693376",
-                "10:497025024-169869312",
-                "10:218103808281018368",
-                "11:0-1426063360",
-                "11:-234881024-964689920",
-                "11:138412032-20971520",
-                "11:0-444596224",
-                "11:201326592-1056964608",
-                "11:-301989888121634816",
-                "11:-446693376-1098907648",
-                "11:-201326592-1367343104",
-                "11:545259520436207616",
-                "11:568328192-975175680",
-                "11:-86402662454525952",
-                "11:-318767104-889192448",
-                "11:-452984832125829120",
-                "11:81369497650331648",
-                "13:-587202566291456",
-                "13:-171966464-1027604480",
-                "13:348127232-358612992",
-                "13:130023424-46137344",
-                "13:-432013312-189792256",
-                "13:339738624-289406976",
-                "13:184549376-65011712",
-                "13:178257920-1025507328",
-                "13:-339738624977272832",
-                "13:-73400320065011712",
-                "14:-664797184-304087040",
-                "14:322961408-1396703232",
-                "14:-228589568-1356857344",
-                "14:479199232-421527552",
-                "14:440401920-1495269376",
-                "14:254803968-1077936128",
-                "14:-142606336-780140544",
-                "14:10485760-706740224",
-                "14:146800640-1012924416",
-                "14:8388608-1029701632",
-                "14:-479526912-814809088",
-                "14:-933232640-415236096",
-                "14:-464519168-905969664",
-                "14:180355072-640679936",
-                "14:-231735296220200960",
-                "14:-327155712-507510784",
-                "14:199229440-1507852288",
-                "14:-92274688-981467136",
-                "16:-565182464-536870912",
-                "16:1541668864276824064",
-                "16:1717567488457179136",
-                "16:836239360549978112",
-                "16:677380096-253755392",
-                "16:142606336727711744",
-                "16:-264241152-1077936128",
-                "16:476053504-385875968",
-                "16:494927872782237696",
-                "22:-4194304-710934528",
-                "22:-339738624-738197504",
-                "22:455081984-692060160",
-                "22:402653184-138412032",
-                "22:-719323136-478150656",
-                "22:-392167424-144703488",
-                "22:-436207616-184549376",
-                "22:-490733568-515899392",
-                "23:-3271557121140850688",
-                "23:-3313500161140850688",
-                "23:-340787200413138944",
-                "23:-104857600576716800",
-                "23:-603979776811597824",
-                "23:3418357761358954496",
-                "23:-7822376961000341504",
-                "23:-436207616530579456",
-                "23:7298088961012924416",
-                "23:1509949441635778560",
-                "23:-788529152461373440",
-                "23:-843055104461373440",
-                "23:662700032683671552",
-                "23:16777216499122176",
-                "25:-795869184-218103808",
-                "25:-678428672-186646528",
-                "30:436207616-303038464",
-                "30:-192937984-1256194048",
-                "31:-1032847363604480",
-                "31:-14155776334036992",
-                "31:458752000427294720",
-                "31:753401856-334036992",
-                "31:50488934440370176",
-                "31:573046784-245891072",
-                "32:-83886080-503316480",
-                "32:67108864-427819008",
-                "32:595591168838860800",
-                "32:381681664548405248",
-                "32:966787072699400192",
-                "33:-1784676352-1310720000",
-                "33:-610271232-1344274432",
-                "33:-398458880-1740636160",
-                "33:603979776-1686110208",
-                "33:1933574144-654311424",
-                "33:1379926016-419430400",
-                "33:1237319680989855744",
-                "33:1803550720494927872",
-                "33:1816133632482344960",
-                "33:1602224128809500672",
-                "33:13233029121673527296",
-                "33:18475909121749024768",
-                "33:-5966397441069547520",
-                "33:325058561862270976",
-                "33:5567938561761607680",
-                "40:210763776277872640",
-                "40:889192448824180736",
-                "40:922746881186988032",
-                "40:-4069130241028259840",
-                "40:-2621440001186988032",
-                "40:281018368802160640",
-                "40:398458880778043392",
-                "40:-807403520734003200",
-                "40:-719323136369098752",
-                "40:-5054136321205862400",
-                "40:658505728635437056",
-                "40:5012193281583349760",
-                "40:7759462401134559232",
-                "40:-1971322881357905920",
-                "40:117440512174063616",
-                "40:540934144780533760",
-                "40:574619648947912704",
-                "41:-912261120335544320",
-                "41:-476053504-882900992",
-                "41:-524288000-364904448",
-                "41:660602880-610271232",
-                "41:329252864924844032",
-                "41:-62914560641728512",
-                "41:-276824064708837376",
-                "41:-83886080-1306525696",
-                "41:-83886080-1119879168",
-                "41:-952107008-369098752",
-                "41:-578813952822083584",
-                "41:-578813952813694976",
-                "41:-587202560813694976",
-                "41:-587202560822083584",
-                "41:-89128960056623104",
-                "41:-583008256-532676608",
-                "41:-627048448232783872",
-                "41:-538968064232783872",
-                "41:1065353216-618659840",
-                "41:648019968-1201668096",
-                "41:513802240-931135488",
-                "41:467664896-931135488",
-                "41:1283457024-645922816",
-                "41:905969664-968884224",
-                "41:358612992924844032",
-                "41:199229440-23068672",
-                "41:3439329281352663040",
-                "41:343932928809500672",
-                "41:335544320591396864",
-                "41:-77594624-694157312",
-                "41:1908408321394606080",
-                "41:2243952641218445312",
-                "42:119537664564133888",
-                "42:-2097152438304768",
-                "42:121634816652214272",
-                "42:33554432918552576",
-                "42:-148897792843055104",
-                "42:-211812352924844032",
-                "42:94371840962592768",
-                "42:-165675008478150656",
-                "42:-1950351361172307968",
-                "42:-2747269121398800384",
-                "42:-2747269121394606080",
-                "42:-2747269121402994688",
-                "42:-796917761476395008",
-                "42:272629760811597824",
-                "42:2390753281684013056",
-                "42:-69206016270532608",
-                "42:-1803550721306525696",
-                "42:2390753281696595968"]
-    # todo find a not stupid way of differentiating objects - currently the format is "[Map#][object.z] "
-    # probably do "[Map#][object.x][object.y] " and if theres objects on top of each other i guess i can go fuck myself
+    oneupids = ["1:L2","1:L8","1:L11","2:L0","2:L10","2:L11","2:L12","2:L17","2:L18","2:L21","2:L23","2:L30","4:L1",
+                "4:L11","4:L17","4:L22","4:L26","4:L28","4:L30","4:L33","4:L40","5:L4","5:L7","5:L10","5:L15","5:L19",
+                "5:L25","5:L26","5:L30","5:L33","5:L34","5:L46","5:L49","7:L6","7:L7","7:L9","7:L10","7:L11","7:L12",
+                "7:L17","7:L22","7:L23","7:L25","7:L26","7:L27","7:L35","7:L36","7:L37","7:L44","7:L47","7:L50","7:52",
+                "8:L1","8:L2","8:L4","8:L6","8:L18","8:L28","8:L30","8:L33","8:L39","8:L40","8:L43","8:L47","8:L49",
+                "8:L50","8:L52","10:L1","10:L2","10:L4","10:L6","10:L7","10:L9","10:L25","10:L41","10:L43","10:L44",
+                "11:L3","11:L5","11:L9","11:L15","11:L19","11:L20","11:L23","11:L24","11:L25","11:L31","11:L33",
+                "11:L36","11:L44","11:L48","13:L2","13:L3","13:L8","13:L11","13:L13","13:L21","13:L30","13:L32","13:L37",
+                "13:L38","14:L1","14:L2","14:L4","14:L5","14:L11","14:L12","14:L15","14:L21","14:L30","14:L33",
+                "14:L37","14:L42","14:L47","14:L53","14:L54","14:L55","14:L56","14:L57","16:L0","16:L2","16:L4","16:L7",
+                "16:L11","16:L13","16:L18","16:L19","16:L21","22:L0","22:L1","22:L2","22:L3","22:L5","22:L8","22:L9",
+                "22:L17","23:L0","23:L1","23:L3","23:L5","23:L6","23:L7","23:L14","23:L17","23:L19","23:L21","23:L26",
+                "23:L27","23:L29","23:L35","25:L0","25:L1","30:L2","30:L12","31:L0","31:L1","31:L2","31:L3","31:L4",
+                "31:L5","32:L4","32:L6","32:L13","32:L16","32:L22","33:L0","33:L18","33:L21","33:L22","33:L31","33:L32",
+                "33:L37","33:L41","33:L42","33:L45","33:L52","33:L66","33:L69","33:L72","33:L74","40:L2","40:L5",
+                "40:L6","40:L7","40:L8","40:L11","40:L15","40:L16","40:L17","40:L19","40:L21","40:L27","40:L32",
+                "40:L33","40:L34","40:L36","40:L37","41:L4","41:L5","41:L7","41:L8","41:L10","41:L20","41:L22","41:L23",
+                "41:L24","41:L28","41:L36","41:L37","41:L38","41:L39","41:L40","41:L46","41:L50","41:L51","41:L52",
+                "41:L54","41:L57","41:L58","41:L59","41:L60","41:L61","41:L62","41:L64","41:L68","41:L76","41:L78",
+                "41:L80","41:L81","42:L8","42:L9","42:L16","42:L22","42:L25","42:L27","42:L31","42:L33","42:L36",
+                "42:L39","42:L40","42:L41","42:L42","42:L46","42:L52","42:L55","42:L57","42:L60","539:L14"]
+
+    superringids = ["1:R0","1:R1","1:R3","1:R4","1:R5","1:R6","1:R7","1:R9","1:R10","1:R12","1:R13","1:R14","2:R1",
+"2:R2","2:R3","2:R4","2:R5","2:R6","2:R7","2:R8","2:R9","2:R13","2:R14","2:R15","2:R16","2:R19","2:R20","2:R22","2:R24",
+"2:R25","2:R26","2:R27","2:R28","2:R29","4:R0","4:R2","4:R3","4:R4","4:R5","4:R6","4:R7","4:R8","4:R9","4:R10","4:R12",
+"4:R13","4:R14","4:R15","4:R16","4:R18","4:R19","4:R20","4:R21","4:R23","4:R24","4:R25","4:R27","4:R29","4:R31","4:R32",
+"4:R34","4:R35","4:R36","4:R37","4:R38","4:R39","4:R41","5:R0","5:R1","5:R2","5:R3","5:R5","5:R6","5:R8","5:R9","5:R11",
+"5:R12","5:R13","5:R14","5:R16","5:R17","5:R18","5:R20","5:R21","5:R22","5:R23","5:R24","5:R27","5:R28","5:R29","5:R31",
+"5:R32","5:R35","5:R36","5:R37","5:R38","5:R39","5:R40","5:R41","5:R42","5:R43","5:R44","5:R45","5:R47","5:R48","5:R50",
+"5:R51","5:R52","7:R0","7:R1","7:R2","7:R3","7:R4","7:R5","7:R8","7:R13","7:R14","7:R15","7:R16","7:R18","7:R19","7:R20",
+"7:R21","7:R24","7:R28","7:R29","7:R30","7:R31","7:R32","7:R33","7:R34","7:R38","7:R39","7:R40","7:R41","7:R42","7:R43",
+"7:R45","7:R46","7:R48","7:R49","7:R51","8:R0","8:R3","8:R5","8:R7","8:R8","8:R9","8:R10","8:R11","8:R12","8:R13",
+"8:R14","8:R15","8:R16","8:R17","8:R19","8:R20","8:R21","8:R22","8:R23","8:R24","8:R25","8:R26","8:R27","8:R29","8:R31",
+"8:R32","8:R34","8:R35","8:R36","8:R37","8:R38","8:R41","8:R42","8:R44","8:R45","8:R46","8:R48","8:R51","10:R0","10:R3",
+"10:R5","10:R8","10:R10","10:R11","10:R12","10:R13","10:R14","10:R15","10:R16","10:R17","10:R18","10:R19","10:R20",
+"10:R21","10:R22","10:R23","10:R24","10:R26","10:R27","10:R28","10:R29","10:R30","10:R31","10:R32","10:R33","10:R34",
+"10:R35","10:R36","10:R37","10:R38","10:R39","10:R40","10:R42","11:R0","11:R1","11:R2","11:R4","11:R6","11:R7","11:R8",
+"11:R10","11:R11","11:R12","11:R13","11:R14","11:R16","11:R17","11:R18","11:R21","11:R22","11:R26","11:R27","11:R28",
+"11:R29","11:R30","11:R32","11:R34","11:R35","11:R37","11:R38","11:R39","11:R40","11:R41","11:R42","11:R43","11:R45",
+"11:R46","11:R47","11:R49","11:R50","11:R51","11:R52","11:R53","11:R54","11:R55","11:R56","11:R57","11:R58","11:R59",
+"11:R60","11:R61","11:R62","13:R0","13:R1","13:R4","13:R5","13:R6","13:R7","13:R9","13:R10","13:R12","13:R14","13:R15",
+"13:R16","13:R17","13:R18","13:R19","13:R20","13:R22","13:R23","13:R24","13:R25","13:R26","13:R27","13:R28","13:R29",
+"13:R31","13:R33","13:R34","13:R35","13:R36","14:R0","14:R3","14:R6","14:R7","14:R8","14:R9","14:R10","14:R13","14:R14",
+"14:R16","14:R17","14:R18","14:R19","14:R20","14:R22","14:R23","14:R24","14:R25","14:R26","14:R27","14:R28","14:R29",
+"14:R31","14:R32","14:R34","14:R35","14:R36","14:R38","14:R39","14:R40","14:R41","14:R43","14:R44","14:R45","14:R46",
+"14:R48","14:R49","14:R50","14:R51","14:R52","14:R58","16:R1","16:R3","16:R5","16:R6","16:R8","16:R9","16:R10",
+"16:R12","16:R14","16:R15","16:R16","16:R17","16:R20","22:R4","22:R6","22:R7","22:R10","22:R11","22:R12","22:R13",
+"22:R14","22:R15","22:R16","22:R18","22:R19","22:R20","22:R21","22:R22","22:R23","22:R24","22:R25","23:R2","23:R4",
+"23:R8","23:R9","23:R10","23:R11","23:R12","23:R13","23:R15","23:R16","23:R18","23:R20","23:R22","23:R23","23:R24",
+"23:R25","23:R28","23:R30","23:R31","23:R32","23:R33","23:R34","23:R36","30:R0","30:R1","30:R3","30:R4","30:R5","30:R6",
+"30:R7","30:R8","30:R9","30:R10","30:R11","30:R13","32:R0","32:R1","32:R2","32:R3","32:R5","32:R7","32:R8","32:R9",
+"32:R10","32:R11","32:R12","32:R14","32:R15","32:R17","32:R18","32:R19","32:R20","32:R21","32:R23","32:R24","32:R25",
+"33:R1","33:R2","33:R3","33:R4","33:R5","33:R6","33:R7","33:R8","33:R9","33:R10","33:R11","33:R12","33:R13","33:R14",
+"33:R15","33:R16","33:R17","33:R19","33:R20","33:R23","33:R24","33:R25","33:R26","33:R27","33:R28","33:R29","33:R30",
+"33:R33","33:R34","33:R35","33:R36","33:R38","33:R39","33:R40","33:R43","33:R44","33:R46","33:R47","33:R48","33:R49",
+"33:R50","33:R51","33:R53","33:R54","33:R55","33:R56","33:R57","33:R58","33:R59","33:R60","33:R61","33:R62","33:R63",
+"33:R64","33:R65","33:R67","33:R68","33:R70","33:R71","33:R73","40:R0","40:R1","40:R3","40:R4","40:R9","40:R10",
+"40:R12","40:R13","40:R14","40:R18","40:R20","40:R22","40:R23","40:R24","40:R25","40:R26","40:R28","40:R29","40:R30",
+"40:R31","40:R35","40:R38","40:R39","41:R0","41:R1","41:R2","41:R3","41:R6","41:R9","41:R11","41:R12","41:R13","41:R14",
+"41:R15","41:R16","41:R17","41:R18","41:R19","41:R21","41:R25","41:R26","41:R27","41:R29","41:R30","41:R31","41:R32",
+"41:R33","41:R34","41:R35","41:R41","41:R42","41:R43","41:R44","41:R45","41:R47","41:R48","41:R49","41:R53","41:R55",
+"41:R56","41:R63","41:R65","41:R66","41:R67","41:R69","41:R70","41:R71","41:R72","41:R73","41:R74","41:R75","41:R77",
+"41:R79","42:R0","42:R1","42:R2","42:R3","42:R4","42:R5","42:R6","42:R7","42:R10","42:R11","42:R12","42:R13","42:R14",
+"42:R15","42:R17","42:R18","42:R19","42:R20","42:R21","42:R23","42:R24","42:R26","42:R28","42:R29","42:R30","42:R32",
+"42:R34","42:R35","42:R37","42:R38","42:R43","42:R44","42:R45","42:R47","42:R48","42:R49","42:R50","42:R51","42:R53",
+"42:R54","42:R56","42:R58","42:R59","42:R61","532:R0","532:R1","532:R2","532:R3","532:R4","532:R5","532:R6","532:R7",
+"532:R8","532:R9","532:R10","532:R11","532:R12","532:R13","532:R14","532:R15","532:R16","532:R17","533:R0","533:R1",
+"533:R2","533:R3","533:R4","533:R5","533:R6","533:R7","533:R8","533:R9","533:R10","533:R11","533:R12","533:R13",
+"533:R14","533:R15","533:R16","533:R17","533:R18","533:R19","533:R20","533:R21","534:R0","534:R1","534:R2","534:R3",
+"534:R4","534:R5","534:R6","534:R7","534:R8","534:R9","534:R10","534:R11","534:R12","534:R13","534:R14","534:R15",
+"534:R16","534:R17","534:R18","534:R19","534:R20","534:R21","534:R22","534:R23","534:R24","535:R0","535:R1","535:R2",
+"535:R3","535:R4","535:R5","535:R6","535:R7","535:R8","535:R9","535:R10","535:R11","535:R12","535:R13","535:R14",
+"535:R15","535:R16","536:R0","536:R1","536:R2","536:R3","536:R4","536:R5","536:R6","536:R7","536:R8","536:R9","536:R10",
+"536:R11","537:R0","537:R1","537:R2","537:R3","537:R4","537:R5","537:R6","537:R7","537:R8","537:R9","537:R10","537:R11",
+"538:R0","538:R1","538:R2","538:R3","538:R4","538:R5","538:R6","538:R7","538:R8","538:R9","538:R10","538:R11","538:R12",
+"538:R13","538:R14","538:R15","538:R16","538:R17","538:R18","538:R19","538:R20","538:R21","538:R22","538:R23","538:R24",
+"539:R0","539:R1","539:R2","539:R3","539:R4","539:R5","539:R6","539:R7","539:R8","539:R9","539:R10","539:R11","539:R12",
+"539:R13","539:R15","539:R16","539:R17","539:R18","540:R0","540:R1","540:R2","540:R3","540:R4","540:R5",
+"540:R6","540:R7","540:R8","540:R9","540:R10","540:R11","540:R12","540:R13","540:R14","540:R15","540:R16","540:R17",
+"540:R18","540:R19","540:R20","540:R21","540:R22","540:R23","540:R24","540:R25","541:R0","541:R1","541:R2","541:R3",
+"541:R4","541:R5","541:R6","541:R7","541:R8","541:R9","541:R10","541:R11","541:R12","541:R13","541:R14","541:R15",
+"541:R16","541:R17","541:R18","541:R19","541:R20","541:R21","542:R0","542:R1","542:R2","542:R3","542:R4","542:R5",
+"542:R6","542:R7","542:R8","542:R9","542:R10","542:R11","542:R12","542:R13","542:R14","542:R15","542:R16","542:R17",
+"542:R18","542:R19","542:R20","542:R21","543:R0","543:R1","543:R2","543:R3","543:R4","543:R5","544:R0","544:R1",
+"544:R2","544:R3","544:R4","544:R5","544:R6","544:R7","544:R8","544:R9","544:R10","545:R0","545:R1","545:R2","545:R3",
+"545:R4","545:R5","545:R6","545:R7","545:R8","545:R9","545:R10","545:R11","545:R12","545:R13","545:R14","545:R15",
+"545:R16","545:R17","545:R18","545:R19","545:R20","545:R21","545:R22","546:R0","546:R1","546:R2","546:R3","546:R4",
+"546:R5","546:R6","546:R7","546:R8","546:R9","546:R10","546:R11","546:R12","546:R13","546:R14","546:R15","546:R16",
+"546:R17","546:R18","546:R19","546:R20","546:R21","546:R22","546:R23","546:R24","546:R25","546:R26","546:R27","546:R28",
+"546:R29","546:R30","546:R31","546:R32","546:R33","546:R34","546:R35","546:R36","546:R37","546:R38","546:R39","546:R40",
+"546:R41","546:R42","546:R43","546:R44","547:R0","547:R1","547:R2","547:R3","547:R4","547:R5","547:R6","547:R7",
+"547:R8","548:R0","548:R1","548:R2","548:R3","548:R4","548:R5","548:R6","548:R7","548:R8","548:R9","548:R10","548:R11",
+"548:R12","548:R13","548:R14","548:R15","548:R16","548:R17","548:R18","548:R19","549:R0","549:R1","549:R2","549:R3",
+"549:R4","549:R5","549:R6","549:R7","549:R8","549:R9","549:R10","549:R11","549:R12","549:R13","549:R14","549:R15",
+"549:R16","549:R17","549:R18","549:R19","549:R20","549:R21","569:R0","569:R1","569:R2","569:R3","569:R4","569:R5",
+"569:R6","569:R7","569:R8","569:R9","569:R10","569:R11","570:R0","570:R1","570:R2","570:R3","570:R4","570:R5",
+"570:R6","570:R7","570:R8","570:R9","570:R10","570:R11"]
+    # format is [gamemap]:[monitortype][checkid]"
+
+
+
+
+
+
 
     while True:
         # run the console command to get recieved items
@@ -1996,7 +1317,10 @@ async def file_watcher(ctx, file_path):
                     if lines == i:
                         locs_to_send.add(oneupids.index(i) + 320)
                         break
-
+                for i in superringids:
+                    if lines == i:
+                        locs_to_send.add(superringids.index(i) + 570)
+                        break
             g.truncate(0)
             g.close()
         except FileNotFoundError:
@@ -2044,7 +1368,4 @@ async def file_watcher(ctx, file_path):
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
-    # t = threading.Thread(target=file_watcher)
-    # t.daemon = True
-    # t.start()
-    run_as_textclient(*sys.argv[1:])
+    launch(*sys.argv[1:])

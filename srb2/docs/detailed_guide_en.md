@@ -20,9 +20,11 @@ These are the settings for the randomizer, change the values depending on what y
 
 if you wanted to change a setting, set one value to be non-zero and the others to 0 such as:
 
-  time_emblems:
-    'false': 50
-    'true': 0
+    time_emblems:
+  
+        'false': 50
+    
+        'true': 0
 
 
 keep in mind the options are weighted so you could potentially randomize whether or not a setting is enabled
@@ -30,11 +32,11 @@ keep in mind the options are weighted so you could potentially randomize whether
 
 for example if you were to put:
 
-time_emblems:
+     time_emblems:
 
-    'false': 50
+        'false': 50
     
-    'true': 50
+        'true': 50
 
 this would result in %50 of the time enabling time emblems and %50 not
 (The numbers do not need to add up to 100)
@@ -43,7 +45,7 @@ the same thing holds true for ranges, with the main difference being you can def
 
 for example say you wanted to change the number of emblems from the default 180 to 100, you would put
 
-  num_emblems:
+    num_emblems:
   
     # You can define additional values between the minimum and maximum values.
     
@@ -51,13 +53,13 @@ for example say you wanted to change the number of emblems from the default 180 
     
     # Maximum value is 250
     
-    100: 50
+        100: 50
     
-    random: 0
+        random: 0
     
-    random-low: 0
+        random-low: 0
     
-    random-high: 0
+        random-high: 0
 
 (the 4 spaces before the value matter)
 

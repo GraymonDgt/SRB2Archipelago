@@ -92,6 +92,7 @@ class SRB2Context(CommonContext):
         self.death_link_lockout: float = time.time()
         self.goal_type: int = None
         self.bcz_emblems: int = 0
+        self.goal_type = 0
         self.matchmaps = None
         self.items_handling = 0b001 | 0b010 | 0b100  # Receive items from other worlds, starting inv, and own items
         self.location_name_to_ap_id = None
@@ -129,6 +130,7 @@ class SRB2Context(CommonContext):
             #set up save file checking tasks here
             self.bcz_emblems = args["slot_data"]["BlackCoreEmblems"]
             self.matchmaps = args["slot_data"]["EnableMatchMaps"]
+            self.goal_type = args["slot_data"]["CompletionType"]
             if args["slot_data"]["DeathLink"] != 0:
                 self.death_link = True
                 self.tags.add("DeathLink")
@@ -483,9 +485,9 @@ def launch(*args):
 async def item_handler(ctx, file_path):
     file_path2 = file_path + "/apgamedat1.ssg"
     try:
-        f = open(file_path + "/luafiles/APTranslator.dat", 'r+b')#TODO check for file and get num traps if needed
+        f = open(file_path + "/luafiles/archipelago/APTranslator.dat", 'r+b')#TODO check for file and get num traps if needed
     except FileNotFoundError:
-        f = open(file_path + "/luafiles/APTranslator.dat", 'w+b')  # TODO check for file and get num traps if needed
+        f = open(file_path + "/luafiles/archipelago/APTranslator.dat", 'w+b')  # TODO check for file and get num traps if needed
         f.write(0x69.to_bytes(1, byteorder="little"))
     f.close()
     # set up new save file here
@@ -494,20 +496,22 @@ async def item_handler(ctx, file_path):
     locs_received = []
     final_write = [0, 0, 0, 0]
     sent_shields = [0, 0, 0, 0, 0, 0, 0, 0]
-
+    numreceived = 0
+    currenttrap = 0
     while True:
         while ctx.total_locations is None:
             await asyncio.sleep(1)
             continue
         try:
-            f = open(file_path + "/luafiles/APTranslator.dat", 'r+b')
+            f = open(file_path + "/luafiles/archipelago/APTranslator.dat", 'r+b')
         except PermissionError:
+            logger.info('Could not open APTranslator.dat. Permission Error')
             await asyncio.sleep(1)
             continue
 
 
         if len(ctx.texttransfer) > 0:
-            h = open(file_path + "/luafiles/APTextTransfer.txt", 'w+b')#i love character 81 not fucking existing so i cant use the python string stuf :))))))
+            h = open(file_path + "/luafiles/archipelago/APTextTransfer.txt", 'w+b')#i love character 81 not fucking existing so i cant use the python string stuf :))))))
             for jsons in ctx.texttransfer:
                 for strings in jsons:
                     try:
@@ -559,6 +563,7 @@ async def item_handler(ctx, file_path):
         emblems = 0
         startrings = 0
         soundtest = 0
+        currreceived = 0
         f.seek(0x12)
         num_traps = int.from_bytes(f.read(2), 'little')
 
@@ -569,6 +574,7 @@ async def item_handler(ctx, file_path):
         # clear file g
 
         for i in ctx.items_received:
+            currreceived +=1
             id = i[0]
             if id == 2:
                 emeralds += 1
@@ -589,49 +595,51 @@ async def item_handler(ctx, file_path):
 
                     f.seek(0x02)
                     if id == 4:  # 1up
-                        f.write(0x01.to_bytes(2, byteorder="little"))
+                        f.write(0x01.to_bytes(1, byteorder="little"))
                     if id == 6:  # pity shield
-                        f.write(0x02.to_bytes(2, byteorder="little"))
+                        f.write(0x02.to_bytes(1, byteorder="little"))
                     if id == 5:  # gravity boots
-                        f.write(0x03.to_bytes(2, byteorder="little"))
+                        f.write(0x03.to_bytes(1, byteorder="little"))
                     if id == 7:  # replay tutorial
-                        f.write(0x04.to_bytes(2, byteorder="little"))
+                        f.write(0x04.to_bytes(1, byteorder="little"))
                     if id == 8:  # ring loss
-                        f.write(0x05.to_bytes(2, byteorder="little"))
+                        f.write(0x05.to_bytes(1, byteorder="little"))
                     if id == 9:  # drop inputs
-                        f.write(0x07.to_bytes(2, byteorder="little"))
+                        f.write(0x07.to_bytes(1, byteorder="little"))
                     if id == 70:  # & knuckles
-                        f.write(0x06.to_bytes(2, byteorder="little"))
+                        f.write(0x06.to_bytes(1, byteorder="little"))
                     if id == 71:  # 50 rings
-                        f.write(0x08.to_bytes(2, byteorder="little"))
+                        f.write(0x08.to_bytes(1, byteorder="little"))
                     if id == 72:  # 20 rings
-                        f.write(0x09.to_bytes(2, byteorder="little"))
+                        f.write(0x09.to_bytes(1, byteorder="little"))
                     if id == 73:  # 10 rings
-                        f.write(0x0A.to_bytes(2, byteorder="little"))
+                        f.write(0x0A.to_bytes(1, byteorder="little"))
                     if id == 75:  # slippery floors
-                        f.write(0x0B.to_bytes(2, byteorder="little"))
+                        f.write(0x0B.to_bytes(1, byteorder="little"))
                     if id == 76:  # 1000 points
-                        f.write(0x0C.to_bytes(2, byteorder="little"))
+                        f.write(0x0C.to_bytes(1, byteorder="little"))
                     if id == 77:  # sonic forces
-                        f.write(0x0D.to_bytes(2, byteorder="little"))
+                        f.write(0x0D.to_bytes(1, byteorder="little"))
                     if id == 78:  # temp invincibility
-                        f.write(0x0E.to_bytes(2, byteorder="little"))
+                        f.write(0x0E.to_bytes(1, byteorder="little"))
                     if id == 79:  # temp speed shoes
-                        f.write(0x0F.to_bytes(2, byteorder="little"))
+                        f.write(0x0F.to_bytes(1, byteorder="little"))
                     if id == 81:  # spb
-                        f.write(0x10.to_bytes(2, byteorder="little"))
+                        f.write(0x10.to_bytes(1, byteorder="little"))
                     if id == 82:  # shrink
-                        f.write(0x11.to_bytes(2, byteorder="little"))
+                        f.write(0x11.to_bytes(1, byteorder="little"))
                     if id == 83:  # grow
-                        f.write(0x12.to_bytes(2, byteorder="little"))
+                        f.write(0x12.to_bytes(1, byteorder="little"))
                     if id == 84:  # double rings
-                        f.write(0x13.to_bytes(2, byteorder="little"))
+                        f.write(0x13.to_bytes(1, byteorder="little"))
 
 
                     f.seek(0x12)
                     f.write((num_traps + 1).to_bytes(2, byteorder="little"))
 
-                continue
+                    f.seek(0x18)
+                    f.write(0x01.to_bytes(1, byteorder="little"))  # let srb2 know to read the file
+                    continue
                 # in the future it would be efficient to always hold a list of sent items so the file doesnt
             if id in locs_received:  # have to be read every second
                 continue
@@ -804,9 +812,7 @@ async def item_handler(ctx, file_path):
             f.write(0x3F.to_bytes(2, byteorder="little"))  # this sucks
         if emeralds == 7:
             f.write(0x7F.to_bytes(2, byteorder="little"))  # this sucks
-        if traps < num_traps:
-            f.seek(0x12)
-            f.write(traps.to_bytes(1, byteorder="little"))
+
         f.seek(0x03)
         f.write(bytes(sent_shields))
         for i in range(len(final_write)):
@@ -820,6 +826,12 @@ async def item_handler(ctx, file_path):
         f.write(ctx.bcz_emblems.to_bytes(1, byteorder="little"))
         f.seek(0x17)
         f.write(startrings.to_bytes(1, byteorder="little"))
+        if numreceived < currreceived:
+            f.seek(0x18)
+            f.write(0x01.to_bytes(1, byteorder="little"))  # let srb2 know to read the file
+            numreceived = currreceived
+
+
 
         try:
             g = open(file_path2, 'r+b')
@@ -1106,21 +1118,22 @@ async def file_watcher(ctx, file_path):
 
         print("apgamedat.dat does not exist, let SRB2 make a new one...")
     except PermissionError:
+
         print("could not overwrite old save data (lack of permission). Try closing the file in HXD you dumbass")
 
 ##    cfg = open(file_path + "/AUTOEXEC.CFG", "w")
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v140.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v142.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v140.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v142.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v140.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v142.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 
@@ -1305,7 +1318,7 @@ async def file_watcher(ctx, file_path):
     while True:
         # run the console command to get recieved items
         try:
-            g = open(file_path + "/luafiles/APTokens.txt", 'r+')
+            g = open(file_path + "/luafiles/archipelago/APTokens.txt", 'r+')
             for lines in g:
                 lines = lines.strip()
                 if lines is None:

@@ -63,6 +63,7 @@ for example say you wanted to change the number of emblems from the default 180 
 
 (the 4 spaces before the value matter)
 
+
 When you are done setting up your yaml, move it to the folder C:\ProgramData\Archipelago\Players
 
 Place a yaml for every game you want to play with in this folder

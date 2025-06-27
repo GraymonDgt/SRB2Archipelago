@@ -27,6 +27,10 @@ Connect to archipelago and SRB2 will automatically open with the AP mod loaded
 
 # ADDITIONAL NOTES
 
+If you don't already know how to set up an Archipelago game, follow this guide:
+
+https://github.com/GraymonDgt/SRB2Archipelago/blob/main/srb2/docs/detailed_guide_en.md
+
 type "hub" into the console to return to the hub at any time
 
 If the AP mod didn't load, you can load it yourself and everything will work fine

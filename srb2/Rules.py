@@ -142,13 +142,14 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
         # Techno Hill
 
-        rf.assign_rule("Techno Hill (Act 1) Spade Emblem", "ELEMENTAL")
+
         rf.assign_rule("Techno Hill (Act 1) Heart Emblem", "TAILS")
         rf.assign_rule("Techno Hill (Act 1) Diamond Emblem", "TAILS | KNUCKLES")
         rf.assign_rule("Techno Hill (Act 1) Club Emblem", "KNUCKLES")
         rf.assign_rule("Techno Hill (Act 2) Star Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
         rf.assign_rule("Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack", "AMY")
         if options.difficulty == 0:
+            rf.assign_rule("Techno Hill (Act 1) Spade Emblem", "ELEMENTAL")
             rf.assign_rule("Techno Hill (Act 2) Emerald Token - Deep in Slime", "ELEMENTAL")
             rf.assign_rule("Techno Hill (Act 1) Star Emblem", "TAILS | KNUCKLES")  # INTENDED SONIC PATH FOR THIS BTW
 
@@ -163,7 +164,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Techno Hill (Act 2) Monitor - x:-18592 y:-4096", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
 
             if options.difficulty == 0:
-                rf.assign_rule("Techno Hill (Act 1) Monitor - x:2976 y:4384", "TAILS | KNUCKLES")#INTENDED SONIC PATH FOR THIS BTW
+                rf.assign_rule("Techno Hill (Act 1) Monitor - High Ledge in Hole Near Start", "TAILS | KNUCKLES")#INTENDED SONIC PATH FOR THIS BTW
                 rf.assign_rule("Techno Hill (Act 2) Monitor - x:0 y:2240","TAILS | KNUCKLES | FANG | WIND")  # or 7 emeralds
                 rf.assign_rule("Techno Hill (Act 2) Monitor - x:-2048 y:-7872", "ELEMENTAL | KNUCKLES | FANG")
             else:
@@ -188,7 +189,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
 
             if options.difficulty == 0:
-                rf.assign_rule("Techno Hill (Act 1) Monitor - Before End on Crates", "TAILS | KNUCKLES | AMY | FANG | WIND")
+                rf.assign_rule("Techno Hill (Act 1) Monitor - Before End on Crates", "TAILS | KNUCKLES | AMY | FANG | WIND")#idk why this is here this is piss easy
                 rf.assign_rule("Techno Hill (Act 2) Monitor - x:64 y:2240", "TAILS | KNUCKLES | FANG | WIND")
                 rf.assign_rule("Techno Hill (Act 2) Monitor - x:-64 y:2240", "TAILS | KNUCKLES | FANG | WIND")
 
@@ -362,9 +363,13 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Egg Rock (Act 1) Monitor - x:-64 y:-10848", "SONIC | TAILS | KNUCKLES | METAL SONIC")
             rf.assign_rule("Egg Rock (Act 1) Monitor - x:-5184 y:-11264", "SONIC | TAILS | KNUCKLES | METAL SONIC")
             rf.assign_rule("Egg Rock (Act 1) Monitor - x:6144 y:-2112", "TAILS | FANG")
-            rf.assign_rule("Egg Rock (Act 2) Monitor - x:11136 y:15456", "TAILS | KNUCKLES | FANG")
+
             rf.assign_rule("Egg Rock (Act 2) Monitor - x:-12032 y:7040", "SONIC | TAILS | KNUCKLES | METAL SONIC")
             rf.assign_rule("Egg Rock (Act 2) Monitor - x:-12864 y:7040", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            if options.difficulty == 0:
+                rf.assign_rule("Egg Rock (Act 2) Monitor - Top of Turret Room", "TAILS | KNUCKLES | FANG")
+            else:
+                rf.assign_rule("Egg Rock (Act 2) Monitor - Top of Turret Room", "TAILS | KNUCKLES | FANG | METAL SONIC")
 
         if options.superring_sanity:
             rf.assign_rule("Egg Rock (Act 1) Monitor - x:384 y:-9952" , "SONIC | TAILS | KNUCKLES | METAL SONIC")

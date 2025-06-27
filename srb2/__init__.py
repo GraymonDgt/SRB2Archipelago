@@ -185,6 +185,8 @@ class SRB2World(World):
                 self.multiworld.itempool += [self.create_item(zone_name)]#and != starting_zone
             #not concise because I need to keep track of slots_to_fill
             for char_name in character_item_data_table.keys():
+                if char_name == "Sonic":#temporary until starting char is implemented
+                    continue
                 self.multiworld.itempool += [self.create_item(char_name)]
                 slots_to_fill -=1
             for shield in other_item_table.keys():

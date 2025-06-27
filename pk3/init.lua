@@ -27,13 +27,23 @@ local enabledrill = 0
 local enabletime = 0
 local showcoords = false
 local monitorid = 0
+local senddeath = false
 --local bytes = {}
-rawset(_G,"bytes",{})
-
+rawset(_G,"bytes",{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
+local syncfile = 0
+local downloading = 0
 addHook("NetVars", function(network)
     bytes = network(bytes)
 end)
-
+COM_AddCommand("syncfile",function(player)
+if not multiplayer then return end
+syncfile = 1
+downloading = 1
+end)
+COM_AddCommand("print",function(player,string)
+if not multiplayer then return end
+print(string)
+end)
 
 
 
@@ -57,22 +67,15 @@ end,MT_RING_BOX)
 
 COM_AddCommand("showcoords", function(player)
 showcoords = not showcoords
-print("WIP")
-print("x: "..player.mo.x/FRACUNIT .." y: "..player.mo.y/FRACUNIT)
+--print("WIP")
+--print("x: "..player.mo.x/FRACUNIT .." y: "..player.mo.y/FRACUNIT)
 end)
 
 addHook("PlayerSpawn",function(player)
-player.extrarings = 0
 player.shrinktrap = 1
 end)
 
 
-addHook("NetVars",function(network)
-for player in players.iterate()
-            player.extrarings = network($)
-			player.startingrings = network($)
-    end
-end)
 
 
 
@@ -156,14 +159,6 @@ if player.frictiontrap then
 end
 end)
 
-addHook("PlayerThink", function(player)-- stupid dumb idiot code
-if player.extrarings then
-	if player.extrarings!=0 then
-		player.rings = $ + player.extrarings
-		player.extrarings = 0
-		end
-	end
-end)
 
 
 addHook("PlayerThink", function(player)-- stupid dumb idiot code
@@ -186,7 +181,7 @@ end)
 
 addHook("MobjDeath", function(object, source, inflictor)
 if not isserver and multiplayer then return end
-local f = assert(io.openlocal("APTokens.txt","a"))
+local f = assert(io.openlocal("archipelago/APTokens.txt","a"))
 f:write(gamemap)
 f:write(object.x)
 f:write(object.y)
@@ -200,7 +195,7 @@ end, MT_TOKEN)
 
 addHook("MobjDeath", function(object, source, inflictor)
 if not isserver and multiplayer then return end
-local f = assert(io.openlocal("APTokens.txt","a"))
+local f = assert(io.openlocal("archipelago/APTokens.txt","a"))
 f:write(gamemap)
 f:write(":")
 --f:write(object.x)
@@ -215,7 +210,7 @@ end, MT_1UP_BOX)
 
 addHook("MobjDeath", function(object, source, inflictor)
 if not isserver and multiplayer then return end
-local f = assert(io.openlocal("APTokens.txt","a"))
+local f = assert(io.openlocal("archipelago/APTokens.txt","a"))
 f:write(gamemap)
 f:write(":")
 --f:write(object.x)
@@ -248,18 +243,17 @@ local function HUDstuff(v)
 
 
 
-if not players[0].currentemblems then return end
-local curembl = players[0].currentemblems
-local goalembl = players[0].goalemblems
+local curembl = bytes[22]
+local goalembl = bytes[23]
 
 if goalembl != 0 then
 for player in players.iterate() do
 if player and player.valid then
 
-v.drawString(16*v.dupx(), 54*v.dupy(), "Emblems:",V_NOSCALESTART)
-v.drawString(16*v.dupx(), 64*v.dupy(), curembl,V_NOSCALESTART)
-v.drawString(42*v.dupx(), 64*v.dupy(), "/",V_NOSCALESTART)
-v.drawString(50*v.dupx(), 64*v.dupy(), goalembl,V_NOSCALESTART)
+v.drawString(16*v.dupx(), 74*v.dupy(), "Emblems:",V_NOSCALESTART)
+v.drawString(16*v.dupx(), 84*v.dupy(), curembl,V_NOSCALESTART)
+v.drawString(42*v.dupx(), 84*v.dupy(), "/",V_NOSCALESTART)
+v.drawString(50*v.dupx(), 84*v.dupy(), goalembl,V_NOSCALESTART)
 end
 end
 end
@@ -267,8 +261,28 @@ end
 
 hud.add(HUDstuff,"scores")
 
---player.exiting force to be lower to exit faster
 
+
+local function coords(v)
+if showcoords then
+
+for player in players.iterate() do
+if player and player.valid then
+
+v.drawString(16*v.dupx(), 54*v.dupy(), "X:",V_NOSCALESTART)
+v.drawString(30*v.dupx(), 54*v.dupy(), player.mo.x/FRACUNIT,V_NOSCALESTART)
+v.drawString(16*v.dupx(), 64*v.dupy(), "Y:",V_NOSCALESTART)
+v.drawString(30*v.dupx(), 64*v.dupy(), player.mo.y/FRACUNIT,V_NOSCALESTART)
+end
+end
+
+
+end
+
+
+end
+
+hud.add(coords,"game")
 
 
 local function beSonic(line, mo)
@@ -315,27 +329,9 @@ addHook("LinedefExecute", beMetal, "BE_METAL")
 
 
 
-local function readupdates()
-if not isserver and multiplayer then return end
-local f = assert(io.openlocal("APTranslator.dat","r+b"))
-
-f:seek("set",0)
-local bytes = {}
-while true do
-    local byte = f:read(1)
-    if byte == nil then
-        break
-    else
-        bytes[#bytes+1] = string.byte(byte)
-    end
-end
-
-
-
-
-
-
-if bytes[1] != 0 then --deathlink
+local function dofiller(file)
+--print(bytes[2])
+if bytes[0] != 0 then --deathlink
 for player in players.iterate() do
         if player and player.valid and player.mo then
             player.nightstime = 0
@@ -344,29 +340,12 @@ for player in players.iterate() do
             P_DamageMobj(player.mo, nil, nil, 1, DMG_INSTAKILL)
         end
     end
-f:seek("set",0)
-f:write("\0")
-f:flush()
-print("Recieved Deathlink")
+bytes[0] = 0
 end
+--TODO outgoing deathlink
 
-for player in players.iterate() do
-        if player and player.valid and player.mo then
-            if player.deadtimer == 1 and player.bot == BOT_NONE then --send a deathlink
-		f:seek("set",1)
-		f:write("x")
-		f:flush()
-		end
-        end
-    end
-
-
-
-
-
-
-if bytes[3] != 0 then --traps
-if bytes[3] == 1 then --1up
+if bytes[2] != 0 then --traps
+if bytes[2] == 1 then --1up
 for player in players.iterate() do
         if player and player.valid then
             player.lives = $ + 1
@@ -378,7 +357,7 @@ for player in players.iterate() do
 
 
 end
-if bytes[3] == 2 then --force pity shield
+if bytes[2] == 2 then --force pity shield
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    player.powers[pw_shield] = SH_PITY
@@ -386,40 +365,36 @@ for player in players.iterate() do
         end
     end
 end
-if bytes[3] == 3 then --force gravity boots
+if bytes[2] == 3 then --force gravity boots
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    player.powers[pw_gravityboots] = 20*TICRATE
         end
     end
 end
-if bytes[3] == 4 then --replay tutorial
+if bytes[2] == 4 then --replay tutorial
 
 	    G_SetCustomExitVars(1000, 1)
         G_ExitLevel()
 	    print("Replay the Tutorial IDIOT")
 
 end
-if bytes[3] == 5 then --ring drain
+if bytes[2] == 5 then --ring drain
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	   player.extrarings = -100
+	   player.rings = player.rings - 100
         end
     end
 end
 
-
-if bytes[3] == 6 then --& knuckles
-f:seek("set",2)
-f:write("\0")
-f:flush()
-G_AddPlayer(skins[2].name,0,"Knuckles",BOT_2PAI)
+if bytes[2] == 6 then --& knuckles
+G_AddPlayer(skins[2].name,"Red","Knuckles",BOT_2PAI)
 	    --COM_BufInsertText(server, "addbot knuckles")
-	    S_StartSound(player.mo, sfx_bowl)
+	    --S_StartSound(player.mo, sfx_bowl)
 
 end
 
-if bytes[3] == 7 then --dropped inputs
+if bytes[2] == 7 then --dropped inputs
 for player in players.iterate() do
         if player and player.valid and player.mo then
 		player.powers[pw_nocontrol] = 3*TICRATE
@@ -428,29 +403,29 @@ for player in players.iterate() do
     end
 end
 
-if bytes[3] == 8 then --50 rings
+if bytes[2] == 8 then --50 rings
 for player in players.iterate() do
-	        player.extrarings = 50
+	        player.rings =  $ + 50
     end
 end
 
-if bytes[3] == 9 then --20 rings
+if bytes[2] == 9 then --20 rings
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.extrarings = 20
+	        player.rings =  $ + 20
 
         end
     end
 end
 
-if bytes[3] == 10 then --10 rings
+if bytes[2] == 10 then --10 rings
 for player in players.iterate() do
         if player and player.valid and player.mo then
-	        player.extrarings = 10
+	        player.rings =  $ + 10
         end
     end
 end
-if bytes[3] == 11 then --icy floors
+if bytes[2] == 11 then --icy floors
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	        player.frictiontrap = TICRATE*75
@@ -459,7 +434,7 @@ for player in players.iterate() do
     end
 end
 
-if bytes[3] == 12 then --1000 points
+if bytes[2] == 12 then --1000 points
 for player in players.iterate() do
 
 			P_AddPlayerScore(player, 1000)
@@ -467,7 +442,7 @@ for player in players.iterate() do
     end
 end
 
-if bytes[3] == 13 then --sonic forces
+if bytes[2] == 13 then --sonic forces
 for player in players.iterate() do
         if player and player.valid and player.mo then
 			player.forcestrap = TICRATE*20
@@ -476,7 +451,7 @@ for player in players.iterate() do
 end
 
 
-if bytes[3] == 14 then --invincibility
+if bytes[2] == 14 then --invincibility
 for player in players.iterate() do
         if player and player.valid and player.mo then
 		player.powers[pw_invulnerability] = 20*TICRATE
@@ -487,7 +462,7 @@ for player in players.iterate() do
 S_ChangeMusic("_INV", true)
 end
 
-if bytes[3] == 15 then --speed shoes
+if bytes[2] == 15 then --speed shoes
 for player in players.iterate() do
         if player and player.valid and player.mo then
 		player.powers[pw_sneakers] = 20*TICRATE
@@ -498,11 +473,11 @@ for player in players.iterate() do
 
 end
 
-if bytes[3] == 16 then --self propelled bomb
+if bytes[2] == 16 then --self propelled bomb
 P_SpawnMobjFromMobj(players[0].mo,0,0,400*FRACUNIT,MT_SPBM)
 end
 
-if bytes[3] == 17 then --shrink monitor
+if bytes[2] == 17 then --shrink monitor
 for player in players.iterate() do
         if player and player.valid and player.mo then
 		player.shrinktrap = TICRATE*40
@@ -510,7 +485,7 @@ for player in players.iterate() do
         end
     end
 end
-if bytes[3] == 18 then --grow monitor
+if bytes[2] == 18 then --grow monitor
 for player in players.iterate() do
         if player and player.valid and player.mo then
 		player.shrinktrap = TICRATE*-40
@@ -518,7 +493,7 @@ for player in players.iterate() do
         end
     end
 end
-if bytes[3] == 19 then --double rings
+if bytes[2] == 19 then --double rings
 for player in players.iterate() do
         if player and player.valid and player.mo then
 		player.doublerings = 30*TICRATE
@@ -526,35 +501,137 @@ for player in players.iterate() do
         end
     end
 end
-
-
-f:seek("set",2)
-f:write("\0")
-f:flush()
+bytes[2] = 0
 end
-  if bytes[25]>0 then
-    local g = assert(io.openlocal("APTextTransfer.txt","r+"))
+end
+
+
+
+
+
+
+
+
+local function readupdates()
+--if host or singleplayer open the normal one
+
+
+if syncfile != 0 and multiplayer then
+
+downloading = 1
+io.open("archipelago/APTranslator.dat", "r", function(file)
+    if not file then
+        print("APTranslator.dat does not exist, let the AP client make it for you")
+        return
+    end
+
+
+    local data = file:read(28)
+	file:seek("set",0)
+--local bytes = {}
+local iterator = 0
+while true do
+    local bite = file:read(1)
+    if bite == nil then
+        break
+    else
+        bytes[iterator] = string.byte(bite)
+		iterator = $ + 1
+    end
+end
+    local clientFile = io.openlocal("client/archipelago/APTranslator.dat", "w")
+	if data then
+    clientFile:write(data) end
+
+	
+	downloading = 0
+end)
+syncfile = 0
+
+end
+if not multiplayer then
+
+local file = assert(io.openlocal("archipelago/APTranslator.dat","r+b"))
+
+
+local iterator = 0
+while true do
+    local bite = file:read(1)
+    if bite == nil then
+        break
+    else
+        bytes[iterator] = string.byte(bite)
+		iterator = $ + 1
+    end
+end
+file:close()
+end
+
+end
+
+
+local function fuckingdumb()
+
+dofiller()
+
+
+if isserver or not multiplayer then
+
+for player in players.iterate() do
+        if player and player.valid and player.mo then
+            if player.deadtimer == 1 and player.bot == BOT_NONE then --send a deathlink
+		senddeath = true
+		end
+        end
+    end
+
+if downloading == 0 then
+local f = assert(io.openlocal("archipelago/APTranslator.dat","r+b"))
+
+f:seek("set",24)
+local file_flag = string.byte(f:read(1))
+
+if file_flag !=0 then
+if multiplayer then downloading = 1 end
+COM_BufInsertText(players[0], "syncfile")
+local g = assert(io.openlocal("archipelago/APTextTransfer.txt","r+"))
 g:seek("set",0)
+local stringarray = {}
 local string = g:read()
 while (string != nil) do
 if not multiplayer then print(string)
 else COM_BufInsertText(players[0], "say "..string)
 end
-
 string = g:read()
- end
+end
+
 f:seek("set",24)
 f:write("\0")
 f:flush()
-    end	
+bytes[24] = 0
+f:seek("set",2)
+f:write("\0")
+f:flush()
+bytes[2] = 0
+end	
 
-
-players[0].currentemblems = bytes[22]
-players[0].goalemblems = bytes[23]
-
-
+if senddeath then
+f:seek("set",1)
+f:write("x")
+f:flush()
+senddeath = false
+end
 f:close()
-if bytes[4] == 0 then --whirlwind
+end
+end
+
+
+
+
+
+
+
+if bytes[3] == 0 then --whirlwind
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_WHIRLWIND then
@@ -566,7 +643,7 @@ for player in players.iterate() do
         end
     end
 end
-if (bytes[5] & 1) == 0 then --armageddon
+if (bytes[4] & 1) == 0 then --armageddon
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_ARMAGEDDON then
@@ -578,7 +655,7 @@ for player in players.iterate() do
         end
     end
 end
-if (bytes[5] & 2) == 0 then --super paraloop
+if (bytes[4] & 2) == 0 then --super paraloop
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_nights_superloop] != 0 then
@@ -587,7 +664,7 @@ for player in players.iterate() do
         end
     end
 end
-if (bytes[5] & 4) == 0 then --nightopian helper
+if (bytes[4] & 4) == 0 then --nightopian helper
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_nights_helper] != 0 then
@@ -596,7 +673,7 @@ for player in players.iterate() do
         end
     end
 end
-if (bytes[5] & 8) == 0 then --link freeze
+if (bytes[4] & 8) == 0 then --link freeze
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_nights_linkfreeze] != 0 then
@@ -605,17 +682,17 @@ for player in players.iterate() do
         end
     end
 end
-if (bytes[5] & 16) != 0 then
+if (bytes[4] & 16) != 0 then
 enabletime = 1
 
 end
-if (bytes[5] & 32) != 0 then
+if (bytes[4] & 32) != 0 then
 enabledrill = 1
 end
 
 
 
-if bytes[6] == 0 then --elemental
+if bytes[5] == 0 then --elemental
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_ELEMENTAL then
@@ -628,7 +705,7 @@ for player in players.iterate() do
     end
 end
 
-if bytes[7] == 0 then --attraction
+if bytes[6] == 0 then --attraction
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_ATTRACT then
@@ -640,7 +717,7 @@ for player in players.iterate() do
         end
     end
 end
-if (bytes[8] & 1) == 0 then --force
+if (bytes[7] & 1) == 0 then --force
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] & SH_FORCE then
@@ -650,7 +727,7 @@ for player in players.iterate() do
     end
 end
 
-if (bytes[8] & 2) == 0 then --s3k flame
+if (bytes[7] & 2) == 0 then --s3k flame
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_FLAMEAURA then
@@ -660,7 +737,7 @@ for player in players.iterate() do
     end
 end
 
-if (bytes[8] & 4) == 0 then --s3k bubble
+if (bytes[7] & 4) == 0 then --s3k bubble
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_BUBBLEWRAP then
@@ -670,7 +747,7 @@ for player in players.iterate() do
     end
 end
 
-if (bytes[8] & 8) == 0 then --s3k lightning
+if (bytes[7] & 8) == 0 then --s3k lightning
 for player in players.iterate() do
         if player and player.valid and player.mo then
 	    if player.powers[pw_shield] == SH_THUNDERCOIN then
@@ -692,281 +769,197 @@ end
 
 
 if gamemap == 125 then
-if (bytes[9] & 1) == 1 then--multiplayer stage toggle
+if (bytes[8] & 1) == 1 then--multiplayer stage toggle
   P_LinedefExecute(131)
   end
-if (bytes[9] & 2) == 2 then
+if (bytes[8] & 2) == 2 then
   P_LinedefExecute(132)
   end
-if (bytes[9] & 4) == 4 then
+if (bytes[8] & 4) == 4 then
   P_LinedefExecute(133)
   end
-if (bytes[9] & 8) == 8 then
+if (bytes[8] & 8) == 8 then
   P_LinedefExecute(134)
   end
-if (bytes[9] & 16) == 16 then
+if (bytes[8] & 16) == 16 then
   P_LinedefExecute(135)
   end
-if (bytes[9] & 32) == 32 then
+if (bytes[8] & 32) == 32 then
   P_LinedefExecute(136)
   end
-if (bytes[9] & 64) == 64 then
+if (bytes[8] & 64) == 64 then
   P_LinedefExecute(137)
   end
-if (bytes[9] & 128) == 128 then
+if (bytes[8] & 128) == 128 then
   P_LinedefExecute(138)
   end
-if (bytes[10] & 1) == 1 then--multiplayer stage toggle
+if (bytes[9] & 1) == 1 then--multiplayer stage toggle
   P_LinedefExecute(139)
   end
-if (bytes[10] & 2) == 2 then
+if (bytes[9] & 2) == 2 then
   P_LinedefExecute(140)
   end
-if (bytes[10] & 4) == 4 then
+if (bytes[9] & 4) == 4 then
   P_LinedefExecute(141)
   end
-if (bytes[10] & 8) == 8 then
+if (bytes[9] & 8) == 8 then
   P_LinedefExecute(142)
   end
-if (bytes[10] & 16) == 16 then
+if (bytes[9] & 16) == 16 then
   P_LinedefExecute(143)
   end
-if (bytes[10] & 32) == 32 then
+if (bytes[9] & 32) == 32 then
   P_LinedefExecute(144)
   end
-if (bytes[10] & 64) == 64 then
+if (bytes[9] & 64) == 64 then
   P_LinedefExecute(145)
   end
-if (bytes[10] & 128) == 128 then
+if (bytes[9] & 128) == 128 then
   P_LinedefExecute(146)
   end
-if (bytes[11] & 1) == 1 then
+if (bytes[10] & 1) == 1 then
   P_LinedefExecute(147)
   end
-if (bytes[11] & 2) == 2 then
+if (bytes[10] & 2) == 2 then
   P_LinedefExecute(148)
   end
-if (bytes[11] & 4) == 4 then
+if (bytes[10] & 4) == 4 then
   P_LinedefExecute(149)
   end
-if (bytes[11] & 8) == 8 then
+if (bytes[10] & 8) == 8 then
   P_LinedefExecute(150)
   end
-if (bytes[11] & 16) == 16 then
+if (bytes[10] & 16) == 16 then
   P_LinedefExecute(151)
   end
-if (bytes[11] & 32) == 32 then
+if (bytes[10] & 32) == 32 then
   P_LinedefExecute(152)
   end
 
 
-  if (bytes[12] & 1) == 1 then
+  if (bytes[11] & 1) == 1 then
   P_LinedefExecute(100)
   end
-  if (bytes[12] & 2) == 2 then
+  if (bytes[11] & 2) == 2 then
   P_LinedefExecute(101)
   end
-  if (bytes[12] & 4) == 4 then
+  if (bytes[11] & 4) == 4 then
   P_LinedefExecute(102)
   end
-  if (bytes[12] & 8) == 8 then
+  if (bytes[11] & 8) == 8 then
   P_LinedefExecute(103)
   end
-  if (bytes[12] & 16) == 16 then
+  if (bytes[11] & 16) == 16 then
   P_LinedefExecute(104)
   end
-  if (bytes[12] & 32) == 32 then
+  if (bytes[11] & 32) == 32 then
   P_LinedefExecute(105)
   end
-  if (bytes[12] & 64) == 64 then
+  if (bytes[11] & 64) == 64 then
   P_LinedefExecute(106)
   end
-  if (bytes[12] & 128) == 128 then
+  if (bytes[11] & 128) == 128 then
   P_LinedefExecute(107)
   end
-  if (bytes[13] & 1) == 1 then
+  if (bytes[12] & 1) == 1 then
   P_LinedefExecute(108)
   end
-  if (bytes[13] & 2) == 2 then
+  if (bytes[12] & 2) == 2 then
   P_LinedefExecute(109)
   end
-  if (bytes[13] & 4) == 4 then
+  if (bytes[12] & 4) == 4 then
   P_LinedefExecute(110)
   end
-  if (bytes[13] & 8) == 8 then
+  if (bytes[12] & 8) == 8 then
   P_LinedefExecute(111)
   end
-  if (bytes[13] & 16) == 16 then
+  if (bytes[12] & 16) == 16 then
   P_LinedefExecute(112)
   end
-  if (bytes[13] & 32) == 32 then
+  if (bytes[12] & 32) == 32 then
   P_LinedefExecute(113)
   end
-  if (bytes[13] & 64) == 64 then
+  if (bytes[12] & 64) == 64 then
   P_LinedefExecute(114)
   end
-  if (bytes[13] & 128) == 128 then
+  if (bytes[12] & 128) == 128 then
   P_LinedefExecute(115)
   end
-  if (bytes[14] & 1) == 1 then
+  if (bytes[13] & 1) == 1 then
   P_LinedefExecute(116)
   end
-  if (bytes[14] & 2) == 2 then
+  if (bytes[13] & 2) == 2 then
   P_LinedefExecute(117)
   end
-  if (bytes[14] & 4) == 4 then
+  if (bytes[13] & 4) == 4 then
   P_LinedefExecute(118)
   end
-  if (bytes[14] & 8) == 8 then
+  if (bytes[13] & 8) == 8 then
   P_LinedefExecute(119)
   end
-  if (bytes[14] & 16) == 16 then
+  if (bytes[13] & 16) == 16 then
   P_LinedefExecute(120)
   end
-  if (bytes[14] & 32) == 32 then
+  if (bytes[13] & 32) == 32 then
   P_LinedefExecute(121)
   end
-  if (bytes[14] & 64) == 64 then
+  if (bytes[13] & 64) == 64 then
   P_LinedefExecute(122)
   end
-  if (bytes[14] & 128) == 128 then
+  if (bytes[13] & 128) == 128 then
   P_LinedefExecute(123)
   end
-  if (bytes[15] & 1) == 1 then
+  if (bytes[14] & 1) == 1 then
   P_LinedefExecute(124)
   end
-  if (bytes[15] & 2) == 2 then
+  if (bytes[14] & 2) == 2 then
   P_LinedefExecute(125)
   end
-  if (bytes[15] & 4) == 4 then
+  if (bytes[14] & 4) == 4 then
   P_LinedefExecute(126)
   end
-  if (bytes[15] & 8) == 8 then
+  if (bytes[14] & 8) == 8 then
   P_LinedefExecute(127)
   end
-  if (bytes[15] & 16) == 16 then
+  if (bytes[14] & 16) == 16 then
   P_LinedefExecute(128)
   end
-  if (bytes[15] & 32) == 32 then
+  if (bytes[14] & 32) == 32 then
   P_LinedefExecute(129)
   end
-  if (bytes[15] & 64) == 64 then
+  if (bytes[14] & 64) == 64 then
   P_LinedefExecute(130)
   end
-    if (bytes[21] & 1) then
+    if (bytes[20] & 1) then
     P_LinedefExecute(41)
     end
-  if (bytes[21] & 2) then -- emblemhints
+  if (bytes[20] & 2) then -- emblemhints
     P_LinedefExecute(42)
     end
-	if (bytes[21] & 4) then--soundtest
+	if (bytes[20] & 4) then--soundtest
     P_LinedefExecute(43)
     end
 	
 	
 end
-  emeralds = emeralds | bytes[16]
-  emeralds = emeralds & bytes[16]
-
+  emeralds = emeralds | bytes[15]
+  emeralds = emeralds & bytes[15]
 
 end
+
+
+
+
+
 
 addHook("ThinkFrame", readupdates,"DEATHL")
 
-addHook("MobjSpawn", function(object)
-if bytes[4] == 0 then --whirlwind
-P_KillMobj(object)
-end
-end,MT_WHIRLWIND_BOX)
+addHook("ThinkFrame", fuckingdumb,"DUMBCO")
 
-addHook("MobjSpawn", function(object)
-if bytes[4] == 0 then --whirlwind
-P_RemoveMobj(object)
-end
-end,MT_WHIRLWIND_GOLDBOX)
 
-addHook("MobjSpawn", function(object)
-if (bytes[5] & 1) == 0 then --armageddon
-P_KillMobj(object)
-end
-end,MT_ARMAGEDDON_BOX)
 
-addHook("MobjSpawn", function(object)
-if (bytes[5] & 1) == 0 then --armageddon
-P_RemoveMobj(object)
-end
-end,MT_ARMAGEDDON_GOLDBOX)
 
-addHook("MobjSpawn", function(object)
-if bytes[6] == 0 then --elemental
-P_KillMobj(object)
-end
-end,MT_ELEMENTAL_BOX)
 
-addHook("MobjSpawn", function(object)
-if bytes[6] == 0 then --elemental
-P_RemoveMobj(object)
-end
-end,MT_ELEMENTAL_GOLDBOX)
 
-addHook("MobjSpawn", function(object)
-if bytes[7] == 0 then --attraction
-P_KillMobj(object)
-end
-end,MT_ATTRACT_BOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 1) == 0 then --attract
-P_RemoveMobj(object)
-end
-end,MT_ATTRACT_GOLDBOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 1) == 0 then --force
-P_KillMobj(object)
-end
-end,MT_FORCE_BOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 1) == 0 then --force
-P_RemoveMobj(object)
-end
-end,MT_FORCE_GOLDBOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 2) == 0 then --s3k flame
-P_RemoveMobj(object)
-end
-end,MT_FLAMEAURA_BOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 2) == 0 then --s3k flame
-P_RemoveMobj(object)
-end
-end,MT_FLAMEAURA_GOLDBOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 4) == 0 then --s3k bubble
-P_RemoveMobj(object)
-end
-end,MT_BUBBLEWRAP_BOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 4) == 0 then --s3k bubble
-P_RemoveMobj(object)
-end
-end,MT_BUBBLEWRAP_GOLDBOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 8) == 0 then --s3k lightning
-P_RemoveMobj(object)
-end
-end,MT_THUNDERCOIN_BOX)
-
-addHook("MobjSpawn", function(object)
-if (bytes[8] & 8) == 0 then --s3k lightning
-P_RemoveMobj(object)
-end
-end,MT_THUNDERCOIN_GOLDBOX)
 
 

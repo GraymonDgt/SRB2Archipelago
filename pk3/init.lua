@@ -592,8 +592,11 @@ f:seek("set",24)
 local file_flag = string.byte(f:read(1))
 
 if file_flag !=0 then
-if multiplayer then downloading = 1 end
-COM_BufInsertText(players[0], "syncfile")
+if (file_flag & 1) == 1 then
+if multiplayer then downloading = 1
+COM_BufInsertText(players[0], "syncfile") end
+end
+if (file_flag & 2) == 2 then
 local g = assert(io.openlocal("archipelago/APTextTransfer.txt","r+"))
 g:seek("set",0)
 local stringarray = {}
@@ -604,17 +607,20 @@ else COM_BufInsertText(players[0], "say "..string)
 end
 string = g:read()
 end
-
+end
 f:seek("set",24)
 f:write("\0")
 f:flush()
 bytes[24] = 0
+
+end
+if downloading == 0 then
 f:seek("set",2)
 f:write("\0")
+f:seek("set",0)
+f:write("\0")
 f:flush()
-bytes[2] = 0
-end	
-
+end
 if senddeath then
 f:seek("set",1)
 f:write("x")

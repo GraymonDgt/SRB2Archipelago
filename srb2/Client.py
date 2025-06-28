@@ -484,6 +484,12 @@ def launch(*args):
 
 async def item_handler(ctx, file_path):
     file_path2 = file_path + "/apgamedat1.ssg"
+
+
+    try:
+        os.mkdir(file_path+"/luafiles/archipelago")
+    except FileExistsError:
+        print("no need to make a new folder")
     try:
         f = open(file_path + "/luafiles/archipelago/APTranslator.dat", 'r+b')#TODO check for file and get num traps if needed
     except FileNotFoundError:
@@ -510,49 +516,7 @@ async def item_handler(ctx, file_path):
             continue
 
 
-        if len(ctx.texttransfer) > 0:
-            h = open(file_path + "/luafiles/archipelago/APTextTransfer.txt", 'w+b')#i love character 81 not fucking existing so i cant use the python string stuf :))))))
-            for jsons in ctx.texttransfer:
-                for strings in jsons:
-                    try:
-                        type = strings["type"]
-                        if type == "player_id":
-                            if int(strings["text"]) == ctx.slot:
-                                h.write(0x81.to_bytes(1, byteorder="little"))
-                            else:
-                                h.write(0x82.to_bytes(1, byteorder="little"))
-                            h.write((ctx.slot_info[int(strings["text"])].name).encode("ascii"))
-                        elif type == "item_id":
-                            if int(strings["flags"])==0:#filler
-                                h.write(0x88.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==1:#important
-                                h.write(0x89.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==2:#useful
-                                h.write(0x84.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==3:#no clue
-                                h.write(0x8F.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==4:#trap
-                                h.write(0x87.to_bytes(1, byteorder="little"))
-                            h.write((ctx.item_names.lookup_in_game(int(strings["text"]), ctx.slot_info[int(strings["player"])].game)).encode("ascii"))#int(strings["player"])))
 
-                        elif type == "location_id":
-                            h.write(0x83.to_bytes(1, byteorder="little"))
-                            h.write((ctx.location_names.lookup_in_slot(int(strings["text"]), int(strings["player"]))).encode("ascii"))
-
-                    except KeyError:
-                        h.write(0x80.to_bytes(1, byteorder="little"))
-                        try:
-                            h.write((strings["text"].encode("UTF-8"))) #stupid
-                        except UnicodeError:
-                            h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
-                    except UnicodeError:
-                        h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
-
-                h.write(0x0A.to_bytes(1, byteorder="little"))
-            ctx.texttransfer = []
-            f.seek(0x18)
-            f.write(0x01.to_bytes(1, byteorder="little"))#let srb2 know to read the texttransfer file
-            h.close()
 
 
 
@@ -590,7 +554,6 @@ async def item_handler(ctx, file_path):
                 startrings += 1
             if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79 or id==84 or id == 81 or id ==82 or id==83:
                 traps += 1
-
                 if traps == num_traps + 1:
 
                     f.seek(0x02)
@@ -636,9 +599,9 @@ async def item_handler(ctx, file_path):
 
                     f.seek(0x12)
                     f.write((num_traps + 1).to_bytes(2, byteorder="little"))
-
                     f.seek(0x18)
-                    f.write(0x01.to_bytes(1, byteorder="little"))  # let srb2 know to read the file
+
+                    f.write(0x01.to_bytes(1,byteorder="little"))  # let srb2 know to read the file
                     continue
                 # in the future it would be efficient to always hold a list of sent items so the file doesnt
             if id in locs_received:  # have to be read every second
@@ -828,10 +791,56 @@ async def item_handler(ctx, file_path):
         f.write(startrings.to_bytes(1, byteorder="little"))
         if numreceived < currreceived:
             f.seek(0x18)
-            f.write(0x01.to_bytes(1, byteorder="little"))  # let srb2 know to read the file
+            f.write(0x01.to_bytes(1, byteorder="little"))  # let srb2 know to read the file for filler
             numreceived = currreceived
+        if num_traps > traps:
+            if ctx.total_locations is not None:
+                f.seek(0x12)
+                f.write(traps.to_bytes(2, byteorder="little"))  # let srb2 know to read the file
 
+        if len(ctx.texttransfer) > 0:
+            h = open(file_path + "/luafiles/archipelago/APTextTransfer.txt", 'w+b')#i love character 81 not fucking existing so i cant use the python string stuf :))))))
+            for jsons in ctx.texttransfer:
+                for strings in jsons:
+                    try:
+                        type = strings["type"]
+                        if type == "player_id":
+                            if int(strings["text"]) == ctx.slot:
+                                h.write(0x81.to_bytes(1, byteorder="little"))
+                            else:
+                                h.write(0x82.to_bytes(1, byteorder="little"))
+                            h.write((ctx.slot_info[int(strings["text"])].name).encode("ascii"))
+                        elif type == "item_id":
+                            if int(strings["flags"])==0:#filler
+                                h.write(0x88.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==1:#important
+                                h.write(0x89.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==2:#useful
+                                h.write(0x84.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==3:#no clue
+                                h.write(0x8F.to_bytes(1, byteorder="little"))
+                            if int(strings["flags"])==4:#trap
+                                h.write(0x87.to_bytes(1, byteorder="little"))
+                            h.write((ctx.item_names.lookup_in_game(int(strings["text"]), ctx.slot_info[int(strings["player"])].game)).encode("ascii"))#int(strings["player"])))
 
+                        elif type == "location_id":
+                            h.write(0x83.to_bytes(1, byteorder="little"))
+                            h.write((ctx.location_names.lookup_in_slot(int(strings["text"]), int(strings["player"]))).encode("ascii"))
+
+                    except KeyError:
+                        h.write(0x80.to_bytes(1, byteorder="little"))
+                        try:
+                            h.write((strings["text"].encode("UTF-8"))) #stupid
+                        except UnicodeError:
+                            h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
+                    except UnicodeError:
+                        h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
+
+                h.write(0x0A.to_bytes(1, byteorder="little"))
+            ctx.texttransfer = []
+            f.seek(0x18)
+            f.write(0x03.to_bytes(1, byteorder="little")) #let srb2 know to read the texttransfer file
+            h.close()
 
         try:
             g = open(file_path2, 'r+b')
@@ -850,6 +859,8 @@ async def item_handler(ctx, file_path):
                 if ctx.activate_death == True:
                     f.seek(0x00)  # received deathlink
                     f.write(0x01.to_bytes(1, byteorder="little"))
+                    f.seek(0x18)
+                    f.write((int.from_bytes(f.read(1), 'little') | 1).to_bytes(1,byteorder="little"))  # let srb2 know to read the file
                     ctx.death_link_lockout = time.time()
                     print("kill yourself")
                     ctx.activate_death = False
@@ -1125,15 +1136,15 @@ async def file_watcher(ctx, file_path):
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v142.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v143.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v142.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v143.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v142.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v143.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 

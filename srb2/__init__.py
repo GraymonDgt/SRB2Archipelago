@@ -144,6 +144,8 @@ class SRB2World(World):
             max_locations -= 379
         if not self.options.superring_sanity:
             max_locations -= 597
+        if self.options.superring_sanity and not self.options.oneup_sanity:#im going insane
+            max_locations +=1
         self.number_of_locations = max_locations
         self.move_rando_bitvec = 0
 
@@ -172,7 +174,14 @@ class SRB2World(World):
 
             Starting_zone = Valid_starts[rand_idx]
             self.multiworld.push_precollected(self.create_item(Starting_zone))
-            self.multiworld.push_precollected(self.create_item("Sonic"))
+
+            char_list = ["Sonic","Tails","Knuckles","Amy","Fang","Metal Sonic"]
+
+
+
+
+
+
             slots_to_fill = self.number_of_locations
             for zone_name in zones_item_data_table.keys():
                 if zone_name == Starting_zone:
@@ -184,11 +193,19 @@ class SRB2World(World):
                 slots_to_fill-=1
                 self.multiworld.itempool += [self.create_item(zone_name)]#and != starting_zone
             #not concise because I need to keep track of slots_to_fill
-            for char_name in character_item_data_table.keys():
-                if char_name == "Sonic":#temporary until starting char is implemented
-                    continue
-                self.multiworld.itempool += [self.create_item(char_name)]
-                slots_to_fill -=1
+            if self.options.starting_character != 6:
+                starting_char = char_list[self.options.starting_character]
+                for char_name in character_item_data_table.keys():
+                    if char_name == starting_char:
+                        self.multiworld.push_precollected(self.create_item(starting_char))
+                        continue
+                    self.multiworld.itempool += [self.create_item(char_name)]
+                    slots_to_fill -= 1
+            else:
+                for char_name in character_item_data_table.keys():
+                    self.multiworld.push_precollected(self.create_item(char_name))
+
+
             for shield in other_item_table.keys():
                 self.multiworld.itempool += [self.create_item(shield)]
                 slots_to_fill -=1

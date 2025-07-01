@@ -593,11 +593,11 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
         if options.superring_sanity:
             rf.assign_rule("Azure Temple Monitor - x:-928 y:8256", "KNUCKLES | AMY")
 
-            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
-            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
-            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
-            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
-            rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            #rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            #rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            #rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            #rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
+            #rf.assign_rule("Azure Temple Monitor - x:1856 y:9952", "SONIC | TAILS | BUBBLE | AMY | FANG | METAL SONIC")
             rf.assign_rule("Azure Temple Monitor - x:2848 y:9312", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
             rf.assign_rule("Azure Temple Monitor - x:512 y:13952", "TAILS | KNUCKLES")
             rf.assign_rule("Azure Temple Monitor - x:2752 y:11008", "SONIC | TAILS | AMY | FANG | METAL SONIC | BUBBLE")
@@ -657,6 +657,46 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Desolate Twilight Monitor - x:2913 y:212", "TAILS | KNUCKLES")
             rf.assign_rule("Desolate Twilight Monitor - x:2904 y:275", "TAILS | KNUCKLES")
             rf.assign_rule("Desolate Twilight Monitor - x:0 y:3584", "TAILS | KNUCKLES")
+
+            rf.assign_rule("Diamond Blizzard Monitor - x:1296 y:400", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+            rf.assign_rule("Diamond Blizzard Monitor - x:1904 y:-1040","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+            rf.assign_rule("Diamond Blizzard Monitor - x:608 y:-4544","TAILS | KNUCKLES | AMY+WIND | FANG+WIND")
+            rf.assign_rule("Diamond Blizzard Monitor - x:928 y:-4544", "TAILS | KNUCKLES | AMY+WIND | FANG+WIND")
+
+            rf.assign_rule("Frost Columns Monitor - x:0 y:-3520", "TAILS | KNUCKLES | AMY+WIND | FANG+WIND")
+            rf.assign_rule("Frost Columns Monitor - x:-64 y:-3520", "TAILS | KNUCKLES | AMY+WIND | FANG+WIND")
+            rf.assign_rule("Frost Columns Monitor - x:-1472 y:-96", "TAILS | KNUCKLES | AMY+WIND | FANG")
+            rf.assign_rule("Frost Columns Monitor - x:-1472 y:-32", "TAILS | KNUCKLES | AMY+WIND | FANG")
+            rf.assign_rule("Frost Columns Monitor - x:-3296 y:3200", "TAILS | KNUCKLES | AMY+WIND | FANG+WIND")
+            rf.assign_rule("Frost Columns Monitor - x:-3328 y:3168", "TAILS | KNUCKLES | AMY+WIND | FANG+WIND")
+            rf.assign_rule("Frost Columns Monitor - x:2112 y:-1088", "TAILS | AMY+WIND | FANG")
+            rf.assign_rule("Frost Columns Monitor - x:2112 y:-1344", "TAILS | AMY+WIND | FANG")
+            rf.assign_rule("Frost Columns Monitor - x:832 y:-1376", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+
+            rf.assign_rule("Summit Showdown Monitor - x:-7456 y:-1696","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+            rf.assign_rule("Summit Showdown Monitor - x:-7008 y:-2144","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+
+            rf.assign_rule("Silver Shiver Monitor - x:-96 y:-2768","SONIC+WIND | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Silver Shiver Monitor - x:32 y:-2768", "SONIC+WIND | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Silver Shiver Monitor - x:15280 y:-26560", "TAILS | AMY | FANG | WIND")
+            rf.assign_rule("Silver Shiver Monitor - x:15696 y:-26560", "TAILS | AMY | FANG | WIND")
+
+            rf.assign_rule("Uncharted Badlands Monitor - x:1920 y:1024", "TAILS | KNUCKLES")
+
+            rf.assign_rule("Pristine Shores Monitor - x:15808 y:12160", "TAILS | KNUCKLES")
+            rf.assign_rule("Pristine Shores Monitor - x:14936 y:13448", "SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+            rf.assign_rule("Pristine Shores Monitor - x:4160 y:7176", "SONIC | TAILS | KNUCKLES | METAL SONIC")
+            rf.assign_rule("Pristine Shores Monitor - x:9944 y:7616", "TAILS | KNUCKLES")
+
+
+            if options.difficulty == 0:
+                rf.assign_rule("Summit Showdown Monitor - x:5600 y:2208","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+                rf.assign_rule("Summit Showdown Monitor - x:5088 y:1696","SONIC | TAILS | KNUCKLES | FANG | METAL SONIC | WIND")
+
+
+
+
+
 
         #special stages
         if options.difficulty == 0:

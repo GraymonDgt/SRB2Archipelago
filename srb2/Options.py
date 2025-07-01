@@ -19,6 +19,18 @@ class NTimeEmblems(DefaultOnToggle):
     """Enable NiGHTS Time emblems (12 Locations)"""
     display_name = "NiGHTS Time Emblems"
 
+class StartingCharacter(Choice):
+    """Choose Starting character
+    Tails/Knuckles are recommended if you don't know where all the emblems are"""
+    option_sonic = 0
+    option_tails = 1
+    option_knuckles = 2
+    option_amy = 3
+    option_fang = 4
+    option_metal_sonic = 5
+    option_all = 6
+    default = 0
+
 
 class RadarStart(Toggle):
     """Start with Emblem Hints + Radar, useful if you don't know where all the emblems are"""
@@ -90,6 +102,7 @@ srb2_options_groups = [
         ScoreEmblems,
         RankEmblems,
         NTimeEmblems,
+        StartingCharacter,
         OneUpSanity,
         SuperRingSanity,
         MPMaps
@@ -111,6 +124,7 @@ class SRB2Options(PerGameCommonOptions):
     score_emblems: ScoreEmblems
     rank_emblems: RankEmblems
     ntime_emblems: NTimeEmblems
+    starting_character: StartingCharacter
     difficulty: LogicDifficulty
     match_maps: MPMaps
     oneup_sanity: OneUpSanity

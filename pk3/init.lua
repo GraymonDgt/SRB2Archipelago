@@ -18,6 +18,7 @@ end)
  
 
 --addHook("MobjSpawn", function(object)
+--if bytes[3] == 0 then
 --P_SpawnMobjFromMobj(object,0,0,0,MT_CUSTOMRING_BOX)
 --P_RemoveMobj(object)
 --end,MT_1UP_BOX)
@@ -841,6 +842,11 @@ if (bytes[10] & 16) == 16 then
 if (bytes[10] & 32) == 32 then
   P_LinedefExecute(152)
   end
+if (bytes[10] & 64) == 64 then
+  P_LinedefExecute(63)
+  end
+--10&64   10&128
+
 
 
   if (bytes[11] & 1) == 1 then
@@ -963,9 +969,220 @@ addHook("ThinkFrame", readupdates,"DEATHL")
 addHook("ThinkFrame", fuckingdumb,"DUMBCO")
 
 
+local function bancharacters()
+
+for player in players.iterate() do
+if player.mo then
+
+if player.mo.skin == "sonic" and (bytes[10] & 64) == 0 then -- stupid code
+  if (bytes[12] & 128) == 128 then --tails
+   R_SetPlayerSkin(player, "tails")
+  end
+  if (bytes[13] & 1) == 1 then --knuckles
+   R_SetPlayerSkin(player, "knuckles")
+  end
+  if (bytes[13] & 2) == 2 then -- amy
+   R_SetPlayerSkin(player, "amy")
+  end
+  if (bytes[13] & 4) == 4 then --fang
+   R_SetPlayerSkin(player, "fang")
+  end
+  if (bytes[13] & 8) == 8 then --metal sonic
+   R_SetPlayerSkin(player, "metalsonic")
+  end
+end
+
+if player.mo.skin == "tails" and (bytes[12] & 128) == 0 then -- stupid code
+  if (bytes[10] & 64) == 64 then --sonic
+   R_SetPlayerSkin(player, "sonic")
+  end
+  if (bytes[13] & 1) == 1 then --knuckles
+   R_SetPlayerSkin(player, "knuckles")
+  end
+  if (bytes[13] & 2) == 2 then -- amy
+   R_SetPlayerSkin(player, "amy")
+  end
+  if (bytes[13] & 4) == 4 then --fang
+   R_SetPlayerSkin(player, "fang")
+  end
+  if (bytes[13] & 8) == 8 then --metal sonic
+   R_SetPlayerSkin(player, "metalsonic")
+  end
+end
+
+if player.mo.skin == "knuckles" and (bytes[13] & 1) == 0 then -- stupid code
+  if (bytes[10] & 64) == 64 then --sonic
+   R_SetPlayerSkin(player, "sonic")
+  end
+  if (bytes[12] & 128) == 128 then --tails
+   R_SetPlayerSkin(player, "tails")
+  end
+  if (bytes[13] & 2) == 2 then -- amy
+   R_SetPlayerSkin(player, "amy")
+  end
+  if (bytes[13] & 4) == 4 then --fang
+   R_SetPlayerSkin(player, "fang")
+  end
+  if (bytes[13] & 8) == 8 then --metal sonic
+   R_SetPlayerSkin(player, "metalsonic")
+  end
+end
+
+if player.mo.skin == "amy" and (bytes[13] & 2) == 0 then -- stupid code
+  if (bytes[10] & 64) == 64 then --sonic
+   R_SetPlayerSkin(player, "sonic")
+  end
+  if (bytes[12] & 128) == 128 then --tails
+   R_SetPlayerSkin(player, "tails")
+  end
+  if (bytes[13] & 1) == 1 then --knuckles
+   R_SetPlayerSkin(player, "knuckles")
+  end
+  if (bytes[13] & 4) == 4 then --fang
+   R_SetPlayerSkin(player, "fang")
+  end
+  if (bytes[13] & 8) == 8 then --metal sonic
+   R_SetPlayerSkin(player, "metalsonic")
+  end
+end
+
+if player.mo.skin == "fang" and (bytes[13] & 4) == 0 then -- stupid code
+
+  if (bytes[10] & 64) == 64 then --sonic
+   R_SetPlayerSkin(player, "sonic")
+  end
+  if (bytes[12] & 128) == 128 then --tails
+   R_SetPlayerSkin(player, "tails")
+  end
+  if (bytes[13] & 1) == 1 then --knuckles
+   R_SetPlayerSkin(player, "knuckles")
+  end
+  if (bytes[13] & 2) == 2 then -- amy
+   R_SetPlayerSkin(player, "amy")
+  end
+  if (bytes[13] & 8) == 8 then --metal sonic
+   R_SetPlayerSkin(player, "metalsonic")
+  end
+end
+
+if player.mo.skin == "metalsonic" and (bytes[13] & 8) == 0 then -- stupid code
+  if (bytes[10] & 64) == 64 then --sonic
+   R_SetPlayerSkin(player, "sonic")
+  end
+  if (bytes[12] & 128) == 128 then --tails
+   R_SetPlayerSkin(player, "tails")
+  end
+  if (bytes[13] & 1) == 1 then --knuckles
+   R_SetPlayerSkin(player, "knuckles")
+  end
+  if (bytes[13] & 2) == 2 then -- amy
+   R_SetPlayerSkin(player, "amy")
+  end
+  if (bytes[13] & 4) == 4 then --fang
+   R_SetPlayerSkin(player, "fang")
+  end
+end
+end
+end
+end
+
+addHook("ThinkFrame", bancharacters,"BANCHR")
 
 
+addHook("MobjSpawn", function(object)
+if bytes[3] == 0 then
+P_RemoveMobj(object)
+end
+end,MT_WHIRLWIND_BOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[3] == 0 then
+P_RemoveMobj(object)
+end
+end,MT_WHIRLWIND_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[4] & 1) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_ARMAGEDDON_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[4] & 1) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_ARMAGEDDON_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[5] == 0 then
+P_RemoveMobj(object)
+end
+end,MT_ELEMENTAL_BOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[5] == 0 then
+P_RemoveMobj(object)
+end
+end,MT_ELEMENTAL_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[6] == 0 then
+P_RemoveMobj(object)
+end
+end,MT_ATTRACT_BOX)
+
+addHook("MobjSpawn", function(object)
+if bytes[6] == 0 then
+P_RemoveMobj(object)
+end
+end,MT_ATTRACT_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 1) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_FORCE_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 1) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_FORCE_GOLDBOX)
 
 
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 2) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_FLAMEAURA_BOX)
 
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 2) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_FLAMEAURA_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 4) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_BUBBLEWRAP_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 4) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_BUBBLEWRAP_GOLDBOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 8) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_THUNDERCOIN_BOX)
+
+addHook("MobjSpawn", function(object)
+if (bytes[7] & 8) == 0 then
+P_RemoveMobj(object)
+end
+end,MT_THUNDERCOIN_GOLDBOX)
 

@@ -134,10 +134,11 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         create_locs(regTHZ,
         "Techno Hill (Act 1) Monitor - Spin Under Conveyor Belt Door","Techno Hill (Act 1) Monitor - Knuckles Path Highest Ledge","Techno Hill (Act 1) Monitor - In Slime Above Spade Emblem",
         "Techno Hill (Act 1) Monitor - Spring Shell Pipe Challenge","Techno Hill (Act 1) Monitor - Pipe Room High Corner","Techno Hill (Act 1) Monitor - Top of Elevator Shaft","Techno Hill (Act 1) Monitor - Deep in Slime Near 2nd Checkpoint",
-        "Techno Hill (Act 1) Monitor - Outside Pipe Room High Ledge","Techno Hill (Act 1) Monitor - High Ledge in Hole Near Start","Techno Hill (Act 2) Monitor - x:-17536 y:2048",
-        "Techno Hill (Act 2) Monitor - x:0 y:2240","Techno Hill (Act 2) Monitor - x:-13152 y:7968","Techno Hill (Act 2) Monitor - x:-3136 y:-448","Techno Hill (Act 2) Monitor - x:1760 y:5472","Techno Hill (Act 2) Monitor - x:-18592 y:-4096",
-        "Techno Hill (Act 2) Monitor - x:-11584 y:-4768","Techno Hill (Act 2) Monitor - x:-2048 y:-7872","Techno Hill (Act 2) Monitor - x:5600 y:-11168","Techno Hill (Act 2) Monitor - x:832 y:-6144","Techno Hill (Act 2) Monitor - x:-16000 y:-6464",
-        "Techno Hill (Act 2) Monitor - x:4128 y:-224")
+        "Techno Hill (Act 1) Monitor - Outside Pipe Room High Ledge","Techno Hill (Act 1) Monitor - High Ledge in Hole Near Start","Techno Hill (Act 2) Monitor - Under Slime Before 2nd Checkpoint",
+        "Techno Hill (Act 2) Monitor - High Ledge Outside 1","Techno Hill (Act 2) Monitor - Near Spade Emblem","Techno Hill (Act 2) Monitor - Large Jump Into Slime C",
+        "Techno Hill (Act 2) Monitor - Near Detons on Pillar","Techno Hill (Act 2) Monitor - Behind Glass Piston Path","Techno Hill (Act 2) Monitor - Knuckles Path Under Spiked Hallway",
+        "Techno Hill (Act 2) Monitor - Egg Corp Cavity Under Slime","Techno Hill (Act 2) Monitor - Pillar Before End","Techno Hill (Act 2) Monitor - Egg Corp Deep in Slime",
+        "Techno Hill (Act 2) Monitor - Near Amy Emerald Token","Techno Hill (Act 2) Monitor - Tall Pillar Outside Glass")
     if options.superring_sanity:
         create_locs(regTHZ,"Techno Hill (Act 1) Monitor - Crate on Large Slime Lake",
         "Techno Hill (Act 1) Monitor - Upper Path in Alcove","Techno Hill (Act 1) Monitor - On Pipe Outside Pipe Room","Techno Hill (Act 1) Monitor - Alt Path on Ledge 1","Techno Hill (Act 1) Monitor - Low Ledge Before Pipe Room",
@@ -148,17 +149,20 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Techno Hill (Act 1) Monitor - Breakable Wall Ledge","Techno Hill (Act 1) Monitor - High Above Slime Lake 2","Techno Hill (Act 1) Monitor - Yellow Springs Near Start","Techno Hill (Act 1) Monitor - Upper Path on Ledge",
         "Techno Hill (Act 1) Monitor - Upper Path Spring Corner","Techno Hill (Act 1) Monitor - First Factory in Slime","Techno Hill (Act 1) Monitor - Alt Path on Ledge 2","Techno Hill (Act 1) Monitor - In First Slime River",
         "Techno Hill (Act 1) Monitor - Deep in 2nd Slime River","Techno Hill (Act 1) Monitor - Upper Path Around Corner","Techno Hill (Act 1) Monitor - Highest Ledge Above Slime Lake","Techno Hill (Act 1) Monitor - Alt Path on Pillar",
-        "Techno Hill (Act 2) Monitor - x:-16320 y:-4800","Techno Hill (Act 2) Monitor - x:-16832 y:-4544",
-        "Techno Hill (Act 2) Monitor - x:-18368 y:1536","Techno Hill (Act 2) Monitor - x:-15936 y:4624","Techno Hill (Act 2) Monitor - x:-20032 y:3648","Techno Hill (Act 2) Monitor - x:-16960 y:-5952",
-        "Techno Hill (Act 2) Monitor - x:64 y:2240","Techno Hill (Act 2) Monitor - x:-64 y:2240","Techno Hill (Act 2) Monitor - x:-20256 y:-152","Techno Hill (Act 2) Monitor - x:-20256 y:-104",
-        "Techno Hill (Act 2) Monitor - x:-3136 y:-704","Techno Hill (Act 2) Monitor - x:-15936 y:4464","Techno Hill (Act 2) Monitor - x:-3392 y:-448","Techno Hill (Act 2) Monitor - x:-2880 y:-448",
-        "Techno Hill (Act 2) Monitor - x:-3136 y:-192","Techno Hill (Act 2) Monitor - x:-10816 y:-1792","Techno Hill (Act 2) Monitor - x:-4384 y:5664","Techno Hill (Act 2) Monitor - x:2976 y:-12480",
-        "Techno Hill (Act 2) Monitor - x:2880 y:-15616","Techno Hill (Act 2) Monitor - x:4320 y:-14208","Techno Hill (Act 2) Monitor - x:-768 y:7328","Techno Hill (Act 2) Monitor - x:4320 y:-14168",
-        "Techno Hill (Act 2) Monitor - x:-14720 y:-2240","Techno Hill (Act 2) Monitor - x:0 y:-6144","Techno Hill (Act 2) Monitor - x:-2048 y:-7872","Techno Hill (Act 2) Monitor - x:-1856 y:-6336",
-        "Techno Hill (Act 2) Monitor - x:-1344 y:-6336","Techno Hill (Act 2) Monitor - x:-1600 y:-6080","Techno Hill (Act 2) Monitor - x:-1600 y:-6592","Techno Hill (Act 2) Monitor - x:-9408 y:4416",
-        "Techno Hill (Act 2) Monitor - x:-2880 y:5792","Techno Hill (Act 2) Monitor - x:-2624 y:-10784","Techno Hill (Act 2) Monitor - x:-2496 y:-10784","Techno Hill (Act 2) Monitor - x:-1856 y:-11264",
-        "Techno Hill (Act 2) Monitor - x:-17728 y:2656","Techno Hill (Act 2) Monitor - x:-15936 y:2720","Techno Hill (Act 2) Monitor - x:-20096 y:3136","Techno Hill (Act 2) Monitor - x:4320 y:-14248",
-        "Techno Hill (Act 2) Monitor - x:576 y:-15264","Techno Hill (Act 2) Monitor - x:352 y:-8544","Techno Hill (Act 2) Monitor - x:352 y:-8480")
+        "Techno Hill (Act 2) Monitor - Knuckles Path Exit 1","Techno Hill (Act 2) Monitor - Knuckles Path Exit 2","Techno Hill (Act 2) Monitor - Barricade Path Under 1st Conveyor",
+        "Techno Hill (Act 2) Monitor - Barricade Path End Ledge 1","Techno Hill (Act 2) Monitor - Barricade Path Cavity 1st Checkpoint","Techno Hill (Act 2) Monitor - Knuckles Path Metal Pillar",
+        "Techno Hill (Act 2) Monitor - High Ledge Outside 2","Techno Hill (Act 2) Monitor - High Ledge Outside 3","Techno Hill (Act 2) Monitor - Piston Room High Ledge 1",
+        "Techno Hill (Act 2) Monitor - Piston Room High Ledge 2","Techno Hill (Act 2) Monitor - Large Jump Into Slime S", "Techno Hill (Act 2) Monitor - Barricade Path End Ledge 2",
+        "Techno Hill (Act 2) Monitor - Large Jump Into Slime W","Techno Hill (Act 2) Monitor - Outside Heart Emblem Door","Techno Hill (Act 2) Monitor - Large Jump Into Slime N",
+        "Techno Hill (Act 2) Monitor - Knuckles Path Before Diagonal Conveyors","Techno Hill (Act 2) Monitor - Behind Crates After 3rd Checkpoint","Techno Hill (Act 2) Monitor - Final Room Cavity in Pillar",
+        "Techno Hill (Act 2) Monitor - Before Detons Behind Crates","Techno Hill (Act 2) Monitor - Near Heart Emblem 1","Techno Hill (Act 2) Monitor - Deton Room Behind Crate",
+        "Techno Hill (Act 2) Monitor - Near Heart Emblem 2","Techno Hill (Act 2) Monitor - Behind Breakable Wall Near Start","Techno Hill (Act 2) Monitor - Egg Corp High Glass Platform",
+        "Techno Hill (Act 2) Monitor - Egg Corp Upper Cavity Around Corner","Techno Hill (Act 2) Monitor - Egg Corp Under Slime W","Techno Hill (Act 2) Monitor - Egg Corp Under Slime E",
+        "Techno Hill (Act 2) Monitor - Egg Corp Under Slime N","Techno Hill (Act 2) Monitor - Egg Corp Under Slime S","Techno Hill (Act 2) Monitor - After Turret Room Under Slime",
+        "Techno Hill (Act 2) Monitor - Large Jump Into Slime E","Techno Hill (Act 2) Monitor - Near Club Emblem 1","Techno Hill (Act 2) Monitor - Near Club Emblem 2",
+        "Techno Hill (Act 2) Monitor - Final Room Under Slime","Techno Hill (Act 2) Monitor - Before 2nd Checkpoint Breakable Wall L","Techno Hill (Act 2) Monitor - Before 2nd Checkpoint Breakable Wall R",
+        "Techno Hill (Act 2) Monitor - Barricade Path on Crate","Techno Hill (Act 2) Monitor - Near Heart Emblem 3","Techno Hill (Act 2) Monitor - Final Room Behind Pipe",
+        "Techno Hill (Act 2) Monitor - Near Diamond Emblem 1","Techno Hill (Act 2) Monitor - Near Diamond Emblem 2")
 
     regDSZ = create_region("Deep Sea Zone", player, world)
     create_locs(regDSZ, "Deep Sea (Act 1) Star Emblem", "Deep Sea (Act 1) Spade Emblem","Deep Sea (Act 1) Heart Emblem", "Deep Sea (Act 1) Diamond Emblem",
@@ -294,8 +298,9 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     if options.ring_emblems:
         create_locs(regRVZ, "Red Volcano (Act 1) Ring Emblem")
     if options.oneup_sanity:
-        create_locs(regRVZ,"Red Volcano (Act 1) Monitor - x:-8624 y:-8192","Red Volcano (Act 1) Monitor - x:23524 y:4224","Red Volcano (Act 1) Monitor - x:26208 y:6976","Red Volcano (Act 1) Monitor - x:12760 y:8392","Red Volcano (Act 1) Monitor - x:10336 y:-3872",
-        "Red Volcano (Act 1) Monitor - x:2176 y:11104","Red Volcano (Act 1) Monitor - x:-4032 y:-16448","Red Volcano (Act 1) Monitor - x:7264 y:-5888","Red Volcano (Act 1) Monitor - x:7552 y:11936")
+        create_locs(regRVZ,"Red Volcano (Act 1) Monitor - Lava Waves Pillar","Red Volcano (Act 1) Monitor - Thin Ledge First Outside Area","Red Volcano (Act 1) Monitor - First Outside Cave",
+        "Red Volcano (Act 1) Monitor - Whirlwind Path Cave Around Corner","Red Volcano (Act 1) Monitor - Right Path Rising Lava Room Ledge","Red Volcano (Act 1) Monitor - Flame Jets Room Ledge",
+        "Red Volcano (Act 1) Monitor - Behind Pillar Near End","Red Volcano (Act 1) Monitor - Near Heart Emblem","Red Volcano (Act 1) Monitor - Thin Ledge Second Outside Area")
     if options.superring_sanity:
         create_locs(regRVZ,"Red Volcano (Act 1) Monitor - x:-4096 y:-8864","Red Volcano (Act 1) Monitor - x:23136 y:6304","Red Volcano (Act 1) Monitor - x:22304 y:8192",
         "Red Volcano (Act 1) Monitor - x:25792 y:8480","Red Volcano (Act 1) Monitor - x:3488 y:-7888","Red Volcano (Act 1) Monitor - x:7952 y:-4112","Red Volcano (Act 1) Monitor - x:3520 y:-7920",
@@ -315,7 +320,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     if options.oneup_sanity:
         create_locs(regERZ,"Egg Rock (Act 1) Monitor - x:-64 y:-10848","Egg Rock (Act 1) Monitor - x:-5184 y:-11264","Egg Rock (Act 1) Monitor - x:6944 y:-10560","Egg Rock (Act 1) Monitor - x:6144 y:-2112","Egg Rock (Act 1) Monitor - x:-10976 y:-7296",
         "Egg Rock (Act 1) Monitor - x:-5984 y:-2208","Egg Rock (Act 1) Monitor - x:-6656 y:-2816","Egg Rock (Act 1) Monitor - x:-7488 y:-7872","Egg Rock (Act 2) Monitor - x:-4992 y:17408","Egg Rock (Act 2) Monitor - x:-5056 y:17408","Egg Rock (Act 2) Monitor - x:-5200 y:6304","Egg Rock (Act 2) Monitor - x:-1600 y:8800",
-        "Egg Rock (Act 2) Monitor - x:-9216 y:12384","Egg Rock (Act 2) Monitor - x:5216 y:20736","Egg Rock (Act 2) Monitor - x:-11936 y:15264","Egg Rock (Act 2) Monitor - x:-6656 y:8096","Egg Rock (Act 2) Monitor - x:11136 y:15456","Egg Rock (Act 2) Monitor - x:2304 y:24960",
+        "Egg Rock (Act 2) Monitor - x:-9216 y:12384","Egg Rock (Act 2) Monitor - x:5216 y:20736","Egg Rock (Act 2) Monitor - x:-11936 y:15264","Egg Rock (Act 2) Monitor - x:-6656 y:8096","Egg Rock (Act 2) Monitor - Top of Turret Room","Egg Rock (Act 2) Monitor - x:2304 y:24960",
         "Egg Rock (Act 2) Monitor - x:-12032 y:7040","Egg Rock (Act 2) Monitor - x:-12864 y:7040","Egg Rock (Act 2) Monitor - x:10112 y:10432","Egg Rock (Act 2) Monitor - x:256 y:7616")
 
     if options.superring_sanity:
@@ -340,7 +345,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     if options.score_emblems:
         create_locs(regBCZ, "Black Core (Act 2) Score Emblem","Black Core (Act 3) Score Emblem")
     if options.oneup_sanity:
-        create_locs(regBCZ,"Black Core (Act 1) Monitor - x:-12144 y:-3328","Black Core (Act 1) Monitor - x:-10352 y:-2848")
+        create_locs(regBCZ,"Black Core (Act 1) Monitor - Half Pillar Above Spike Gate","Black Core (Act 1) Monitor - Behind Arrow Sign","Black Core (Act 2) Monitor - Behind Computers")
 
 
     regFHZ = create_region("Frozen Hillside Zone", player, world)

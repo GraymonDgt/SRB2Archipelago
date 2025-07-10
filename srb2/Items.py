@@ -89,6 +89,8 @@ traps_item_data_table:dict[str, SRB2ItemData] = {
     "Shrink Monitor": SRB2ItemData(82, ItemClassification.trap),
     "Grow Monitor": SRB2ItemData(83, ItemClassification.trap),
     "Reversed Controls": SRB2ItemData(85, ItemClassification.trap),
+    "Jumpscare": SRB2ItemData(86, ItemClassification.trap)
+
 
 }
 

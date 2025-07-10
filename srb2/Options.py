@@ -93,6 +93,15 @@ class CompletionType(Choice):
     option_Bad_Ending = 0
     option_Good_Ending = 1
 
+class RingLink(Choice):
+    """Enable Ringlink (share rings/currency with other games)
+    Easy - Only lose rings through damage
+    Normal - Lose rings on death (crushing, drowning, pits)
+    Hard - Lose rings on zone exit, zone entry and retry"""
+    option_off = 0
+    option_easy = 1
+    option_normal = 2
+    option_hard = 3
 
 
 srb2_options_groups = [
@@ -113,6 +122,7 @@ srb2_options_groups = [
         BlackCoreEmblemCost,
         TrapPercentage,
         EmblemNumber,
+        RingLink,
     ]),
 ]
 
@@ -133,5 +143,6 @@ class SRB2Options(PerGameCommonOptions):
     num_emblems: EmblemNumber
     bcz_emblem_percent:BlackCoreEmblemCost
     trap_percentage:TrapPercentage
+    ring_link: RingLink
     death_link: DeathLink
     completion_type: CompletionType

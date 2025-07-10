@@ -157,18 +157,18 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Techno Hill (Act 1) Monitor - Spin Under Conveyor Belt Door", "SONIC | TAILS | KNUCKLES | METAL SONIC")
             rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path Highest Ledge", "TAILS | KNUCKLES")
             rf.assign_rule("Techno Hill (Act 1) Monitor - Outside Pipe Room High Ledge", "TAILS | KNUCKLES")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-11584 y:-4768","KNUCKLES")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:832 y:-6144", "ELEMENTAL | KNUCKLES | FANG")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16000 y:-6464", "AMY")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:4128 y:-224", "TAILS | KNUCKLES")#probably possible as sonic
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-18592 y:-4096", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Knuckles Path Under Spiked Hallway","KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Egg Corp Deep in Slime", "ELEMENTAL | KNUCKLES | FANG")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Near Amy Emerald Token", "AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Tall Pillar Outside Glass", "TAILS | KNUCKLES")#probably possible as sonic
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Behind Glass Piston Path", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
 
             if options.difficulty == 0:
                 rf.assign_rule("Techno Hill (Act 1) Monitor - High Ledge in Hole Near Start", "TAILS | KNUCKLES")#INTENDED SONIC PATH FOR THIS BTW
-                rf.assign_rule("Techno Hill (Act 2) Monitor - x:0 y:2240","TAILS | KNUCKLES | FANG | WIND")  # or 7 emeralds
-                rf.assign_rule("Techno Hill (Act 2) Monitor - x:-2048 y:-7872", "ELEMENTAL | KNUCKLES | FANG")
-            else:
-                rf.assign_rule("Techno Hill (Act 2) Monitor - x:0 y:2240","TAILS | KNUCKLES | AMY | FANG | WIND")  # or 7 emeralds
+                rf.assign_rule("Techno Hill (Act 2) Monitor - High Ledge Outside 1","TAILS | KNUCKLES | FANG | WIND")  # or 7 emeralds
+                rf.assign_rule("Techno Hill (Act 2) Monitor - Egg Corp Cavity Under Slime", "ELEMENTAL | KNUCKLES | FANG")
+            #else:
+            #    rf.assign_rule("Techno Hill (Act 2) Monitor - High Ledge Outside 1","TAILS | KNUCKLES | AMY | FANG | WIND")  # or 7 emeralds
 
 
         if options.superring_sanity:
@@ -179,19 +179,20 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
             rf.assign_rule("Techno Hill (Act 1) Monitor - Knuckles Path in Slime", "SONIC+ELEMENTAL | TAILS | KNUCKLES | METAL SONIC+ELEMENTAL")
 
 
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16320 y:-4800", "KNUCKLES | AMY")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16832 y:-4544", "KNUCKLES | AMY")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-16960 y:-5952", "KNUCKLES | AMY+WIND")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-10816 y:-1792", "KNUCKLES")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:4320 y:-14168", "KNUCKLES | AMY")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-17728 y:2656", "KNUCKLES | AMY")
-            rf.assign_rule("Techno Hill (Act 2) Monitor - x:-15936 y:2720", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Knuckles Path Exit 1", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Knuckles Path Exit 2", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Knuckles Path Metal Pillar", "KNUCKLES | AMY+WIND")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Knuckles Path Before Diagonal Conveyors", "KNUCKLES")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Before 2nd Checkpoint Breakable Wall L", "KNUCKLES | AMY")
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Before 2nd Checkpoint Breakable Wall R", "KNUCKLES | AMY")
+
+            rf.assign_rule("Techno Hill (Act 2) Monitor - Behind Breakable Wall Near Start", "KNUCKLES | AMY")
 
 
             if options.difficulty == 0:
                 rf.assign_rule("Techno Hill (Act 1) Monitor - Before End on Crates", "TAILS | KNUCKLES | AMY | FANG | WIND")#idk why this is here this is piss easy
-                rf.assign_rule("Techno Hill (Act 2) Monitor - x:64 y:2240", "TAILS | KNUCKLES | FANG | WIND")
-                rf.assign_rule("Techno Hill (Act 2) Monitor - x:-64 y:2240", "TAILS | KNUCKLES | FANG | WIND")
+                rf.assign_rule("Techno Hill (Act 2) Monitor - High Ledge Outside 2", "TAILS | KNUCKLES | FANG | WIND")
+                rf.assign_rule("Techno Hill (Act 2) Monitor - High Ledge Outside 3", "TAILS | KNUCKLES | FANG | WIND")
 
 
 
@@ -341,9 +342,11 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
 
         # Red Volcano
+        #fang cant get club emblem
+        rf.assign_rule("Red Volcano (Act 1) Club Emblem", "SONIC | TAILS | KNUCKLES | AMY | METAL SONIC")
         rf.assign_rule("Red Volcano (Act 1) Spade Emblem", "TAILS")
         rf.assign_rule("Red Volcano (Act 1) Emerald Token - First Outside Area", "TAILS | KNUCKLES | METAL SONIC | WIND")
-        rf.assign_rule("Red Volcano (Act 1) Emerald Token - Hidden Ledge Near 4th Checkpoint", "TAILS | WIND")
+        rf.assign_rule("Red Volcano (Act 1) Emerald Token - Hidden Ledge Near 4th Checkpoint", "TAILS | FANG | WIND")
         #no 1up rules in rvz
         if options.superring_sanity:
             rf.assign_rule("Red Volcano (Act 1) Monitor - x:22304 y:8192", "SONIC | TAILS | KNUCKLES | METAL SONIC | WIND")

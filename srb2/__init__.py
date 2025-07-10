@@ -122,7 +122,7 @@ class SRB2World(World):
 
     def generate_early(self):
 
-        max_locations = 259+57+246+597+380#TODO up this once i have enough locations
+        max_locations = 259+57+248+597+380#TODO up this once i have enough locations
         if not self.options.time_emblems:
             max_locations -= 27
         if not self.options.ring_emblems:
@@ -134,7 +134,7 @@ class SRB2World(World):
         if not self.options.ntime_emblems:
             max_locations -= 12
         if not self.options.oneup_sanity:
-            max_locations -= 246
+            max_locations -= 248
         if not self.options.match_maps:
             max_locations -= 21
 
@@ -144,8 +144,8 @@ class SRB2World(World):
             max_locations -= 379
         if not self.options.superring_sanity:
             max_locations -= 597
-        if self.options.superring_sanity and not self.options.oneup_sanity:#im going insane
-            max_locations +=1
+        #if self.options.superring_sanity and not self.options.oneup_sanity:#im going insane
+        #    max_locations +=1
         self.number_of_locations = max_locations
         self.move_rando_bitvec = 0
 
@@ -263,7 +263,7 @@ class SRB2World(World):
             if slots_to_fill!= 0:
                 trap_slots = int(slots_to_fill*self.options.trap_percentage/100)
                 while trap_slots != 0:
-                    trapnum = random.randrange(70)
+                    trapnum = random.randrange(76)
                     if trapnum<3:
                         self.multiworld.itempool += [self.create_item("Replay Tutorial")]#4
                     elif trapnum<8:
@@ -284,6 +284,8 @@ class SRB2World(World):
                         self.multiworld.itempool += [self.create_item("Ring Loss")]
                     elif trapnum < 70:
                         self.multiworld.itempool += [self.create_item("Forced Pity Shield")]
+                    elif trapnum < 76:
+                        self.multiworld.itempool += [self.create_item("Jumpscare")]
                     trap_slots-=1
                     slots_to_fill-=1
 
@@ -325,6 +327,7 @@ class SRB2World(World):
 
     def fill_slot_data(self):
         return {
+            "RingLink": self.options.ring_link.value,
             "DeathLink": self.options.death_link.value,
             "CompletionType": self.options.completion_type.value,
             "BlackCoreEmblems": self.options.bcz_emblem_percent.value,

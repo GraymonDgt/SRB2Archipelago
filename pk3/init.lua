@@ -29,12 +29,16 @@ local enabletime = 0
 local showcoords = false
 local monitorid = 0
 local senddeath = false
+local jumpscaretype = 0
+local jumpscaretime = 0
 --local bytes = {}
 rawset(_G,"bytes",{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
+rawset(_G,"num_images",4)
 local syncfile = 0
 local downloading = 0
 addHook("NetVars", function(network)
     bytes = network(bytes)
+	showcoords = network(showcoords)
 end)
 COM_AddCommand("syncfile",function(player)
 if not multiplayer then return end
@@ -45,13 +49,21 @@ COM_AddCommand("print",function(player,string)
 if not multiplayer then return end
 print(string)
 end)
+COM_AddCommand("setrings",function(player, setrings)
 
-
+--for player in players.iterate() do
+players[0].rings = setrings
+--end
+end,COM_ADMIN)
 
 
 addHook("MapChange", function()
 monitorid = 0
 end)
+addHook("MapLoad", function() --thanks to Vadapega for this FDZ death fix
+monitorid = 0
+end)
+
 
 addHook("MobjSpawn", function(object)
 object.checkid = monitorid
@@ -74,6 +86,7 @@ end)
 
 addHook("PlayerSpawn",function(player)
 player.shrinktrap = 1
+player.prevrings = 0
 end)
 
 
@@ -98,6 +111,11 @@ addHook("ThinkFrame", function()
 if gamemap >49 and gamemap <60 then
 G_SetCustomExitVars(125, 0)
 end
+if jumpscaretime > 0 then
+jumpscaretime = $ - 1
+end
+if gamemap == 33 then
+monitorid = 0 end
 end)
 
 
@@ -175,10 +193,16 @@ end
 end)
 
 addHook("PlayerSpawn",function(player)
-if player.startingrings then
-player.rings = player.startingrings
+if bytes[29] == 3 then
+player.resetrings = 1
 end
 end)
+addHook("PlayerSpawn",function(player)
+if player.startingrings then
+player.rings = $ + player.startingrings
+end
+end)
+
 
 addHook("MobjDeath", function(object, source, inflictor)
 if not isserver and multiplayer then return end
@@ -244,19 +268,18 @@ local function HUDstuff(v)
 
 
 
-local curembl = bytes[22]
-local goalembl = bytes[23]
+local curembl = bytes[21]
+local goalembl = bytes[22]
 
 if goalembl != 0 then
-for player in players.iterate() do
-if player and player.valid then
+
 
 v.drawString(16*v.dupx(), 74*v.dupy(), "Emblems:",V_NOSCALESTART)
 v.drawString(16*v.dupx(), 84*v.dupy(), curembl,V_NOSCALESTART)
 v.drawString(42*v.dupx(), 84*v.dupy(), "/",V_NOSCALESTART)
 v.drawString(50*v.dupx(), 84*v.dupy(), goalembl,V_NOSCALESTART)
-end
-end
+
+
 end
 end
 
@@ -264,20 +287,17 @@ hud.add(HUDstuff,"scores")
 
 
 
-local function coords(v)
+local function coords(v,player)
 if showcoords then
 
-for player in players.iterate() do
-if player and player.valid then
+
+if player and player.valid and player.bot == BOT_NONE then
 
 v.drawString(16*v.dupx(), 54*v.dupy(), "X:",V_NOSCALESTART)
 v.drawString(30*v.dupx(), 54*v.dupy(), player.mo.x/FRACUNIT,V_NOSCALESTART)
 v.drawString(16*v.dupx(), 64*v.dupy(), "Y:",V_NOSCALESTART)
 v.drawString(30*v.dupx(), 64*v.dupy(), player.mo.y/FRACUNIT,V_NOSCALESTART)
 end
-end
-
-
 end
 
 
@@ -502,6 +522,21 @@ for player in players.iterate() do
         end
     end
 end
+if bytes[2] == 20 then --jumpscare
+for player in players.iterate do
+S_StartSound(object, sfx_kc57)
+end
+jumpscaretime = TICRATE * 2
+if custom_images then
+jumpscaretype = P_RandomKey(custom_images)
+else
+jumpscaretype = P_RandomKey(num_images)
+end
+end
+
+
+
+
 bytes[2] = 0
 end
 end
@@ -581,22 +616,66 @@ if isserver or not multiplayer then
 for player in players.iterate() do
         if player and player.valid and player.mo then
             if player.deadtimer == 1 and player.bot == BOT_NONE then --send a deathlink
+			if bytes[29] == 2 then
+			player.resetrings = 1
+			end
 		senddeath = true
 		end
         end
     end
 
+
+
 if downloading == 0 then
 local f = assert(io.openlocal("archipelago/APTranslator.dat","r+b"))
-
+if f then
 f:seek("set",24)
 local file_flag = string.byte(f:read(1))
+
+
+if bytes[29] > 0 then --ring link
+
+
+        if players[0] and players[0].valid and players[0].mo and players[0].bot == BOT_NONE then
+		local player = players[0]
+		f:seek("set",27)
+		local temp2rings = string.byte(f:read(1))
+		local fullrings = string.byte(f:read(1))*256 + temp2rings
+
+			if fullrings != player.rings and fullrings!= player.prevrings and player.rings != player.prevrings then
+			
+			local temprings = player.rings - player.prevrings
+			if temprings<0 then temprings = 0 end
+			player.rings = temprings + fullrings
+			
+			
+			player.prevrings = player.rings
+
+			end
+			
+			
+			if fullrings != player.rings then
+			if player.rings == player.prevrings then
+			 player.rings = fullrings
+			end
+			
+			end
+		
+			player.prevrings = player.rings
+			COM_BufInsertText(players[0], "setrings "..player.rings)
+
+        end
+    end
+
+
+
 
 if file_flag !=0 then
 if (file_flag & 1) == 1 then
 if multiplayer then downloading = 1
 COM_BufInsertText(players[0], "syncfile") end
 end
+
 if (file_flag & 2) == 2 then
 local g = assert(io.openlocal("archipelago/APTextTransfer.txt","r+"))
 g:seek("set",0)
@@ -628,10 +707,23 @@ f:write("x")
 f:flush()
 senddeath = false
 end
+f:seek("set",27)
+if players[0] then
+local rings16bit = players[0].rings & 0xFFFF
+if not players[0].resetrings then
+f:write(string.char(rings16bit&0xFF,(rings16bit>>8)&0xFF))
+else
+f:write("\0")
+players[0].resetrings = 0
+end
+f:flush()
+end--love working with binary file why cant i just write an int
+
+
 f:close()
 end
 end
-
+end
 
 
 
@@ -763,10 +855,9 @@ for player in players.iterate() do
         end
     end
 end
-
    for player in players.iterate() do
         if player and player.valid and player.mo then
-		player.startingrings = bytes[24]*5
+		player.startingrings = bytes[23]*5
 		
 		
 		
@@ -952,7 +1043,7 @@ if (bytes[10] & 64) == 64 then
     P_LinedefExecute(43)
     end
 	
-	
+
 end
   emeralds = emeralds | bytes[15]
   emeralds = emeralds & bytes[15]
@@ -973,7 +1064,7 @@ local function bancharacters()
 
 for player in players.iterate() do
 if player.mo then
-
+if player.bot == BOT_NONE then
 if player.mo.skin == "sonic" and (bytes[10] & 64) == 0 then -- stupid code
   if (bytes[12] & 128) == 128 then --tails
    R_SetPlayerSkin(player, "tails")
@@ -1085,6 +1176,8 @@ end
 end
 end
 end
+end
+
 
 addHook("ThinkFrame", bancharacters,"BANCHR")
 
@@ -1186,3 +1279,23 @@ P_RemoveMobj(object)
 end
 end,MT_THUNDERCOIN_GOLDBOX)
 
+hud.add(function(v, player, camera)
+    -- Only draw if the player is valid and in-game
+    if player and player.valid then 
+
+	
+	
+	local string = "JMP"..tostring(jumpscaretype)
+	
+    local patch = v.cachePatch(string) -- crack coding
+	
+
+    -- Screen width and height
+    --local screenWidth = v.width()
+    --local screenHeight = v.height()
+
+	if jumpscaretime > 0 then
+    v.drawScaled(0, 0,FRACUNIT,patch,V_SNAPTOTOP|V_SNAPTOLEFT|V_HUDTRANS)
+	end
+	end
+end, "game")

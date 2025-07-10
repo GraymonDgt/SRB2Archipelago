@@ -80,7 +80,7 @@ class SRB2Context(CommonContext):
 
     def __init__(self, server_address: Optional[str], password: Optional[str]) -> None:
         super().__init__(server_address, password)
-
+        self.slot = 0
         self.game = "Sonic Robo Blast 2"
         self.missing_checks = None
         self.prev_found = None
@@ -90,7 +90,10 @@ class SRB2Context(CommonContext):
         self.last_death_link = None
         self.death_link: float = time.time()
         self.death_link_lockout: float = time.time()
-        self.goal_type: int = None
+        self.ring_link: bool = False
+        self.previous_rings = 0
+        self.ring_link_rings = 0
+        self.goal_type: int = 0
         self.bcz_emblems: int = 0
         self.goal_type = 0
         self.matchmaps = None
@@ -136,19 +139,34 @@ class SRB2Context(CommonContext):
                 self.tags.add("DeathLink")
             else:
                 self.death_link = False
+            if args["slot_data"]["RingLink"] != 0:
+                self.ring_link = args["slot_data"]["RingLink"]
+                self.tags.add("RingLink")
+            else:
+                self.ring_link = False
+
+
+
 
             # if we don't have the seed name from the RoomInfo packet, wait until we do.
             while not self.seed_name:
                 time.sleep(1)
 
 
-        if cmd == "RoomInfo":
+        elif cmd == "RoomInfo":
             self.seed_name = args['seed_name']
 
-
+        elif cmd == "Bounced":
+            tags = args.get("tags", [])
+            if "RingLink" in tags:
+                handle_received_rings(self, args["data"])
 
             # If receiving data package, resync previous items
             #asyncio.create_task(self.receive_item())#probably important
+    #def on_ringlink(self, rings) -> None:
+    #   self.rings = rings
+
+
 
     def on_deathlink(self, data: typing.Dict[str, typing.Any]) -> None:
         """Gets dispatched when a new DeathLink is triggered by another linked player."""
@@ -190,216 +208,6 @@ async def server_autoreconnect(ctx: CommonContext):
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="server loop")
 
 
-async def process_server_cmd(ctx: CommonContext, args: dict):
-    try:
-        cmd = args["cmd"]
-    except:
-        logger.exception(f"Could not get command from {args}")
-        raise
-
-    if cmd == 'RoomInfo':
-        if ctx.seed_name and ctx.seed_name != args["seed_name"]:
-            msg = "The server is running a different multiworld than your client is. (invalid seed_name)"
-            logger.info(msg, extra={'compact_gui': True})
-            ctx.gui_error('Error', msg)
-        else:
-            logger.info('--------------------------------')
-            logger.info('Room Information:')
-            logger.info('--------------------------------')
-            version = args["version"]
-            ctx.server_version = Version(*version)
-
-            if "generator_version" in args:
-                ctx.generator_version = Version(*args["generator_version"])
-                logger.info(f'Server protocol version: {ctx.server_version.as_simple_string()}, '
-                            f'generator version: {ctx.generator_version.as_simple_string()}, '
-                            f'tags: {", ".join(args["tags"])}')
-            else:
-                logger.info(f'Server protocol version: {ctx.server_version.as_simple_string()}, '
-                            f'tags: {", ".join(args["tags"])}')
-            if args['password']:
-                logger.info('Password required')
-            ctx.update_permissions(args.get("permissions", {}))
-            logger.info(
-                f"A !hint costs {args['hint_cost']}% of your total location count as points"
-                f" and you get {args['location_check_points']}"
-                f" for each location checked. Use !hint for more information.")
-            ctx.hint_cost = int(args['hint_cost'])
-            ctx.check_points = int(args['location_check_points'])
-
-            if "players" in args:  # TODO remove when servers sending this are outdated
-                players = args.get("players", [])
-                if len(players) < 1:
-                    logger.info('No player connected')
-                else:
-                    players.sort()
-                    current_team = -1
-                    logger.info('Connected Players:')
-                    for network_player in players:
-                        if network_player.team != current_team:
-                            logger.info(f'  Team #{network_player.team + 1}')
-                            current_team = network_player.team
-                        logger.info('    %s (Player %d)' % (network_player.alias, network_player.slot))
-
-            # update data package
-            data_package_versions = args.get("datapackage_versions", {})
-            data_package_checksums = args.get("datapackage_checksums", {})
-            await ctx.prepare_data_package(set(args["games"]), data_package_versions, data_package_checksums)
-
-            await ctx.server_auth(args['password'])
-
-    elif cmd == 'DataPackage':
-        ctx.consume_network_data_package(args['data'])
-
-    elif cmd == 'ConnectionRefused':
-        errors = args["errors"]
-        if 'InvalidSlot' in errors:
-            ctx.disconnected_intentionally = True
-            ctx.event_invalid_slot()
-        elif 'InvalidGame' in errors:
-            ctx.disconnected_intentionally = True
-            ctx.event_invalid_game()
-        elif 'IncompatibleVersion' in errors:
-            ctx.disconnected_intentionally = True
-            raise Exception('Server reported your client version as incompatible. '
-                            'This probably means you have to update.')
-        elif 'InvalidItemsHandling' in errors:
-            raise Exception('The item handling flags requested by the client are not supported')
-        # last to check, recoverable problem
-        elif 'InvalidPassword' in errors:
-            logger.error('Invalid password')
-            ctx.password = None
-            await ctx.server_auth(True)
-        elif errors:
-            raise Exception("Unknown connection errors: " + str(errors))
-        else:
-            raise Exception('Connection refused by the multiworld host, no reason provided')
-
-    elif cmd == 'Connected':
-        ctx.username = ctx.auth
-        ctx.team = args["team"]
-        ctx.slot = args["slot"]
-        # int keys get lost in JSON transfer
-        ctx.slot_info = {0: NetworkSlot("Archipelago", "Archipelago", SlotType.player)}
-        ctx.slot_info.update({int(pid): data for pid, data in args["slot_info"].items()})
-        ctx.hint_points = args.get("hint_points", 0)
-        ctx.consume_players_package(args["players"])
-        ctx.stored_data_notification_keys.add(f"_read_hints_{ctx.team}_{ctx.slot}")
-        ctx.goal_type = args["slot_data"]["CompletionType"]
-        ctx.bcz_emblems = args["slot_data"]["BlackCoreEmblems"]
-        ctx.matchmaps = args["slot_data"]["EnableMatchMaps"]
-        if args["slot_data"]["DeathLink"] != 0:
-            ctx.death_link = True
-            ctx.tags.add("DeathLink")
-        else:
-            ctx.death_link = False
-
-        msgs = []
-        if ctx.locations_checked:
-            msgs.append({"cmd": "LocationChecks",
-                         "locations": list(ctx.locations_checked)})
-        if ctx.locations_scouted:
-            msgs.append({"cmd": "LocationScouts",
-                         "locations": list(ctx.locations_scouted)})
-        if ctx.stored_data_notification_keys:
-            msgs.append({"cmd": "Get",
-                         "keys": list(ctx.stored_data_notification_keys)})
-            msgs.append({"cmd": "SetNotify",
-                         "keys": list(ctx.stored_data_notification_keys)})
-        if msgs:
-            await ctx.send_msgs(msgs)
-        if ctx.finished_game:
-            await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
-
-        # Get the server side view of missing as of time of connecting.
-        # This list is used to only send to the server what is reported as ACTUALLY Missing.
-        # This also serves to allow an easy visual of what locations were already checked previously
-        # when /missing is used for the client side view of what is missing.
-        ctx.missing_locations = set(args["missing_locations"])
-        ctx.checked_locations = set(args["checked_locations"])
-        ctx.server_locations = ctx.missing_locations | ctx.checked_locations
-
-        server_url = urllib.parse.urlparse(ctx.server_address)
-        Utils.persistent_store("client", "last_server_address", server_url.netloc)
-
-    elif cmd == 'ReceivedItems':
-
-        start_index = args["index"]
-
-        if start_index == 0:
-            ctx.items_received = []
-        elif start_index != len(ctx.items_received):
-            sync_msg = [{'cmd': 'Sync'}]
-            if ctx.locations_checked:
-                sync_msg.append({"cmd": "LocationChecks",
-                                 "locations": list(ctx.locations_checked)})
-            await ctx.send_msgs(sync_msg)
-        if start_index == len(ctx.items_received):
-            for item in args['items']:
-                ctx.items_received.append(NetworkItem(*item))
-                str_itemname = ctx.item_names.lookup_in_game(item.item)
-                str_senderloc = ctx.location_names.lookup_in_slot(item.location, item.player)
-                str_sendername = ctx.slot_info[item.player].name
-
-                #str_final = str_sendername+" sent "+str_itemname+" to "+ctx.slot_info[ctx.slot].name+" ("+str_senderloc+")\n"
-                #if str_sendername == ctx.slot_info[ctx.slot].name:
-                #    str_final = ctx.slot_info[ctx.slot].name+" found their "+str_itemname+" ("+str_senderloc+")\n"
-                #ctx.texttransfer.append(str_final)
-                #do something like ctx.texttransfer.append(str_final) and in file_watcher, write to all the files
-        ctx.watcher_event.set()
-
-    elif cmd == 'LocationInfo':
-        for item in [NetworkItem(*item) for item in args['locations']]:
-            ctx.locations_info[item.location] = item
-        ctx.watcher_event.set()
-
-    elif cmd == "RoomUpdate":
-        if "players" in args:
-            ctx.consume_players_package(args["players"])
-        if "hint_points" in args:
-            ctx.hint_points = args['hint_points']
-        if "checked_locations" in args:
-            checked = set(args["checked_locations"])
-            ctx.checked_locations |= checked
-            ctx.missing_locations -= checked
-        if "permissions" in args:
-            ctx.update_permissions(args["permissions"])
-
-    elif cmd == 'Print':
-        ctx.on_print(args)
-
-    elif cmd == 'PrintJSON':
-        ctx.on_print_json(args)
-
-    elif cmd == 'InvalidPacket':
-        logger.warning(f"Invalid Packet of {args['type']}: {args['text']}")
-
-
-    elif cmd == "Bounced":
-        tags = args.get("tags", [])
-        # we can skip checking "DeathLink" in ctx.tags, as otherwise we wouldn't have been send this
-        if "DeathLink" in tags and ctx.last_death_link != args["data"]["time"]:
-            ctx.on_deathlink(args["data"])
-
-    elif cmd == "Retrieved":
-        ctx.stored_data.update(args["keys"])
-        if ctx.ui and f"_read_hints_{ctx.team}_{ctx.slot}" in args["keys"]:
-            ctx.ui.update_hints()
-
-    elif cmd == "SetReply":
-        ctx.stored_data[args["key"]] = args["value"]
-        if ctx.ui and f"_read_hints_{ctx.team}_{ctx.slot}" == args["key"]:
-            ctx.ui.update_hints()
-        elif args["key"].startswith("EnergyLink"):
-            ctx.current_energy_link_value = args["value"]
-            if ctx.ui:
-                ctx.ui.set_new_energy_link_value()
-    else:
-        logger.debug(f"unknown command {cmd}")
-
-    ctx.on_package(cmd, args)
-
-
 async def console_loop(ctx: CommonContext):
     commandprocessor = ctx.command_processor(ctx)
     queue = asyncio.Queue()
@@ -418,6 +226,22 @@ async def console_loop(ctx: CommonContext):
                 commandprocessor(input_text)
         except Exception as e:
             logger.exception(e)
+
+def handle_received_rings(ctx, data):#shamelessly stolen code from shadow the hedgehog's client
+    amount = data["amount"] # yeah his personal client that he made
+    source = data["source"] # can you tell im tired trying to write this
+    if source == ctx.slot:
+        return
+
+    should_receive = should_send_ring_link(ctx, False)
+
+    if should_receive:
+        ctx.ring_link_rings += amount
+        #ctx.previous_rings += ctx.ring_link_rings
+
+
+def should_send_ring_link(ctx, hasDied):
+    return True
 
 
 
@@ -495,6 +319,8 @@ async def item_handler(ctx, file_path):
     except FileNotFoundError:
         f = open(file_path + "/luafiles/archipelago/APTranslator.dat", 'w+b')  # TODO check for file and get num traps if needed
         f.write(0x69.to_bytes(1, byteorder="little"))
+        f.seek(0x1B)
+        f.write(0x00.to_bytes(3, byteorder="little"))
     f.close()
     # set up new save file here
     # dont need to zero anything out because the first write will overwrite everything wrong
@@ -514,7 +340,8 @@ async def item_handler(ctx, file_path):
             logger.info('Could not open APTranslator.dat. Permission Error')
             await asyncio.sleep(1)
             continue
-
+        f.seek(0x1D)
+        f.write(ctx.ring_link.to_bytes(1, byteorder="little"))
 
 
 
@@ -552,7 +379,7 @@ async def item_handler(ctx, file_path):
                 soundtest = 1
             if id == 74:
                 startrings += 1
-            if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79 or id==84 or id == 81 or id ==82 or id==83:
+            if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79 or id==84 or id == 81 or id ==82 or id==83 or id == 86:
                 traps += 1
                 if traps == num_traps + 1:
 
@@ -595,7 +422,8 @@ async def item_handler(ctx, file_path):
                         f.write(0x12.to_bytes(1, byteorder="little"))
                     if id == 84:  # double rings
                         f.write(0x13.to_bytes(1, byteorder="little"))
-
+                    if id == 86:  # jumpscare
+                        f.write(0x14.to_bytes(1, byteorder="little"))
 
                     f.seek(0x12)
                     f.write((num_traps + 1).to_bytes(2, byteorder="little"))
@@ -739,7 +567,8 @@ async def item_handler(ctx, file_path):
                 sent_shields[7] = sent_shields[7] + 16
             if id == 220:#airborne temple
                 sent_shields[7] = sent_shields[7] + 32
-
+            if id == 55:#sonic
+                sent_shields[7] = sent_shields[7] + 64
 
             locs_received.append(id)
         if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems) and 17 not in locs_received:
@@ -851,9 +680,10 @@ async def item_handler(ctx, file_path):
             print("save file 1 not found, create it to more easily return to the multiworld hub")
 
         # todo handle deathlink traps and 1ups
-        f.seek(0x01)
-        is_dead = f.read(1)
+
         if ctx.death_link == True:
+            f.seek(0x01)
+            is_dead = f.read(1)
             if ctx.death_link_lockout + 4 <= time.time():
 
                 if ctx.activate_death == True:
@@ -881,6 +711,40 @@ async def item_handler(ctx, file_path):
                 f.seek(0x00)
                 f.write(0x00.to_bytes(2, byteorder="little"))
         # print("wrote new file data")
+        if ctx.ring_link != 0:
+        #more stolen code from shadow himself
+            f.seek(0x1B)
+            current_rings_bytes = f.read(2)
+            current_rings = int.from_bytes(current_rings_bytes, byteorder="little")
+
+            difference = current_rings - ctx.previous_rings
+            ctx.previous_rings = current_rings + ctx.ring_link_rings
+
+
+            #TODO special code for when rings goes over 9999
+
+
+            if difference != 0:
+                #logger.info("got here with a difference of " + str(difference))
+                msg = {
+                    "cmd": "Bounce",
+                    "slots": [ctx.slot],
+                    "data": {
+                        "time": time.time(),
+                        "source": ctx.slot,
+                        "amount": difference
+                    },
+                    "tags":["RingLink"]
+                }
+
+                await ctx.send_msgs([msg])
+
+            #here write new ring value back into file
+            f.seek(0x1B)
+            f.write((current_rings+ctx.ring_link_rings).to_bytes(2, byteorder="little"))
+            ctx.ring_link_rings = 0
+            # logger.info("ring link rings is " + str(ctx.ring_link_rings))
+
         f.close()
         await asyncio.sleep(1)
 
@@ -1136,15 +1000,15 @@ async def file_watcher(ctx, file_path):
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v145.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v150.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v145.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v150.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v145.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v150.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 
@@ -1224,7 +1088,7 @@ async def file_watcher(ctx, file_path):
     oneupids = ["1:L2","1:L8","1:L11","2:L0","2:L10","2:L11","2:L12","2:L17","2:L18","2:L21","2:L23","2:L30","4:L1",
                 "4:L11","4:L17","4:L22","4:L26","4:L28","4:L30","4:L33","4:L40","5:L4","5:L7","5:L10","5:L15","5:L19",
                 "5:L25","5:L26","5:L30","5:L33","5:L34","5:L46","5:L49","7:L6","7:L7","7:L9","7:L10","7:L11","7:L12",
-                "7:L17","7:L22","7:L23","7:L25","7:L26","7:L27","7:L35","7:L36","7:L37","7:L44","7:L47","7:L50","7:52",
+                "7:L17","7:L22","7:L23","7:L25","7:L26","7:L27","7:L35","7:L36","7:L37","7:L44","7:L47","7:L50","7:L52",
                 "8:L1","8:L2","8:L4","8:L6","8:L18","8:L28","8:L30","8:L33","8:L39","8:L40","8:L43","8:L47","8:L49",
                 "8:L50","8:L52","10:L1","10:L2","10:L4","10:L6","10:L7","10:L9","10:L25","10:L41","10:L43","10:L44",
                 "11:L3","11:L5","11:L9","11:L15","11:L19","11:L20","11:L23","11:L24","11:L25","11:L31","11:L33",
@@ -1233,7 +1097,7 @@ async def file_watcher(ctx, file_path):
                 "14:L37","14:L42","14:L47","14:L53","14:L54","14:L55","14:L56","14:L57","16:L0","16:L2","16:L4","16:L7",
                 "16:L11","16:L13","16:L18","16:L19","16:L21","22:L0","22:L1","22:L2","22:L3","22:L5","22:L8","22:L9",
                 "22:L17","23:L0","23:L1","23:L3","23:L5","23:L6","23:L7","23:L14","23:L17","23:L19","23:L21","23:L26",
-                "23:L27","23:L29","23:L35","25:L0","25:L1","30:L2","30:L12","31:L0","31:L1","31:L2","31:L3","31:L4",
+                "23:L27","23:L29","23:L35","25:L0","25:L1","26:L0","30:L2","30:L12","31:L0","31:L1","31:L2","31:L3","31:L4",
                 "31:L5","32:L4","32:L6","32:L13","32:L16","32:L22","33:L0","33:L18","33:L21","33:L22","33:L31","33:L32",
                 "33:L37","33:L41","33:L42","33:L45","33:L52","33:L66","33:L69","33:L72","33:L74","40:L2","40:L5",
                 "40:L6","40:L7","40:L8","40:L11","40:L15","40:L16","40:L17","40:L19","40:L21","40:L27","40:L32",

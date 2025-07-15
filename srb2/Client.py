@@ -170,7 +170,7 @@ class SRB2Context(CommonContext):
 
     def on_deathlink(self, data: typing.Dict[str, typing.Any]) -> None:
         """Gets dispatched when a new DeathLink is triggered by another linked player."""
-        self.last_death_link = max(data["time"], self.last_death_link)
+        self.last_death_link = time.time()#max(data["time"], self.last_death_link)
         text = data.get("cause", "")
         self.activate_death = True
         if text:
@@ -570,6 +570,7 @@ async def item_handler(ctx, file_path):
             if id == 55:#sonic
                 sent_shields[7] = sent_shields[7] + 64
 
+
             locs_received.append(id)
         if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems) and 17 not in locs_received:
             locs_received.append(17)
@@ -577,7 +578,8 @@ async def item_handler(ctx, file_path):
         # this would be so much better if i made a list of everything and then wrote it to the file all at once
         if ctx.matchmaps:
             sent_shields[5] = sent_shields[5] | 1
-
+        if ctx.death_link:
+            sent_shields[7] = sent_shields[7] | 128
         f.seek(0x14)
         if emblemhints >= 2:
             emblemhints = 3 #bits 1 and 2 set
@@ -741,6 +743,8 @@ async def item_handler(ctx, file_path):
 
             #here write new ring value back into file
             f.seek(0x1B)
+            if current_rings+ctx.ring_link_rings < 0:
+                ctx.ring_link_rings = -current_rings
             f.write((current_rings+ctx.ring_link_rings).to_bytes(2, byteorder="little"))
             ctx.ring_link_rings = 0
             # logger.info("ring link rings is " + str(ctx.ring_link_rings))
@@ -1000,15 +1004,15 @@ async def file_watcher(ctx, file_path):
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v150.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v151.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v150.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v151.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v150.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v151.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 

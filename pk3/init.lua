@@ -31,6 +31,7 @@ local monitorid = 0
 local senddeath = false
 local jumpscaretype = 0
 local jumpscaretime = 0
+local lastknownrings = 0
 --local bytes = {}
 rawset(_G,"bytes",{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
 rawset(_G,"num_images",4)
@@ -39,6 +40,7 @@ local downloading = 0
 addHook("NetVars", function(network)
     bytes = network(bytes)
 	showcoords = network(showcoords)
+	lastknownrings = network(lastknownrings)
 end)
 COM_AddCommand("syncfile",function(player)
 if not multiplayer then return end
@@ -50,10 +52,11 @@ if not multiplayer then return end
 print(string)
 end)
 COM_AddCommand("setrings",function(player, setrings)
-
---for player in players.iterate() do
-players[0].rings = setrings
---end
+for player in players.iterate() do
+player.rings = setrings
+player.prevrings = setrings
+end
+lastknownrings = setrings
 end,COM_ADMIN)
 
 
@@ -135,7 +138,7 @@ return false end
 end,MT_NIGHTSEXTRATIME)
 
 addHook("PlayerThink", function(player)-- stupid dumb idiot code
-if player.shrinktrap then
+if player.shrinktrap and player.mo then
 	if player.shrinktrap>0 then
 		player.mo.destscale = FRACUNIT/2
 		player.shrinktrap = player.shrinktrap - 1
@@ -198,9 +201,9 @@ player.resetrings = 1
 end
 end)
 addHook("PlayerSpawn",function(player)
-if player.startingrings then
-player.rings = $ + player.startingrings
-end
+
+player.rings = $ + bytes[23]*5
+
 end)
 
 
@@ -273,7 +276,9 @@ local goalembl = bytes[22]
 
 if goalembl != 0 then
 
+--if (bytes[10] & 64) == 6
 
+	
 v.drawString(16*v.dupx(), 74*v.dupy(), "Emblems:",V_NOSCALESTART)
 v.drawString(16*v.dupx(), 84*v.dupy(), curembl,V_NOSCALESTART)
 v.drawString(42*v.dupx(), 84*v.dupy(), "/",V_NOSCALESTART)
@@ -610,6 +615,44 @@ local function fuckingdumb()
 
 dofiller()
 
+--ring link/deathlink for multiplayer here\
+local collectivedifference = 0
+if bytes[29] > 0 then
+
+
+
+for player in players.iterate() do
+collectivedifference = $ + player.rings - player.prevrings
+end
+
+lastknownrings = $ + collectivedifference
+
+for player in players.iterate() do
+if player.bot == BOT_NONE then
+player.rings = lastknownrings
+player.prevrings = lastknownrings
+
+end
+end
+end
+
+  if (bytes[10] & 128) == 128 then --deathlink is on
+for player in players.iterate() do
+if player.bot == BOT_NONE then
+if player.deadtimer == 1 then
+for player2 in players.iterate() do
+        if player2 and player2.valid and player.mo then
+            player2.nightstime = 0
+	    player2.powers[pw_invulnerability] = 0
+	    player2.powers[pw_super] = 0
+		print("Recieved Deathlink")
+            P_DamageMobj(player2.mo, nil, nil, 1, DMG_INSTAKILL)
+        end
+end
+end
+end
+end
+end
 
 if isserver or not multiplayer then
 
@@ -642,27 +685,22 @@ if bytes[29] > 0 then --ring link
 		local temp2rings = string.byte(f:read(1))
 		local fullrings = string.byte(f:read(1))*256 + temp2rings
 
-			if fullrings != player.rings and fullrings!= player.prevrings and player.rings != player.prevrings then
-			
-			local temprings = player.rings - player.prevrings
-			if temprings<0 then temprings = 0 end
-			player.rings = temprings + fullrings
-			
-			
-			player.prevrings = player.rings
+		if collectivedifference != 0 and fullrings!=lastknownrings-collectivedifference then
 
-			end
-			
-			
-			if fullrings != player.rings then
-			if player.rings == player.prevrings then
-			 player.rings = fullrings
-			end
-			
-			end
-		
-			player.prevrings = player.rings
+			player.rings = fullrings + collectivedifference
+			-- run setrings
 			COM_BufInsertText(players[0], "setrings "..player.rings)
+			end-- game and file have both been updated
+
+			-- trust game to write later if collectivedifference !=0
+			
+			if collectivedifference == 0 and fullrings!=lastknownrings-collectivedifference then
+			 player.rings = fullrings
+			COM_BufInsertText(players[0], "setrings "..fullrings)
+			end -- no rings collected gameside, trust file
+		
+			
+
 
         end
     end
@@ -709,7 +747,7 @@ senddeath = false
 end
 f:seek("set",27)
 if players[0] then
-local rings16bit = players[0].rings & 0xFFFF
+local rings16bit = lastknownrings & 0xFFFF
 if not players[0].resetrings then
 f:write(string.char(rings16bit&0xFF,(rings16bit>>8)&0xFF))
 else
@@ -855,14 +893,7 @@ for player in players.iterate() do
         end
     end
 end
-   for player in players.iterate() do
-        if player and player.valid and player.mo then
-		player.startingrings = bytes[23]*5
-		
-		
-		
-		end
-	end
+
 
 
 
@@ -1045,9 +1076,9 @@ if (bytes[10] & 64) == 64 then
 	
 
 end
-  emeralds = emeralds | bytes[15]
-  emeralds = emeralds & bytes[15]
-
+  --emeralds = emeralds | bytes[15]
+  --emeralds = emeralds & bytes[15]
+emeralds = bytes[15]
 end
 
 

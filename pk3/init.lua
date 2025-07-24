@@ -622,7 +622,9 @@ if bytes[29] > 0 then
 
 
 for player in players.iterate() do
+if player.bot == BOT_NONE then
 collectivedifference = $ + player.rings - player.prevrings
+end
 end
 
 lastknownrings = $ + collectivedifference

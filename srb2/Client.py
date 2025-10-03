@@ -145,9 +145,6 @@ class SRB2Context(CommonContext):
             else:
                 self.ring_link = False
 
-
-
-
             # if we don't have the seed name from the RoomInfo packet, wait until we do.
             while not self.seed_name:
                 time.sleep(1)
@@ -233,15 +230,8 @@ def handle_received_rings(ctx, data):#shamelessly stolen code from shadow the he
     if source == ctx.slot:
         return
 
-    should_receive = should_send_ring_link(ctx, False)
+    ctx.ring_link_rings += amount
 
-    if should_receive:
-        ctx.ring_link_rings += amount
-        #ctx.previous_rings += ctx.ring_link_rings
-
-
-def should_send_ring_link(ctx, hasDied):
-    return True
 
 
 
@@ -331,427 +321,432 @@ async def item_handler(ctx, file_path):
     numreceived = 0
     currenttrap = 0
     while True:
-        while ctx.total_locations is None:
-            await asyncio.sleep(1)
-            continue
-        try:
-            f = open(file_path + "/luafiles/archipelago/APTranslator.dat", 'r+b')
-        except PermissionError:
-            logger.info('Could not open APTranslator.dat. Permission Error')
-            await asyncio.sleep(1)
-            continue
-        f.seek(0x1D)
-        f.write(ctx.ring_link.to_bytes(1, byteorder="little"))
+        while ctx.total_locations is not None:
 
 
-
-
-
-
-        traps = 0
-        emeralds = 0
-        emblemhints = 0
-        emblems = 0
-        startrings = 0
-        soundtest = 0
-        currreceived = 0
-        f.seek(0x12)
-        num_traps = int.from_bytes(f.read(2), 'little')
-
-        # read characters until null terminator in g
-        # compare string/number to token list
-        # if found, send respective check
-        # repeat until end of file
-        # clear file g
-
-        for i in ctx.items_received:
-            currreceived +=1
-            id = i[0]
-            if id == 2:
-                emeralds += 1
+            try:
+                f = open(file_path + "/luafiles/archipelago/APTranslator.dat", 'r+b')
+            except PermissionError:
+                logger.info('Could not open APTranslator.dat. Permission Error')
+                await asyncio.sleep(1)
                 continue
-            if id == 1:
-                emblems += 1
-                continue
-            if id == 3:
-                emblemhints += 1
-            if id == 80:
-                soundtest = 1
-            if id == 74:
-                startrings += 1
-            if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79 or id==84 or id == 81 or id ==82 or id==83 or id == 86:
-                traps += 1
-                if traps == num_traps + 1:
+            f.seek(0x1D)
+            f.write(ctx.ring_link.to_bytes(1, byteorder="little"))
 
-                    f.seek(0x02)
-                    if id == 4:  # 1up
-                        f.write(0x01.to_bytes(1, byteorder="little"))
-                    if id == 6:  # pity shield
-                        f.write(0x02.to_bytes(1, byteorder="little"))
-                    if id == 5:  # gravity boots
-                        f.write(0x03.to_bytes(1, byteorder="little"))
-                    if id == 7:  # replay tutorial
-                        f.write(0x04.to_bytes(1, byteorder="little"))
-                    if id == 8:  # ring loss
-                        f.write(0x05.to_bytes(1, byteorder="little"))
-                    if id == 9:  # drop inputs
-                        f.write(0x07.to_bytes(1, byteorder="little"))
-                    if id == 70:  # & knuckles
-                        f.write(0x06.to_bytes(1, byteorder="little"))
-                    if id == 71:  # 50 rings
-                        f.write(0x08.to_bytes(1, byteorder="little"))
-                    if id == 72:  # 20 rings
-                        f.write(0x09.to_bytes(1, byteorder="little"))
-                    if id == 73:  # 10 rings
-                        f.write(0x0A.to_bytes(1, byteorder="little"))
-                    if id == 75:  # slippery floors
-                        f.write(0x0B.to_bytes(1, byteorder="little"))
-                    if id == 76:  # 1000 points
-                        f.write(0x0C.to_bytes(1, byteorder="little"))
-                    if id == 77:  # sonic forces
-                        f.write(0x0D.to_bytes(1, byteorder="little"))
-                    if id == 78:  # temp invincibility
-                        f.write(0x0E.to_bytes(1, byteorder="little"))
-                    if id == 79:  # temp speed shoes
-                        f.write(0x0F.to_bytes(1, byteorder="little"))
-                    if id == 81:  # spb
-                        f.write(0x10.to_bytes(1, byteorder="little"))
-                    if id == 82:  # shrink
-                        f.write(0x11.to_bytes(1, byteorder="little"))
-                    if id == 83:  # grow
-                        f.write(0x12.to_bytes(1, byteorder="little"))
-                    if id == 84:  # double rings
-                        f.write(0x13.to_bytes(1, byteorder="little"))
-                    if id == 86:  # jumpscare
-                        f.write(0x14.to_bytes(1, byteorder="little"))
 
-                    f.seek(0x12)
-                    f.write((num_traps + 1).to_bytes(2, byteorder="little"))
-                    f.seek(0x18)
 
-                    f.write(0x01.to_bytes(1,byteorder="little"))  # let srb2 know to read the file
+
+
+
+            traps = 0
+            emeralds = 0
+            emblemhints = 0
+            emblems = 0
+            startrings = 0
+            soundtest = 0
+            currreceived = 0
+            f.seek(0x12)
+            num_traps = int.from_bytes(f.read(2), 'little')
+
+            # read characters until null terminator in g
+            # compare string/number to token list
+            # if found, send respective check
+            # repeat until end of file
+            # clear file g
+
+            for i in ctx.items_received:
+                currreceived +=1
+                id = i[0]
+                if id == 2:
+                    emeralds += 1
                     continue
-                # in the future it would be efficient to always hold a list of sent items so the file doesnt
-            if id in locs_received:  # have to be read every second
-                continue
+                if id == 1:
+                    emblems += 1
+                    continue
+                if id == 3:
+                    emblemhints += 1
+                if id == 80:
+                    soundtest = 1
+                if id == 74:
+                    startrings += 1
+                if id == 4 or id == 5 or id == 6 or id == 7 or id == 8 or id == 9 or id == 70 or id == 71 or id == 72 or id == 73 or id == 75 or id == 76 or id == 77 or id == 78 or id == 79 or id==84 or id == 81 or id ==82 or id==83 or id == 86:
+                    traps += 1
+                    if traps == num_traps + 1:
 
-            if id == 10:  # greenflower
-                final_write[0] = final_write[0] + 1
-            if id == 11:  # techno hill
-                final_write[0] = final_write[0] + 2
-            if id == 12:  # deep sea
-                final_write[0] = final_write[0] + 4
-            if id == 13:  # castle eggman
-                final_write[0] = final_write[0] + 8
-            if id == 14:  # arid canyon
-                final_write[0] = final_write[0] + 16
-            if id == 15:  # red volcano
-                final_write[0] = final_write[0] + 32
-            if id == 16:  # egg rock
-                final_write[0] = final_write[0] + 64
-            if id == 17 and ctx.bcz_emblems == 0:  # black core
+                        f.seek(0x02)
+                        if id == 4:  # 1up
+                            f.write(0x01.to_bytes(1, byteorder="little"))
+                        if id == 6:  # pity shield
+                            f.write(0x02.to_bytes(1, byteorder="little"))
+                        if id == 5:  # gravity boots
+                            f.write(0x03.to_bytes(1, byteorder="little"))
+                        if id == 7:  # replay tutorial
+                            f.write(0x04.to_bytes(1, byteorder="little"))
+                        if id == 8:  # ring loss
+                            f.write(0x05.to_bytes(1, byteorder="little"))
+                        if id == 9:  # drop inputs
+                            f.write(0x07.to_bytes(1, byteorder="little"))
+                        if id == 70:  # & knuckles
+                            f.write(0x06.to_bytes(1, byteorder="little"))
+                        if id == 71:  # 50 rings
+                            f.write(0x08.to_bytes(1, byteorder="little"))
+                        if id == 72:  # 20 rings
+                            f.write(0x09.to_bytes(1, byteorder="little"))
+                        if id == 73:  # 10 rings
+                            f.write(0x0A.to_bytes(1, byteorder="little"))
+                        if id == 75:  # slippery floors
+                            f.write(0x0B.to_bytes(1, byteorder="little"))
+                        if id == 76:  # 1000 points
+                            f.write(0x0C.to_bytes(1, byteorder="little"))
+                        if id == 77:  # sonic forces
+                            f.write(0x0D.to_bytes(1, byteorder="little"))
+                        if id == 78:  # temp invincibility
+                            f.write(0x0E.to_bytes(1, byteorder="little"))
+                        if id == 79:  # temp speed shoes
+                            f.write(0x0F.to_bytes(1, byteorder="little"))
+                        if id == 81:  # spb
+                            f.write(0x10.to_bytes(1, byteorder="little"))
+                        if id == 82:  # shrink
+                            f.write(0x11.to_bytes(1, byteorder="little"))
+                        if id == 83:  # grow
+                            f.write(0x12.to_bytes(1, byteorder="little"))
+                        if id == 84:  # double rings
+                            f.write(0x13.to_bytes(1, byteorder="little"))
+                        if id == 86:  # jumpscare
+                            f.write(0x14.to_bytes(1, byteorder="little"))
+
+                        f.seek(0x12)
+                        f.write((num_traps + 1).to_bytes(2, byteorder="little"))
+                        f.seek(0x18)
+
+                        f.write(0x01.to_bytes(1,byteorder="little"))  # let srb2 know to read the file
+                        continue
+                    # in the future it would be efficient to always hold a list of sent items so the file doesnt
+                if id in locs_received:  # have to be read every second
+                    continue
+
+                if id == 10:  # greenflower
+                    final_write[0] = final_write[0] + 1
+                if id == 11:  # techno hill
+                    final_write[0] = final_write[0] + 2
+                if id == 12:  # deep sea
+                    final_write[0] = final_write[0] + 4
+                if id == 13:  # castle eggman
+                    final_write[0] = final_write[0] + 8
+                if id == 14:  # arid canyon
+                    final_write[0] = final_write[0] + 16
+                if id == 15:  # red volcano
+                    final_write[0] = final_write[0] + 32
+                if id == 16:  # egg rock
+                    final_write[0] = final_write[0] + 64
+                if id == 17 and ctx.bcz_emblems == 0:  # black core
+                    final_write[0] = final_write[0] + 128
+                if id == 18:  # frozen hillside
+                    final_write[1] = final_write[1] + 8
+                if id == 19:  # pipe towers
+                    final_write[1] = final_write[1] + 16
+                if id == 20:  # forest fortress
+                    final_write[1] = final_write[1] + 32
+                if id == 21:  # final demo
+                    final_write[1] = final_write[1] + 64
+                if id == 22:  # haunted heights
+                    final_write[1] = final_write[1] + 1
+                if id == 23:  # aerial garden
+                    final_write[1] = final_write[1] + 2
+                if id == 24:  # azure temple
+                    final_write[1] = final_write[1] + 4
+                if id == 50:  # tails
+                    final_write[1] = final_write[1] + 128
+                if id == 51:  # knuckles
+                    final_write[2] = final_write[2] + 1
+                if id == 53:  # fang
+                    final_write[2] = final_write[2] + 2
+                if id == 52:  # amy
+                    final_write[2] = final_write[2] + 4
+                if id == 54:  # metal sonic
+                    final_write[2] = final_write[2] + 8
+                if id == 25:  # floral fields
+                    final_write[2] = final_write[2] + 16
+                if id == 26:  # toxic plateau
+                    final_write[2] = final_write[2] + 32
+                if id == 27:  # flooded cove
+                    final_write[2] = final_write[2] + 64
+                if id == 28:  # cavern fortress
+                    final_write[2] = final_write[2] + 128
+                if id == 29:  # dusty wasteland
+                    final_write[3] = final_write[3] + 1
+                if id == 30:  # magma caves
+                    final_write[3] = final_write[3] + 2
+                if id == 31:  # egg satellite
+                    final_write[3] = final_write[3] + 4
+                if id == 32:  # black hole
+                    final_write[3] = final_write[3] + 8
+                if id == 33:  # christmas chime
+                    final_write[3] = final_write[3] + 16
+                if id == 34:  # dream hill
+                    final_write[3] = final_write[3] + 32
+                if id == 35:  # alpine praradise
+                    final_write[3] = final_write[3] + 64
+                if id == 56:  # whirlwind
+                    sent_shields[0] = 1
+                if id == 57:  # armageddon
+                    sent_shields[1] = sent_shields[1]+1
+                if id == 100: #paraloop
+                    sent_shields[1] = sent_shields[1] + 2
+                if id == 101: #night helper
+                    sent_shields[1] = sent_shields[1] + 4
+                if id == 102: #link freeze
+                    sent_shields[1] = sent_shields[1] + 8
+                if id == 103: #extra time
+                    sent_shields[1] = sent_shields[1] + 16
+                if id == 104: #drill refill
+                    sent_shields[1] = sent_shields[1] + 32
+
+                if id == 58:  # elemental
+                    sent_shields[2] = 1
+                if id == 59:  # attraction
+                    sent_shields[3] = 1
+                if id == 60:  # force
+                    sent_shields[4] = sent_shields[4] + 1
+                if id == 61:  # flame
+                    sent_shields[4] = sent_shields[4] + 2
+                if id == 62:  # bubble
+                    sent_shields[4] = sent_shields[4] + 4
+                if id == 63:  # lightning
+                    sent_shields[4] = sent_shields[4] + 8
+
+                if id == 200:#jade valley
+                    sent_shields[5] = sent_shields[5] + 2
+                if id == 201:#toxic plateau
+                    sent_shields[5] = sent_shields[5] + 4
+                if id == 202:#fuckass water map
+                    sent_shields[5] = sent_shields[5] + 8
+                if id == 203:#thunder citedel
+                    sent_shields[5] = sent_shields[5] + 16
+                if id == 204:#desolate twilight
+                    sent_shields[5] = sent_shields[5] + 32
+                if id == 205:#frigid mountain
+                    sent_shields[5] = sent_shields[5] + 64
+                if id == 206:#orbital hangar
+                    sent_shields[5] = sent_shields[5] + 128
+                if id == 207:#sapphire falls
+                    sent_shields[6] = sent_shields[6] + 1
+                if id == 208:#diamond blizzard
+                    sent_shields[6] = sent_shields[6] + 2
+                if id == 209:#Celestial Sanctuary
+                    sent_shields[6] = sent_shields[6] + 4
+                if id == 210:#frost columns
+                    sent_shields[6] = sent_shields[6] + 8
+                if id == 211:#Meadow Match Zone
+                    sent_shields[6] = sent_shields[6] + 16
+                if id == 212:#granite lake
+                    sent_shields[6] = sent_shields[6] + 32
+                if id == 213:#summit showdown
+                    sent_shields[6] = sent_shields[6] + 64
+                if id == 214:#Silver Shiver
+                    sent_shields[6] = sent_shields[6] + 128
+                if id == 215:#uncharted badlands
+                    sent_shields[7] = sent_shields[7] + 1
+                if id == 216:#Pristine Shores
+                    sent_shields[7] = sent_shields[7] + 2
+                if id == 217:#crystalline heights
+                    sent_shields[7] = sent_shields[7] + 4
+                if id == 218:#starlit warehouse
+                    sent_shields[7] = sent_shields[7] + 8
+                if id == 219:#fuckass space map
+                    sent_shields[7] = sent_shields[7] + 16
+                if id == 220:#airborne temple
+                    sent_shields[7] = sent_shields[7] + 32
+                if id == 55:#sonic
+                    sent_shields[7] = sent_shields[7] + 64
+
+
+                locs_received.append(id)
+            if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems) and 17 not in locs_received:
+                locs_received.append(17)
                 final_write[0] = final_write[0] + 128
-            if id == 18:  # frozen hillside
-                final_write[1] = final_write[1] + 8
-            if id == 19:  # pipe towers
-                final_write[1] = final_write[1] + 16
-            if id == 20:  # forest fortress
-                final_write[1] = final_write[1] + 32
-            if id == 21:  # final demo
-                final_write[1] = final_write[1] + 64
-            if id == 22:  # haunted heights
-                final_write[1] = final_write[1] + 1
-            if id == 23:  # aerial garden
-                final_write[1] = final_write[1] + 2
-            if id == 24:  # azure temple
-                final_write[1] = final_write[1] + 4
-            if id == 50:  # tails
-                final_write[1] = final_write[1] + 128
-            if id == 51:  # knuckles
-                final_write[2] = final_write[2] + 1
-            if id == 53:  # fang
-                final_write[2] = final_write[2] + 2
-            if id == 52:  # amy
-                final_write[2] = final_write[2] + 4
-            if id == 54:  # metal sonic
-                final_write[2] = final_write[2] + 8
-            if id == 25:  # floral fields
-                final_write[2] = final_write[2] + 16
-            if id == 26:  # toxic plateau
-                final_write[2] = final_write[2] + 32
-            if id == 27:  # flooded cove
-                final_write[2] = final_write[2] + 64
-            if id == 28:  # cavern fortress
-                final_write[2] = final_write[2] + 128
-            if id == 29:  # dusty wasteland
-                final_write[3] = final_write[3] + 1
-            if id == 30:  # magma caves
-                final_write[3] = final_write[3] + 2
-            if id == 31:  # egg satellite
-                final_write[3] = final_write[3] + 4
-            if id == 32:  # black hole
-                final_write[3] = final_write[3] + 8
-            if id == 33:  # christmas chime
-                final_write[3] = final_write[3] + 16
-            if id == 34:  # dream hill
-                final_write[3] = final_write[3] + 32
-            if id == 35:  # alpine praradise
-                final_write[3] = final_write[3] + 64
-            if id == 56:  # whirlwind
-                sent_shields[0] = 1
-            if id == 57:  # armageddon
-                sent_shields[1] = sent_shields[1]+1
-            if id == 100: #paraloop
-                sent_shields[1] = sent_shields[1] + 2
-            if id == 101: #night helper
-                sent_shields[1] = sent_shields[1] + 4
-            if id == 102: #link freeze
-                sent_shields[1] = sent_shields[1] + 8
-            if id == 103: #extra time
-                sent_shields[1] = sent_shields[1] + 16
-            if id == 104: #drill refill
-                sent_shields[1] = sent_shields[1] + 32
+            # this would be so much better if i made a list of everything and then wrote it to the file all at once
+            if ctx.matchmaps:
+                sent_shields[5] = sent_shields[5] | 1
+            if ctx.death_link:
+                sent_shields[7] = sent_shields[7] | 128
+            f.seek(0x14)
+            if emblemhints >= 2:
+                emblemhints = 3 #bits 1 and 2 set
+            if soundtest!= 0:
+                emblemhints += 4 #sound test bullshit
+            f.write(emblemhints.to_bytes(1, byteorder="little"))  # this sucks
+            if emeralds > 7:
+                emeralds = 7
+            f.seek(0x0F)
 
-            if id == 58:  # elemental
-                sent_shields[2] = 1
-            if id == 59:  # attraction
-                sent_shields[3] = 1
-            if id == 60:  # force
-                sent_shields[4] = sent_shields[4] + 1
-            if id == 61:  # flame
-                sent_shields[4] = sent_shields[4] + 2
-            if id == 62:  # bubble
-                sent_shields[4] = sent_shields[4] + 4
-            if id == 63:  # lightning
-                sent_shields[4] = sent_shields[4] + 8
+            if emeralds == 0:
+                f.write(0x00.to_bytes(2, byteorder="little"))  # this sucks
+            if emeralds == 1:
+                f.write(0x01.to_bytes(2, byteorder="little"))  # this sucks
+            if emeralds == 2:
+                f.write(0x03.to_bytes(2, byteorder="little"))  # this sucks
+            if emeralds == 3:
+                f.write(0x07.to_bytes(2, byteorder="little"))  # this sucks
+            if emeralds == 4:
+                f.write(0x0F.to_bytes(2, byteorder="little"))  # this sucks
+            if emeralds == 5:
+                f.write(0x1F.to_bytes(2, byteorder="little"))  # this sucks
+            if emeralds == 6:
+                f.write(0x3F.to_bytes(2, byteorder="little"))  # this sucks
+            if emeralds == 7:
+                f.write(0x7F.to_bytes(2, byteorder="little"))  # this sucks
 
-            if id == 200:#jade valley
-                sent_shields[5] = sent_shields[5] + 2
-            if id == 201:#toxic plateau
-                sent_shields[5] = sent_shields[5] + 4
-            if id == 202:#fuckass water map
-                sent_shields[5] = sent_shields[5] + 8
-            if id == 203:#thunder citedel
-                sent_shields[5] = sent_shields[5] + 16
-            if id == 204:#desolate twilight
-                sent_shields[5] = sent_shields[5] + 32
-            if id == 205:#frigid mountain
-                sent_shields[5] = sent_shields[5] + 64
-            if id == 206:#orbital hangar
-                sent_shields[5] = sent_shields[5] + 128
-            if id == 207:#sapphire falls
-                sent_shields[6] = sent_shields[6] + 1
-            if id == 208:#diamond blizzard
-                sent_shields[6] = sent_shields[6] + 2
-            if id == 209:#Celestial Sanctuary
-                sent_shields[6] = sent_shields[6] + 4
-            if id == 210:#frost columns
-                sent_shields[6] = sent_shields[6] + 8
-            if id == 211:#Meadow Match Zone
-                sent_shields[6] = sent_shields[6] + 16
-            if id == 212:#granite lake
-                sent_shields[6] = sent_shields[6] + 32
-            if id == 213:#summit showdown
-                sent_shields[6] = sent_shields[6] + 64
-            if id == 214:#Silver Shiver
-                sent_shields[6] = sent_shields[6] + 128
-            if id == 215:#uncharted badlands
-                sent_shields[7] = sent_shields[7] + 1
-            if id == 216:#Pristine Shores
-                sent_shields[7] = sent_shields[7] + 2
-            if id == 217:#crystalline heights
-                sent_shields[7] = sent_shields[7] + 4
-            if id == 218:#starlit warehouse
-                sent_shields[7] = sent_shields[7] + 8
-            if id == 219:#fuckass space map
-                sent_shields[7] = sent_shields[7] + 16
-            if id == 220:#airborne temple
-                sent_shields[7] = sent_shields[7] + 32
-            if id == 55:#sonic
-                sent_shields[7] = sent_shields[7] + 64
+            f.seek(0x03)
+            f.write(bytes(sent_shields))
+            for i in range(len(final_write)):
+                if final_write[i] > 255:
+                    final_write[i] = 255
+            f.seek(0x0B)
+            f.write(bytes(final_write))  # TODO change to only write on startup, file close, or new item received
+            f.seek(0x15)
+            f.write(emblems.to_bytes(1, byteorder="little"))
+            f.seek(0x16)
+            f.write(ctx.bcz_emblems.to_bytes(1, byteorder="little"))
+            f.seek(0x17)
+            f.write(startrings.to_bytes(1, byteorder="little"))
+            if numreceived < currreceived:
+                f.seek(0x18)
+                f.write(0x01.to_bytes(1, byteorder="little"))  # let srb2 know to read the file for filler
+                numreceived = currreceived
+            if num_traps > traps:
+                if len(ctx.items_received)!=0:#TODO fix this hack
+                    f.seek(0x12)
+                    f.write(traps.to_bytes(2, byteorder="little"))  # let srb2 know to read the file
 
-
-            locs_received.append(id)
-        if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems) and 17 not in locs_received:
-            locs_received.append(17)
-            final_write[0] = final_write[0] + 128
-        # this would be so much better if i made a list of everything and then wrote it to the file all at once
-        if ctx.matchmaps:
-            sent_shields[5] = sent_shields[5] | 1
-        if ctx.death_link:
-            sent_shields[7] = sent_shields[7] | 128
-        f.seek(0x14)
-        if emblemhints >= 2:
-            emblemhints = 3 #bits 1 and 2 set
-        if soundtest!= 0:
-            emblemhints += 4 #sound test bullshit
-        f.write(emblemhints.to_bytes(1, byteorder="little"))  # this sucks
-        if emeralds > 7:
-            emeralds = 7
-        f.seek(0x0F)
-
-        if emeralds == 0:
-            f.write(0x00.to_bytes(2, byteorder="little"))  # this sucks
-        if emeralds == 1:
-            f.write(0x01.to_bytes(2, byteorder="little"))  # this sucks
-        if emeralds == 2:
-            f.write(0x03.to_bytes(2, byteorder="little"))  # this sucks
-        if emeralds == 3:
-            f.write(0x07.to_bytes(2, byteorder="little"))  # this sucks
-        if emeralds == 4:
-            f.write(0x0F.to_bytes(2, byteorder="little"))  # this sucks
-        if emeralds == 5:
-            f.write(0x1F.to_bytes(2, byteorder="little"))  # this sucks
-        if emeralds == 6:
-            f.write(0x3F.to_bytes(2, byteorder="little"))  # this sucks
-        if emeralds == 7:
-            f.write(0x7F.to_bytes(2, byteorder="little"))  # this sucks
-
-        f.seek(0x03)
-        f.write(bytes(sent_shields))
-        for i in range(len(final_write)):
-            if final_write[i] > 255:
-                final_write[i] = 255
-        f.seek(0x0B)
-        f.write(bytes(final_write))  # TODO change to only write on startup, file close, or new item received
-        f.seek(0x15)
-        f.write(emblems.to_bytes(1, byteorder="little"))
-        f.seek(0x16)
-        f.write(ctx.bcz_emblems.to_bytes(1, byteorder="little"))
-        f.seek(0x17)
-        f.write(startrings.to_bytes(1, byteorder="little"))
-        if numreceived < currreceived:
-            f.seek(0x18)
-            f.write(0x01.to_bytes(1, byteorder="little"))  # let srb2 know to read the file for filler
-            numreceived = currreceived
-        if num_traps > traps:
-            if ctx.total_locations is not None:
-                f.seek(0x12)
-                f.write(traps.to_bytes(2, byteorder="little"))  # let srb2 know to read the file
-
-        if len(ctx.texttransfer) > 0:
-            h = open(file_path + "/luafiles/archipelago/APTextTransfer.txt", 'w+b')#i love character 81 not fucking existing so i cant use the python string stuf :))))))
-            for jsons in ctx.texttransfer:
-                for strings in jsons:
-                    try:
-                        type = strings["type"]
-                        if type == "player_id":
-                            if int(strings["text"]) == ctx.slot:
-                                h.write(0x81.to_bytes(1, byteorder="little"))
-                            else:
-                                h.write(0x82.to_bytes(1, byteorder="little"))
-                            h.write((ctx.slot_info[int(strings["text"])].name).encode("ascii"))
-                        elif type == "item_id":
-                            if int(strings["flags"])==0:#filler
-                                h.write(0x88.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==1:#important
-                                h.write(0x89.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==2:#useful
-                                h.write(0x84.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==3:#no clue
-                                h.write(0x8F.to_bytes(1, byteorder="little"))
-                            if int(strings["flags"])==4:#trap
-                                h.write(0x87.to_bytes(1, byteorder="little"))
-                            h.write((ctx.item_names.lookup_in_game(int(strings["text"]), ctx.slot_info[int(strings["player"])].game)).encode("ascii"))#int(strings["player"])))
-
-                        elif type == "location_id":
-                            h.write(0x83.to_bytes(1, byteorder="little"))
-                            h.write((ctx.location_names.lookup_in_slot(int(strings["text"]), int(strings["player"]))).encode("ascii"))
-
-                    except KeyError:
-                        h.write(0x80.to_bytes(1, byteorder="little"))
+            if len(ctx.texttransfer) > 0:
+                h = open(file_path + "/luafiles/archipelago/APTextTransfer.txt", 'w+b')#i love character 81 not fucking existing so i cant use the python string stuf :))))))
+                for jsons in ctx.texttransfer:
+                    for strings in jsons:
                         try:
-                            h.write((strings["text"].encode("UTF-8"))) #stupid
+                            type = strings["type"]
+                            if type == "player_id":
+                                if int(strings["text"]) == ctx.slot:
+                                    h.write(0x81.to_bytes(1, byteorder="little"))
+                                else:
+                                    h.write(0x82.to_bytes(1, byteorder="little"))
+                                h.write(ctx.slot_info[int(strings["text"])].name.encode("ascii"))
+                            elif type == "item_id":
+                                if int(strings["flags"])==0:#filler
+                                    h.write(0x88.to_bytes(1, byteorder="little"))
+                                elif int(strings["flags"])==1:#important
+                                    h.write(0x89.to_bytes(1, byteorder="little"))
+                                elif int(strings["flags"])==2:#useful
+                                    h.write(0x84.to_bytes(1, byteorder="little"))
+                                elif int(strings["flags"])==3:#useful+important
+                                    h.write(0x8F.to_bytes(1, byteorder="little"))
+                                elif int(strings["flags"])==4:#trap
+                                    h.write(0x87.to_bytes(1, byteorder="little"))
+                                else:
+                                    h.write(0x85.to_bytes(1, byteorder="little"))
+                                h.write((ctx.item_names.lookup_in_game(int(strings["text"]), ctx.slot_info[int(strings["player"])].game)).encode("ascii"))#int(strings["player"])))
+
+                            elif type == "location_id":
+                                h.write(0x83.to_bytes(1, byteorder="little"))
+                                h.write((ctx.location_names.lookup_in_slot(int(strings["text"]), int(strings["player"]))).encode("ascii"))
+
+                        except KeyError:
+                            h.write(0x80.to_bytes(1, byteorder="little"))
+                            try:
+                                h.write((strings["text"].encode("UTF-8"))) #stupid
+                            except UnicodeError:
+                                h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
                         except UnicodeError:
                             h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
-                    except UnicodeError:
-                        h.write("UTF-8 ENCODING ERROR".encode("UTF-8"))
 
-                h.write(0x0A.to_bytes(1, byteorder="little"))
-            ctx.texttransfer = []
-            f.seek(0x18)
-            f.write(0x03.to_bytes(1, byteorder="little")) #let srb2 know to read the texttransfer file
-            h.close()
+                    h.write(0x0A.to_bytes(1, byteorder="little"))
+                ctx.texttransfer = []
+                f.seek(0x18)
+                f.write(0x03.to_bytes(1, byteorder="little")) #let srb2 know to read the texttransfer file
+                h.close()
 
-        try:
-            g = open(file_path2, 'r+b')
-            g.seek(0x10)  # always select No save to go back to the ap hub
-            g.write(0x7D.to_bytes(2, byteorder="little"))  # or find a console command that does that
-            g.close()
-        except:
-            print("save file 1 not found, create it to more easily return to the multiworld hub")
+            try:
+                g = open(file_path2, 'r+b')
+                g.seek(0x10)  # always select No save to go back to the ap hub
+                g.write(0x7D.to_bytes(2, byteorder="little"))  # or find a console command that does that
+                g.close()
+            except:
+                print("save file 1 not found, create it to more easily return to the multiworld hub")
 
-        # todo handle deathlink traps and 1ups
+            # todo handle deathlink traps and 1ups
 
-        if ctx.death_link == True:
-            f.seek(0x01)
-            is_dead = f.read(1)
-            if ctx.death_link_lockout + 4 <= time.time():
+            if ctx.death_link == True:
+                f.seek(0x01)
+                is_dead = f.read(1)
+                if ctx.death_link_lockout + 4 <= time.time():
 
-                if ctx.activate_death == True:
-                    f.seek(0x00)  # received deathlink
-                    f.write(0x01.to_bytes(1, byteorder="little"))
-                    f.seek(0x18)
-                    f.write((int.from_bytes(f.read(1), 'little') | 1).to_bytes(1,byteorder="little"))  # let srb2 know to read the file
-                    ctx.death_link_lockout = time.time()
-                    print("kill yourself")
+                    if ctx.activate_death == True:
+                        f.seek(0x00)  # received deathlink
+                        f.write(0x01.to_bytes(1, byteorder="little"))
+                        f.seek(0x18)
+                        f.write((int.from_bytes(f.read(1), 'little') | 1).to_bytes(1,byteorder="little"))  # let srb2 know to read the file
+                        ctx.death_link_lockout = time.time()
+                        print("kill yourself")
+                        ctx.activate_death = False
+
+                    elif is_dead != b'\x00':  # outgoing deathlink
+                        f.seek(0x01)
+                        f.write(0x00.to_bytes(1, byteorder="little"))
+                        message = ctx.player_names[ctx.slot] + " wasn't able to retry in time"
+
+                        await ctx.send_death(message)
+                        ctx.death_link_lockout = time.time()
+                        print("killed myself")
+
+                else:
                     ctx.activate_death = False
+                    print("in lockout")
+                    # write 0s to both slots if conditions havent been met
+                    f.seek(0x00)
+                    f.write(0x00.to_bytes(2, byteorder="little"))
+            # print("wrote new file data")
+            if ctx.ring_link != 0:
+            #more stolen code from shadow himself
+                f.seek(0x1B)
+                current_rings_bytes = f.read(2)
+                current_rings = int.from_bytes(current_rings_bytes, byteorder="little")
 
-                elif is_dead != b'\x00':  # outgoing deathlink
-                    f.seek(0x01)
-                    f.write(0x00.to_bytes(1, byteorder="little"))
-                    message = ctx.player_names[ctx.slot] + " wasn't able to retry in time"
-
-                    await ctx.send_death(message)
-                    ctx.death_link_lockout = time.time()
-                    print("killed myself")
-
-            else:
-                ctx.activate_death = False
-                print("in lockout")
-                # write 0s to both slots if conditions havent been met
-                f.seek(0x00)
-                f.write(0x00.to_bytes(2, byteorder="little"))
-        # print("wrote new file data")
-        if ctx.ring_link != 0:
-        #more stolen code from shadow himself
-            f.seek(0x1B)
-            current_rings_bytes = f.read(2)
-            current_rings = int.from_bytes(current_rings_bytes, byteorder="little")
-
-            difference = current_rings - ctx.previous_rings
-            ctx.previous_rings = current_rings + ctx.ring_link_rings
+                difference = current_rings - ctx.previous_rings
+                ctx.previous_rings = current_rings + ctx.ring_link_rings
 
 
-            #TODO special code for when rings goes over 9999
+                #TODO special code for when rings goes over 9999
 
 
-            if difference != 0:
-                #logger.info("got here with a difference of " + str(difference))
-                msg = {
-                    "cmd": "Bounce",
-                    "slots": [ctx.slot],
-                    "data": {
-                        "time": time.time(),
-                        "source": ctx.slot,
-                        "amount": difference
-                    },
-                    "tags":["RingLink"]
-                }
+                if difference != 0:
+                    #logger.info("got here with a difference of " + str(difference))
+                    msg = {
+                        "cmd": "Bounce",
+                        "slots": [ctx.slot],
+                        "data": {
+                            "time": time.time(),
+                            "source": ctx.slot,
+                            "amount": difference
+                        },
+                        "tags":["RingLink"]
+                    }
 
-                await ctx.send_msgs([msg])
+                    await ctx.send_msgs([msg])
 
-            #here write new ring value back into file
-            f.seek(0x1B)
-            if current_rings+ctx.ring_link_rings < 0:
-                ctx.ring_link_rings = -current_rings
-            f.write((current_rings+ctx.ring_link_rings).to_bytes(2, byteorder="little"))
-            ctx.ring_link_rings = 0
-            # logger.info("ring link rings is " + str(ctx.ring_link_rings))
+                #here write new ring value back into file
+                f.seek(0x1B)
+                if current_rings+ctx.ring_link_rings < 0:
+                    ctx.ring_link_rings = -current_rings
+                if current_rings+ctx.ring_link_rings <= 65535:
+                    f.write(int(current_rings+ctx.ring_link_rings).to_bytes(2, byteorder="little"))
+                else:
+                    f.write(int(65535).to_bytes(2, byteorder="little"))
+                ctx.ring_link_rings = 0
+                # logger.info("ring link rings is " + str(ctx.ring_link_rings))
 
-        f.close()
+            f.close()
+            await asyncio.sleep(1)
         await asyncio.sleep(1)
-
 
 async def file_watcher(ctx, file_path):
     locs_to_send = set()
@@ -1004,15 +999,15 @@ async def file_watcher(ctx, file_path):
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v151.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v152.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v151.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v152.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v151.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v152.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 

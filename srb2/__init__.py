@@ -11,7 +11,7 @@ from BaseClasses import Item, Tutorial, ItemClassification, Region
 from ..AutoWorld import World, WebWorld
 import random
 from multiprocessing import Process
-from worlds.LauncherComponents import Component, components, Type, launch_subprocess
+from worlds.LauncherComponents import Component, components, Type, launch_subprocess, icon_paths
 
 
 
@@ -34,14 +34,14 @@ def launch_client():
     from .Client import launch
     launch_subprocess(launch, name="SRB2Client")
 
-
 components.append(Component(
     "Sonic Robo Blast 2 Client",
     "SRB2Client",
     func=launch_client,
-    component_type=Type.CLIENT
+    component_type=Type.CLIENT,
+    icon = "emblem"
 ))
-
+icon_paths["emblem"] = f"ap:{__name__}/srb2emblem.png"
 class SRB2World(World):
     """ 
     Peak game
@@ -122,28 +122,34 @@ class SRB2World(World):
 
     def generate_early(self):
 
-        max_locations = 259+57+248+597+380#TODO up this once i have enough locations
-        if not self.options.time_emblems:
-            max_locations -= 27
-        if not self.options.ring_emblems:
-            max_locations -= 20
-        if not self.options.score_emblems:
-            max_locations -= 7
-        if not self.options.rank_emblems:
-            max_locations -= 12
-        if not self.options.ntime_emblems:
-            max_locations -= 12
-        if not self.options.oneup_sanity:
-            max_locations -= 248
-        if not self.options.match_maps:
-            max_locations -= 21
+        max_locations = 181#TODO up this once i have enough locations
+        if self.options.time_emblems:
+            max_locations += 27
+        if self.options.ring_emblems:
+            max_locations += 20
+        if self.options.score_emblems:
+            max_locations += 7
+        if self.options.nights_maps:
+            max_locations += 36
+            if self.options.rank_emblems:
+                max_locations += 12
+            if self.options.ntime_emblems:
+                max_locations += 12
 
-        if not self.options.oneup_sanity or not self.options.match_maps:
-            max_locations -= 1
-        if not self.options.superring_sanity or not self.options.match_maps:
-            max_locations -= 379
-        if not self.options.superring_sanity:
-            max_locations -= 597
+        if self.options.oneup_sanity:
+            max_locations += 247
+
+        if self.options.superring_sanity:
+            max_locations += 598
+
+        if self.options.match_maps:
+            max_locations += 21
+            if self.options.oneup_sanity:
+                max_locations += 1
+            if self.options.superring_sanity:
+                max_locations += 379
+
+
         #if self.options.superring_sanity and not self.options.oneup_sanity:#im going insane
         #    max_locations +=1
         self.number_of_locations = max_locations
@@ -209,12 +215,13 @@ class SRB2World(World):
             for shield in other_item_table.keys():
                 self.multiworld.itempool += [self.create_item(shield)]
                 slots_to_fill -=1
-            for spstage in special_item_data_table.keys():
-                self.multiworld.itempool += [self.create_item(spstage)]
-                slots_to_fill -=1
-            for shield in nights_item_table.keys():
-                self.multiworld.itempool += [self.create_item(shield)]
-                slots_to_fill -=1
+            if self.options.nights_maps:
+                for spstage in special_item_data_table.keys():
+                    self.multiworld.itempool += [self.create_item(spstage)]
+                    slots_to_fill -=1
+                for shield in nights_item_table.keys():
+                    self.multiworld.itempool += [self.create_item(shield)]
+                    slots_to_fill -=1
 
             if self.options.match_maps:
                 for zone in mpmatch_item_table.keys():
@@ -260,64 +267,35 @@ class SRB2World(World):
                     slots_to_fill -= 1
 
 
-            if slots_to_fill!= 0:
+            if slots_to_fill > 0:
                 trap_slots = int(slots_to_fill*self.options.trap_percentage/100)
-                while trap_slots != 0:
-                    trapnum = random.randrange(76)
-                    if trapnum<3:
-                        self.multiworld.itempool += [self.create_item("Replay Tutorial")]#4
-                    elif trapnum<8:
-                        self.multiworld.itempool += [self.create_item("Self-Propelled Bomb")]#5
-                    elif trapnum < 14:
-                        self.multiworld.itempool += [self.create_item("Sonic Forces")]
-                    elif trapnum < 22:
-                        self.multiworld.itempool += [self.create_item("Slippery Floors")]
-                    elif trapnum < 26:
-                        self.multiworld.itempool += [self.create_item("Shrink Monitor")]
-                    elif trapnum < 32:
-                        self.multiworld.itempool += [self.create_item("Grow Monitor")]
-                    #elif trapnum < 42:
-                    #    self.multiworld.itempool += [self.create_item("Reversed Controls")]
-                    elif trapnum < 42:
-                        self.multiworld.itempool += [self.create_item("Dropped Inputs")]
-                    elif trapnum < 52:
-                        self.multiworld.itempool += [self.create_item("Ring Loss")]
-                    elif trapnum < 70:
-                        self.multiworld.itempool += [self.create_item("Forced Pity Shield")]
-                    elif trapnum < 76:
-                        self.multiworld.itempool += [self.create_item("Jumpscare")]
-                    trap_slots-=1
-                    slots_to_fill-=1
+                total_trap_weights = 0
+                for trap_weight in self.options.trap_weights:
+                    total_trap_weights += self.options.trap_weights[trap_weight]
+                ratio = trap_slots/total_trap_weights
+                for trap in self.options.trap_weights:
+                    for i in range(int(ratio*self.options.trap_weights[trap])):
+                        self.multiworld.itempool += [self.create_item(trap)]
+                        slots_to_fill -=1
 
-
-
-            if slots_to_fill != 0:
+            if slots_to_fill > 0:
                 filler_slots = slots_to_fill
-                while filler_slots != 0:
-                    fillernum = random.randrange(90)
-                    if fillernum<8:
-                        self.multiworld.itempool += [self.create_item("1UP")]
-                    elif fillernum<28:
-                        self.multiworld.itempool += [self.create_item("10 Rings")]
-                    elif fillernum < 38:
-                        self.multiworld.itempool += [self.create_item("20 Rings")]
-                    elif fillernum < 42:
-                        self.multiworld.itempool += [self.create_item("50 Rings")]
-                    elif fillernum < 48:
-                        self.multiworld.itempool += [self.create_item("& Knuckles")]
-                    elif fillernum < 58:
-                        self.multiworld.itempool += [self.create_item("1000 Points")]
-                    elif fillernum < 68:
-                        self.multiworld.itempool += [self.create_item("Temporary Invincibility")]
-                    elif fillernum < 80:
-                        self.multiworld.itempool += [self.create_item("Temporary Super Sneakers")]
-                    elif fillernum < 90:
-                        self.multiworld.itempool += [self.create_item("Double Rings")]
-                    filler_slots-=1
-                    slots_to_fill-=1
+                total_filler_weights = 0
+                for filler_weight in self.options.filler_weights:
+                    total_filler_weights += self.options.filler_weights[filler_weight]
+                ratio = filler_slots/total_filler_weights
+                for filler in self.options.filler_weights:
+                    for i in range(int(ratio*self.options.filler_weights[filler])):
+                        self.multiworld.itempool += [self.create_item(filler)]
+                        slots_to_fill -= 1
+
+            while slots_to_fill > 0:
+                self.multiworld.itempool += [self.create_item("1UP")]
+                slots_to_fill -= 1
 
 
     def generate_basic(self): #use to force items in a specific location
+        #self.multiworld.get_location()
         return
            #self.multiworld.get_location("BoB: Bob-omb Buddy", self.player).place_locked_item(self.create_item("Cannon Unlock BoB"))
 

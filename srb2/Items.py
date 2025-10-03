@@ -18,7 +18,7 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     "Progressive Emblem Hint": SRB2ItemData(3, ItemClassification.useful),
     "1UP": SRB2ItemData(4, ItemClassification.filler),
 
-    "& Knuckles": SRB2ItemData(70, ItemClassification.filler),
+    "& Knuckles": SRB2ItemData(70, ItemClassification.trap | ItemClassification.useful),
     "50 Rings": SRB2ItemData(71, ItemClassification.filler),
     "20 Rings": SRB2ItemData(72, ItemClassification.filler),
     "10 Rings": SRB2ItemData(73, ItemClassification.filler),

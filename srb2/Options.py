@@ -1,6 +1,6 @@
 import typing
 from dataclasses import dataclass
-from Options import DefaultOnToggle, Range, Toggle, DeathLink, Choice, PerGameCommonOptions, OptionSet, OptionGroup
+from Options import DefaultOnToggle, Range, Toggle, DeathLink, Choice, PerGameCommonOptions, OptionSet, OptionGroup, OptionCounter
 
 
 class TimeEmblems(DefaultOnToggle):
@@ -12,12 +12,19 @@ class RingEmblems(DefaultOnToggle):
 class ScoreEmblems(DefaultOnToggle):
     """Enable record attack Score emblems (7 Locations)"""
     display_name = "Score Emblems"
+
+class NightsMaps(DefaultOnToggle):
+    """Enable NiGHTS stages as items/locations (36 Locations)"""
+    display_name = "NiGHTS Maps"
+
 class RankEmblems(DefaultOnToggle):
     """Enable NiGHTS A Rank emblems (12 Locations)"""
     display_name = "NiGHTS Rank Emblems"
 class NTimeEmblems(DefaultOnToggle):
     """Enable NiGHTS Time emblems (12 Locations)"""
     display_name = "NiGHTS Time Emblems"
+
+
 
 class StartingCharacter(Choice):
     """Choose Starting character
@@ -40,7 +47,7 @@ class LogicDifficulty(Choice):
     """Difficulty of logic required to get items
     Normal - Tails/Knuckles required for difficult emblems, no badnik bouncing
     Hard - If it's possible, it's in logic
-    Custom - Disables logic for custom character use"""
+    Custom - Disables in-zone logic for custom character use"""
     option_normal = 0
     option_hard = 1
     option_custom = 2
@@ -84,6 +91,44 @@ class TrapPercentage(Range):
     range_end = 100
     default = 30
 
+class TrapWeights(OptionCounter):
+    """
+    Determines the ratio of each trap
+    """
+    default = {
+        "Replay Tutorial": 4,
+        "Self-Propelled Bomb": 6,
+        "Sonic Forces": 8,
+        "Jumpscare": 8,
+        "Slippery Floors": 8,
+        "Shrink Monitor": 6,
+        "Grow Monitor": 6,
+        "Forced Gravity Boots": 10,
+        "Ring Loss": 10,
+        "Dropped Inputs": 10,
+        "Forced Pity Shield": 20,
+    }
+    display_name = "Trap Weights"
+
+class FillerWeights(OptionCounter):
+    """
+    Determines the ratio of each filler item
+    """
+    default = {
+        "1UP": 4,
+        "10 Rings": 25,
+        "20 Rings": 10,
+        "50 Rings": 5,
+        "1000 Points": 8,
+        "& Knuckles": 8,
+        "Temporary Invincibility": 12,
+        "Temporary Super Sneakers": 12,
+        "Double Rings": 6,
+    }
+    display_name = "Filler Weights"
+
+
+
 class CompletionType(Choice):
     """Set goal for Victory Condition
     Bad Ending Requires Beating Black Core Zone Act 3
@@ -109,6 +154,7 @@ srb2_options_groups = [
         TimeEmblems,
         RingEmblems,
         ScoreEmblems,
+        NightsMaps,
         RankEmblems,
         NTimeEmblems,
         StartingCharacter,
@@ -121,8 +167,11 @@ srb2_options_groups = [
         RadarStart,
         BlackCoreEmblemCost,
         TrapPercentage,
+        TrapWeights,
+        FillerWeights,
         EmblemNumber,
         RingLink,
+
     ]),
 ]
 
@@ -132,6 +181,7 @@ class SRB2Options(PerGameCommonOptions):
     time_emblems: TimeEmblems
     ring_emblems: RingEmblems
     score_emblems: ScoreEmblems
+    nights_maps: NightsMaps
     rank_emblems: RankEmblems
     ntime_emblems: NTimeEmblems
     starting_character: StartingCharacter
@@ -141,6 +191,8 @@ class SRB2Options(PerGameCommonOptions):
     superring_sanity: SuperRingSanity
     radar_start: RadarStart
     num_emblems: EmblemNumber
+    trap_weights: TrapWeights
+    filler_weights: FillerWeights
     bcz_emblem_percent:BlackCoreEmblemCost
     trap_percentage:TrapPercentage
     ring_link: RingLink

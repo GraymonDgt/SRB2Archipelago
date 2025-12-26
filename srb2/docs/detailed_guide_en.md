@@ -68,15 +68,15 @@ When you are done setting up your yaml, move it to the folder C:\ProgramData\Arc
 
 Place a yaml for every game you want to play with in this folder
 
-when you have all your yamls in the folder, click 'Generate' in the archipelago launcher
+When you have all your yamls in the folder, click 'Generate' in the Archipelago launcher
 
-a terminal will open and when its finished a zip file will be created in C:\ProgramData\Archipelago\output
+A terminal will open and when its finished a zip file will be created in C:\ProgramData\Archipelago\output
 
 (if the terminal remains open then read what it says. If the issue is with a yaml it should give a line number)
 
 
-To host a game, go to archipelago.gg and under 'Getting started' click 'Host game'
+To host a game, go to archipelago.gg and under the 'Getting started' menu in the top left corner, click 'Host game'
 
 Upload the zip file from C:\ProgramData\Archipelago\output and click 'create room'
 
-You may now connect to the room using whatever method is required per game using the 5 digit number
+You may now connect to the room using whatever method is required per game using the 5 digit number.

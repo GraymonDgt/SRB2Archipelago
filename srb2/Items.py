@@ -13,7 +13,7 @@ class SRB2ItemData(NamedTuple):
 
 
 generic_item_data_table: dict[str, SRB2ItemData] = {
-    "Emblem": SRB2ItemData(1, ItemClassification.progression_skip_balancing),
+    "Emblem": SRB2ItemData(1, ItemClassification.progression_deprioritized_skip_balancing),
     "Chaos Emerald": SRB2ItemData(2),
     "Progressive Emblem Hint": SRB2ItemData(3, ItemClassification.useful),
     "1UP": SRB2ItemData(4, ItemClassification.filler),
@@ -56,16 +56,21 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
 
 
 
-# Spindash
-# progressive tails flight
+
 # progressive force shield
 # shield spike protection (shields now protect from spikes)
-# +10 Max Rings
-
-
 
 # knuckles break strength (allows knuckles to break walls)
-# amy/fang downward floor break
+
+# Spindash // progressive roll
+# Amy's hammer
+# Fang's Tail
+# Fang's Popgun
+
+# Tails' Flight
+# sonic's thok
+# knuckles' glide
+# metal sonic's booster
 
 #object locks
     # zoom tubes
@@ -73,7 +78,16 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     # mace swing
     # minecarts
     # rollout rocks
-# lock thz slime
+    # thz slime
+
+#wacky ideas
+    # springs
+    # monitors
+
+
+
+
+
 
 }
 traps_item_data_table:dict[str, SRB2ItemData] = {
@@ -93,7 +107,25 @@ traps_item_data_table:dict[str, SRB2ItemData] = {
 
 
 }
+objects_item_table: dict[str, SRB2ItemData] = {
+    "Zoom Tubes": SRB2ItemData(150),#power erz1 erz2
+    "Rope Hangs": SRB2ItemData(151),#power #acz1, erz2
+    "Swinging Maces": SRB2ItemData(152),#power #ffz cez1 cez2
+    "Minecarts": SRB2ItemData(153),#power #acz2
+    "Rollout Rocks": SRB2ItemData(154),#power #rvz
+    "Gargoyle Statues": SRB2ItemData(155),#object #dsz1 dsz2
+    "Air Bubbles": SRB2ItemData(156),#object most zones
+    "Buoyant Slime": SRB2ItemData(157),#floor thz1 thz2
+    "Dust Devils": SRB2ItemData(158),#object acz1 acz2
+    "Yellow Springs": SRB2ItemData(159),#object
+    "Red Springs": SRB2ItemData(160),#object
+    "Blue Springs": SRB2ItemData(161),#object
 
+
+
+
+
+}
 
 zones_item_data_table: dict[str, SRB2ItemData] = {
     "Greenflower Zone": SRB2ItemData(10),
@@ -105,6 +137,41 @@ zones_item_data_table: dict[str, SRB2ItemData] = {
     "Egg Rock Zone": SRB2ItemData(16),
     "Black Core Zone": SRB2ItemData(17),
 
+    "Frozen Hillside Zone": SRB2ItemData(18),
+    "Pipe Towers Zone": SRB2ItemData(19),
+    "Forest Fortress Zone": SRB2ItemData(20),
+    "Final Demo Zone": SRB2ItemData(21),
+
+    "Haunted Heights Zone": SRB2ItemData(22),
+    "Aerial Garden Zone": SRB2ItemData(23),
+    "Azure Temple Zone": SRB2ItemData(24),
+}
+acts_item_data_table: dict[str,SRB2ItemData]={
+
+    "Greenflower Zone (Act 1)": SRB2ItemData(105),
+    "Greenflower Zone (Act 2)": SRB2ItemData(106),
+    "Greenflower Zone (Act 3)": SRB2ItemData(107),
+    "Techno Hill Zone (Act 1)": SRB2ItemData(108),
+    "Techno Hill Zone (Act 2)": SRB2ItemData(109),
+    "Techno Hill Zone (Act 3)": SRB2ItemData(110),
+    "Deep Sea Zone (Act 1)": SRB2ItemData(111),
+    "Deep Sea Zone (Act 2)": SRB2ItemData(112),
+    "Deep Sea Zone (Act 3)": SRB2ItemData(113),
+    "Castle Eggman Zone (Act 1)": SRB2ItemData(114),
+    "Castle Eggman Zone (Act 2)": SRB2ItemData(115),
+    "Castle Eggman Zone (Act 3)": SRB2ItemData(116),
+    "Arid Canyon Zone (Act 1)": SRB2ItemData(117),
+    "Arid Canyon Zone (Act 2)": SRB2ItemData(118),
+    "Arid Canyon Zone (Act 3)": SRB2ItemData(119),
+    "Red Volcano Zone (Act 1)": SRB2ItemData(120),
+    #"Red Volcano Zone (Act 2)": SRB2ItemData(121),
+    #"Red Volcano Zone (Act 3)": SRB2ItemData(122),
+    "Egg Rock Zone (Act 1)": SRB2ItemData(123),
+    "Egg Rock Zone (Act 2)": SRB2ItemData(124),
+    #"Egg Rock Zone (Act 3)": SRB2ItemData(125),
+    "Black Core Zone (Act 1)": SRB2ItemData(126),
+    "Black Core Zone (Act 2)": SRB2ItemData(127),
+    "Black Core Zone (Act 3)": SRB2ItemData(128),
     "Frozen Hillside Zone": SRB2ItemData(18),
     "Pipe Towers Zone": SRB2ItemData(19),
     "Forest Fortress Zone": SRB2ItemData(20),
@@ -129,6 +196,12 @@ special_item_data_table: dict[str, SRB2ItemData] = {
     "Dream Hill Zone": SRB2ItemData(34),
     "Alpine Paradise Zone": SRB2ItemData(35),
 }
+
+sp_acts_item_data_table: dict[str, SRB2ItemData] = {
+"Alpine Paradise Zone (Act 1)": SRB2ItemData(129),
+"Alpine Paradise Zone (Act 2)": SRB2ItemData(130),
+}
+
 
 character_item_data_table: dict[str, SRB2ItemData] = {
     "Tails": SRB2ItemData(50),
@@ -191,12 +264,15 @@ mpmatch_item_table:dict[str, SRB2ItemData] = {
 item_data_table = {
     **generic_item_data_table,
     **zones_item_data_table,
+    **acts_item_data_table,
+    **objects_item_table,
     **character_item_data_table,
     **other_item_table,
     **mpmatch_item_table,
     **traps_item_data_table,
     **nights_item_table,
-    **special_item_data_table
+    **special_item_data_table,
+    **sp_acts_item_data_table
 }
 
 item_table = {name: data.code for name, data in item_data_table.items() if data.code is not None}

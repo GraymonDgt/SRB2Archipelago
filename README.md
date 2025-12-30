@@ -11,6 +11,8 @@ https://github.com/ArchipelagoMW/Archipelago
 
 # SETUP GUIDE
 
+(Assuming you already know what Archipelago is and how to set up a game)
+
 Download srb2 here: https://www.srb2.org/download/
 
 Put SL_ArchipelagoSRB2_Vxxx.pk3 in the addons folder

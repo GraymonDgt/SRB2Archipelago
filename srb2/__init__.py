@@ -171,16 +171,17 @@ class SRB2World(World):
 
         return item
 
-    def create_items(self):
+        def create_items(self):
+            disable_objects = False
             if self.options.object_locking:
                 if self.options.oneup_sanity or self.options.superring_sanity:
-                    self.options.object_locking = False
+                    disable_objects = True
 
             # 1Up Mushrooms
             #actsanity valid starts w/ object rando
             #gfz1, thz1hard, dsz2? cez1 erz2
             if not self.options.actsanity:
-                if not self.options.object_locking:
+                if not self.options.object_locking and disable_objects == False:
                     Valid_starts = ["Greenflower Zone", "Techno Hill Zone", "Deep Sea Zone", "Castle Eggman Zone",
                             "Arid Canyon Zone", "Red Volcano Zone", "Egg Rock Zone"]
                 else:
@@ -188,7 +189,7 @@ class SRB2World(World):
                             "Arid Canyon Zone", "Egg Rock Zone"]#zone boss means these always have a sphere 1
 
             else:
-                if not self.options.object_locking:
+                if not self.options.object_locking and disable_objects == False:
                     Valid_starts = ["Greenflower Zone (Act 1)", "Greenflower Zone (Act 2)", "Techno Hill Zone (Act 1)", "Techno Hill Zone (Act 2)", "Deep Sea Zone (Act 1)","Deep Sea Zone (Act 2)",
                                 "Castle Eggman Zone (Act 1)","Castle Eggman Zone (Act 2)","Arid Canyon Zone (Act 1)", "Arid Canyon Zone (Act 2)","Red Volcano Zone (Act 1)", "Egg Rock Zone (Act 1)","Egg Rock Zone (Act 2)",
                                 "Frozen Hillside Zone","Pipe Towers Zone","Forest Fortress Zone"]
@@ -205,7 +206,7 @@ class SRB2World(World):
 
             slots_to_fill = self.number_of_locations
 
-            if self.options.object_locking:
+            if self.options.object_locking and disable_objects == False:
                 for object_name in objects_item_table:
                     self.multiworld.itempool += [self.create_item(object_name)]
                     slots_to_fill -= 1

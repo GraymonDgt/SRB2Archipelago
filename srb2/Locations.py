@@ -213,6 +213,12 @@ AGZ_table = {
     "Aerial Garden Time Emblem": 167,
     "Aerial Garden Ring Emblem": 168,
     "Aerial Garden Clear": 169,
+    "Aerial Garden Emerald Token - First Room High Tower": 311,
+    "Aerial Garden Emerald Token - Diamond Emblem 1": 312,
+    "Aerial Garden Emerald Token - Diamond Emblem 2": 313,
+    "Aerial Garden Emerald Token - Diamond Emblem 3": 314,
+    "Aerial Garden Emerald Token - Diamond Emblem 4": 315,
+    "Aerial Garden Emerald Token - Underwater on Pillar": 316,
 }
 ATZ_table = {
     "Azure Temple Star Emblem": 170,
@@ -427,8 +433,8 @@ oneupcoords_table = {
 "Greenflower (Act 1) Monitor - Highest Ledge":322,#wind | tails | knuckles
 "Greenflower (Act 2) Monitor - Breakable Floor Near Springs 1":323,#amy fangw
 "Greenflower (Act 2) Monitor - Open Area Behind Checkered Pillar":324,
-"Greenflower (Act 2) Monitor - Skylight in 2nd Cave":325, #tails knux
-"Greenflower (Act 2) Monitor - Fenced Flower Ledge":326,
+"Greenflower (Act 2) Monitor - Fenced Flower Ledge":325,
+"Greenflower (Act 2) Monitor - Skylight in 2nd Cave":326,
 "Greenflower (Act 2) Monitor - Near Star Emblem 1":327,
 "Greenflower (Act 2) Monitor - Waterfall Top Near Start":328, #tails knux (sonic might do this with a large bounce)
 "Greenflower (Act 2) Monitor - Pillar Next to End":329, #tails knux
@@ -536,7 +542,7 @@ oneupcoords_table = {
 "Arid Canyon (Act 2) Monitor - Left Path High Ledge Cave":431,
 "Arid Canyon (Act 2) Monitor - Left Path Visible From Minecarts":432,
 "Arid Canyon (Act 2) Monitor - Near Heart Emblem 1":433,
-"Arid Canyon (Act 2) Monitor - Behind TNT Crates Near Spade Emblem":434,
+"Arid Canyon (Act 2) Monitor - Behind TNT Crates Near Diamond Emblem":434,
 "Arid Canyon (Act 2) Monitor - Ending Minecarts":435,
 "Arid Canyon (Act 2) Monitor - Very High Ledge Between Left and Looping Path":436,
 #"Arid Canyon (Act 2) Monitor - Left Path Inaccessible":437, #removed due to being oob, keep in client list to keep ids similar
@@ -683,8 +689,10 @@ oneupcoords_table = {
 "Azure Temple Monitor - Action Nospin Path Ledge After Spring":567,
 "Sapphire Falls Monitor - Inside Central Platform":568
 }
-ringmonitors_table = {
 
+
+
+ringmonitors_table = {
 #"Greenflower (Act 1) Monitor - x:2400 y:7600":570,
 #"Greenflower (Act 1) Monitor - x:5808 y:2656":571,
 #"Greenflower (Act 1) Monitor - x:1672 y:9376":572,
@@ -833,12 +841,12 @@ ringmonitors_table = {
 "Techno Hill (Act 2) Monitor - Large Jump Into Slime S":647,
 "Techno Hill (Act 2) Monitor - Barricade Path End Ledge 2":648,
 "Techno Hill (Act 2) Monitor - Large Jump Into Slime W":649,
-"Techno Hill (Act 2) Monitor - Outside Heart Emblem Door":650,
+"Techno Hill (Act 2) Monitor - Large Jump Into Slime E":650,
 "Techno Hill (Act 2) Monitor - Large Jump Into Slime N":651,
 "Techno Hill (Act 2) Monitor - Knuckles Path Before Diagonal Conveyors":652,
 "Techno Hill (Act 2) Monitor - Behind Crates After 3rd Checkpoint":653,
 "Techno Hill (Act 2) Monitor - Final Room Cavity in Pillar":654,
-"Techno Hill (Act 2) Monitor - Before Detons Behind Crates":655,
+"Techno Hill (Act 2) Monitor - Outside Heart Emblem Door":655,
 "Techno Hill (Act 2) Monitor - Near Heart Emblem 1":656,
 "Techno Hill (Act 2) Monitor - Deton Room Behind Crate":657,
 "Techno Hill (Act 2) Monitor - Near Heart Emblem 2":658,
@@ -850,7 +858,7 @@ ringmonitors_table = {
 "Techno Hill (Act 2) Monitor - Egg Corp Under Slime N":664,
 "Techno Hill (Act 2) Monitor - Egg Corp Under Slime S":665,
 "Techno Hill (Act 2) Monitor - After Turret Room Under Slime":666,
-"Techno Hill (Act 2) Monitor - Large Jump Into Slime E":667,
+"Techno Hill (Act 2) Monitor - Before Detons Behind Crates":667,
 "Techno Hill (Act 2) Monitor - Near Club Emblem 1":668,
 "Techno Hill (Act 2) Monitor - Near Club Emblem 2":669,
 "Techno Hill (Act 2) Monitor - Final Room Under Slime":670,
@@ -1744,8 +1752,6 @@ ringmonitors_table = {
 "Airborne Temple Monitor - x:-256 y:-256":1546
 }
 
-# TODO shields, act clears
-# Correspond to 3626000 + course index * 7 + star index, then secret stars, then keys, then 100 Coin Stars
 location_table = {**GFZ_table,**THZ_table,**DSZ_table,**CEZ_table,**ACZ_table,
                   **RVZ_table,**ERZ_table,**BCZ_table,**FHZ_table,**PTZ_table,**FFZ_table,**HHZ_table,**AGZ_table,**ATZ_table,
                   **FFSP_table,**TPSP_table,**FCSP_table,**CFSP_table,**DWSP_table,**MCSP_table,**ESSP_table,**BHSP_table,

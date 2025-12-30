@@ -141,12 +141,13 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
     connect_regions(world, player, "Menu", "Egg Rock Zone 1", lambda state: state.has("Egg Rock Zone", player) or state.has("Egg Rock Zone (Act 1)", player))
     connect_regions(world, player, "Menu", "Egg Rock Zone 2", lambda state: state.has("Egg Rock Zone", player) or state.has("Egg Rock Zone (Act 2)", player))
 
-    connect_regions(world, player, "Menu", "Black Core Zone 1", lambda state: state.has("Black Core Zone", player) or state.has("Black Core Zone (Act 1)", player))
-    connect_regions(world, player, "Menu", "Black Core Zone 2", lambda state: state.has("Black Core Zone", player) or state.has("Black Core Zone (Act 2)", player))
-
     if options.bcz_emblem_percent==0:
+        connect_regions(world, player, "Menu", "Black Core Zone 1", lambda state: state.has("Black Core Zone", player) or state.has("Black Core Zone (Act 1)", player))
+        connect_regions(world, player, "Menu", "Black Core Zone 2", lambda state: state.has("Black Core Zone", player) or state.has("Black Core Zone (Act 2)", player))
         connect_regions(world, player, "Menu", "Black Core Zone 3", lambda state: state.has("Black Core Zone", player) or state.has("Black Core Zone (Act 3)", player))
     else:
+        connect_regions(world, player, "Menu", "Black Core Zone 1", lambda state: state.has("Emblem", player, options.bcz_emblem_percent))
+        connect_regions(world, player, "Menu", "Black Core Zone 2", lambda state: state.has("Emblem", player, options.bcz_emblem_percent))
         connect_regions(world, player, "Menu", "Black Core Zone 3", lambda state: state.has("Emblem", player, options.bcz_emblem_percent))
 
     connect_regions(world, player, "Black Core Zone 3", "Credits",lambda state: state.count("Chaos Emerald", player) > 6)

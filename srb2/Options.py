@@ -67,6 +67,13 @@ class SuperRingSanity(Toggle):
     With Ringslinger Maps - 976 Locations"""
     display_name = "Super Ring-Sanity"
 
+class ActSanity(Toggle):
+    """Splits zone unlocks into individual acts
+    I.E. Greenflower Zone -> Greenflower Zone (Act 1), Greenflower Zone (Act 2), Greenflower Zone (Act 3)"""
+
+class ObjectLocking(Toggle):
+    """Shuffles certain objects like springs, slime, zoom tubes etc
+    LOGIC DOES NOT CURRENTLY WORK WITH MONITORS"""
 
 class BlackCoreEmblemCost(Range):
     """PERCENTAGE of emblems needed for black core zone to be unlocked
@@ -82,7 +89,7 @@ class EmblemNumber(Range):
     display_name = "Total Emblems"
     range_start = 10
     range_end = 250
-    default = 180
+    default = 100
 
 class TrapPercentage(Range):
     """Percentage of filler items to replace with traps"""
@@ -163,6 +170,8 @@ srb2_options_groups = [
         MPMaps
     ]),
     OptionGroup("Meta Options", [
+        ActSanity,
+        ObjectLocking,
         LogicDifficulty,
         RadarStart,
         BlackCoreEmblemCost,
@@ -184,6 +193,8 @@ class SRB2Options(PerGameCommonOptions):
     nights_maps: NightsMaps
     rank_emblems: RankEmblems
     ntime_emblems: NTimeEmblems
+    actsanity: ActSanity
+    object_locking: ObjectLocking
     starting_character: StartingCharacter
     difficulty: LogicDifficulty
     match_maps: MPMaps

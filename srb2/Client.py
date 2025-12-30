@@ -96,6 +96,7 @@ class SRB2Context(CommonContext):
         self.goal_type: int = 0
         self.bcz_emblems: int = 0
         self.goal_type = 0
+        self.actsanity = False
         self.matchmaps = None
         self.items_handling = 0b001 | 0b010 | 0b100  # Receive items from other worlds, starting inv, and own items
         self.location_name_to_ap_id = None
@@ -134,6 +135,7 @@ class SRB2Context(CommonContext):
             self.bcz_emblems = args["slot_data"]["BlackCoreEmblems"]
             self.matchmaps = args["slot_data"]["EnableMatchMaps"]
             self.goal_type = args["slot_data"]["CompletionType"]
+            self.actsanity = args["slot_data"]["ActSanity"]
             if args["slot_data"]["DeathLink"] != 0:
                 self.death_link = True
                 self.tags.add("DeathLink")
@@ -316,8 +318,8 @@ async def item_handler(ctx, file_path):
     # dont need to zero anything out because the first write will overwrite everything wrong
 
     locs_received = []
-    final_write = [0, 0, 0, 0]
-    sent_shields = [0, 0, 0, 0, 0, 0, 0, 0]
+    received_bytes = [0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0]
+
     numreceived = 0
     currenttrap = 0
     while True:
@@ -426,150 +428,263 @@ async def item_handler(ctx, file_path):
                     continue
 
                 if id == 10:  # greenflower
-                    final_write[0] = final_write[0] + 1
+                    received_bytes[0] = received_bytes[0] | 1
+                    received_bytes[0] = received_bytes[0] | 2
+                    received_bytes[0] = received_bytes[0] | 4
+                if id == 105: #gfz1
+                    received_bytes[0] = received_bytes[0] | 1
+                if id == 106: #gfz2
+                    received_bytes[0] = received_bytes[0] | 2
+                if id == 107: #gfz3
+                    received_bytes[0] = received_bytes[0] | 4
+
                 if id == 11:  # techno hill
-                    final_write[0] = final_write[0] + 2
+                    received_bytes[0] = received_bytes[0] | 8
+                    received_bytes[0] = received_bytes[0] | 16
+                    received_bytes[0] = received_bytes[0] | 32
+                if id == 108: #thz1
+                    received_bytes[0] = received_bytes[0] | 8
+                if id == 109: #thz2
+                    received_bytes[0] = received_bytes[0] | 16
+                if id == 110: #thz3
+                    received_bytes[0] = received_bytes[0] | 32
+
                 if id == 12:  # deep sea
-                    final_write[0] = final_write[0] + 4
+                    received_bytes[0] = received_bytes[0] | 64
+                    received_bytes[0] = received_bytes[0] | 128
+                    received_bytes[1] = received_bytes[1] | 1
+                if id == 111: #dsz1
+                    received_bytes[0] = received_bytes[0] | 64
+                if id == 112: #dsz2
+                    received_bytes[0] = received_bytes[0] | 128
+                if id == 113: #dsz3
+                    received_bytes[1] = received_bytes[1] | 1
+
                 if id == 13:  # castle eggman
-                    final_write[0] = final_write[0] + 8
+                    received_bytes[1] = received_bytes[1] | 2
+                    received_bytes[1] = received_bytes[1] | 4
+                    received_bytes[1] = received_bytes[1] | 8
+                if id == 114: #cez1
+                    received_bytes[1] = received_bytes[1] | 2
+                if id == 115: #cez2
+                    received_bytes[1] = received_bytes[1] | 4
+                if id == 116: #cez3
+                    received_bytes[1] = received_bytes[1] | 8
+
                 if id == 14:  # arid canyon
-                    final_write[0] = final_write[0] + 16
+                    received_bytes[1] = received_bytes[1] | 16
+                    received_bytes[1] = received_bytes[1] | 32
+                    received_bytes[1] = received_bytes[1] | 64
+                if id == 117:  # acz1
+                    received_bytes[1] = received_bytes[1] | 16
+                if id == 118:  # acz2
+                    received_bytes[1] = received_bytes[1] | 32
+                if id == 119:  # acz3
+                    received_bytes[1] = received_bytes[1] | 64
+
                 if id == 15:  # red volcano
-                    final_write[0] = final_write[0] + 32
+                    received_bytes[1] = received_bytes[1] | 128
+                    received_bytes[2] = received_bytes[2] | 1
+                    received_bytes[2] = received_bytes[2] | 2
+                if id == 120:  # rvz1
+                    received_bytes[1] = received_bytes[1] | 128
+                if id == 121:  # rvz2
+                    received_bytes[2] = received_bytes[2] | 1
+                if id == 122:  # rvz3
+                    received_bytes[2] = received_bytes[2] | 2
+
                 if id == 16:  # egg rock
-                    final_write[0] = final_write[0] + 64
-                if id == 17 and ctx.bcz_emblems == 0:  # black core
-                    final_write[0] = final_write[0] + 128
+                    received_bytes[2] = received_bytes[2] | 4
+                    received_bytes[2] = received_bytes[2] | 8
+                    received_bytes[2] = received_bytes[2] | 16
+                if id == 123:  # erz1
+                    received_bytes[2] = received_bytes[2] | 4
+                if id == 124:  # erz2
+                    received_bytes[2] = received_bytes[2] | 8
+                if id == 125:  # erz3
+                    received_bytes[2] = received_bytes[2] | 16
+
+                if id == 17:  # black core
+                    received_bytes[2] = received_bytes[2] | 32
+                    received_bytes[2] = received_bytes[2] | 64
+                    received_bytes[2] = received_bytes[2] | 128
+                if id == 126:  # bcz1
+                    received_bytes[2] = received_bytes[2] | 32
+                if id == 127:  # bcz2
+                    received_bytes[2] = received_bytes[2] | 64
+                if id == 128:  # bcz3
+                    received_bytes[2] = received_bytes[2] | 128
+
                 if id == 18:  # frozen hillside
-                    final_write[1] = final_write[1] + 8
+                    received_bytes[3] = received_bytes[3] | 1
                 if id == 19:  # pipe towers
-                    final_write[1] = final_write[1] + 16
+                    received_bytes[3] = received_bytes[3] | 2
                 if id == 20:  # forest fortress
-                    final_write[1] = final_write[1] + 32
+                    received_bytes[3] = received_bytes[3] | 4
                 if id == 21:  # final demo
-                    final_write[1] = final_write[1] + 64
+                    received_bytes[3] = received_bytes[3] | 8
                 if id == 22:  # haunted heights
-                    final_write[1] = final_write[1] + 1
+                    received_bytes[3] = received_bytes[3] | 16
                 if id == 23:  # aerial garden
-                    final_write[1] = final_write[1] + 2
+                    received_bytes[3] = received_bytes[3] | 32
                 if id == 24:  # azure temple
-                    final_write[1] = final_write[1] + 4
-                if id == 50:  # tails
-                    final_write[1] = final_write[1] + 128
-                if id == 51:  # knuckles
-                    final_write[2] = final_write[2] + 1
-                if id == 53:  # fang
-                    final_write[2] = final_write[2] + 2
-                if id == 52:  # amy
-                    final_write[2] = final_write[2] + 4
-                if id == 54:  # metal sonic
-                    final_write[2] = final_write[2] + 8
+                    received_bytes[3] = received_bytes[3] | 64
+
                 if id == 25:  # floral fields
-                    final_write[2] = final_write[2] + 16
+                    received_bytes[3] = received_bytes[3] | 128
                 if id == 26:  # toxic plateau
-                    final_write[2] = final_write[2] + 32
+                    received_bytes[4] = received_bytes[4] | 1
                 if id == 27:  # flooded cove
-                    final_write[2] = final_write[2] + 64
+                    received_bytes[4] = received_bytes[4] | 2
                 if id == 28:  # cavern fortress
-                    final_write[2] = final_write[2] + 128
+                    received_bytes[4] = received_bytes[4] | 4
                 if id == 29:  # dusty wasteland
-                    final_write[3] = final_write[3] + 1
+                    received_bytes[4] = received_bytes[4] | 8
                 if id == 30:  # magma caves
-                    final_write[3] = final_write[3] + 2
+                    received_bytes[4] = received_bytes[4] | 16
                 if id == 31:  # egg satellite
-                    final_write[3] = final_write[3] + 4
+                    received_bytes[4] = received_bytes[4] | 32
                 if id == 32:  # black hole
-                    final_write[3] = final_write[3] + 8
+                    received_bytes[4] = received_bytes[4] | 64
                 if id == 33:  # christmas chime
-                    final_write[3] = final_write[3] + 16
+                    received_bytes[4] = received_bytes[4] | 128
                 if id == 34:  # dream hill
-                    final_write[3] = final_write[3] + 32
+                    received_bytes[5] = received_bytes[5] | 1
                 if id == 35:  # alpine praradise
-                    final_write[3] = final_write[3] + 64
-                if id == 56:  # whirlwind
-                    sent_shields[0] = 1
-                if id == 57:  # armageddon
-                    sent_shields[1] = sent_shields[1]+1
-                if id == 100: #paraloop
-                    sent_shields[1] = sent_shields[1] + 2
-                if id == 101: #night helper
-                    sent_shields[1] = sent_shields[1] + 4
-                if id == 102: #link freeze
-                    sent_shields[1] = sent_shields[1] + 8
-                if id == 103: #extra time
-                    sent_shields[1] = sent_shields[1] + 16
-                if id == 104: #drill refill
-                    sent_shields[1] = sent_shields[1] + 32
+                    received_bytes[5] = received_bytes[5] | 2
+                    received_bytes[5] = received_bytes[5] | 4
+                if id == 129: #apz1
+                    received_bytes[5] = received_bytes[5] | 2
+                if id == 130: #apz2
+                    received_bytes[5] = received_bytes[5] | 4
 
-                if id == 58:  # elemental
-                    sent_shields[2] = 1
-                if id == 59:  # attraction
-                    sent_shields[3] = 1
-                if id == 60:  # force
-                    sent_shields[4] = sent_shields[4] + 1
-                if id == 61:  # flame
-                    sent_shields[4] = sent_shields[4] + 2
-                if id == 62:  # bubble
-                    sent_shields[4] = sent_shields[4] + 4
-                if id == 63:  # lightning
-                    sent_shields[4] = sent_shields[4] + 8
-
-                if id == 200:#jade valley
-                    sent_shields[5] = sent_shields[5] + 2
-                if id == 201:#toxic plateau
-                    sent_shields[5] = sent_shields[5] + 4
-                if id == 202:#fuckass water map
-                    sent_shields[5] = sent_shields[5] + 8
-                if id == 203:#thunder citedel
-                    sent_shields[5] = sent_shields[5] + 16
-                if id == 204:#desolate twilight
-                    sent_shields[5] = sent_shields[5] + 32
-                if id == 205:#frigid mountain
-                    sent_shields[5] = sent_shields[5] + 64
-                if id == 206:#orbital hangar
-                    sent_shields[5] = sent_shields[5] + 128
-                if id == 207:#sapphire falls
-                    sent_shields[6] = sent_shields[6] + 1
-                if id == 208:#diamond blizzard
-                    sent_shields[6] = sent_shields[6] + 2
-                if id == 209:#Celestial Sanctuary
-                    sent_shields[6] = sent_shields[6] + 4
-                if id == 210:#frost columns
-                    sent_shields[6] = sent_shields[6] + 8
-                if id == 211:#Meadow Match Zone
-                    sent_shields[6] = sent_shields[6] + 16
-                if id == 212:#granite lake
-                    sent_shields[6] = sent_shields[6] + 32
-                if id == 213:#summit showdown
-                    sent_shields[6] = sent_shields[6] + 64
-                if id == 214:#Silver Shiver
-                    sent_shields[6] = sent_shields[6] + 128
-                if id == 215:#uncharted badlands
-                    sent_shields[7] = sent_shields[7] + 1
-                if id == 216:#Pristine Shores
-                    sent_shields[7] = sent_shields[7] + 2
-                if id == 217:#crystalline heights
-                    sent_shields[7] = sent_shields[7] + 4
-                if id == 218:#starlit warehouse
-                    sent_shields[7] = sent_shields[7] + 8
-                if id == 219:#fuckass space map
-                    sent_shields[7] = sent_shields[7] + 16
-                if id == 220:#airborne temple
-                    sent_shields[7] = sent_shields[7] + 32
                 if id == 55:#sonic
-                    sent_shields[7] = sent_shields[7] + 64
+                    received_bytes[5] = received_bytes[5] | 8
+                if id == 50:  # tails
+                    received_bytes[5] = received_bytes[5] | 16
+                if id == 51:  # knuckles
+                    received_bytes[5] = received_bytes[5] | 32
+                if id == 53:  # fang
+                    received_bytes[5] = received_bytes[5] | 64
+                if id == 52:  # amy
+                    received_bytes[5] = received_bytes[5] | 128
+                if id == 54:  # metal sonic
+                    received_bytes[6] = received_bytes[6] | 1
 
 
+                if id == 56:  # whirlwind
+                    received_bytes[6] = received_bytes[6] | 2
+                if id == 57:  # armageddon
+                    received_bytes[6] = received_bytes[6] | 4
+                if id == 58:  # elemental
+                    received_bytes[6] = received_bytes[6] | 8
+                if id == 59:  # attraction
+                    received_bytes[6] = received_bytes[6] | 16
+                if id == 60:  # force
+                    received_bytes[6] = received_bytes[6] | 32
+                if id == 61:  # flame
+                    received_bytes[6] = received_bytes[6] | 64
+                if id == 62:  # bubble
+                    received_bytes[6] = received_bytes[6] | 128
+                if id == 63:  # lightning
+                    received_bytes[7] = received_bytes[7] | 1
+
+
+                if id == 100: #paraloop
+                    received_bytes[7] = received_bytes[7] | 2
+                if id == 101: #night helper
+                    received_bytes[7] = received_bytes[7] | 4
+                if id == 102: #link freeze
+                    received_bytes[7] = received_bytes[7] | 8
+                if id == 103: #extra time
+                    received_bytes[7] = received_bytes[7] | 16
+                if id == 104: #drill refill
+                    received_bytes[7] = received_bytes[7] | 32
+
+                # #match map flags
+                if id == 200:#jade valley
+                    received_bytes[7] = received_bytes[7] | 64
+                if id == 201:#toxic plateau
+                    received_bytes[7] = received_bytes[7] | 128
+                if id == 202:#fuckass water map
+                    received_bytes[8] = received_bytes[8] | 1
+                if id == 203:#thunder citedel
+                    received_bytes[8] = received_bytes[8] | 2
+                if id == 204:#desolate twilight
+                    received_bytes[8] = received_bytes[8] | 4
+                if id == 205:#frigid mountain
+                    received_bytes[8] = received_bytes[8] | 8
+                if id == 206:#orbital hangar
+                    received_bytes[8] = received_bytes[8] | 16
+                if id == 207:#sapphire falls
+                    received_bytes[8] = received_bytes[8] | 32
+                if id == 208:#diamond blizzard
+                    received_bytes[8] = received_bytes[8] | 64
+                if id == 209:#Celestial Sanctuary
+                    received_bytes[8] = received_bytes[8] | 128
+                if id == 210:#frost columns
+                    received_bytes[9] = received_bytes[9] | 1
+                if id == 211:#Meadow Match Zone
+                    received_bytes[9] = received_bytes[9] | 2
+                if id == 212:#granite lake
+                    received_bytes[9] = received_bytes[9] | 4
+                if id == 213:#summit showdown
+                    received_bytes[9] = received_bytes[9] | 8
+                if id == 214:#Silver Shiver
+                    received_bytes[9] = received_bytes[9] | 16
+                if id == 215:#uncharted badlands
+                    received_bytes[9] = received_bytes[9] | 32
+                if id == 216:#Pristine Shores
+                    received_bytes[9] = received_bytes[9] | 64
+                if id == 217:#crystalline heights
+                    received_bytes[9] = received_bytes[9] | 128
+                if id == 218:#starlit warehouse
+                    received_bytes[10] = received_bytes[10] | 1
+                if id == 219:#fuckass space map
+                    received_bytes[10] = received_bytes[10] | 2
+                if id == 220:#airborne temple
+                    received_bytes[10] = received_bytes[10] | 4
+                if id == 150:#zoom tubes
+                    received_bytes[10] = received_bytes[10] | 8
+                if id == 151:#Rope hangs
+                    received_bytes[10] = received_bytes[10] | 16
+                if id == 152:#swinging maces
+                    received_bytes[10] = received_bytes[10] | 32
+                if id == 153:#minecarts
+                    received_bytes[10] = received_bytes[10] | 64
+                if id == 154:#rollout rocks
+                    received_bytes[10] = received_bytes[10] | 128
+                if id == 155:#gargoyle statues
+                    received_bytes[11] = received_bytes[11] | 1
+                if id == 156:#air bubbles
+                    received_bytes[11] = received_bytes[11] | 2
+                if id == 157:#Buoyant Slime
+                    received_bytes[11] = received_bytes[11] | 4
+                if id == 158:#dust devils
+                    received_bytes[11] = received_bytes[11] | 8
+                if id == 159:#yellow springs
+                    received_bytes[11] = received_bytes[11] | 16
+                if id == 160:#red springs
+                    received_bytes[11] = received_bytes[11] | 32
+                if id == 161:#blue springs
+                    received_bytes[11] = received_bytes[11] | 64
+
+                #received_bytes[11] = received_bytes[11] | 128 #deathlink toggle
                 locs_received.append(id)
-            if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems) and 17 not in locs_received:
-                locs_received.append(17)
-                final_write[0] = final_write[0] + 128
+            if (ctx.bcz_emblems > 0 and emblems >= ctx.bcz_emblems):
+                if not ctx.actsanity and 17 not in locs_received:
+                    locs_received.append(17)
+                    received_bytes[2] = received_bytes[2] | 32
+                    received_bytes[2] = received_bytes[2] | 64
+                    received_bytes[2] = received_bytes[2] | 128
+                if ctx.actsanity and 128 not in locs_received:
+                    received_bytes[2] = received_bytes[2] | 128
+
             # this would be so much better if i made a list of everything and then wrote it to the file all at once
             if ctx.matchmaps:
-                sent_shields[5] = sent_shields[5] | 1
+                received_bytes[11] = received_bytes[11] | 128
             if ctx.death_link:
-                sent_shields[7] = sent_shields[7] | 128
+                received_bytes[2] = received_bytes[2] | 16
             f.seek(0x14)
             if emblemhints >= 2:
                 emblemhints = 3 #bits 1 and 2 set
@@ -598,12 +713,8 @@ async def item_handler(ctx, file_path):
                 f.write(0x7F.to_bytes(2, byteorder="little"))  # this sucks
 
             f.seek(0x03)
-            f.write(bytes(sent_shields))
-            for i in range(len(final_write)):
-                if final_write[i] > 255:
-                    final_write[i] = 255
-            f.seek(0x0B)
-            f.write(bytes(final_write))  # TODO change to only write on startup, file close, or new item received
+            f.write(bytes(received_bytes))
+            # TODO change to only write on startup, file close, or new item received
             f.seek(0x15)
             f.write(emblems.to_bytes(1, byteorder="little"))
             f.seek(0x16)
@@ -999,15 +1110,15 @@ async def file_watcher(ctx, file_path):
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v152.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v160.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v152.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v160.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v152.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v160.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 

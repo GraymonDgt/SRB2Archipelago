@@ -33,16 +33,6 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     regCredits = create_region("Credits", player, world)
     create_locs(regCredits,"Good Ending")
 
-    regATZC = create_region("Azure Temple Club", player, world)
-    create_locs(regATZC, "Azure Temple Club Emblem")
-    if options.oneup_sanity:
-        create_locs(regATZC,"Azure Temple Monitor - Near Club Emblem 1",
-        "Azure Temple Monitor - Near Club Emblem 2",
-        "Azure Temple Monitor - Near Club Emblem 3")
-
-    if options.oneup_sanity:
-        regDSFD = create_region("Deep Sea Fast Door", player, world)
-        create_locs(regDSFD, "Deep Sea (Act 1) Monitor - Behind Fast Closing Door 1","Deep Sea (Act 1) Monitor - Behind Fast Closing Door 2")
 
 
     if options.match_maps:
@@ -91,56 +81,78 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
 
 
 
-    regGFZ = create_region("Greenflower Zone", player, world)
-    create_locs(regGFZ, "Greenflower (Act 1) Star Emblem", "Greenflower (Act 1) Spade Emblem","Greenflower (Act 1) Heart Emblem", "Greenflower (Act 1) Diamond Emblem",
-                        "Greenflower (Act 1) Club Emblem","Greenflower (Act 2) Star Emblem", "Greenflower (Act 2) Spade Emblem","Greenflower (Act 2) Heart Emblem", "Greenflower (Act 2) Diamond Emblem",
-                        "Greenflower (Act 2) Club Emblem","Greenflower (Act 1) Clear","Greenflower (Act 2) Clear","Greenflower (Act 3) Clear","Greenflower (Act 1) Emerald Token - Breakable Wall Near Bridge",
-                "Greenflower (Act 1) Emerald Token - Midair Top Path","Greenflower (Act 2) Emerald Token - Main Path Cave","Greenflower (Act 2) Emerald Token - Under Bridge Near End",
+    regGFZ1 = create_region("Greenflower Zone 1", player, world)
+    regGFZ2 = create_region("Greenflower Zone 2", player, world)
+    regGFZ3 = create_region("Greenflower Zone 3", player, world)
+
+    create_locs(regGFZ1, "Greenflower (Act 1) Star Emblem", "Greenflower (Act 1) Spade Emblem","Greenflower (Act 1) Heart Emblem",
+                "Greenflower (Act 1) Diamond Emblem","Greenflower (Act 1) Club Emblem","Greenflower (Act 1) Clear",
+                "Greenflower (Act 1) Emerald Token - Breakable Wall Near Bridge","Greenflower (Act 1) Emerald Token - Midair Top Path")
+    create_locs(regGFZ2,"Greenflower (Act 2) Star Emblem", "Greenflower (Act 2) Spade Emblem", "Greenflower (Act 2) Heart Emblem",
+                "Greenflower (Act 2) Diamond Emblem","Greenflower (Act 2) Club Emblem","Greenflower (Act 2) Clear",
+                "Greenflower (Act 2) Emerald Token - Main Path Cave","Greenflower (Act 2) Emerald Token - Under Bridge Near End",
                 "Greenflower (Act 2) Emerald Token - No Spin High on Ledge")
+    create_locs(regGFZ3,"Greenflower (Act 3) Clear")
     if options.time_emblems:
-        create_locs(regGFZ, "Greenflower (Act 1) Time Emblem","Greenflower (Act 2) Time Emblem","Greenflower (Act 3) Time Emblem")
+        create_locs(regGFZ1, "Greenflower (Act 1) Time Emblem")
+        create_locs(regGFZ2, "Greenflower (Act 2) Time Emblem")
+        create_locs(regGFZ3, "Greenflower (Act 3) Time Emblem")
     if options.ring_emblems:
-        create_locs(regGFZ, "Greenflower (Act 1) Ring Emblem","Greenflower (Act 2) Ring Emblem")
+        create_locs(regGFZ1, "Greenflower (Act 1) Ring Emblem")
+        create_locs(regGFZ2, "Greenflower (Act 2) Ring Emblem")
     if options.score_emblems:
-        create_locs(regGFZ, "Greenflower (Act 3) Score Emblem")
+        create_locs(regGFZ3, "Greenflower (Act 3) Score Emblem")
+
     if options.oneup_sanity:
-        create_locs(regGFZ,"Greenflower (Act 1) Monitor - Upper Spin Path in Cave","Greenflower (Act 1) Monitor - Single Pillar Near End","Greenflower (Act 1) Monitor - Highest Ledge","Greenflower (Act 2) Monitor - Breakable Floor Near Springs 1",
-        "Greenflower (Act 2) Monitor - Open Area Behind Checkered Pillar","Greenflower (Act 2) Monitor - Skylight in 2nd Cave","Greenflower (Act 2) Monitor - Fenced Flower Ledge","Greenflower (Act 2) Monitor - Near Star Emblem 1",
-        "Greenflower (Act 2) Monitor - Waterfall Top Near Start","Greenflower (Act 2) Monitor - Pillar Next to End","Greenflower (Act 2) Monitor - High Ledge After Final Cave","Greenflower (Act 2) Monitor - Inside Fence Above Start")
+        create_locs(regGFZ1,"Greenflower (Act 1) Monitor - Upper Spin Path in Cave","Greenflower (Act 1) Monitor - Single Pillar Near End","Greenflower (Act 1) Monitor - Highest Ledge")
+        create_locs(regGFZ2,"Greenflower (Act 2) Monitor - Breakable Floor Near Springs 1","Greenflower (Act 2) Monitor - Open Area Behind Checkered Pillar", "Greenflower (Act 2) Monitor - Skylight in 2nd Cave",
+        "Greenflower (Act 2) Monitor - Fenced Flower Ledge", "Greenflower (Act 2) Monitor - Near Star Emblem 1","Greenflower (Act 2) Monitor - Waterfall Top Near Start",
+        "Greenflower (Act 2) Monitor - Pillar Next to End", "Greenflower (Act 2) Monitor - High Ledge After Final Cave", "Greenflower (Act 2) Monitor - Inside Fence Above Start")
     if options.superring_sanity:
-        create_locs(regGFZ,"Greenflower (Act 1) Monitor - Lake Side Path on Ledge","Greenflower (Act 1) Monitor - Spin Path Entrance","Greenflower (Act 1) Monitor - Alcove Near Bridges 2",
+        create_locs(regGFZ1,"Greenflower (Act 1) Monitor - Lake Side Path on Ledge","Greenflower (Act 1) Monitor - Spin Path Entrance","Greenflower (Act 1) Monitor - Alcove Near Bridges 2",
         "Greenflower (Act 1) Monitor - First Pillar","Greenflower (Act 1) Monitor - Across High Bridge in Flowers","Greenflower (Act 1) Monitor - High Ledge After Cave","Greenflower (Act 1) Monitor - Alcove Near Bridges 1",
         "Greenflower (Act 1) Monitor - Lake Alcove Near End","Greenflower (Act 1) Monitor - Spring Pillar Near End 1","Greenflower (Act 1) Monitor - Behind Bars in Cave","Greenflower (Act 1) Monitor - Behind Bushes Upper Path",
-        "Greenflower (Act 1) Monitor - Spring Pillar Near End 2","Greenflower (Act 2) Monitor - Main Path Springs","Greenflower (Act 2) Monitor - Very High Alcove 1","Greenflower (Act 2) Monitor - Very High Alcove 2",
-        "Greenflower (Act 2) Monitor - Very High Alcove 3","Greenflower (Act 2) Monitor - Very High Alcove 4","Greenflower (Act 2) Monitor - Very High Alcove 5","Greenflower (Act 2) Monitor - Very High Alcove 6",
-        "Greenflower (Act 2) Monitor - Very High Alcove 7","Greenflower (Act 2) Monitor - Very High Alcove 8","Greenflower (Act 2) Monitor - Spade Emblem Cave 1","Greenflower (Act 2) Monitor - Spade Emblem Cave 2",
-        "Greenflower (Act 2) Monitor - Spade Emblem Cave 3","Greenflower (Act 2) Monitor - In Fences Near Picnic","Greenflower (Act 2) Monitor - Log on Final Path","Greenflower (Act 2) Monitor - Near Springs Before End",
-        "Greenflower (Act 2) Monitor - Square Pillar Before Big Ramp","Greenflower (Act 2) Monitor - Behind Bush Near Start","Greenflower (Act 2) Monitor - Wall Under High Alcove","Greenflower (Act 2) Monitor - No Spin Inside Spikes",
-        "Greenflower (Act 2) Monitor - Open Area on Ledge","Greenflower (Act 2) Monitor - High Path River","Greenflower (Act 2) Monitor - Spin Path Red Springs")
+        "Greenflower (Act 1) Monitor - Spring Pillar Near End 2")
 
+        create_locs(regGFZ2,"Greenflower (Act 2) Monitor - Main Path Springs", "Greenflower (Act 2) Monitor - Very High Alcove 1", "Greenflower (Act 2) Monitor - Very High Alcove 2",
+        "Greenflower (Act 2) Monitor - Very High Alcove 3", "Greenflower (Act 2) Monitor - Very High Alcove 4", "Greenflower (Act 2) Monitor - Very High Alcove 5", "Greenflower (Act 2) Monitor - Very High Alcove 6",
+        "Greenflower (Act 2) Monitor - Very High Alcove 7", "Greenflower (Act 2) Monitor - Very High Alcove 8", "Greenflower (Act 2) Monitor - Spade Emblem Cave 1", "Greenflower (Act 2) Monitor - Spade Emblem Cave 2",
+        "Greenflower (Act 2) Monitor - Spade Emblem Cave 3", "Greenflower (Act 2) Monitor - In Fences Near Picnic", "Greenflower (Act 2) Monitor - Log on Final Path", "Greenflower (Act 2) Monitor - Near Springs Before End",
+        "Greenflower (Act 2) Monitor - Square Pillar Before Big Ramp", "Greenflower (Act 2) Monitor - Behind Bush Near Start", "Greenflower (Act 2) Monitor - Wall Under High Alcove", "Greenflower (Act 2) Monitor - No Spin Inside Spikes",
+        "Greenflower (Act 2) Monitor - Open Area on Ledge", "Greenflower (Act 2) Monitor - High Path River", "Greenflower (Act 2) Monitor - Spin Path Red Springs")
 
-    regTHZ = create_region("Techno Hill Zone", player, world)
-    create_locs(regTHZ, "Techno Hill (Act 1) Star Emblem", "Techno Hill (Act 1) Spade Emblem","Techno Hill (Act 1) Heart Emblem", "Techno Hill (Act 1) Diamond Emblem",
-                        "Techno Hill (Act 1) Club Emblem","Techno Hill (Act 2) Star Emblem", "Techno Hill (Act 2) Spade Emblem","Techno Hill (Act 2) Heart Emblem", "Techno Hill (Act 2) Diamond Emblem",
-                        "Techno Hill (Act 2) Club Emblem","Techno Hill (Act 1) Clear","Techno Hill (Act 2) Clear","Techno Hill (Act 3) Clear","Techno Hill (Act 1) Emerald Token - On Pipes",
-                "Techno Hill (Act 1) Emerald Token - Alt Path Under Slime","Techno Hill (Act 2) Emerald Token - Deep in Slime","Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack")
+    regTHZ1 = create_region("Techno Hill Zone 1", player, world)
+    regTHZ2 = create_region("Techno Hill Zone 2", player, world)
+    regTHZ2M = create_region("Techno Hill Zone 2 Main", player, world)
+    regTHZ3 = create_region("Techno Hill Zone 3", player, world)
+
+    create_locs(regTHZ1, "Techno Hill (Act 1) Star Emblem", "Techno Hill (Act 1) Spade Emblem","Techno Hill (Act 1) Heart Emblem", "Techno Hill (Act 1) Diamond Emblem",
+                        "Techno Hill (Act 1) Club Emblem","Techno Hill (Act 1) Clear","Techno Hill (Act 1) Emerald Token - On Pipes","Techno Hill (Act 1) Emerald Token - Alt Path Under Slime")
+    create_locs(regTHZ2M,"Techno Hill (Act 2) Star Emblem", "Techno Hill (Act 2) Spade Emblem", "Techno Hill (Act 2) Heart Emblem", "Techno Hill (Act 2) Diamond Emblem",
+    "Techno Hill (Act 2) Club Emblem","Techno Hill (Act 2) Clear","Techno Hill (Act 2) Emerald Token - Deep in Slime","Techno Hill (Act 2) Emerald Token - Knuckles Path Backtrack")
+    create_locs(regTHZ3,"Techno Hill (Act 3) Clear")
     if options.time_emblems:
-        create_locs(regTHZ, "Techno Hill (Act 1) Time Emblem","Techno Hill (Act 2) Time Emblem","Techno Hill (Act 3) Time Emblem")
+        create_locs(regTHZ1, "Techno Hill (Act 1) Time Emblem")
+        create_locs(regTHZ2M, "Techno Hill (Act 2) Time Emblem")
+        create_locs(regTHZ3, "Techno Hill (Act 3) Time Emblem")
+
     if options.ring_emblems:
-        create_locs(regTHZ, "Techno Hill (Act 1) Ring Emblem","Techno Hill (Act 2) Ring Emblem")
+        create_locs(regTHZ1, "Techno Hill (Act 1) Ring Emblem")
+        create_locs(regTHZ2M, "Techno Hill (Act 2) Ring Emblem")
     if options.score_emblems:
-        create_locs(regTHZ, "Techno Hill (Act 3) Score Emblem")
+        create_locs(regTHZ3, "Techno Hill (Act 3) Score Emblem")
     if options.oneup_sanity:
-        create_locs(regTHZ,
+        create_locs(regTHZ1,
         "Techno Hill (Act 1) Monitor - Spin Under Conveyor Belt Door","Techno Hill (Act 1) Monitor - Knuckles Path Highest Ledge","Techno Hill (Act 1) Monitor - In Slime Above Spade Emblem",
         "Techno Hill (Act 1) Monitor - Spring Shell Pipe Challenge","Techno Hill (Act 1) Monitor - Pipe Room High Corner","Techno Hill (Act 1) Monitor - Top of Elevator Shaft","Techno Hill (Act 1) Monitor - Deep in Slime Near 2nd Checkpoint",
-        "Techno Hill (Act 1) Monitor - Outside Pipe Room High Ledge","Techno Hill (Act 1) Monitor - High Ledge in Hole Near Start","Techno Hill (Act 2) Monitor - Under Slime Before 2nd Checkpoint",
+        "Techno Hill (Act 1) Monitor - Outside Pipe Room High Ledge","Techno Hill (Act 1) Monitor - High Ledge in Hole Near Start")
+        create_locs(regTHZ2M,"Techno Hill (Act 2) Monitor - Under Slime Before 2nd Checkpoint",
         "Techno Hill (Act 2) Monitor - High Ledge Outside 1","Techno Hill (Act 2) Monitor - Near Spade Emblem","Techno Hill (Act 2) Monitor - Large Jump Into Slime C",
         "Techno Hill (Act 2) Monitor - Near Detons on Pillar","Techno Hill (Act 2) Monitor - Behind Glass Piston Path","Techno Hill (Act 2) Monitor - Knuckles Path Under Spiked Hallway",
         "Techno Hill (Act 2) Monitor - Egg Corp Cavity Under Slime","Techno Hill (Act 2) Monitor - Pillar Before End","Techno Hill (Act 2) Monitor - Egg Corp Deep in Slime",
         "Techno Hill (Act 2) Monitor - Near Amy Emerald Token","Techno Hill (Act 2) Monitor - Tall Pillar Outside Glass")
     if options.superring_sanity:
-        create_locs(regTHZ,"Techno Hill (Act 1) Monitor - Crate on Large Slime Lake",
+        create_locs(regTHZ1,"Techno Hill (Act 1) Monitor - Crate on Large Slime Lake",
         "Techno Hill (Act 1) Monitor - Upper Path in Alcove","Techno Hill (Act 1) Monitor - On Pipe Outside Pipe Room","Techno Hill (Act 1) Monitor - Alt Path on Ledge 1","Techno Hill (Act 1) Monitor - Low Ledge Before Pipe Room",
         "Techno Hill (Act 1) Monitor - Pipe Room on Ground","Techno Hill (Act 1) Monitor - Knuckles Path Behind Pipe","Techno Hill (Act 1) Monitor - Deep in Slime Towards Factory","Techno Hill (Act 1) Monitor - Knuckles Path on Ledge",
         "Techno Hill (Act 1) Monitor - Knuckles Path High Ledge","Techno Hill (Act 1) Monitor - First Factory Back Ledge","Techno Hill (Act 1) Monitor - End of Knuckles Path in Flowers","Techno Hill (Act 1) Monitor - Knuckles Path on Pipes",
@@ -149,14 +161,19 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Techno Hill (Act 1) Monitor - Breakable Wall Ledge","Techno Hill (Act 1) Monitor - High Above Slime Lake 2","Techno Hill (Act 1) Monitor - Yellow Springs Near Start","Techno Hill (Act 1) Monitor - Upper Path on Ledge",
         "Techno Hill (Act 1) Monitor - Upper Path Spring Corner","Techno Hill (Act 1) Monitor - First Factory in Slime","Techno Hill (Act 1) Monitor - Alt Path on Ledge 2","Techno Hill (Act 1) Monitor - In First Slime River",
         "Techno Hill (Act 1) Monitor - Deep in 2nd Slime River","Techno Hill (Act 1) Monitor - Upper Path Around Corner","Techno Hill (Act 1) Monitor - Highest Ledge Above Slime Lake","Techno Hill (Act 1) Monitor - Alt Path on Pillar",
-        "Techno Hill (Act 2) Monitor - Knuckles Path Exit 1","Techno Hill (Act 2) Monitor - Knuckles Path Exit 2","Techno Hill (Act 2) Monitor - Barricade Path Under 1st Conveyor",
+        "Techno Hill (Act 2) Monitor - Knuckles Path Exit 1","Techno Hill (Act 2) Monitor - Knuckles Path Exit 2")
+
+        create_locs(regTHZ2,
+        "Techno Hill (Act 2) Monitor - Knuckles Path Before Diagonal Conveyors","Techno Hill (Act 2) Monitor - Behind Breakable Wall Near Start")
+
+        create_locs(regTHZ2M,"Techno Hill (Act 2) Monitor - Barricade Path Under 1st Conveyor",
         "Techno Hill (Act 2) Monitor - Barricade Path End Ledge 1","Techno Hill (Act 2) Monitor - Barricade Path Cavity 1st Checkpoint","Techno Hill (Act 2) Monitor - Knuckles Path Metal Pillar",
         "Techno Hill (Act 2) Monitor - High Ledge Outside 2","Techno Hill (Act 2) Monitor - High Ledge Outside 3","Techno Hill (Act 2) Monitor - Piston Room High Ledge 1",
         "Techno Hill (Act 2) Monitor - Piston Room High Ledge 2","Techno Hill (Act 2) Monitor - Large Jump Into Slime S", "Techno Hill (Act 2) Monitor - Barricade Path End Ledge 2",
         "Techno Hill (Act 2) Monitor - Large Jump Into Slime W","Techno Hill (Act 2) Monitor - Outside Heart Emblem Door","Techno Hill (Act 2) Monitor - Large Jump Into Slime N",
-        "Techno Hill (Act 2) Monitor - Knuckles Path Before Diagonal Conveyors","Techno Hill (Act 2) Monitor - Behind Crates After 3rd Checkpoint","Techno Hill (Act 2) Monitor - Final Room Cavity in Pillar",
+        "Techno Hill (Act 2) Monitor - Behind Crates After 3rd Checkpoint","Techno Hill (Act 2) Monitor - Final Room Cavity in Pillar",
         "Techno Hill (Act 2) Monitor - Before Detons Behind Crates","Techno Hill (Act 2) Monitor - Near Heart Emblem 1","Techno Hill (Act 2) Monitor - Deton Room Behind Crate",
-        "Techno Hill (Act 2) Monitor - Near Heart Emblem 2","Techno Hill (Act 2) Monitor - Behind Breakable Wall Near Start","Techno Hill (Act 2) Monitor - Egg Corp High Glass Platform",
+        "Techno Hill (Act 2) Monitor - Near Heart Emblem 2","Techno Hill (Act 2) Monitor - Egg Corp High Glass Platform",
         "Techno Hill (Act 2) Monitor - Egg Corp Upper Cavity Around Corner","Techno Hill (Act 2) Monitor - Egg Corp Under Slime W","Techno Hill (Act 2) Monitor - Egg Corp Under Slime E",
         "Techno Hill (Act 2) Monitor - Egg Corp Under Slime N","Techno Hill (Act 2) Monitor - Egg Corp Under Slime S","Techno Hill (Act 2) Monitor - After Turret Room Under Slime",
         "Techno Hill (Act 2) Monitor - Large Jump Into Slime E","Techno Hill (Act 2) Monitor - Near Club Emblem 1","Techno Hill (Act 2) Monitor - Near Club Emblem 2",
@@ -164,35 +181,47 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Techno Hill (Act 2) Monitor - Barricade Path on Crate","Techno Hill (Act 2) Monitor - Near Heart Emblem 3","Techno Hill (Act 2) Monitor - Final Room Behind Pipe",
         "Techno Hill (Act 2) Monitor - Near Diamond Emblem 1","Techno Hill (Act 2) Monitor - Near Diamond Emblem 2")
 
-    regDSZ = create_region("Deep Sea Zone", player, world)
-    create_locs(regDSZ, "Deep Sea (Act 1) Star Emblem", "Deep Sea (Act 1) Spade Emblem","Deep Sea (Act 1) Heart Emblem", "Deep Sea (Act 1) Diamond Emblem",
-                        "Deep Sea (Act 1) Club Emblem","Deep Sea (Act 2) Star Emblem", "Deep Sea (Act 2) Spade Emblem","Deep Sea (Act 2) Heart Emblem", "Deep Sea (Act 2) Diamond Emblem",
-                        "Deep Sea (Act 2) Club Emblem","Deep Sea (Act 1) Clear","Deep Sea (Act 2) Clear","Deep Sea (Act 3) Clear","Deep Sea (Act 1) Emerald Token - V on Right Path",
-                "Deep Sea (Act 1) Emerald Token - Underwater Air Pocket on Right Path","Deep Sea (Act 1) Emerald Token - Yellow Doors",
-    "Deep Sea (Act 1) Emerald Token - Large Underwater Curve", "Deep Sea (Act 1) Emerald Token - Waterslide Gargoyles", "Deep Sea (Act 2) Emerald Token - Near Heart Emblem",
-    "Deep Sea (Act 2) Emerald Token - Red and Yellow Springs", "Deep Sea (Act 2) Emerald Token - Down Right From Goal", "Deep Sea (Act 2) Emerald Token - No Spin Spring Turnaround")
+    regDSZ1 = create_region("Deep Sea Zone 1", player, world)
+    regDSZ2 = create_region("Deep Sea Zone 2", player, world)
+    regDSZ3 = create_region("Deep Sea Zone 3", player, world)
+
+    create_locs(regDSZ1, "Deep Sea (Act 1) Star Emblem", "Deep Sea (Act 1) Spade Emblem","Deep Sea (Act 1) Heart Emblem", "Deep Sea (Act 1) Diamond Emblem","Deep Sea (Act 1) Club Emblem",
+                        "Deep Sea (Act 1) Clear","Deep Sea (Act 1) Emerald Token - V on Right Path","Deep Sea (Act 1) Emerald Token - Underwater Air Pocket on Right Path",
+                    "Deep Sea (Act 1) Emerald Token - Yellow Doors","Deep Sea (Act 1) Emerald Token - Large Underwater Curve", "Deep Sea (Act 1) Emerald Token - Waterslide Gargoyles")
+    create_locs(regDSZ2, "Deep Sea (Act 2) Star Emblem", "Deep Sea (Act 2) Spade Emblem", "Deep Sea (Act 2) Heart Emblem", "Deep Sea (Act 2) Diamond Emblem",
+                            "Deep Sea (Act 2) Club Emblem","Deep Sea (Act 2) Clear", "Deep Sea (Act 2) Emerald Token - Near Heart Emblem",
+                            "Deep Sea (Act 2) Emerald Token - Red and Yellow Springs", "Deep Sea (Act 2) Emerald Token - Down Right From Goal", "Deep Sea (Act 2) Emerald Token - No Spin Spring Turnaround")
+    create_locs(regDSZ3,"Deep Sea (Act 3) Clear")
     if options.time_emblems:
-        create_locs(regDSZ, "Deep Sea (Act 1) Time Emblem","Deep Sea (Act 2) Time Emblem","Deep Sea (Act 3) Time Emblem")
+        create_locs(regDSZ1, "Deep Sea (Act 1) Time Emblem")
+        create_locs(regDSZ2,"Deep Sea (Act 2) Time Emblem")
+        create_locs(regDSZ3,"Deep Sea (Act 3) Time Emblem")
     if options.ring_emblems:
-        create_locs(regDSZ, "Deep Sea (Act 1) Ring Emblem","Deep Sea (Act 2) Ring Emblem")
+        create_locs(regDSZ1, "Deep Sea (Act 1) Ring Emblem")
+        create_locs(regDSZ2,"Deep Sea (Act 2) Ring Emblem")
     if options.score_emblems:
-        create_locs(regDSZ, "Deep Sea (Act 3) Score Emblem")
+        create_locs(regDSZ3, "Deep Sea (Act 3) Score Emblem")
     if options.oneup_sanity:
-        create_locs(regDSZ,"Deep Sea (Act 1) Monitor - Join Right Lower Route Underwater Around Corner","Deep Sea (Act 1) Monitor - Right Lower Route Sloped Ledge",
+        create_locs(regDSZ1,"Deep Sea (Act 1) Monitor - Join Right Lower Route Underwater Around Corner","Deep Sea (Act 1) Monitor - Right Lower Route Sloped Ledge",
         "Deep Sea (Act 1) Monitor - Heart Emblem Backtrack to Club 1","Deep Sea (Act 1) Monitor - Underwater Pillar Button 1","Deep Sea (Act 1) Monitor - Near Waterslide Emerald Token",
         "Deep Sea (Act 1) Monitor - Purple Switch","Deep Sea (Act 1) Monitor - Left Path Tall Pillar After Waterslides","Deep Sea (Act 1) Monitor - Right Path Under Hidden Elevator",
         "Deep Sea (Act 1) Monitor - Waterfall Cave Opposite Spade Emblem","Deep Sea (Act 1) Monitor - Heart Emblem Backtrack to Club 2","Deep Sea (Act 1) Monitor - Broken Wall Near End",
         "Deep Sea (Act 1) Monitor - Yellow Switch","Deep Sea (Act 1) Monitor - Behind Fast Closing Door 1","Deep Sea (Act 1) Monitor - Behind Fast Closing Door 2",
         "Deep Sea (Act 1) Monitor - Left Path Waterfall Cave","Deep Sea (Act 1) Monitor - Near Diamond Emblem","Deep Sea (Act 1) Monitor - Right Right Subpath Breakable Wall Between Columns",
-        "Deep Sea (Act 1) Monitor - Left Path Behind Cyan Door","Deep Sea (Act 1) Monitor - Waterslide Hidden Spring Room","Deep Sea (Act 2) Monitor - Spindash Fast Door 1",
-        "Deep Sea (Act 2) Monitor - Gargoyle Path Wall Under Oval Platform","Deep Sea (Act 2) Monitor - Spindash Fast Door 2","Deep Sea (Act 2) Monitor - Knuckles Path Dark High Ledge",
-        "Deep Sea (Act 2) Monitor - Knuckles Path Crushing Ceiling","Deep Sea (Act 2) Monitor - Left Ledge Near End","Deep Sea (Act 2) Monitor - Gargoyle Path Underwater Crack Behind Plants",
-        "Deep Sea (Act 2) Monitor - Near Club Emblem","Deep Sea (Act 2) Monitor - Gargoyle Path Inside 3rd Column","Deep Sea (Act 2) Monitor - Gargoyle Path Behind Periodic Waterfall",
-        "Deep Sea (Act 2) Monitor - Main Path Roll Down Ramp Into Breakable Wall","Deep Sea (Act 2) Monitor - Gargoyle Path Spiked Cliff Top","Deep Sea (Act 2) Monitor - Waterslide Fail 2nd Jump",
-        "Deep Sea (Act 2) Monitor - Waterslide Avoid Wall Spikes","Deep Sea (Act 2) Monitor - Spindash Fast Door 3")
+        "Deep Sea (Act 1) Monitor - Left Path Behind Cyan Door","Deep Sea (Act 1) Monitor - Waterslide Hidden Spring Room","Deep Sea (Act 1) Monitor - Behind Fast Closing Door 1",
+        "Deep Sea (Act 1) Monitor - Behind Fast Closing Door 2")
+
+        create_locs(regDSZ2,"Deep Sea (Act 2) Monitor - Spindash Fast Door 1",
+        "Deep Sea (Act 2) Monitor - Gargoyle Path Wall Under Oval Platform", "Deep Sea (Act 2) Monitor - Spindash Fast Door 2", "Deep Sea (Act 2) Monitor - Knuckles Path Dark High Ledge",
+        "Deep Sea (Act 2) Monitor - Knuckles Path Crushing Ceiling", "Deep Sea (Act 2) Monitor - Left Ledge Near End", "Deep Sea (Act 2) Monitor - Gargoyle Path Underwater Crack Behind Plants",
+        "Deep Sea (Act 2) Monitor - Near Club Emblem", "Deep Sea (Act 2) Monitor - Gargoyle Path Inside 3rd Column", "Deep Sea (Act 2) Monitor - Gargoyle Path Behind Periodic Waterfall",
+        "Deep Sea (Act 2) Monitor - Main Path Roll Down Ramp Into Breakable Wall", "Deep Sea (Act 2) Monitor - Gargoyle Path Spiked Cliff Top", "Deep Sea (Act 2) Monitor - Waterslide Fail 2nd Jump",
+        "Deep Sea (Act 2) Monitor - Waterslide Avoid Wall Spikes", "Deep Sea (Act 2) Monitor - Spindash Fast Door 3")
+
+
 
     if options.superring_sanity:
-        create_locs(regDSZ,"Deep Sea (Act 1) Monitor - x:15616 y:2944","Deep Sea (Act 1) Monitor - x:-3136 y:5696","Deep Sea (Act 1) Monitor - x:8704 y:3168",
+        create_locs(regDSZ1,"Deep Sea (Act 1) Monitor - x:15616 y:2944","Deep Sea (Act 1) Monitor - x:-3136 y:5696","Deep Sea (Act 1) Monitor - x:8704 y:3168",
         "Deep Sea (Act 1) Monitor - x:3904 y:-2048","Deep Sea (Act 1) Monitor - x:3648 y:-2048","Deep Sea (Act 1) Monitor - x:8576 y:3168","Deep Sea (Act 1) Monitor - x:3136 y:5216",
         "Deep Sea (Act 1) Monitor - x:12224 y:12352","Deep Sea (Act 1) Monitor - x:1536 y:3680","Deep Sea (Act 1) Monitor - x:-1952 y:7456","Deep Sea (Act 1) Monitor - x:-2016 y:7456",
         "Deep Sea (Act 1) Monitor - x:3136 y:1152","Deep Sea (Act 1) Monitor - x:2144 y:14176","Deep Sea (Act 1) Monitor - x:2144 y:13728","Deep Sea (Act 1) Monitor - x:5152 y:-2208",
@@ -200,7 +229,8 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Deep Sea (Act 1) Monitor - x:2800 y:8368","Deep Sea (Act 1) Monitor - x:10848 y:8352","Deep Sea (Act 1) Monitor - x:10432 y:2176","Deep Sea (Act 1) Monitor - x:16192 y:16640",
         "Deep Sea (Act 1) Monitor - x:-1664 y:2496","Deep Sea (Act 1) Monitor - x:15072 y:8672","Deep Sea (Act 1) Monitor - x:12368 y:13248","Deep Sea (Act 1) Monitor - x:18256 y:16272",
         "Deep Sea (Act 1) Monitor - x:704 y:12224","Deep Sea (Act 1) Monitor - x:384 y:12224","Deep Sea (Act 1) Monitor - x:12800 y:3456","Deep Sea (Act 1) Monitor - x:15136 y:2656",
-        "Deep Sea (Act 1) Monitor - x:16448 y:1696","Deep Sea (Act 1) Monitor - x:1728 y:4384","Deep Sea (Act 1) Monitor - x:160 y:14240","Deep Sea (Act 2) Monitor - x:128 y:-7264",
+        "Deep Sea (Act 1) Monitor - x:16448 y:1696","Deep Sea (Act 1) Monitor - x:1728 y:4384","Deep Sea (Act 1) Monitor - x:160 y:14240")
+        create_locs(regDSZ2,"Deep Sea (Act 2) Monitor - x:128 y:-7264",
         "Deep Sea (Act 2) Monitor - x:17408 y:-16640","Deep Sea (Act 2) Monitor - x:16576 y:7552","Deep Sea (Act 2) Monitor - x:7840 y:96","Deep Sea (Act 2) Monitor - x:18016 y:-2592",
         "Deep Sea (Act 2) Monitor - x:15040 y:-1792","Deep Sea (Act 2) Monitor - x:16176 y:-10240","Deep Sea (Act 2) Monitor - x:10528 y:5232","Deep Sea (Act 2) Monitor - x:15424 y:6080",
         "Deep Sea (Act 2) Monitor - x:4128 y:6880","Deep Sea (Act 2) Monitor - x:19872 y:-8672","Deep Sea (Act 2) Monitor - x:20736 y:-10816","Deep Sea (Act 2) Monitor - x:10792 y:-7616",
@@ -213,23 +243,34 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Deep Sea (Act 2) Monitor - x:23488 y:4736")
 
 
-    regCEZ = create_region("Castle Eggman Zone", player, world)
-    create_locs(regCEZ, "Castle Eggman (Act 1) Star Emblem", "Castle Eggman (Act 1) Spade Emblem", "Castle Eggman (Act 1) Heart Emblem", "Castle Eggman (Act 1) Diamond Emblem",
-                "Castle Eggman (Act 1) Club Emblem", "Castle Eggman (Act 2) Star Emblem", "Castle Eggman (Act 2) Spade Emblem", "Castle Eggman (Act 2) Heart Emblem", "Castle Eggman (Act 2) Diamond Emblem",
-                "Castle Eggman (Act 2) Club Emblem","Castle Eggman (Act 1) Clear","Castle Eggman (Act 2) Clear","Castle Eggman (Act 3) Clear","Castle Eggman (Act 1) Emerald Token - Behind Fence Near Start",
-    "Castle Eggman (Act 1) Emerald Token - Spring Side Path","Castle Eggman (Act 1) Emerald Token - Inside Castle","Castle Eggman (Act 2) Emerald Token - First Outside Area","Castle Eggman (Act 2) Emerald Token - Corner of Right Courtyard",
+    regCEZ1 = create_region("Castle Eggman Zone 1", player, world)
+    regCEZ2 = create_region("Castle Eggman Zone 2", player, world)
+    regCEZ3 = create_region("Castle Eggman Zone 3", player, world)
+    create_locs(regCEZ1, "Castle Eggman (Act 1) Star Emblem", "Castle Eggman (Act 1) Spade Emblem", "Castle Eggman (Act 1) Heart Emblem", "Castle Eggman (Act 1) Diamond Emblem",
+                "Castle Eggman (Act 1) Club Emblem", "Castle Eggman (Act 1) Clear","Castle Eggman (Act 1) Emerald Token - Behind Fence Near Start",
+                "Castle Eggman (Act 1) Emerald Token - Spring Side Path","Castle Eggman (Act 1) Emerald Token - Inside Castle")
+
+    create_locs(regCEZ2,"Castle Eggman (Act 2) Star Emblem", "Castle Eggman (Act 2) Spade Emblem", "Castle Eggman (Act 2) Heart Emblem", "Castle Eggman (Act 2) Diamond Emblem",
+    "Castle Eggman (Act 2) Club Emblem","Castle Eggman (Act 2) Clear","Castle Eggman (Act 2) Emerald Token - First Outside Area","Castle Eggman (Act 2) Emerald Token - Corner of Right Courtyard",
     "Castle Eggman (Act 2) Emerald Token - Back Window of Left Courtyard","Castle Eggman (Act 2) Emerald Token - Spring Near Club Emblem","Castle Eggman (Act 2) Emerald Token - High Ledge Before Final Tower")
+
+    create_locs(regCEZ3, "Castle Eggman (Act 3) Clear")
     if options.time_emblems:
-        create_locs(regCEZ, "Castle Eggman (Act 1) Time Emblem", "Castle Eggman (Act 2) Time Emblem", "Castle Eggman (Act 3) Time Emblem")
+        create_locs(regCEZ1, "Castle Eggman (Act 1) Time Emblem")
+        create_locs(regCEZ2, "Castle Eggman (Act 2) Time Emblem")
+        create_locs(regCEZ3, "Castle Eggman (Act 3) Time Emblem")
     if options.ring_emblems:
-        create_locs(regCEZ, "Castle Eggman (Act 1) Ring Emblem", "Castle Eggman (Act 2) Ring Emblem")
+        create_locs(regCEZ1, "Castle Eggman (Act 1) Ring Emblem")
+        create_locs(regCEZ2, "Castle Eggman (Act 2) Ring Emblem")
     if options.score_emblems:
-        create_locs(regCEZ, "Castle Eggman (Act 3) Score Emblem")
+        create_locs(regCEZ3, "Castle Eggman (Act 3) Score Emblem")
     if options.oneup_sanity:
-        create_locs(regCEZ,"Castle Eggman (Act 1) Monitor - Mud Path on Side Wall","Castle Eggman (Act 1) Monitor - Outside Bars First Tall Castle Wall",
+        create_locs(regCEZ1,"Castle Eggman (Act 1) Monitor - Mud Path on Side Wall","Castle Eggman (Act 1) Monitor - Outside Bars First Tall Castle Wall",
         "Castle Eggman (Act 1) Monitor - Second Area Behind Overgrown Bars","Castle Eggman (Act 1) Monitor - Near Spade Emblem 1","Castle Eggman (Act 1) Monitor - Main Path Cave Under Mud 1",
         "Castle Eggman (Act 1) Monitor - Lower Main Path Tilted Maces 1","Castle Eggman (Act 1) Monitor - Main Path Sloped Spring Jumps","Castle Eggman (Act 1) Monitor - Bonfire Area Behind Tall Pillar",
-        "Castle Eggman (Act 1) Monitor - Red Spring Path First Turnaround","Castle Eggman (Act 1) Monitor - Red Spring Path Pillar With Robo-Hoods","Castle Eggman (Act 2) Monitor - Rafter Above Starting Area",
+        "Castle Eggman (Act 1) Monitor - Red Spring Path First Turnaround","Castle Eggman (Act 1) Monitor - Red Spring Path Pillar With Robo-Hoods")
+
+        create_locs(regCEZ2,"Castle Eggman (Act 2) Monitor - Rafter Above Starting Area",
         "Castle Eggman (Act 2) Monitor - Front Left Path High Above Water","Castle Eggman (Act 2) Monitor - High Bookshelf Before Final Tower","Castle Eggman (Act 2) Monitor - Under Bridge Near 3rd Checkpoint",
         "Castle Eggman (Act 2) Monitor - Front Left Path High Ledge Before Swinging Chains","Castle Eggman (Act 2) Monitor - Bookshelf in Spike Pit Before Final Tower","Castle Eggman (Act 2) Monitor - First Top Path Hidden Ground Spring",
         "Castle Eggman (Act 2) Monitor - First Outside Area Pillar Near Star Emblem","Castle Eggman (Act 2) Monitor - Miss Red Springs Before 4th Checkpoint","Castle Eggman (Act 2) Monitor - Right Courtyard Corner Near Swinging Chain",
@@ -237,7 +278,7 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Castle Eggman (Act 2) Monitor - Right Path Thin Gray Bookshelf Top")
 
     if options.superring_sanity:
-        create_locs(regCEZ,"Castle Eggman (Act 1) Monitor - x:4224 y:-1600","Castle Eggman (Act 1) Monitor - x:10336 y:6144","Castle Eggman (Act 1) Monitor - x:10336 y:6016",
+        create_locs(regCEZ1,"Castle Eggman (Act 1) Monitor - x:4224 y:-1600","Castle Eggman (Act 1) Monitor - x:10336 y:6144","Castle Eggman (Act 1) Monitor - x:10336 y:6016",
         "Castle Eggman (Act 1) Monitor - x:2464 y:-17536","Castle Eggman (Act 1) Monitor - x:-3968 y:-11072","Castle Eggman (Act 1) Monitor - x:-4096 y:-11200","Castle Eggman (Act 1) Monitor - x:7392 y:1472",
         "Castle Eggman (Act 1) Monitor - x:5056 y:192","Castle Eggman (Act 1) Monitor - x:5184 y:192","Castle Eggman (Act 1) Monitor - x:1760 y:-5760","Castle Eggman (Act 1) Monitor - x:-2080 y:-15008",
         "Castle Eggman (Act 1) Monitor - x:6016 y:7936","Castle Eggman (Act 1) Monitor - x:7392 y:1536","Castle Eggman (Act 1) Monitor - x:-3104 y:-11616","Castle Eggman (Act 1) Monitor - x:6784 y:9024",
@@ -245,8 +286,8 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Castle Eggman (Act 1) Monitor - x:-6880 y:-12736","Castle Eggman (Act 1) Monitor - x:-6880 y:-12800","Castle Eggman (Act 1) Monitor - x:8512 y:-512","Castle Eggman (Act 1) Monitor - x:6048 y:-5920",
         "Castle Eggman (Act 1) Monitor - x:-3104 y:-11488","Castle Eggman (Act 1) Monitor - x:13424 y:4640","Castle Eggman (Act 1) Monitor - x:6304 y:-5856","Castle Eggman (Act 1) Monitor - x:3024 y:-5424",
         "Castle Eggman (Act 1) Monitor - x:-4736 y:-12096","Castle Eggman (Act 1) Monitor - x:-6720 y:-10304","Castle Eggman (Act 1) Monitor - x:-6752 y:-10272","Castle Eggman (Act 1) Monitor - x:1792 y:-2528",
-        "Castle Eggman (Act 1) Monitor - x:1824 y:-2560","Castle Eggman (Act 1) Monitor - x:2960 y:2160","Castle Eggman (Act 1) Monitor - x:5280 y:4704","Castle Eggman (Act 1) Monitor - x:2464 y:-17664",
-        "Castle Eggman (Act 2) Monitor - x:-6848 y:-20096","Castle Eggman (Act 2) Monitor - x:-7392 y:-20768","Castle Eggman (Act 2) Monitor - x:0 y:-21056","Castle Eggman (Act 2) Monitor - x:-8472 y:-18480",
+        "Castle Eggman (Act 1) Monitor - x:1824 y:-2560","Castle Eggman (Act 1) Monitor - x:2960 y:2160","Castle Eggman (Act 1) Monitor - x:5280 y:4704","Castle Eggman (Act 1) Monitor - x:2464 y:-17664")
+        create_locs(regCEZ2,"Castle Eggman (Act 2) Monitor - x:-6848 y:-20096","Castle Eggman (Act 2) Monitor - x:-7392 y:-20768","Castle Eggman (Act 2) Monitor - x:0 y:-21056","Castle Eggman (Act 2) Monitor - x:-8472 y:-18480",
         "Castle Eggman (Act 2) Monitor - x:-2256 y:-18912","Castle Eggman (Act 2) Monitor - x:-8604 y:-8704","Castle Eggman (Act 2) Monitor - x:0 y:-11296","Castle Eggman (Act 2) Monitor - x:6976 y:320",
         "Castle Eggman (Act 2) Monitor - x:6144 y:-11136","Castle Eggman (Act 2) Monitor - x:7392 y:1696","Castle Eggman (Act 2) Monitor - x:3456 y:992","Castle Eggman (Act 2) Monitor - x:-6352 y:5120",
         "Castle Eggman (Act 2) Monitor - x:-8472 y:-18384","Castle Eggman (Act 2) Monitor - x:-12288 y:-1664","Castle Eggman (Act 2) Monitor - x:-3072 y:-16224","Castle Eggman (Act 2) Monitor - x:4288 y:-17216",
@@ -260,38 +301,48 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Castle Eggman (Act 2) Monitor - x:2112 y:-16736","Castle Eggman (Act 2) Monitor - x:5664 y:-9184","Castle Eggman (Act 2) Monitor - x:-14464 y:-1152","Castle Eggman (Act 2) Monitor - x:1984 y:-9984",
         "Castle Eggman (Act 2) Monitor - x:6656 y:-14336")
 
-    regACZ = create_region("Arid Canyon Zone", player, world)
-    create_locs(regACZ, "Arid Canyon (Act 1) Star Emblem", "Arid Canyon (Act 1) Spade Emblem", "Arid Canyon (Act 1) Heart Emblem", "Arid Canyon (Act 1) Diamond Emblem",
-                "Arid Canyon (Act 1) Club Emblem", "Arid Canyon (Act 2) Star Emblem", "Arid Canyon (Act 2) Spade Emblem", "Arid Canyon (Act 2) Heart Emblem", "Arid Canyon (Act 2) Diamond Emblem",
-                "Arid Canyon (Act 2) Club Emblem","Arid Canyon (Act 1) Clear","Arid Canyon (Act 2) Clear","Arid Canyon (Act 3) Clear","Arid Canyon (Act 1) Emerald Token - Speed Shoes Central Pillar",
-    "Arid Canyon (Act 1) Emerald Token - Behind Pillar Before Exploding Ramp","Arid Canyon (Act 1) Emerald Token - Behind Wall and Spikes","Arid Canyon (Act 2) Emerald Token - Left No Spin Path Minecarts",
-    "Arid Canyon (Act 2) Emerald Token - Large Arch Cave Right Ledge","Arid Canyon (Act 2) Emerald Token - Knuckles Dark Path Around Wall")
+    regACZ1 = create_region("Arid Canyon Zone 1", player, world)
+    regACZ2 = create_region("Arid Canyon Zone 2", player, world)
+    regACZ3 = create_region("Arid Canyon Zone 3", player, world)
+    create_locs(regACZ1, "Arid Canyon (Act 1) Star Emblem", "Arid Canyon (Act 1) Spade Emblem", "Arid Canyon (Act 1) Heart Emblem", "Arid Canyon (Act 1) Diamond Emblem",
+                "Arid Canyon (Act 1) Club Emblem","Arid Canyon (Act 1) Clear","Arid Canyon (Act 1) Emerald Token - Speed Shoes Central Pillar",
+    "Arid Canyon (Act 1) Emerald Token - Behind Pillar Before Exploding Ramp","Arid Canyon (Act 1) Emerald Token - Behind Wall and Spikes")
+    create_locs(regACZ2, "Arid Canyon (Act 2) Star Emblem", "Arid Canyon (Act 2) Spade Emblem", "Arid Canyon (Act 2) Heart Emblem", "Arid Canyon (Act 2) Diamond Emblem","Arid Canyon (Act 2) Emerald Token - Left No Spin Path Minecarts",
+    "Arid Canyon (Act 2) Emerald Token - Large Arch Cave Right Ledge","Arid Canyon (Act 2) Emerald Token - Knuckles Dark Path Around Wall",
+    "Arid Canyon (Act 2) Club Emblem","Arid Canyon (Act 2) Clear")
+    create_locs(regACZ3, "Arid Canyon (Act 3) Clear")
     if options.time_emblems:
-        create_locs(regACZ, "Arid Canyon (Act 1) Time Emblem", "Arid Canyon (Act 2) Time Emblem", "Arid Canyon (Act 3) Time Emblem")
+        create_locs(regACZ1, "Arid Canyon (Act 1) Time Emblem")
+        create_locs(regACZ2, "Arid Canyon (Act 2) Time Emblem")
+        create_locs(regACZ3, "Arid Canyon (Act 3) Time Emblem")
     if options.ring_emblems:
-        create_locs(regACZ, "Arid Canyon (Act 1) Ring Emblem", "Arid Canyon (Act 2) Ring Emblem")
+        create_locs(regACZ1, "Arid Canyon (Act 1) Ring Emblem")
+        create_locs(regACZ2, "Arid Canyon (Act 2) Ring Emblem")
     if options.score_emblems:
-        create_locs(regACZ, "Arid Canyon (Act 3) Score Emblem")
+        create_locs(regACZ3, "Arid Canyon (Act 3) Score Emblem")
     if options.oneup_sanity:
-        create_locs(regACZ,"Arid Canyon (Act 1) Monitor - Top Plank Before Path Split","Arid Canyon (Act 1) Monitor - Cave Below First House","Arid Canyon (Act 1) Monitor - Main Area High Broken Road",
+        create_locs(regACZ1,"Arid Canyon (Act 1) Monitor - Top Plank Before Path Split","Arid Canyon (Act 1) Monitor - Cave Below First House","Arid Canyon (Act 1) Monitor - Main Area High Broken Road",
         "Arid Canyon (Act 1) Monitor - End of Sneakers Path Brown Pillar","Arid Canyon (Act 1) Monitor - TNT Path High Above Exploding Plank","Arid Canyon (Act 1) Monitor - Sneakers Path Stone Pillar Ramp",
     "Arid Canyon (Act 1) Monitor - Near Amy Emerald Token","Arid Canyon (Act 1) Monitor - High Ledge Above Start","Arid Canyon (Act 1) Monitor - Final Section Under Ceiling Near Checkpoint",
-    "Arid Canyon (Act 1) Monitor - End of TNT Path Above Cave","Arid Canyon (Act 2) Monitor - Left Path Moving Platform Knuckles Wall","Arid Canyon (Act 2) Monitor - High Ledge Near Start",
+    "Arid Canyon (Act 1) Monitor - End of TNT Path Above Cave")
+
+        create_locs(regACZ2,"Arid Canyon (Act 2) Monitor - Left Path Moving Platform Knuckles Wall","Arid Canyon (Act 2) Monitor - High Ledge Near Start",
     "Arid Canyon (Act 2) Monitor - Left Path End of Collapsing Plank","Arid Canyon (Act 2) Monitor - Large Arch Cave Thin Planks Right Side","Arid Canyon (Act 2) Monitor - Left Cliffside Ledge From Start",
     "Arid Canyon (Act 2) Monitor - Canarivore Path Half Pipe Top Middle","Arid Canyon (Act 2) Monitor - Looping Path Tall Brown Rock Pillar","Arid Canyon (Act 2) Monitor - Looping Path Small Cave High Up",
     "Arid Canyon (Act 2) Monitor - End Of Left Knuckles Path Around Corner 1","Arid Canyon (Act 2) Monitor - Looping Path Low Ledge in Cave","Arid Canyon (Act 2) Monitor - Left Path High Ledge Cave",
-    "Arid Canyon (Act 2) Monitor - Left Path Visible From Minecarts","Arid Canyon (Act 2) Monitor - Near Heart Emblem 1","Arid Canyon (Act 2) Monitor - Behind TNT Crates Near Spade Emblem",
+    "Arid Canyon (Act 2) Monitor - Left Path Visible From Minecarts","Arid Canyon (Act 2) Monitor - Near Heart Emblem 1","Arid Canyon (Act 2) Monitor - Behind TNT Crates Near Diamond Emblem",
     "Arid Canyon (Act 2) Monitor - Ending Minecarts","Arid Canyon (Act 2) Monitor - Very High Ledge Between Left and Looping Path","Arid Canyon (Act 2) Monitor - TNT Barrel Ledge Near Star Emblem")
 
     if options.superring_sanity:
-        create_locs(regACZ,"Arid Canyon (Act 1) Monitor - x:-2368 y:-15680","Arid Canyon (Act 1) Monitor - x:3568 y:-1824","Arid Canyon (Act 1) Monitor - x:3856 y:-9648",
+        create_locs(regACZ1,"Arid Canyon (Act 1) Monitor - x:-2368 y:-15680","Arid Canyon (Act 1) Monitor - x:3568 y:-1824","Arid Canyon (Act 1) Monitor - x:3856 y:-9648",
         "Arid Canyon (Act 1) Monitor - x:3952 y:-9616","Arid Canyon (Act 1) Monitor - x:4895 y:-8222","Arid Canyon (Act 1) Monitor - x:-352 y:-2688","Arid Canyon (Act 1) Monitor - x:-6208 y:-2304",
         "Arid Canyon (Act 1) Monitor - x:2336 y:-14304","Arid Canyon (Act 1) Monitor - x:-1872 y:-12080","Arid Canyon (Act 1) Monitor - x:928 y:-10784","Arid Canyon (Act 1) Monitor - x:1632 y:1696",
         "Arid Canyon (Act 1) Monitor - x:-11680 y:672","Arid Canyon (Act 1) Monitor - x:3904 y:544","Arid Canyon (Act 1) Monitor - x:-7360 y:-2240","Arid Canyon (Act 1) Monitor - x:3568 y:-1696",
         "Arid Canyon (Act 1) Monitor - x:-7360 y:-2368","Arid Canyon (Act 1) Monitor - x:704 y:-12224","Arid Canyon (Act 1) Monitor - x:992 y:-10784","Arid Canyon (Act 1) Monitor - x:-10400 y:-4544",
         "Arid Canyon (Act 1) Monitor - x:864 y:-16064","Arid Canyon (Act 1) Monitor - x:6368 y:-17376","Arid Canyon (Act 1) Monitor - x:320 y:-8640","Arid Canyon (Act 1) Monitor - x:224 y:-8640",
         "Arid Canyon (Act 1) Monitor - x:416 y:-8640","Arid Canyon (Act 1) Monitor - x:2032 y:-13120","Arid Canyon (Act 1) Monitor - x:2816 y:-4800","Arid Canyon (Act 1) Monitor - x:4336 y:-12176",
-        "Arid Canyon (Act 1) Monitor - x:-3669 y:1024","Arid Canyon (Act 1) Monitor - x:-7456 y:-1184","Arid Canyon (Act 2) Monitor - x:-3488 y:-23200","Arid Canyon (Act 2) Monitor - x:-2240 y:-23648",
+        "Arid Canyon (Act 1) Monitor - x:-3669 y:1024","Arid Canyon (Act 1) Monitor - x:-7456 y:-1184")
+        create_locs(regACZ2,"Arid Canyon (Act 2) Monitor - x:-3488 y:-23200","Arid Canyon (Act 2) Monitor - x:-2240 y:-23648",
         "Arid Canyon (Act 2) Monitor - x:4672 y:-10912","Arid Canyon (Act 2) Monitor - x:4416 y:-22144","Arid Canyon (Act 2) Monitor - x:-1120 y:-9280","Arid Canyon (Act 2) Monitor - x:3072 y:-9216",
         "Arid Canyon (Act 2) Monitor - x:5440 y:-9664","Arid Canyon (Act 2) Monitor - x:3888 y:-16096","Arid Canyon (Act 2) Monitor - x:3888 y:-16800","Arid Canyon (Act 2) Monitor - x:3232 y:-17440",
         "Arid Canyon (Act 2) Monitor - x:-768 y:-16512","Arid Canyon (Act 2) Monitor - x:-3840 y:-15968","Arid Canyon (Act 2) Monitor - x:-3904 y:-15968","Arid Canyon (Act 2) Monitor - x:-1776 y:-23296",
@@ -303,67 +354,84 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Arid Canyon (Act 2) Monitor - x:-12960 y:-2400","Arid Canyon (Act 2) Monitor - x:-5008 y:-17344","Arid Canyon (Act 2) Monitor - x:-6624 y:-13888","Arid Canyon (Act 2) Monitor - x:-6816 y:-19616",
         "Arid Canyon (Act 2) Monitor - x:-5632 y:-10528","Arid Canyon (Act 2) Monitor - x:7360 y:-9280","Arid Canyon (Act 2) Monitor - x:-5144 y:-616")
 
-    regRVZ = create_region("Red Volcano Zone", player, world)
-    create_locs(regRVZ, "Red Volcano (Act 1) Star Emblem", "Red Volcano (Act 1) Spade Emblem", "Red Volcano (Act 1) Heart Emblem", "Red Volcano (Act 1) Diamond Emblem",
+    regRVZ1 = create_region("Red Volcano Zone 1", player, world)
+    create_locs(regRVZ1, "Red Volcano (Act 1) Star Emblem", "Red Volcano (Act 1) Spade Emblem", "Red Volcano (Act 1) Heart Emblem", "Red Volcano (Act 1) Diamond Emblem",
                 "Red Volcano (Act 1) Club Emblem","Red Volcano (Act 1) Clear","Red Volcano (Act 1) Emerald Token - First Outside Area","Red Volcano (Act 1) Emerald Token - Hidden Ledge Near 4th Checkpoint",
     "Red Volcano (Act 1) Emerald Token - Rollout Rock Lavafall","Red Volcano (Act 1) Emerald Token - Behind Ending Rocket")
     if options.time_emblems:
-        create_locs(regRVZ, "Red Volcano (Act 1) Time Emblem")
+        create_locs(regRVZ1, "Red Volcano (Act 1) Time Emblem")
     if options.ring_emblems:
-        create_locs(regRVZ, "Red Volcano (Act 1) Ring Emblem")
+        create_locs(regRVZ1, "Red Volcano (Act 1) Ring Emblem")
     if options.oneup_sanity:
-        create_locs(regRVZ,"Red Volcano (Act 1) Monitor - Lava Waves Pillar","Red Volcano (Act 1) Monitor - Thin Ledge First Outside Area","Red Volcano (Act 1) Monitor - First Outside Cave",
+        create_locs(regRVZ1,"Red Volcano (Act 1) Monitor - Lava Waves Pillar","Red Volcano (Act 1) Monitor - Thin Ledge First Outside Area","Red Volcano (Act 1) Monitor - First Outside Cave",
         "Red Volcano (Act 1) Monitor - Whirlwind Path Cave Around Corner","Red Volcano (Act 1) Monitor - Right Path Rising Lava Room Ledge","Red Volcano (Act 1) Monitor - Flame Jets Room Ledge",
         "Red Volcano (Act 1) Monitor - Behind Pillar Near End","Red Volcano (Act 1) Monitor - Near Heart Emblem","Red Volcano (Act 1) Monitor - Thin Ledge Second Outside Area")
     if options.superring_sanity:
-        create_locs(regRVZ,"Red Volcano (Act 1) Monitor - x:-4096 y:-8864","Red Volcano (Act 1) Monitor - x:23136 y:6304","Red Volcano (Act 1) Monitor - x:22304 y:8192",
+        create_locs(regRVZ1,"Red Volcano (Act 1) Monitor - x:-4096 y:-8864","Red Volcano (Act 1) Monitor - x:23136 y:6304","Red Volcano (Act 1) Monitor - x:22304 y:8192",
         "Red Volcano (Act 1) Monitor - x:25792 y:8480","Red Volcano (Act 1) Monitor - x:3488 y:-7888","Red Volcano (Act 1) Monitor - x:7952 y:-4112","Red Volcano (Act 1) Monitor - x:3520 y:-7920",
         "Red Volcano (Act 1) Monitor - x:10784 y:-6912","Red Volcano (Act 1) Monitor - x:-768 y:1600","Red Volcano (Act 1) Monitor - x:15840 y:12692","Red Volcano (Act 1) Monitor - x:4128 y:17504",
         "Red Volcano (Act 1) Monitor - x:4064 y:17568","Red Volcano (Act 1) Monitor - x:15904 y:12704")
 
-    regERZ = create_region("Egg Rock Zone", player, world)
-    create_locs(regERZ, "Egg Rock (Act 1) Star Emblem", "Egg Rock (Act 1) Spade Emblem", "Egg Rock (Act 1) Heart Emblem", "Egg Rock (Act 1) Diamond Emblem",
-                "Egg Rock (Act 1) Club Emblem", "Egg Rock (Act 2) Star Emblem", "Egg Rock (Act 2) Spade Emblem", "Egg Rock (Act 2) Heart Emblem", "Egg Rock (Act 2) Diamond Emblem",
-                "Egg Rock (Act 2) Club Emblem","Egg Rock (Act 1) Clear","Egg Rock (Act 2) Clear","Egg Rock (Act 1) Emerald Token - Gravity Conveyor Belts",
-    "Egg Rock (Act 1) Emerald Token - Moving Platforms","Egg Rock (Act 2) Emerald Token - Outside on Metal Beam","Egg Rock (Act 2) Emerald Token - Skip Gravity Pad",
+    regERZ1 = create_region("Egg Rock Zone 1", player, world)
+    regERZ2 = create_region("Egg Rock Zone 2", player, world)
+    create_locs(regERZ1, "Egg Rock (Act 1) Star Emblem", "Egg Rock (Act 1) Spade Emblem", "Egg Rock (Act 1) Heart Emblem", "Egg Rock (Act 1) Diamond Emblem",
+                "Egg Rock (Act 1) Club Emblem","Egg Rock (Act 1) Clear","Egg Rock (Act 1) Emerald Token - Gravity Conveyor Belts",
+    "Egg Rock (Act 1) Emerald Token - Moving Platforms")
+
+
+
+    create_locs(regERZ2, "Egg Rock (Act 2) Star Emblem", "Egg Rock (Act 2) Spade Emblem", "Egg Rock (Act 2) Heart Emblem", "Egg Rock (Act 2) Diamond Emblem","Egg Rock (Act 2) Clear",
+    "Egg Rock (Act 2) Club Emblem","Egg Rock (Act 2) Emerald Token - Outside on Metal Beam","Egg Rock (Act 2) Emerald Token - Skip Gravity Pad",
     "Egg Rock (Act 2) Emerald Token - Disco Room")
     if options.time_emblems:
-        create_locs(regERZ, "Egg Rock (Act 1) Time Emblem", "Egg Rock (Act 2) Time Emblem")
+        create_locs(regERZ1, "Egg Rock (Act 1) Time Emblem")
+        create_locs(regERZ2, "Egg Rock (Act 2) Time Emblem")
     if options.ring_emblems:
-        create_locs(regERZ, "Egg Rock (Act 1) Ring Emblem", "Egg Rock (Act 2) Ring Emblem")
+        create_locs(regERZ1, "Egg Rock (Act 1) Ring Emblem")
+        create_locs(regERZ2, "Egg Rock (Act 2) Ring Emblem")
     if options.oneup_sanity:
-        create_locs(regERZ,"Egg Rock (Act 1) Monitor - Spin Path Crushers Corner","Egg Rock (Act 1) Monitor - Spin Path Guarded by Spincushion",
+        create_locs(regERZ1,"Egg Rock (Act 1) Monitor - Spin Path Crushers Corner","Egg Rock (Act 1) Monitor - Spin Path Guarded by Spincushion",
         "Egg Rock (Act 1) Monitor - Near Diamond Emblem 1","Egg Rock (Act 1) Monitor - Tails Path in Lava","Egg Rock (Act 1) Monitor - Near Star Emblem 1",
-        "Egg Rock (Act 1) Monitor - Near End Behind Blue Pillar","Egg Rock (Act 1) Monitor - Gravity Lava Room","Egg Rock (Act 1) Monitor - 2D Area Behind Last Zoom Tube 1",
-        "Egg Rock (Act 2) Monitor - 2D Area Above Air Pocket 1","Egg Rock (Act 2) Monitor - 2D Area Above Air Pocket 2","Egg Rock (Act 2) Monitor - Left Path Red Platform Corner",
+        "Egg Rock (Act 1) Monitor - Near End Behind Blue Pillar","Egg Rock (Act 1) Monitor - Gravity Lava Room","Egg Rock (Act 1) Monitor - 2D Area Behind Last Zoom Tube 1")
+
+        create_locs(regERZ2,"Egg Rock (Act 2) Monitor - 2D Area Above Air Pocket 1","Egg Rock (Act 2) Monitor - 2D Area Above Air Pocket 2","Egg Rock (Act 2) Monitor - Left Path Red Platform Corner",
         "Egg Rock (Act 2) Monitor - Left Path Behind Blue Pillars","Egg Rock (Act 2) Monitor - Auto Gravity Area Behind First Zoom Tube 1","Egg Rock (Act 2) Monitor - Air Lock Room Small Ledge",
         "Egg Rock (Act 2) Monitor - Near Spade Emblem","Egg Rock (Act 2) Monitor - Near Star Emblem 1","Egg Rock (Act 2) Monitor - Top of Turret Room",
         "Egg Rock (Act 2) Monitor - Left Path Surrounded by Eggman Monitors","Egg Rock (Act 2) Monitor - Disco Room 1","Egg Rock (Act 2) Monitor - Disco Room 2",
         "Egg Rock (Act 2) Monitor - Skip Gravity Pad Near Token","Egg Rock (Act 2) Monitor - Right Path Below Outside Start")
 
     if options.superring_sanity:
-        create_locs(regERZ,"Egg Rock (Act 1) Monitor - x:-11040 y:-7296","Egg Rock (Act 1) Monitor - x:-10912 y:-7296","Egg Rock (Act 1) Monitor - x:-7504 y:-7872",
+        create_locs(regERZ1,"Egg Rock (Act 1) Monitor - x:-11040 y:-7296","Egg Rock (Act 1) Monitor - x:-10912 y:-7296","Egg Rock (Act 1) Monitor - x:-7504 y:-7872",
         "Egg Rock (Act 1) Monitor - x:-5760 y:-2208","Egg Rock (Act 1) Monitor - x:-1056 y:3136","Egg Rock (Act 1) Monitor - x:3336 y:-9024","Egg Rock (Act 1) Monitor - x:384 y:-9952",
         "Egg Rock (Act 1) Monitor - x:384 y:-10912","Egg Rock (Act 1) Monitor - x:-3488 y:2464","Egg Rock (Act 1) Monitor - x:-7360 y:-7872","Egg Rock (Act 1) Monitor - x:-9888 y:-11392",
         "Egg Rock (Act 1) Monitor - x:-5376 y:-9760","Egg Rock (Act 1) Monitor - x:-7296 y:-7872","Egg Rock (Act 1) Monitor - x:7008 y:-10560","Egg Rock (Act 1) Monitor - x:1600 y:-5120",
         "Egg Rock (Act 1) Monitor - x:-5408 y:-288","Egg Rock (Act 1) Monitor - x:-4800 y:2240","Egg Rock (Act 1) Monitor - x:-992 y:3136","Egg Rock (Act 2) Monitor - x:-9248 y:12448",
-        "Egg Rock (Act 2) Monitor - x:-9248 y:12320","Egg Rock (Act 2) Monitor - x:-3520 y:15200","Egg Rock (Act 2) Monitor - x:-2016 y:15200","Egg Rock (Act 2) Monitor - x:-3456 y:15200",
+        "Egg Rock (Act 2) Monitor - x:-9248 y:12320")
+        create_locs(regERZ2,"Egg Rock (Act 2) Monitor - x:-3520 y:15200","Egg Rock (Act 2) Monitor - x:-2016 y:15200","Egg Rock (Act 2) Monitor - x:-3456 y:15200",
         "Egg Rock (Act 2) Monitor - x:-4800 y:17408","Egg Rock (Act 2) Monitor - x:-4864 y:17408","Egg Rock (Act 2) Monitor - x:-2336 y:14144","Egg Rock (Act 2) Monitor - x:-6592 y:8096",
         "Egg Rock (Act 2) Monitor - x:-6720 y:8096","Egg Rock (Act 2) Monitor - x:-13152 y:10784","Egg Rock (Act 2) Monitor - x:1536 y:16896","Egg Rock (Act 2) Monitor - x:9472 y:14976",
         "Egg Rock (Act 2) Monitor - x:64 y:12736","Egg Rock (Act 2) Monitor - x:1024 y:3392","Egg Rock (Act 2) Monitor - x:1024 y:3296","Egg Rock (Act 2) Monitor - x:-11936 y:12704",
         "Egg Rock (Act 2) Monitor - x:768 y:-1408","Egg Rock (Act 2) Monitor - x:864 y:7328","Egg Rock (Act 2) Monitor - x:64 y:12224","Egg Rock (Act 2) Monitor - x:64 y:12096",
         "Egg Rock (Act 2) Monitor - x:9472 y:15936","Egg Rock (Act 2) Monitor - x:3296 y:21600")
 
-    regBCZ = create_region("Black Core Zone", player, world)
-    create_locs(regBCZ, "Black Core (Act 1) Clear","Black Core (Act 2) Clear","Black Core (Act 3) Clear")
+    regBCZ1 = create_region("Black Core Zone 1", player, world)
+    regBCZ2 = create_region("Black Core Zone 2", player, world)
+    regBCZ3 = create_region("Black Core Zone 3", player, world)
+    create_locs(regBCZ1, "Black Core (Act 1) Clear")
+    create_locs(regBCZ2,"Black Core (Act 2) Clear")
+    create_locs(regBCZ3,"Black Core (Act 3) Clear")
     if options.time_emblems:
-        create_locs(regBCZ, "Black Core (Act 1) Time Emblem", "Black Core (Act 2) Time Emblem", "Black Core (Act 3) Time Emblem")
+        create_locs(regBCZ1, "Black Core (Act 1) Time Emblem")
+        create_locs(regBCZ2, "Black Core (Act 2) Time Emblem")
+        create_locs(regBCZ3, "Black Core (Act 3) Time Emblem")
     if options.ring_emblems:
-        create_locs(regBCZ, "Black Core (Act 1) Ring Emblem")
+        create_locs(regBCZ1, "Black Core (Act 1) Ring Emblem")
     if options.score_emblems:
-        create_locs(regBCZ, "Black Core (Act 2) Score Emblem","Black Core (Act 3) Score Emblem")
+        create_locs(regBCZ2, "Black Core (Act 2) Score Emblem")
+        create_locs(regBCZ3,"Black Core (Act 3) Score Emblem")
     if options.oneup_sanity:
-        create_locs(regBCZ,"Black Core (Act 1) Monitor - Half Pillar Above Spike Gate","Black Core (Act 1) Monitor - Behind Arrow Sign","Black Core (Act 2) Monitor - Behind Computers")
+        create_locs(regBCZ1,"Black Core (Act 1) Monitor - Half Pillar Above Spike Gate","Black Core (Act 1) Monitor - Behind Arrow Sign")
+        create_locs(regBCZ2,"Black Core (Act 2) Monitor - Behind Computers")
 
 
     regFHZ = create_region("Frozen Hillside Zone", player, world)
@@ -512,13 +580,16 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
 
 
     regATZ = create_region("Azure Temple Zone", player, world)
-    create_locs(regATZ, "Azure Temple Star Emblem", "Azure Temple Spade Emblem", "Azure Temple Heart Emblem", "Azure Temple Diamond Emblem",
+    create_locs(regATZ, "Azure Temple Star Emblem", "Azure Temple Spade Emblem", "Azure Temple Heart Emblem", "Azure Temple Diamond Emblem","Azure Temple Club Emblem",
                 "Azure Temple Clear")
     if options.time_emblems:
         create_locs(regATZ, "Azure Temple Time Emblem")
     if options.ring_emblems:
         create_locs(regATZ, "Azure Temple Ring Emblem")
     if options.oneup_sanity:
+        create_locs(regATZ, "Azure Temple Monitor - Near Club Emblem 1",
+                    "Azure Temple Monitor - Near Club Emblem 2",
+                    "Azure Temple Monitor - Near Club Emblem 3")
         create_locs(regATZ,"Azure Temple Monitor - Main Path Behind Statues","Azure Temple Monitor - Main Path High Rocky Ledge",
         "Azure Temple Monitor - Bottom Path Side of Statue Hallway","Azure Temple Monitor - Rafters Near Spade Emblem 1","Azure Temple Monitor - Top Path High Ledge Behind Bars",
         "Azure Temple Monitor - Top Path Near Spiked Platform Ledge 1","Azure Temple Monitor - Bottom Path Buggle Room Rafters","Azure Temple Monitor - Near Star Emblem",
@@ -563,8 +634,11 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         create_locs(regSPCCZ, "Christmas Chime Sun Emblem", "Christmas Chime Moon Emblem","Christmas Chime Clear")
         regSPDHZ = create_region("Dream Hill Zone", player, world)
         create_locs(regSPDHZ, "Dream Hill Sun Emblem", "Dream Hill Moon Emblem","Dream Hill Clear")
-        regSPAPZ = create_region("Alpine Paradise Zone", player, world)
-        create_locs(regSPAPZ, "Alpine Paradise (Act 1) Sun Emblem", "Alpine Paradise (Act 1) Moon Emblem","Alpine Paradise (Act 1) Clear","Alpine Paradise (Act 2) Sun Emblem", "Alpine Paradise (Act 2) Moon Emblem","Alpine Paradise (Act 2) Clear")
+
+        regSPAPZ1 = create_region("Alpine Paradise Zone 1", player, world)
+        regSPAPZ2 = create_region("Alpine Paradise Zone 2", player, world)
+        create_locs(regSPAPZ1, "Alpine Paradise (Act 1) Sun Emblem", "Alpine Paradise (Act 1) Moon Emblem","Alpine Paradise (Act 1) Clear")
+        create_locs(regSPAPZ2, "Alpine Paradise (Act 2) Sun Emblem", "Alpine Paradise (Act 2) Moon Emblem","Alpine Paradise (Act 2) Clear")
 
         if options.ntime_emblems:
             create_locs(regSPFFZ, "Floral Field Time Emblem")
@@ -577,7 +651,8 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
             create_locs(regSPBHZ, "Black Hole Time Emblem")
             create_locs(regSPCCZ, "Christmas Chime Time Emblem")
             create_locs(regSPDHZ, "Dream Hill Time Emblem")
-            create_locs(regSPAPZ, "Alpine Paradise (Act 1) Time Emblem","Alpine Paradise (Act 2) Time Emblem")
+            create_locs(regSPAPZ1, "Alpine Paradise (Act 1) Time Emblem")
+            create_locs(regSPAPZ2,"Alpine Paradise (Act 2) Time Emblem")
 
         if options.rank_emblems:
             create_locs(regSPFFZ, "Floral Field A Rank Emblem")
@@ -590,7 +665,8 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
             create_locs(regSPBHZ, "Black Hole A Rank Emblem")
             create_locs(regSPCCZ, "Christmas Chime A Rank Emblem")
             create_locs(regSPDHZ, "Dream Hill A Rank Emblem")
-            create_locs(regSPAPZ, "Alpine Paradise (Act 1) A Rank Emblem","Alpine Paradise (Act 2) A Rank Emblem")
+            create_locs(regSPAPZ1, "Alpine Paradise (Act 1) A Rank Emblem")
+            create_locs(regSPAPZ2,"Alpine Paradise (Act 2) A Rank Emblem")
 
     if options.match_maps and options.oneup_sanity:
         create_locs(regMPSFZ,"Sapphire Falls Monitor - Inside Central Platform")

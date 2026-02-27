@@ -24,7 +24,7 @@ https://github.com/ArchipelagoMW/Archipelago
 
 - Install srb2.apworld by opening it or moving it to either
 
-C:\ProgramData\Archipelago\custom_worlds\ or C:\ProgramData\MultiworldGG\custom_worlds\.
+C:\ProgramData\Archipelago\custom_worlds\ or C:\ProgramData\MultiworldGG\custom_worlds\ .
 
 - Move SL_ArchipelagoSRB2_Vxxx.pk3 into the addons folder of your desired SRB2 installation.
 

@@ -5,10 +5,6 @@ Avoid mentioning/ linking this on the main AP Discord because of the "no fangame
 All discussion/ development of this APworld will take place here:
 https://discord.gg/kkH4wBUmG9
 
-If you don't already have the standalone Archipelago client installed, download it from here:
-https://github.com/ArchipelagoMW/Archipelago
-
-
 ## Required Software
 
 - Sonic Robo Blast 2 (https://www.srb2.org/download/)

@@ -20,19 +20,21 @@ https://github.com/ArchipelagoMW/Archipelago
 
 ## Setup Guide
 
-Download SL_ArchipelagoSRB2_Vxxx.pk3 and srb2.apworld from releases (https://github.com/GraymonDgt/SRB2Archipelago/releases)
+- Download SL_ArchipelagoSRB2_Vxxx.pk3 and srb2.apworld from releases (https://github.com/GraymonDgt/SRB2Archipelago/releases)
 
-Install srb2.apworld by opening it or moving it to C:\ProgramData\Archipelago\custom_worlds\ or C:\ProgramData\MultiworldGG\custom_worlds\.
+- Install srb2.apworld by opening it or moving it to either
 
-Move SL_ArchipelagoSRB2_Vxxx.pk3 into the addons folder of your desired SRB2 installation.
+C:\ProgramData\Archipelago\custom_worlds\ or C:\ProgramData\MultiworldGG\custom_worlds\.
+
+- Move SL_ArchipelagoSRB2_Vxxx.pk3 into the addons folder of your desired SRB2 installation.
 
 ## Joining a Multiworld Game
 
-After opening the Archipelago/MultiworldGG client, there will be an option labelled "Sonic Robo Blast 2 Client".
+- After opening the Archipelago/MultiworldGG client, there will be an option labeled "Sonic Robo Blast 2 Client".
 
-When opening that, a dialogue will open asking for your SRB2 directory, select the same folder as srb2win.exe/gamedata.dat.
+- When opening that, a dialogue will open asking for your SRB2 directory, select the same folder as srb2win.exe/gamedata.dat.
 
-After connecting using the server address and port number, SRB2 will automatically open with the AP mod loaded.
+- After connecting using the server address and port number, SRB2 will automatically open with the AP mod loaded.
 
 # FAQ
 

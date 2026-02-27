@@ -9,21 +9,29 @@ If you don't already have the standalone Archipelago client installed, download 
 https://github.com/ArchipelagoMW/Archipelago
 
 
-# SETUP GUIDE
+## Required Software
 
-(Assuming you already know what Archipelago is and how to set up a game)
+- Sonic Robo Blast 2 (https://www.srb2.org/download/)
 
-Download srb2 here: https://www.srb2.org/download/
+- The most recent Archipelago client or the most recent MultiworldGG client
+  (https://github.com/ArchipelagoMW/Archipelago/releases)
+  (https://multiworld.gg/downloads/)
 
-Put SL_ArchipelagoSRB2_Vxxx.pk3 in the addons folder
+## Setup Guide
 
-Install the srb2 apworld
+Download SL_ArchipelagoSRB2_Vxxx.pk3 and srb2.apworld from releases (https://github.com/GraymonDgt/SRB2Archipelago/releases)
 
-There will be a new client in the archipelago launcher named "Sonic Robo Blast 2 Client"
+Install srb2.apworld by opening it
 
-When opening that, a dialogue will open asking for your SRB2 directory (the same folder as srb2win.exe/gamedata.dat)
+Move SL_ArchipelagoSRB2_Vxxx.pk3 into the addons folder of your desired SRB2 installation
 
-Connect to archipelago and SRB2 will automatically open with the AP mod loaded
+## Joining a Multiworld Game
+
+After opening the Archipelago/MultiworldGG client, there will be an option labelled "Sonic Robo Blast 2 Client"
+
+When opening that, a dialogue will open asking for your SRB2 directory, select the same folder as srb2win.exe/gamedata.dat
+
+After connecting using the server address and port number, SRB2 will automatically open with the AP mod loaded.
 
 # FAQ
 
@@ -37,17 +45,20 @@ Connect to archipelago and SRB2 will automatically open with the AP mod loaded
   While you can use modded characters, logic doesn't currently account for them and there's no way to switch to them in the hub.
   If you want to use a modded character with no logic issues, select 'All' for your starting character in the yaml settings.
 
+- The AP mod didn't load when connecting
+
+  You can load the AP mod manually and everything will work fine.
+
 - Something something can't read APTranslator.dat
   
-  I swear I'm working on fixing that, keep restarting the client until it works
+  I swear I'm working on fixing that, keep restarting the client until it works.
 
+- SRB2 was closed, do I have to restart the client?
+
+  No, you can reopen SRB2 and reload the AP mod without any issues.
 
 # ADDITIONAL NOTES
 
-type "hub" into the console to return to the hub at any time
-
-If the AP mod didn't load, you can load it yourself and everything will work fine
-
-You can relaunch SRB2 if the game closes as long as it is in the same folder you picked when launching Archipelago
+Type "hub" into the console to return to the hub at any time
 
 Contact me in the #sonic-robo-blast-2 channel in the discord above if you run into any issues

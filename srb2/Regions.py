@@ -161,12 +161,12 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Techno Hill (Act 1) Monitor - Breakable Wall Ledge","Techno Hill (Act 1) Monitor - High Above Slime Lake 2","Techno Hill (Act 1) Monitor - Yellow Springs Near Start","Techno Hill (Act 1) Monitor - Upper Path on Ledge",
         "Techno Hill (Act 1) Monitor - Upper Path Spring Corner","Techno Hill (Act 1) Monitor - First Factory in Slime","Techno Hill (Act 1) Monitor - Alt Path on Ledge 2","Techno Hill (Act 1) Monitor - In First Slime River",
         "Techno Hill (Act 1) Monitor - Deep in 2nd Slime River","Techno Hill (Act 1) Monitor - Upper Path Around Corner","Techno Hill (Act 1) Monitor - Highest Ledge Above Slime Lake","Techno Hill (Act 1) Monitor - Alt Path on Pillar",
-        "Techno Hill (Act 2) Monitor - Knuckles Path Exit 1","Techno Hill (Act 2) Monitor - Knuckles Path Exit 2")
+        )
 
         create_locs(regTHZ2,
         "Techno Hill (Act 2) Monitor - Knuckles Path Before Diagonal Conveyors","Techno Hill (Act 2) Monitor - Behind Breakable Wall Near Start")
 
-        create_locs(regTHZ2M,"Techno Hill (Act 2) Monitor - Barricade Path Under 1st Conveyor",
+        create_locs(regTHZ2M,"Techno Hill (Act 2) Monitor - Knuckles Path Exit 1","Techno Hill (Act 2) Monitor - Knuckles Path Exit 2","Techno Hill (Act 2) Monitor - Barricade Path Under 1st Conveyor",
         "Techno Hill (Act 2) Monitor - Barricade Path End Ledge 1","Techno Hill (Act 2) Monitor - Barricade Path Cavity 1st Checkpoint","Techno Hill (Act 2) Monitor - Knuckles Path Metal Pillar",
         "Techno Hill (Act 2) Monitor - High Ledge Outside 2","Techno Hill (Act 2) Monitor - High Ledge Outside 3","Techno Hill (Act 2) Monitor - Piston Room High Ledge 1",
         "Techno Hill (Act 2) Monitor - Piston Room High Ledge 2","Techno Hill (Act 2) Monitor - Large Jump Into Slime S", "Techno Hill (Act 2) Monitor - Barricade Path End Ledge 2",
@@ -202,45 +202,53 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     if options.score_emblems:
         create_locs(regDSZ3, "Deep Sea (Act 3) Score Emblem")
     if options.oneup_sanity:
-        create_locs(regDSZ1,"Deep Sea (Act 1) Monitor - Join Right Lower Route Underwater Around Corner","Deep Sea (Act 1) Monitor - Right Lower Route Sloped Ledge",
-        "Deep Sea (Act 1) Monitor - Heart Emblem Backtrack to Club 1","Deep Sea (Act 1) Monitor - Underwater Pillar Button 1","Deep Sea (Act 1) Monitor - Near Waterslide Emerald Token",
+        create_locs(regDSZ1,"Deep Sea (Act 1) Monitor - Left Path First Water Around Corner","Deep Sea (Act 1) Monitor - Right Lower Route Sloped Ledge",
+        "Deep Sea (Act 1) Monitor - Heart Emblem Backtrack to Club 1","Deep Sea (Act 1) Monitor - Sinking Pillar Button 1","Deep Sea (Act 1) Monitor - Near Waterslide Emerald Token",
         "Deep Sea (Act 1) Monitor - Purple Switch","Deep Sea (Act 1) Monitor - Left Path Tall Pillar After Waterslides","Deep Sea (Act 1) Monitor - Right Path Under Hidden Elevator",
         "Deep Sea (Act 1) Monitor - Waterfall Cave Opposite Spade Emblem","Deep Sea (Act 1) Monitor - Heart Emblem Backtrack to Club 2","Deep Sea (Act 1) Monitor - Broken Wall Near End",
         "Deep Sea (Act 1) Monitor - Yellow Switch","Deep Sea (Act 1) Monitor - Behind Fast Closing Door 1","Deep Sea (Act 1) Monitor - Behind Fast Closing Door 2",
-        "Deep Sea (Act 1) Monitor - Left Path Waterfall Cave","Deep Sea (Act 1) Monitor - Near Diamond Emblem","Deep Sea (Act 1) Monitor - Right Right Subpath Breakable Wall Between Columns",
+        "Deep Sea (Act 1) Monitor - Waterfall Cave Near Cyan Door","Deep Sea (Act 1) Monitor - Near Diamond Emblem","Deep Sea (Act 1) Monitor - Right Right Subpath Breakable Wall Between Columns",
         "Deep Sea (Act 1) Monitor - Left Path Behind Cyan Door","Deep Sea (Act 1) Monitor - Waterslide Hidden Spring Room","Deep Sea (Act 1) Monitor - Behind Fast Closing Door 1",
         "Deep Sea (Act 1) Monitor - Behind Fast Closing Door 2")
 
         create_locs(regDSZ2,"Deep Sea (Act 2) Monitor - Spindash Fast Door 1",
         "Deep Sea (Act 2) Monitor - Gargoyle Path Wall Under Oval Platform", "Deep Sea (Act 2) Monitor - Spindash Fast Door 2", "Deep Sea (Act 2) Monitor - Knuckles Path Dark High Ledge",
         "Deep Sea (Act 2) Monitor - Knuckles Path Crushing Ceiling", "Deep Sea (Act 2) Monitor - Left Ledge Near End", "Deep Sea (Act 2) Monitor - Gargoyle Path Underwater Crack Behind Plants",
-        "Deep Sea (Act 2) Monitor - Near Club Emblem", "Deep Sea (Act 2) Monitor - Gargoyle Path Inside 3rd Column", "Deep Sea (Act 2) Monitor - Gargoyle Path Behind Periodic Waterfall",
+        "Deep Sea (Act 2) Monitor - Near Club Emblem", "Deep Sea (Act 2) Monitor - Gargoyle Path Inside 3rd Rising Pillar", "Deep Sea (Act 2) Monitor - Gargoyle Path Behind Periodic Waterfall",
         "Deep Sea (Act 2) Monitor - Main Path Roll Down Ramp Into Breakable Wall", "Deep Sea (Act 2) Monitor - Gargoyle Path Spiked Cliff Top", "Deep Sea (Act 2) Monitor - Waterslide Fail 2nd Jump",
         "Deep Sea (Act 2) Monitor - Waterslide Avoid Wall Spikes", "Deep Sea (Act 2) Monitor - Spindash Fast Door 3")
 
 
 
     if options.superring_sanity:
-        create_locs(regDSZ1,"Deep Sea (Act 1) Monitor - x:15616 y:2944","Deep Sea (Act 1) Monitor - x:-3136 y:5696","Deep Sea (Act 1) Monitor - x:8704 y:3168",
-        "Deep Sea (Act 1) Monitor - x:3904 y:-2048","Deep Sea (Act 1) Monitor - x:3648 y:-2048","Deep Sea (Act 1) Monitor - x:8576 y:3168","Deep Sea (Act 1) Monitor - x:3136 y:5216",
-        "Deep Sea (Act 1) Monitor - x:12224 y:12352","Deep Sea (Act 1) Monitor - x:1536 y:3680","Deep Sea (Act 1) Monitor - x:-1952 y:7456","Deep Sea (Act 1) Monitor - x:-2016 y:7456",
-        "Deep Sea (Act 1) Monitor - x:3136 y:1152","Deep Sea (Act 1) Monitor - x:2144 y:14176","Deep Sea (Act 1) Monitor - x:2144 y:13728","Deep Sea (Act 1) Monitor - x:5152 y:-2208",
-        "Deep Sea (Act 1) Monitor - x:-96 y:6400","Deep Sea (Act 1) Monitor - x:15520 y:1184", "Deep Sea (Act 1) Monitor - x:19712 y:13184", "Deep Sea (Act 1) Monitor - x:15344 y:10656",
-        "Deep Sea (Act 1) Monitor - x:2800 y:8368","Deep Sea (Act 1) Monitor - x:10848 y:8352","Deep Sea (Act 1) Monitor - x:10432 y:2176","Deep Sea (Act 1) Monitor - x:16192 y:16640",
-        "Deep Sea (Act 1) Monitor - x:-1664 y:2496","Deep Sea (Act 1) Monitor - x:15072 y:8672","Deep Sea (Act 1) Monitor - x:12368 y:13248","Deep Sea (Act 1) Monitor - x:18256 y:16272",
-        "Deep Sea (Act 1) Monitor - x:704 y:12224","Deep Sea (Act 1) Monitor - x:384 y:12224","Deep Sea (Act 1) Monitor - x:12800 y:3456","Deep Sea (Act 1) Monitor - x:15136 y:2656",
-        "Deep Sea (Act 1) Monitor - x:16448 y:1696","Deep Sea (Act 1) Monitor - x:1728 y:4384","Deep Sea (Act 1) Monitor - x:160 y:14240")
-        create_locs(regDSZ2,"Deep Sea (Act 2) Monitor - x:128 y:-7264",
-        "Deep Sea (Act 2) Monitor - x:17408 y:-16640","Deep Sea (Act 2) Monitor - x:16576 y:7552","Deep Sea (Act 2) Monitor - x:7840 y:96","Deep Sea (Act 2) Monitor - x:18016 y:-2592",
-        "Deep Sea (Act 2) Monitor - x:15040 y:-1792","Deep Sea (Act 2) Monitor - x:16176 y:-10240","Deep Sea (Act 2) Monitor - x:10528 y:5232","Deep Sea (Act 2) Monitor - x:15424 y:6080",
-        "Deep Sea (Act 2) Monitor - x:4128 y:6880","Deep Sea (Act 2) Monitor - x:19872 y:-8672","Deep Sea (Act 2) Monitor - x:20736 y:-10816","Deep Sea (Act 2) Monitor - x:10792 y:-7616",
-        "Deep Sea (Act 2) Monitor - x:21632 y:-6144","Deep Sea (Act 2) Monitor - x:12608 y:-9248","Deep Sea (Act 2) Monitor - x:12608 y:-9184","Deep Sea (Act 2) Monitor - x:5408 y:10048",
-        "Deep Sea (Act 2) Monitor - x:-16 y:-3968","Deep Sea (Act 2) Monitor - x:-16 y:-4224","Deep Sea (Act 2) Monitor - x:26144 y:12960","Deep Sea (Act 2) Monitor - x:19712 y:-672",
-        "Deep Sea (Act 2) Monitor - x:5600 y:-3344","Deep Sea (Act 2) Monitor - x:8064 y:-4928","Deep Sea (Act 2) Monitor - x:8064 y:-6080","Deep Sea (Act 2) Monitor - x:15104 y:3776",
-        "Deep Sea (Act 2) Monitor - x:15360 y:3776","Deep Sea (Act 2) Monitor - x:10784 y:-8512","Deep Sea (Act 2) Monitor - x:7680 y:3456","Deep Sea (Act 2) Monitor - x:7680 y:3328",
-        "Deep Sea (Act 2) Monitor - x:9120 y:3680","Deep Sea (Act 2) Monitor - x:7776 y:3744","Deep Sea (Act 2) Monitor - x:14384 y:12131","Deep Sea (Act 2) Monitor - x:14512 y:13315",
-        "Deep Sea (Act 2) Monitor - x:7776 y:3680","Deep Sea (Act 2) Monitor - x:8384 y:16752","Deep Sea (Act 2) Monitor - x:11904 y:14016","Deep Sea (Act 2) Monitor - x:9120 y:3744",
-        "Deep Sea (Act 2) Monitor - x:23488 y:4736")
+        create_locs(regDSZ1,"Deep Sea (Act 1) Monitor - Underwater After Red Spring Jump","Deep Sea (Act 1) Monitor - Right Path Beside Elevator",
+"Deep Sea (Act 1) Monitor - Sinking Pillar Button 2","Deep Sea (Act 1) Monitor - Left Path Underwater Switch 1","Deep Sea (Act 1) Monitor - Left Path Underwater Switch 2",
+"Deep Sea (Act 1) Monitor - Sinking Pillar Button 3","Deep Sea (Act 1) Monitor - Right Lower Route Under Sloped Ledge","Deep Sea (Act 1) Monitor - Below Star Emblem",
+"Deep Sea (Act 1) Monitor - Left Path Ledge Over Water","Deep Sea (Act 1) Monitor - Right Path Underwater 1","Deep Sea (Act 1) Monitor - Right Path Underwater 2",
+"Deep Sea (Act 1) Monitor - Left Path Shallow Water","Deep Sea (Act 1) Monitor - Right Right Subpath Merge Underwater 1","Deep Sea (Act 1) Monitor - Right Right Subpath Merge Underwater 2",
+"Deep Sea (Act 1) Monitor - Left Path Behind Rubble","Deep Sea (Act 1) Monitor - Right Lower Path Before Broken Door","Deep Sea (Act 1) Monitor - After Waterslide",
+"Deep Sea (Act 1) Monitor - Before End Behind Pillar","Deep Sea (Act 1) Monitor - Right Ending Path on Rocks","Deep Sea (Act 1) Monitor - Right Right Subpath High Rock Alcove",
+"Deep Sea (Act 1) Monitor - Pillar Button Path Behind First Gargoyle","Deep Sea (Act 1) Monitor - Left Path Behind Waterslide Start","Deep Sea (Act 1) Monitor - Left Ending Path High on Rocks",
+"Deep Sea (Act 1) Monitor - Right Path First Arch Top","Deep Sea (Act 1) Monitor - Right Ending Path Near Floating Mines","Deep Sea (Act 1) Monitor - Underwater Curve Cave on Rock",
+"Deep Sea (Act 1) Monitor - Near End Behind Rubble","Deep Sea (Act 1) Monitor - Right Right Subpath Behind Pillar 1","Deep Sea (Act 1) Monitor - Right Right Subpath Behind Pillar 2",
+"Deep Sea (Act 1) Monitor - Left Path Underwater Near Waterslide","Deep Sea (Act 1) Monitor - Red Spring Jump Left","Deep Sea (Act 1) Monitor - After Waterslide Underwater Around Corner",
+"Deep Sea (Act 1) Monitor - Join Right Lower Route Underwater Wall Bottom","Deep Sea (Act 1) Monitor - Right Right Subpath Inside Waterfall")
+
+
+
+        create_locs(regDSZ2,"Deep Sea (Act 2) Monitor - Right Waterslide Path Cave","Deep Sea (Act 2) Monitor - Left Ledge After Start","Deep Sea (Act 2) Monitor - Diagonal Pillars Near Spring Emerald Token",
+"Deep Sea (Act 2) Monitor - Nospin Path Before Final Gate","Deep Sea (Act 2) Monitor - Main Path Pillars Behind Plants","Deep Sea (Act 2) Monitor - Main Path Pillars Gargoyle Ledge",
+"Deep Sea (Act 2) Monitor - Main Path Behind First Right Plants","Deep Sea (Act 2) Monitor - Nospin Path Behind First Plants","Deep Sea (Act 2) Monitor - Fast Closing Door Front",
+"Deep Sea (Act 2) Monitor - Underwater Before Final Waterslide","Deep Sea (Act 2) Monitor - Gargoyle Path Block in Water","Deep Sea (Act 2) Monitor - Gargoyle Path on Pillar",
+"Deep Sea (Act 2) Monitor - Down Right From Goal on Rocky Ledge","Deep Sea (Act 2) Monitor - Gargoyle Path Spiked Pillar","Deep Sea (Act 2) Monitor - Gargoyle Path Behind Doors 1",
+"Deep Sea (Act 2) Monitor - Gargoyle Path Behind Doors 2","Deep Sea (Act 2) Monitor - Cliffside Near Red Button","Deep Sea (Act 2) Monitor - Right Waterslide Path Switch Secret 1",
+"Deep Sea (Act 2) Monitor - Right Waterslide Path Switch Secret 2","Deep Sea (Act 2) Monitor - Fountain Near Oval Platform","Deep Sea (Act 2) Monitor - Main Path Before Crushing Blocks",
+"Deep Sea (Act 2) Monitor - Behind Plants Near End","Deep Sea (Act 2) Monitor - Before End 1","Deep Sea (Act 2) Monitor - Before End 2",
+"Deep Sea (Act 2) Monitor - Crushing Ceiling Side 1","Deep Sea (Act 2) Monitor - Crushing Ceiling Side 2","Deep Sea (Act 2) Monitor - Down Right From Goal Underwater Cave",
+"Deep Sea (Act 2) Monitor - Nospin Path Behind Spring Button Door 1","Deep Sea (Act 2) Monitor - Nospin Path Behind Spring Button Door 2","Deep Sea (Act 2) Monitor - Nospin Path Behind Ruins Corner L1",
+"Deep Sea (Act 2) Monitor - Nospin Path Behind Ruins Corner R1","Deep Sea (Act 2) Monitor - Rising Water Platforms 1","Deep Sea (Act 2) Monitor - Rising Water Platforms 2",
+"Deep Sea (Act 2) Monitor - Nospin Path Behind Ruins Corner R2","Deep Sea (Act 2) Monitor - Gargoyle Path Stalagmite Cave","Deep Sea (Act 2) Monitor - Gargoyle Path Pillar Between Gap",
+"Deep Sea (Act 2) Monitor - Nospin Path Behind Ruins Corner L2","Deep Sea (Act 2) Monitor - Gargoyle Path After Rising Pillars Behind Plants")
 
 
     regCEZ1 = create_region("Castle Eggman Zone 1", player, world)
@@ -273,33 +281,40 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         create_locs(regCEZ2,"Castle Eggman (Act 2) Monitor - Rafter Above Starting Area",
         "Castle Eggman (Act 2) Monitor - Front Left Path High Above Water","Castle Eggman (Act 2) Monitor - High Bookshelf Before Final Tower","Castle Eggman (Act 2) Monitor - Under Bridge Near 3rd Checkpoint",
         "Castle Eggman (Act 2) Monitor - Front Left Path High Ledge Before Swinging Chains","Castle Eggman (Act 2) Monitor - Bookshelf in Spike Pit Before Final Tower","Castle Eggman (Act 2) Monitor - First Top Path Hidden Ground Spring",
-        "Castle Eggman (Act 2) Monitor - First Outside Area Pillar Near Star Emblem","Castle Eggman (Act 2) Monitor - Miss Red Springs Before 4th Checkpoint","Castle Eggman (Act 2) Monitor - Right Courtyard Corner Near Swinging Chain",
-        "Castle Eggman (Act 2) Monitor - Rocky Ledge Opposite Club Emblem","Castle Eggman (Act 2) Monitor - Window of Left Courtyard","Castle Eggman (Act 2) Monitor - Left Path Chain Launch Side Corridor",
+        "Castle Eggman (Act 2) Monitor - First Outside Area Pillar Near Star Emblem","Castle Eggman (Act 2) Monitor - Miss Red Springs Before 4th Checkpoint","Castle Eggman (Act 2) Monitor - Right Courtyard Corner Near Swinging Mace",
+        "Castle Eggman (Act 2) Monitor - Rocky Ledge Opposite Club Emblem","Castle Eggman (Act 2) Monitor - Window of Left Courtyard","Castle Eggman (Act 2) Monitor - Left Path Mace Launch Side Corridor",
         "Castle Eggman (Act 2) Monitor - Right Path Thin Gray Bookshelf Top")
 
     if options.superring_sanity:
-        create_locs(regCEZ1,"Castle Eggman (Act 1) Monitor - x:4224 y:-1600","Castle Eggman (Act 1) Monitor - x:10336 y:6144","Castle Eggman (Act 1) Monitor - x:10336 y:6016",
-        "Castle Eggman (Act 1) Monitor - x:2464 y:-17536","Castle Eggman (Act 1) Monitor - x:-3968 y:-11072","Castle Eggman (Act 1) Monitor - x:-4096 y:-11200","Castle Eggman (Act 1) Monitor - x:7392 y:1472",
-        "Castle Eggman (Act 1) Monitor - x:5056 y:192","Castle Eggman (Act 1) Monitor - x:5184 y:192","Castle Eggman (Act 1) Monitor - x:1760 y:-5760","Castle Eggman (Act 1) Monitor - x:-2080 y:-15008",
-        "Castle Eggman (Act 1) Monitor - x:6016 y:7936","Castle Eggman (Act 1) Monitor - x:7392 y:1536","Castle Eggman (Act 1) Monitor - x:-3104 y:-11616","Castle Eggman (Act 1) Monitor - x:6784 y:9024",
-        "Castle Eggman (Act 1) Monitor - x:5504 y:9024","Castle Eggman (Act 1) Monitor - x:4704 y:32","Castle Eggman (Act 1) Monitor - x:5280 y:-6496","Castle Eggman (Act 1) Monitor - x:5472 y:-6496",
-        "Castle Eggman (Act 1) Monitor - x:-6880 y:-12736","Castle Eggman (Act 1) Monitor - x:-6880 y:-12800","Castle Eggman (Act 1) Monitor - x:8512 y:-512","Castle Eggman (Act 1) Monitor - x:6048 y:-5920",
-        "Castle Eggman (Act 1) Monitor - x:-3104 y:-11488","Castle Eggman (Act 1) Monitor - x:13424 y:4640","Castle Eggman (Act 1) Monitor - x:6304 y:-5856","Castle Eggman (Act 1) Monitor - x:3024 y:-5424",
-        "Castle Eggman (Act 1) Monitor - x:-4736 y:-12096","Castle Eggman (Act 1) Monitor - x:-6720 y:-10304","Castle Eggman (Act 1) Monitor - x:-6752 y:-10272","Castle Eggman (Act 1) Monitor - x:1792 y:-2528",
-        "Castle Eggman (Act 1) Monitor - x:1824 y:-2560","Castle Eggman (Act 1) Monitor - x:2960 y:2160","Castle Eggman (Act 1) Monitor - x:5280 y:4704","Castle Eggman (Act 1) Monitor - x:2464 y:-17664")
-        create_locs(regCEZ2,"Castle Eggman (Act 2) Monitor - x:-6848 y:-20096","Castle Eggman (Act 2) Monitor - x:-7392 y:-20768","Castle Eggman (Act 2) Monitor - x:0 y:-21056","Castle Eggman (Act 2) Monitor - x:-8472 y:-18480",
-        "Castle Eggman (Act 2) Monitor - x:-2256 y:-18912","Castle Eggman (Act 2) Monitor - x:-8604 y:-8704","Castle Eggman (Act 2) Monitor - x:0 y:-11296","Castle Eggman (Act 2) Monitor - x:6976 y:320",
-        "Castle Eggman (Act 2) Monitor - x:6144 y:-11136","Castle Eggman (Act 2) Monitor - x:7392 y:1696","Castle Eggman (Act 2) Monitor - x:3456 y:992","Castle Eggman (Act 2) Monitor - x:-6352 y:5120",
-        "Castle Eggman (Act 2) Monitor - x:-8472 y:-18384","Castle Eggman (Act 2) Monitor - x:-12288 y:-1664","Castle Eggman (Act 2) Monitor - x:-3072 y:-16224","Castle Eggman (Act 2) Monitor - x:4288 y:-17216",
-        "Castle Eggman (Act 2) Monitor - x:1728 y:-14784","Castle Eggman (Act 2) Monitor - x:-5184 y:-19776","Castle Eggman (Act 2) Monitor - x:-5376 y:-15904","Castle Eggman (Act 2) Monitor - x:2112 y:-18432",
-        "Castle Eggman (Act 2) Monitor - x:-7616 y:-10368","Castle Eggman (Act 2) Monitor - x:-6784 y:-14592","Castle Eggman (Act 2) Monitor - x:4608 y:-7808","Castle Eggman (Act 2) Monitor - x:-4224 y:-17024",
-        "Castle Eggman (Act 2) Monitor - x:-9664 y:64","Castle Eggman (Act 2) Monitor - x:4064 y:-1120","Castle Eggman (Act 2) Monitor - x:-544 y:-1328","Castle Eggman (Act 2) Monitor - x:-6448 y:5120",
-        "Castle Eggman (Act 2) Monitor - x:-1984 y:-9984","Castle Eggman (Act 2) Monitor - x:-832 y:-1280","Castle Eggman (Act 2) Monitor - x:-9472 y:-1888","Castle Eggman (Act 2) Monitor - x:7712 y:-8288",
-        "Castle Eggman (Act 2) Monitor - x:-5632 y:-7200","Castle Eggman (Act 2) Monitor - x:-32 y:-2720","Castle Eggman (Act 2) Monitor - x:32 y:-2656","Castle Eggman (Act 2) Monitor - x:-544 y:-1232",
-        "Castle Eggman (Act 2) Monitor - x:9760 y:1824","Castle Eggman (Act 2) Monitor - x:8800 y:736","Castle Eggman (Act 2) Monitor - x:8800 y:-736","Castle Eggman (Act 2) Monitor - x:5312 y:-1984",
-        "Castle Eggman (Act 2) Monitor - x:-8064 y:3584","Castle Eggman (Act 2) Monitor - x:-8064 y:4608","Castle Eggman (Act 2) Monitor - x:7424 y:-12416","Castle Eggman (Act 2) Monitor - x:5600 y:-9184",
-        "Castle Eggman (Act 2) Monitor - x:2112 y:-16736","Castle Eggman (Act 2) Monitor - x:5664 y:-9184","Castle Eggman (Act 2) Monitor - x:-14464 y:-1152","Castle Eggman (Act 2) Monitor - x:1984 y:-9984",
-        "Castle Eggman (Act 2) Monitor - x:6656 y:-14336")
+        create_locs(regCEZ1,"Castle Eggman (Act 1) Monitor - Lower Main Path Before Tilted Maces","Castle Eggman (Act 1) Monitor - Near Spade Emblem 2",
+        "Castle Eggman (Act 1) Monitor - Near Spade Emblem 3","Castle Eggman (Act 1) Monitor - Left Path Cliff 1","Castle Eggman (Act 1) Monitor - Main Path Cave Under Mud 2",
+        "Castle Eggman (Act 1) Monitor - Main Path Cave Under Mud 3","Castle Eggman (Act 1) Monitor - Titled Maces Cave 1","Castle Eggman (Act 1) Monitor - Lower Main Path Tilted Maces 2",
+        "Castle Eggman (Act 1) Monitor - Lower Main Path Tilted Maces 3","Castle Eggman (Act 1) Monitor - Main Path Tree Ledge","Castle Eggman (Act 1) Monitor - Breakable Stone Near Start",
+        "Castle Eggman (Act 1) Monitor - Trees Near Final Checkpoint","Castle Eggman (Act 1) Monitor - Titled Maces Cave 2","Castle Eggman (Act 1) Monitor - Wall Path Breakable Stone 1",
+        "Castle Eggman (Act 1) Monitor - Final Checkpoint R","Castle Eggman (Act 1) Monitor - Final Checkpoint L","Castle Eggman (Act 1) Monitor - Red Spring Path Start Behind Tree",
+        "Castle Eggman (Act 1) Monitor - Near Star Emblem 1","Castle Eggman (Act 1) Monitor - Near Star Emblem 2","Castle Eggman (Act 1) Monitor - First Swinging Mace Jump 1",
+        "Castle Eggman (Act 1) Monitor - First Swinging Mace Jump 2","Castle Eggman (Act 1) Monitor - Wall Mace Cave Bottom","Castle Eggman (Act 1) Monitor - First Checkpoint Ring Circle",
+        "Castle Eggman (Act 1) Monitor - Wall Path Breakable Stone 2","Castle Eggman (Act 1) Monitor - Corner Behind 2nd Checkpoint","Castle Eggman (Act 1) Monitor - Corner After Lower First Checkpoint",
+        "Castle Eggman (Act 1) Monitor - Before Lower First Checkpoint","Castle Eggman (Act 1) Monitor - Alcove In First Mud Pit","Castle Eggman (Act 1) Monitor - Mud Path First Pit 1",
+        "Castle Eggman (Act 1) Monitor - Mud Path First Pit 2","Castle Eggman (Act 1) Monitor - Near Club Emblem 1","Castle Eggman (Act 1) Monitor - Near Club Emblem 2",
+        "Castle Eggman (Act 1) Monitor - Red Spring Path Second Turnaround","Castle Eggman (Act 1) Monitor - Red Spring Path On Slope","Castle Eggman (Act 1) Monitor - Left Path Cliff 2")
+        create_locs(regCEZ2,"Castle Eggman (Act 2) Monitor - First Top Path Near Platforms","Castle Eggman (Act 2) Monitor - Outside Path Start",
+        "Castle Eggman (Act 2) Monitor - Behind First Eggman Statue","Castle Eggman (Act 2) Monitor - First Top Path Stay On Platforms 1","Castle Eggman (Act 2) Monitor - First Spiked Mace Pit",
+        "Castle Eggman (Act 2) Monitor - Left Courtyard Behind Wood Pillar","Castle Eggman (Act 2) Monitor - First Courtyard Behind Fountain","Castle Eggman (Act 2) Monitor - Gray Bookshelf Near Final Tower Token",
+        "Castle Eggman (Act 2) Monitor - Below Right Courtyard Token","Castle Eggman (Act 2) Monitor - Before Final Tower Spike Pit Around Corner","Castle Eggman (Act 2) Monitor - Before Final Tower Spike Pit Under Ledge",
+        "Castle Eggman (Act 2) Monitor - Pillar After Side Mace Launch 1","Castle Eggman (Act 2) Monitor - First Top Path Stay On Platforms 2","Castle Eggman (Act 2) Monitor - Near Club Emblem",
+        "Castle Eggman (Act 2) Monitor - Behind Springs After Outside Path","Castle Eggman (Act 2) Monitor - Right Courtyard Back Left Corner","Castle Eggman (Act 2) Monitor - First Courtyard Front Right Corner",
+        "Castle Eggman (Act 2) Monitor - Outside Path Near Spiked Maces","Castle Eggman (Act 2) Monitor - Left Courtyard Back Left Corner","Castle Eggman (Act 2) Monitor - Left After Floor Trap",
+        "Castle Eggman (Act 2) Monitor - Left Courtyard Front Pillar","Castle Eggman (Act 2) Monitor - Left Courtyard Bottom Right Corner","Castle Eggman (Act 2) Monitor - Left Side Before Swinging Mace Launch",
+        "Castle Eggman (Act 2) Monitor - First Top Path Falling Floor","Castle Eggman (Act 2) Monitor - Grass Room Spike Ball Stuck In Tree","Castle Eggman (Act 2) Monitor - Right Library Cracked Statue Base",
+        "Castle Eggman (Act 2) Monitor - Left Library Bookshelf Between Pillars 1","Castle Eggman (Act 2) Monitor - Pillar After Side Mace Launch 2","Castle Eggman (Act 2) Monitor - First Courtyard Back Left Corner",
+        "Castle Eggman (Act 2) Monitor - Left Library First Spike Pit","Castle Eggman (Act 2) Monitor - Grass Room Small Tree Ledge","Castle Eggman (Act 2) Monitor - Right Courtyard Spring Path Cracked Stone",
+        "Castle Eggman (Act 2) Monitor - Right Side Before Swinging Mace Launch","Castle Eggman (Act 2) Monitor - Above Library Entrance 1","Castle Eggman (Act 2) Monitor - Above Library Entrance 2",
+        "Castle Eggman (Act 2) Monitor - Left Library Bookshelf Between Pillars 2","Castle Eggman (Act 2) Monitor - Cracked Brick Right Library Outside","Castle Eggman (Act 2) Monitor - Right Library Moving Platforms Left Bookshelf",
+        "Castle Eggman (Act 2) Monitor - Right Library Moving Platforms Right Bookshelf","Castle Eggman (Act 2) Monitor - Right Library Fake Statue","Castle Eggman (Act 2) Monitor - Side Mace Launch Right",
+        "Castle Eggman (Act 2) Monitor - Side Mace Launch Left","Castle Eggman (Act 2) Monitor - Right Courtyard Square Pillar In Grass","Castle Eggman (Act 2) Monitor - Right Courtyard Spring Path Miss Jump 1",
+        "Castle Eggman (Act 2) Monitor - Before First Courtyard Right Hallway","Castle Eggman (Act 2) Monitor - Right Courtyard Spring Path Miss Jump 2","Castle Eggman (Act 2) Monitor - Grass Room Spike Pit Side Room",
+        "Castle Eggman (Act 2) Monitor - First Courtyard Back Right Corner","Castle Eggman (Act 2) Monitor - Right Courtyard First Pillar")
 
     regACZ1 = create_region("Arid Canyon Zone 1", player, world)
     regACZ2 = create_region("Arid Canyon Zone 2", player, world)
@@ -334,25 +349,30 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
     "Arid Canyon (Act 2) Monitor - Ending Minecarts","Arid Canyon (Act 2) Monitor - Very High Ledge Between Left and Looping Path","Arid Canyon (Act 2) Monitor - TNT Barrel Ledge Near Star Emblem")
 
     if options.superring_sanity:
-        create_locs(regACZ1,"Arid Canyon (Act 1) Monitor - x:-2368 y:-15680","Arid Canyon (Act 1) Monitor - x:3568 y:-1824","Arid Canyon (Act 1) Monitor - x:3856 y:-9648",
-        "Arid Canyon (Act 1) Monitor - x:3952 y:-9616","Arid Canyon (Act 1) Monitor - x:4895 y:-8222","Arid Canyon (Act 1) Monitor - x:-352 y:-2688","Arid Canyon (Act 1) Monitor - x:-6208 y:-2304",
-        "Arid Canyon (Act 1) Monitor - x:2336 y:-14304","Arid Canyon (Act 1) Monitor - x:-1872 y:-12080","Arid Canyon (Act 1) Monitor - x:928 y:-10784","Arid Canyon (Act 1) Monitor - x:1632 y:1696",
-        "Arid Canyon (Act 1) Monitor - x:-11680 y:672","Arid Canyon (Act 1) Monitor - x:3904 y:544","Arid Canyon (Act 1) Monitor - x:-7360 y:-2240","Arid Canyon (Act 1) Monitor - x:3568 y:-1696",
-        "Arid Canyon (Act 1) Monitor - x:-7360 y:-2368","Arid Canyon (Act 1) Monitor - x:704 y:-12224","Arid Canyon (Act 1) Monitor - x:992 y:-10784","Arid Canyon (Act 1) Monitor - x:-10400 y:-4544",
-        "Arid Canyon (Act 1) Monitor - x:864 y:-16064","Arid Canyon (Act 1) Monitor - x:6368 y:-17376","Arid Canyon (Act 1) Monitor - x:320 y:-8640","Arid Canyon (Act 1) Monitor - x:224 y:-8640",
-        "Arid Canyon (Act 1) Monitor - x:416 y:-8640","Arid Canyon (Act 1) Monitor - x:2032 y:-13120","Arid Canyon (Act 1) Monitor - x:2816 y:-4800","Arid Canyon (Act 1) Monitor - x:4336 y:-12176",
-        "Arid Canyon (Act 1) Monitor - x:-3669 y:1024","Arid Canyon (Act 1) Monitor - x:-7456 y:-1184")
-        create_locs(regACZ2,"Arid Canyon (Act 2) Monitor - x:-3488 y:-23200","Arid Canyon (Act 2) Monitor - x:-2240 y:-23648",
-        "Arid Canyon (Act 2) Monitor - x:4672 y:-10912","Arid Canyon (Act 2) Monitor - x:4416 y:-22144","Arid Canyon (Act 2) Monitor - x:-1120 y:-9280","Arid Canyon (Act 2) Monitor - x:3072 y:-9216",
-        "Arid Canyon (Act 2) Monitor - x:5440 y:-9664","Arid Canyon (Act 2) Monitor - x:3888 y:-16096","Arid Canyon (Act 2) Monitor - x:3888 y:-16800","Arid Canyon (Act 2) Monitor - x:3232 y:-17440",
-        "Arid Canyon (Act 2) Monitor - x:-768 y:-16512","Arid Canyon (Act 2) Monitor - x:-3840 y:-15968","Arid Canyon (Act 2) Monitor - x:-3904 y:-15968","Arid Canyon (Act 2) Monitor - x:-1776 y:-23296",
-        "Arid Canyon (Act 2) Monitor - x:2216 y:-16960","Arid Canyon (Act 2) Monitor - x:2264 y:-16960","Arid Canyon (Act 2) Monitor - x:4576 y:-7904","Arid Canyon (Act 2) Monitor - x:-7648 y:-13824",
-        "Arid Canyon (Act 2) Monitor - x:2176 y:-15456","Arid Canyon (Act 2) Monitor - x:-7088 y:-13760","Arid Canyon (Act 2) Monitor - x:-7088 y:-13888","Arid Canyon (Act 2) Monitor - x:2304 y:-15456",
-        "Arid Canyon (Act 2) Monitor - x:6976 y:-22208","Arid Canyon (Act 2) Monitor - x:6976 y:-22144","Arid Canyon (Act 2) Monitor - x:4928 y:-15488","Arid Canyon (Act 2) Monitor - x:-4720 y:-17344",
-        "Arid Canyon (Act 2) Monitor - x:-3360 y:-14208","Arid Canyon (Act 2) Monitor - x:7776 y:-6528","Arid Canyon (Act 2) Monitor - x:7776 y:-6592","Arid Canyon (Act 2) Monitor - x:896 y:-20992",
-        "Arid Canyon (Act 2) Monitor - x:-3136 y:-17376","Arid Canyon (Act 2) Monitor - x:-14240 y:-5376","Arid Canyon (Act 2) Monitor - x:-14176 y:-5376","Arid Canyon (Act 2) Monitor - x:-15424 y:-5312",
-        "Arid Canyon (Act 2) Monitor - x:-12960 y:-2400","Arid Canyon (Act 2) Monitor - x:-5008 y:-17344","Arid Canyon (Act 2) Monitor - x:-6624 y:-13888","Arid Canyon (Act 2) Monitor - x:-6816 y:-19616",
-        "Arid Canyon (Act 2) Monitor - x:-5632 y:-10528","Arid Canyon (Act 2) Monitor - x:7360 y:-9280","Arid Canyon (Act 2) Monitor - x:-5144 y:-616")
+        create_locs(regACZ1,"Arid Canyon (Act 1) Monitor - First House","Arid Canyon (Act 1) Monitor - Knuckles Path Before Climb 1",
+        "Arid Canyon (Act 1) Monitor - Main Area High Near Broken Road 1","Arid Canyon (Act 1) Monitor - Main Area High Near Broken Road 2","Arid Canyon (Act 1) Monitor - Main Area Small Crates",
+        "Arid Canyon (Act 1) Monitor - Main Path Ledge Near Rope Hangs","Arid Canyon (Act 1) Monitor - TNT Path Near Exploding Ramp","Arid Canyon (Act 1) Monitor - Second House",
+        "Arid Canyon (Act 1) Monitor - First Rock","Arid Canyon (Act 1) Monitor - Main Area Ledge After Plank 1","Arid Canyon (Act 1) Monitor - Under Road Before Heart Emblem",
+        "Arid Canyon (Act 1) Monitor - Near Spade Emblem","Arid Canyon (Act 1) Monitor - Knuckles Path Around Corner","Arid Canyon (Act 1) Monitor - TNT Path High Ledge Before Exploding Ramp 1",
+        "Arid Canyon (Act 1) Monitor - Knuckles Path Before Climb 2","Arid Canyon (Act 1) Monitor - TNT Path High Ledge Before Exploding Ramp 2","Arid Canyon (Act 1) Monitor - High Ledge Before First Path Split",
+        "Arid Canyon (Act 1) Monitor - Main Area Ledge After Plank 2","Arid Canyon (Act 1) Monitor - TNT Path Behind Large Crate","Arid Canyon (Act 1) Monitor - Behind First Crate",
+        "Arid Canyon (Act 1) Monitor - Nospin Path Behind Cacti","Arid Canyon (Act 1) Monitor - Main Area Miss Spring 1","Arid Canyon (Act 1) Monitor - Main Area Miss Spring 2",
+        "Arid Canyon (Act 1) Monitor - Main Area Miss Spring 3","Arid Canyon (Act 1) Monitor - Main Path Wagon Wheel","Arid Canyon (Act 1) Monitor - Entrance Road To Knuckles Path",
+        "Arid Canyon (Act 1) Monitor - Right Path Cave Behind Crates","Arid Canyon (Act 1) Monitor - Behind Cacti Near Falling Anvil","Arid Canyon (Act 1) Monitor - Behind Cacti End of TNT Path")
+        create_locs(regACZ2,"Arid Canyon (Act 2) Monitor - Left Path Under Collapsing Plank","Arid Canyon (Act 2) Monitor - Left Path Second Platform",
+        "Arid Canyon (Act 2) Monitor - Behind Plank Near Diamond Emblem","Arid Canyon (Act 2) Monitor - First Crate","Arid Canyon (Act 2) Monitor - Looping Path Low Ledge Behind Cacti",
+        "Arid Canyon (Act 2) Monitor - Large Arch Cave Gap After Spikes","Arid Canyon (Act 2) Monitor - Large Arch Cave TNT Behind Crates","Arid Canyon (Act 2) Monitor - Canarivore Path Half Pipe Top 1",
+        "Arid Canyon (Act 2) Monitor - Canarivore Path Half Pipe Top 2","Arid Canyon (Act 2) Monitor - Behind Crate Near Spade Emblem","Arid Canyon (Act 2) Monitor - TNT Barrels Near Star Emblem",
+        "Arid Canyon (Act 2) Monitor - Canarivore Path Before Ramp 1","Arid Canyon (Act 2) Monitor - Canarivore Path Before Ramp 2","Arid Canyon (Act 2) Monitor - Left Path Tall Plank",
+        "Arid Canyon (Act 2) Monitor - Looping Path Side Ledge 1","Arid Canyon (Act 2) Monitor - Looping Path Side Ledge 2","Arid Canyon (Act 2) Monitor - Large Arch Cave Middle Crates",
+        "Arid Canyon (Act 2) Monitor - Below Heart Emblem Area","Arid Canyon (Act 2) Monitor - End Of Left Knuckles Path Around Corner 2","Arid Canyon (Act 2) Monitor - Near Heart Emblem 2",
+        "Arid Canyon (Act 2) Monitor - Near Heart Emblem 3","Arid Canyon (Act 2) Monitor - End Of Left Knuckles Path Around Corner 3","Arid Canyon (Act 2) Monitor - Left Knuckles Path Back Ledge 1",
+        "Arid Canyon (Act 2) Monitor - Left Knuckles Path Back Ledge 2","Arid Canyon (Act 2) Monitor - Left Knuckles Path Main Platform","Arid Canyon (Act 2) Monitor - Nospin Path After First Minecart 1",
+        "Arid Canyon (Act 2) Monitor - Looping Path Ledge Near Rock","Arid Canyon (Act 2) Monitor - Near Arch Cave Token 1","Arid Canyon (Act 2) Monitor - Near Arch Cave Token 2",
+        "Arid Canyon (Act 2) Monitor - Right Ledge Near Start","Arid Canyon (Act 2) Monitor - Nospin Path Before Second Minecart","Arid Canyon (Act 2) Monitor - Left Path Behind TNT Near End 1",
+        "Arid Canyon (Act 2) Monitor - Left Path Behind TNT Near End 2","Arid Canyon (Act 2) Monitor - Left Path Near Wooden Bridge","Arid Canyon (Act 2) Monitor - Left Path Alternate Rail",
+        "Arid Canyon (Act 2) Monitor - Nospin Path After First Minecart 2","Arid Canyon (Act 2) Monitor - Left Path Small Ledge Under Heart Emblem","Arid Canyon (Act 2) Monitor - Left Path Climb Wooden Spring Ladder",
+        "Arid Canyon (Act 2) Monitor - Canarivore Path Join Left Path Ledge","Arid Canyon (Act 2) Monitor - Large Arch Cave Guarded By Green Snapper","Arid Canyon (Act 2) Monitor - Crate Before Final Minecart")
 
     regRVZ1 = create_region("Red Volcano Zone 1", player, world)
     create_locs(regRVZ1, "Red Volcano (Act 1) Star Emblem", "Red Volcano (Act 1) Spade Emblem", "Red Volcano (Act 1) Heart Emblem", "Red Volcano (Act 1) Diamond Emblem",
@@ -367,10 +387,11 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Red Volcano (Act 1) Monitor - Whirlwind Path Cave Around Corner","Red Volcano (Act 1) Monitor - Right Path Rising Lava Room Ledge","Red Volcano (Act 1) Monitor - Flame Jets Room Ledge",
         "Red Volcano (Act 1) Monitor - Behind Pillar Near End","Red Volcano (Act 1) Monitor - Near Heart Emblem","Red Volcano (Act 1) Monitor - Thin Ledge Second Outside Area")
     if options.superring_sanity:
-        create_locs(regRVZ1,"Red Volcano (Act 1) Monitor - x:-4096 y:-8864","Red Volcano (Act 1) Monitor - x:23136 y:6304","Red Volcano (Act 1) Monitor - x:22304 y:8192",
-        "Red Volcano (Act 1) Monitor - x:25792 y:8480","Red Volcano (Act 1) Monitor - x:3488 y:-7888","Red Volcano (Act 1) Monitor - x:7952 y:-4112","Red Volcano (Act 1) Monitor - x:3520 y:-7920",
-        "Red Volcano (Act 1) Monitor - x:10784 y:-6912","Red Volcano (Act 1) Monitor - x:-768 y:1600","Red Volcano (Act 1) Monitor - x:15840 y:12692","Red Volcano (Act 1) Monitor - x:4128 y:17504",
-        "Red Volcano (Act 1) Monitor - x:4064 y:17568","Red Volcano (Act 1) Monitor - x:15904 y:12704")
+        create_locs(regRVZ1,"Red Volcano (Act 1) Monitor - First Ledge","Red Volcano (Act 1) Monitor - First Outside Area Under Stone Platform",
+        "Red Volcano (Act 1) Monitor - First Outside Area Tall Middle Rock","Red Volcano (Act 1) Monitor - First Outside Area Lower Back Grass","Red Volcano (Act 1) Monitor - Right Path Ledge After Falling Platform 1",
+        "Red Volcano (Act 1) Monitor - Main Path Low Ledge","Red Volcano (Act 1) Monitor - Right Path Ledge After Falling Platform 2","Red Volcano (Act 1) Monitor - Right Path Rising Lava Room Middle Ledge",
+        "Red Volcano (Act 1) Monitor - Final Path Split Ledge","Red Volcano (Act 1) Monitor - Second Outside Area Right Ledge 1","Red Volcano (Act 1) Monitor - Near Lavafall Token 1",
+        "Red Volcano (Act 1) Monitor - Near Lavafall Token 2","Red Volcano (Act 1) Monitor - Second Outside Area Right Ledge 2")
 
     regERZ1 = create_region("Egg Rock Zone 1", player, world)
     regERZ2 = create_region("Egg Rock Zone 2", player, world)
@@ -401,18 +422,21 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Egg Rock (Act 2) Monitor - Skip Gravity Pad Near Token","Egg Rock (Act 2) Monitor - Right Path Below Outside Start")
 
     if options.superring_sanity:
-        create_locs(regERZ1,"Egg Rock (Act 1) Monitor - x:-11040 y:-7296","Egg Rock (Act 1) Monitor - x:-10912 y:-7296","Egg Rock (Act 1) Monitor - x:-7504 y:-7872",
-        "Egg Rock (Act 1) Monitor - x:-5760 y:-2208","Egg Rock (Act 1) Monitor - x:-1056 y:3136","Egg Rock (Act 1) Monitor - x:3336 y:-9024","Egg Rock (Act 1) Monitor - x:384 y:-9952",
-        "Egg Rock (Act 1) Monitor - x:384 y:-10912","Egg Rock (Act 1) Monitor - x:-3488 y:2464","Egg Rock (Act 1) Monitor - x:-7360 y:-7872","Egg Rock (Act 1) Monitor - x:-9888 y:-11392",
-        "Egg Rock (Act 1) Monitor - x:-5376 y:-9760","Egg Rock (Act 1) Monitor - x:-7296 y:-7872","Egg Rock (Act 1) Monitor - x:7008 y:-10560","Egg Rock (Act 1) Monitor - x:1600 y:-5120",
-        "Egg Rock (Act 1) Monitor - x:-5408 y:-288","Egg Rock (Act 1) Monitor - x:-4800 y:2240","Egg Rock (Act 1) Monitor - x:-992 y:3136","Egg Rock (Act 2) Monitor - x:-9248 y:12448",
-        "Egg Rock (Act 2) Monitor - x:-9248 y:12320")
-        create_locs(regERZ2,"Egg Rock (Act 2) Monitor - x:-3520 y:15200","Egg Rock (Act 2) Monitor - x:-2016 y:15200","Egg Rock (Act 2) Monitor - x:-3456 y:15200",
-        "Egg Rock (Act 2) Monitor - x:-4800 y:17408","Egg Rock (Act 2) Monitor - x:-4864 y:17408","Egg Rock (Act 2) Monitor - x:-2336 y:14144","Egg Rock (Act 2) Monitor - x:-6592 y:8096",
-        "Egg Rock (Act 2) Monitor - x:-6720 y:8096","Egg Rock (Act 2) Monitor - x:-13152 y:10784","Egg Rock (Act 2) Monitor - x:1536 y:16896","Egg Rock (Act 2) Monitor - x:9472 y:14976",
-        "Egg Rock (Act 2) Monitor - x:64 y:12736","Egg Rock (Act 2) Monitor - x:1024 y:3392","Egg Rock (Act 2) Monitor - x:1024 y:3296","Egg Rock (Act 2) Monitor - x:-11936 y:12704",
-        "Egg Rock (Act 2) Monitor - x:768 y:-1408","Egg Rock (Act 2) Monitor - x:864 y:7328","Egg Rock (Act 2) Monitor - x:64 y:12224","Egg Rock (Act 2) Monitor - x:64 y:12096",
-        "Egg Rock (Act 2) Monitor - x:9472 y:15936","Egg Rock (Act 2) Monitor - x:3296 y:21600")
+        create_locs(regERZ1,"Egg Rock (Act 1) Monitor - Near Star Emblem 2","Egg Rock (Act 1) Monitor - Near Star Emblem 3",
+        "Egg Rock (Act 1) Monitor - 2D Area Zoom Tube Top","Egg Rock (Act 1) Monitor - Blue Pillar Before End","Egg Rock (Act 1) Monitor - Main Path End 1",
+        "Egg Rock (Act 1) Monitor - Behind Moving Lasers","Egg Rock (Act 1) Monitor - Spin Path Crushers R","Egg Rock (Act 1) Monitor - Spin Path Crushers L",
+        "Egg Rock (Act 1) Monitor - Outside Air Pocket Near End","Egg Rock (Act 1) Monitor - 2D Area Behind Last Zoom Tube 2","Egg Rock (Act 1) Monitor - Appearing Blocks Area Corner",
+        "Egg Rock (Act 1) Monitor - Spin Path Gravity Room","Egg Rock (Act 1) Monitor - 2D Area Behind Last Zoom Tube 3","Egg Rock (Act 1) Monitor - Near Diamond Emblem 2",
+        "Egg Rock (Act 1) Monitor - Knuckles Path Before Wall Conveyors","Egg Rock (Act 1) Monitor - Metal Beam Before End","Egg Rock (Act 1) Monitor - Right Before End",
+        "Egg Rock (Act 1) Monitor - Main Path End 2")
+        create_locs(regERZ2,"Egg Rock (Act 2) Monitor - Auto Gravity Area Behind First Zoom Tube 2","Egg Rock (Act 2) Monitor - Auto Gravity Area Behind First Zoom Tube 3",
+        "Egg Rock (Act 2) Monitor - 2D Area Outside Ledge 1","Egg Rock (Act 2) Monitor - 2D Area Second Zoom Tube Exit","Egg Rock (Act 2) Monitor - 2D Area Outside Ledge 2",
+        "Egg Rock (Act 2) Monitor - 2D Area Above Air Pocket 3","Egg Rock (Act 2) Monitor - 2D Area Above Air Pocket 4","Egg Rock (Act 2) Monitor - 2D Area Low Ledge",
+        "Egg Rock (Act 2) Monitor - Near Star Emblem 2","Egg Rock (Act 2) Monitor - Near Star Emblem 3","Egg Rock (Act 2) Monitor - Near Zoom Tube Before Final Teleporter",
+        "Egg Rock (Act 2) Monitor - Elevator Shaft","Egg Rock (Act 2) Monitor - Turret Room Back Right","Egg Rock (Act 2) Monitor - Right Path Spike Pit",
+        "Egg Rock (Act 2) Monitor - Left Path Outside First Checkpoint 1","Egg Rock (Act 2) Monitor - Left Path Outside First Checkpoint 2","Egg Rock (Act 2) Monitor - Auto Gravity Area Pop-up Turrets",
+        "Egg Rock (Act 2) Monitor - Starting Area Corner","Egg Rock (Act 2) Monitor - Right Path First Outside Area Entrance","Egg Rock (Act 2) Monitor - Right Path Near Second Checkpoint 1",
+        "Egg Rock (Act 2) Monitor - Right Path Near Second Checkpoint 2","Egg Rock (Act 2) Monitor - Turret Room Back Left","Egg Rock (Act 2) Monitor - Air Lock Room Floor")
 
     regBCZ1 = create_region("Black Core Zone 1", player, world)
     regBCZ2 = create_region("Black Core Zone 2", player, world)
@@ -472,12 +496,13 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Forest Fortress Monitor - In Ceiling After Final Checkpoint","Forest Fortress Monitor - Trees Near Diamond Emblem")
 
     if options.superring_sanity:
-        create_locs(regFFZ,"Forest Fortress Monitor - x:-4512 y:-13968","Forest Fortress Monitor - x:-6240 y:-9024","Forest Fortress Monitor - x:-1280 y:-7616",
-        "Forest Fortress Monitor - x:-1280 y:-7744","Forest Fortress Monitor - x:-2816 y:-4992","Forest Fortress Monitor - x:3200 y:-1952","Forest Fortress Monitor - x:3776 y:-832",
-        "Forest Fortress Monitor - x:9248 y:2720","Forest Fortress Monitor - x:12928 y:6656","Forest Fortress Monitor - x:9120 y:7392","Forest Fortress Monitor - x:9120 y:12864",
-        "Forest Fortress Monitor - x:9056 y:12736","Forest Fortress Monitor - x:2864 y:-6864","Forest Fortress Monitor - x:4456 y:-3944","Forest Fortress Monitor - x:6816 y:6656",
-        "Forest Fortress Monitor - x:6776 y:6576","Forest Fortress Monitor - x:8224 y:12064","Forest Fortress Monitor - x:2912 y:-6816","Forest Fortress Monitor - x:2224 y:11392",
-        "Forest Fortress Monitor - x:8608 y:3808","Forest Fortress Monitor - x:10976 y:8352")
+        create_locs(regFFZ,"Forest Fortress Monitor - Ledge Near First Swinging Mace","Forest Fortress Monitor - Main Path Ring Circle","Forest Fortress Monitor - Near Hanging Wood Bridge 2",
+    "Forest Fortress Monitor - Near Hanging Wood Bridge 3","Forest Fortress Monitor - Main Path Tree Pillar","Forest Fortress Monitor - First Castle Wall Near Water",
+    "Forest Fortress Monitor - First Castle Wall Underwater","Forest Fortress Monitor - Castle Lake Ledge","Forest Fortress Monitor - Vertical Mace Jump Ledge",
+    "Forest Fortress Monitor - Before Final Checkpoint","Forest Fortress Monitor - Low Ledge Before Goal 2","Forest Fortress Monitor - Low Ledge Before Goal 3",
+    "Forest Fortress Monitor - Overgrown Ledge Right Path 1","Forest Fortress Monitor - Spike Room Near Yellow Spring","Forest Fortress Monitor - Near Club Emblem 1",
+    "Forest Fortress Monitor - Near Club Emblem 2","Forest Fortress Monitor - Inside Tower Near End","Forest Fortress Monitor - Overgrown Ledge Right Path 2",
+    "Forest Fortress Monitor - Before Final Spring Chain","Forest Fortress Monitor - Castle Lake Underwater","Forest Fortress Monitor - Tower Before Club Emblem")
 
 
     regFDZ = create_region("Final Demo Zone", player, world)
@@ -498,22 +523,26 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
 "Final Demo Monitor - Castle Eggman (Act 2) Right Courtyard on Platform 1","Final Demo Monitor - Red Volcano (Act 1) Start","Final Demo Monitor - Red Volcano (Act 1) Across Broken Bridge 1","Final Demo Monitor - Red Volcano (Act 1) Cave Near Falling Platforms")
 
     if options.superring_sanity:
-        create_locs(regFDZ,"Final Demo Monitor - x:-27570 y:-28152","Final Demo Monitor - x:-26848 y:-30720","Final Demo Monitor - x:-28896 y:-21056",
-        "Final Demo Monitor - x:-23328 y:-21952","Final Demo Monitor - x:-26872 y:-30672","Final Demo Monitor - x:-26824 y:-30672","Final Demo Monitor - x:-14488 y:-23296",
-        "Final Demo Monitor - x:-14488 y:-23256","Final Demo Monitor - x:-6400 y:-17312","Final Demo Monitor - x:-3200 y:-18496","Final Demo Monitor - x:-3136 y:-18496",
-        "Final Demo Monitor - x:-3136 y:-18560","Final Demo Monitor - x:-3136 y:-18624","Final Demo Monitor - x:-3200 y:-18624","Final Demo Monitor - x:-3264 y:-18624",
-        "Final Demo Monitor - x:-3264 y:-18560","Final Demo Monitor - x:-3264 y:-18496","Final Demo Monitor - x:-14528 y:-23296","Final Demo Monitor - x:-6344 y:-16184",
-        "Final Demo Monitor - x:15936 y:-27840","Final Demo Monitor - x:16128 y:-26624","Final Demo Monitor - x:9280 y:-17280","Final Demo Monitor - x:6208 y:-18326",
-        "Final Demo Monitor - x:23008 y:-23200","Final Demo Monitor - x:15936 y:-27800","Final Demo Monitor - x:9120 y:-160","Final Demo Monitor - x:9120 y:-288",
-        "Final Demo Monitor - x:28832 y:-2464","Final Demo Monitor - x:25280 y:15232","Final Demo Monitor - x:19264 y:16448","Final Demo Monitor - x:19456 y:16448",
-        "Final Demo Monitor - x:24320 y:7552","Final Demo Monitor - x:24896 y:6272","Final Demo Monitor - x:26368 y:6592","Final Demo Monitor - x:27136 y:7616",
-        "Final Demo Monitor - x:22912 y:12480","Final Demo Monitor - x:26816 y:16640","Final Demo Monitor - x:18336 y:11040","Final Demo Monitor - x:18272 y:10976",
-        "Final Demo Monitor - x:18272 y:11040","Final Demo Monitor - x:18336 y:10976","Final Demo Monitor - x:20512 y:24640","Final Demo Monitor - x:20256 y:25536",
-        "Final Demo Monitor - x:20256 y:25472","Final Demo Monitor - x:20192 y:25472","Final Demo Monitor - x:25440 y:22912","Final Demo Monitor - x:25376 y:22912",
-        "Final Demo Monitor - x:28512 y:20320","Final Demo Monitor - x:24672 y:18880","Final Demo Monitor - x:24672 y:18944","Final Demo Monitor - x:24672 y:18816",
-        "Final Demo Monitor - x:25888 y:24384","Final Demo Monitor - x:27136 y:23968","Final Demo Monitor - x:27200 y:23904","Final Demo Monitor - x:27200 y:23968",
-        "Final Demo Monitor - x:28192 y:25792","Final Demo Monitor - x:28192 y:26240","Final Demo Monitor - x:15792 y:17664","Final Demo Monitor - x:432 y:28416",
-        "Final Demo Monitor - x:8016 y:26656")
+        create_locs(regFDZ,"Final Demo Monitor - Greenflower (Act 1) First Pillar","Final Demo Monitor - Greenflower (Act 1) First Cave Skylight 1","Final Demo Monitor - Greenflower (Act 1) Bridge Lake Top Ledge",
+"Final Demo Monitor - Greenflower (Act 1) Floating Thok Barrier Ledge","Final Demo Monitor - Greenflower (Act 1) First Cave Skylight 2","Final Demo Monitor - Greenflower (Act 1) First Cave Skylight 3",
+"Final Demo Monitor - Greenflower (Act 2) Waterfall Platforms 1","Final Demo Monitor - Greenflower (Act 2) Waterfall Platforms 2","Final Demo Monitor - Greenflower (Act 2) Main Path Near Springs",
+        "Final Demo Monitor - Greenflower (Act 2) Very High Alcove 1","Final Demo Monitor - Greenflower (Act 2) Very High Alcove 2","Final Demo Monitor - Greenflower (Act 2) Very High Alcove 3",
+        "Final Demo Monitor - Greenflower (Act 2) Very High Alcove 4","Final Demo Monitor - Greenflower (Act 2) Very High Alcove 5","Final Demo Monitor - Greenflower (Act 2) Very High Alcove 6",
+        "Final Demo Monitor - Greenflower (Act 2) Very High Alcove 7","Final Demo Monitor - Greenflower (Act 2) Very High Alcove 8","Final Demo Monitor - Greenflower (Act 2) Waterfall Platforms 3",
+        "Final Demo Monitor - Greenflower (Act 2) Fence Near Spring Chain","Final Demo Monitor - Techno Hill (Act 1) Floating Platform 1","Final Demo Monitor - Techno Hill (Act 1) Metal Platform After Poison Lake",
+        "Final Demo Monitor - Techno Hill (Act 1) Ledge Above First Poison","Final Demo Monitor - Techno Hill (Act 1) Right of Second Poison","Final Demo Monitor - Techno Hill (Act 1) On Pipes Near Token",
+        "Final Demo Monitor - Techno Hill (Act 1) Floating Platform 2","Final Demo Monitor - Techno Hill (Act 2) Glass Conveyor Secret 1","Final Demo Monitor - Techno Hill (Act 2) Glass Conveyor Secret 2",
+        "Final Demo Monitor - Techno Hill (Act 2) Flowing Poison","Final Demo Monitor - Castle Eggman (Act 1) Left Water Secret","Final Demo Monitor - Castle Eggman (Act 1) Moat Sewer 1",
+        "Final Demo Monitor - Castle Eggman (Act 1) Moat Sewer 2","Final Demo Monitor - Castle Eggman (Act 1) Left Tunnel Before Act Clear","Final Demo Monitor - Castle Eggman (Act 1) Right Tunnel Before Act Clear",
+        "Final Demo Monitor - Castle Eggman (Act 1) Tunnel Near Token","Final Demo Monitor - Castle Eggman (Act 1) Red Spring Cave","Final Demo Monitor - Castle Eggman (Act 1) Right Alcove Near Start",
+        "Final Demo Monitor - Castle Eggman (Act 1) Left Path Spring Cave","Final Demo Monitor - Castle Eggman (Act 1) Red Button Trap 1","Final Demo Monitor - Castle Eggman (Act 1) Red Button Trap 2",
+        "Final Demo Monitor - Castle Eggman (Act 1) Red Button Trap 3","Final Demo Monitor - Castle Eggman (Act 1) Red Button Trap 4","Final Demo Monitor - Castle Eggman (Act 2) Secret Corner in Fountain",
+        "Final Demo Monitor - Castle Eggman (Act 2) Secret in Fountain 2","Final Demo Monitor - Castle Eggman (Act 2) Secret in Fountain 3","Final Demo Monitor - Castle Eggman (Act 2) Secret in Fountain 4",
+        "Final Demo Monitor - Castle Eggman (Act 2) Sewer Secret 1","Final Demo Monitor - Castle Eggman (Act 2) Sewer Secret 2","Final Demo Monitor - Castle Eggman (Act 2) Sewer Room On Pipe",
+        "Final Demo Monitor - Castle Eggman (Act 2) Sewer Room Switch Corner 1","Final Demo Monitor - Castle Eggman (Act 2) Sewer Room Switch Corner 2","Final Demo Monitor - Castle Eggman (Act 2) Sewer Room Switch Corner 3",
+        "Final Demo Monitor - Castle Eggman (Act 2) Right Courtyard Overhang","Final Demo Monitor - Castle Eggman (Act 2) Right Courtyard Pillar 1","Final Demo Monitor - Castle Eggman (Act 2) Right Courtyard Pillar 2",
+        "Final Demo Monitor - Castle Eggman (Act 2) Right Courtyard Pillar 3","Final Demo Monitor - Castle Eggman (Act 2) Right Courtyard Platform 2","Final Demo Monitor - Castle Eggman (Act 2) Right Courtyard Platform 3",
+        "Final Demo Monitor - Red Volcano (Act 1) Main Path After Checkpoint","Final Demo Monitor - Red Volcano (Act 1) Across Broken Bridge 2","Final Demo Monitor - Red Volcano (Act 1) Main Path Under Pipes")
 
     regHHZ = create_region("Haunted Heights Zone", player, world)
     create_locs(regHHZ, "Haunted Heights Star Emblem", "Haunted Heights Spade Emblem", "Haunted Heights Heart Emblem", "Haunted Heights Diamond Emblem",
@@ -531,12 +560,14 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Haunted Heights Monitor - First Lower Path Slime Before Checkpoint","Haunted Heights Monitor - First Lower Path Slimefall")
 
     if options.superring_sanity:
-        create_locs(regHHZ,"Haunted Heights Monitor - x:1984 y:864","Haunted Heights Monitor - x:320 y:-160","Haunted Heights Monitor - x:9088 y:480",
-        "Haunted Heights Monitor - x:3424 y:4608","Haunted Heights Monitor - x:-10304 y:21440","Haunted Heights Monitor - x:-10432 y:21440","Haunted Heights Monitor - x:2848 y:12704",
-        "Haunted Heights Monitor - x:-2880 y:18208","Haunted Heights Monitor - x:5184 y:3360","Haunted Heights Monitor - x:12960 y:7616","Haunted Heights Monitor - x:9657 y:6182",
-        "Haunted Heights Monitor - x:3968 y:7136","Haunted Heights Monitor - x:-1440 y:14112","Haunted Heights Monitor - x:8736 y:19456","Haunted Heights Monitor - x:1056 y:16192",
-        "Haunted Heights Monitor - x:6240 y:21504","Haunted Heights Monitor - x:4976 y:23376","Haunted Heights Monitor - x:7360 y:17952","Haunted Heights Monitor - x:5376 y:20736",
-        "Haunted Heights Monitor - x:3520 y:20224","Haunted Heights Monitor - x:9952 y:13120","Haunted Heights Monitor - x:-6208 y:15936","Haunted Heights Monitor - x:-6528 y:18592")
+        create_locs(regHHZ,"Haunted Heights Monitor - Right Ledge Near Start","Haunted Heights Monitor - Grave Near Start",
+        "Haunted Heights Monitor - First Slime Pit","Haunted Heights Monitor - First Area Under Grated Platform","Haunted Heights Monitor - Third Area Grated Platform 1",
+        "Haunted Heights Monitor - Third Area Grated Platform 2","Haunted Heights Monitor - Knuckles Path Center Slime Platform","Haunted Heights Monitor - Third Area Bottom Entrances",
+        "Haunted Heights Monitor - First Area Near Top Exit","Haunted Heights Monitor - Second Area Spike Ball Circle","Haunted Heights Monitor - Second Area Grassy Ledge",
+        "Haunted Heights Monitor - First Area Near Conveyor Ramp","Haunted Heights Monitor - Third Area Knuckles Path Exit","Haunted Heights Monitor - Before Nospin Path Entrance",
+        "Haunted Heights Monitor - Spin Conveyor Path Slime Corner","Haunted Heights Monitor - Nospin Path Behind Spikes","Haunted Heights Monitor - Fang Path Between Pipes",
+        "Haunted Heights Monitor - Spin Path Behind First Ledge","Haunted Heights Monitor - Nospin Path Under High Ledge","Haunted Heights Monitor - Amy Path Spikes In Slime",
+        "Haunted Heights Monitor - First Lower Path Entrance","Haunted Heights Monitor - Third Area Slimefall Lake","Haunted Heights Monitor - Third Area Ledge After Conveyors")
 
     regAGZ = create_region("Aerial Garden Zone", player, world)
     create_locs(regAGZ, "Aerial Garden Star Emblem", "Aerial Garden Spade Emblem", "Aerial Garden Heart Emblem", "Aerial Garden Diamond Emblem",
@@ -554,8 +585,8 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         create_locs(regAGZ,"Aerial Garden Monitor - Path Left 5 Thin Platforms Top 1","Aerial Garden Monitor - Path Right 3 Behind Statues","Aerial Garden Monitor - Triangle Hallway Spin Under Seaweed",
         "Aerial Garden Monitor - Path Right 1 Across Moving Platforms","Aerial Garden Monitor - Final Elevator Room Ledge 1","Aerial Garden Monitor - Path Left 6 Waterfall Top 1",
         "Aerial Garden Monitor - Path Right 5 Vertical Moving Platforms","Aerial Garden Monitor - Path Left 2 on Fountain","Aerial Garden Monitor - Path Left 2 Spin Into Bushes",
-        "Aerial Garden Monitor - Path Left 5 Top Cave Clearing","Aerial Garden Monitor - Near Heart Emblem 1","Aerial Garden Monitor - Near Heart Emblem 2",
-        "Aerial Garden Monitor - Near Heart Emblem 3","Aerial Garden Monitor - Near Heart Emblem 4","Aerial Garden Monitor - Path Left 5 High Thin Platforms",
+        "Aerial Garden Monitor - Path Left 4 Top Cave Clearing","Aerial Garden Monitor - Near Heart Emblem 1","Aerial Garden Monitor - Near Heart Emblem 2",
+        "Aerial Garden Monitor - Near Heart Emblem 3","Aerial Garden Monitor - Near Heart Emblem 4","Aerial Garden Monitor - Path Left 4 High Thin Platforms",
         "Aerial Garden Monitor - Triangle Hallway Rafters 1","Aerial Garden Monitor - Line Hallway Outside R","Aerial Garden Monitor - Line Hallway Outside L",
         "Aerial Garden Monitor - First Room Near Emerald Token","Aerial Garden Monitor - Second Area Ledge Behind Fountain","Aerial Garden Monitor - Near Star Emblem 1",
         "Aerial Garden Monitor - Near Star Emblem 2","Aerial Garden Monitor - First Area Small Far Platform","Aerial Garden Monitor - Path Left 1 Gap Between Pillars 1",
@@ -564,19 +595,23 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Aerial Garden Monitor - Underwater Path Spring Pillars","Aerial Garden Monitor - Underwater Path Behind Corner")
 
     if options.superring_sanity:
-        create_locs(regAGZ,"Aerial Garden Monitor - x:-8960 y:-2816","Aerial Garden Monitor - x:-8832 y:-2816","Aerial Garden Monitor - x:-13920 y:5056",
-        "Aerial Garden Monitor - x:-13920 y:5184","Aerial Garden Monitor - x:7840 y:-5280","Aerial Garden Monitor - x:-8896 y:12416","Aerial Garden Monitor - x:-8832 y:12480",
-        "Aerial Garden Monitor - x:-8896 y:12544","Aerial Garden Monitor - x:-8960 y:12480","Aerial Garden Monitor - x:-9024 y:12416","Aerial Garden Monitor - x:-8960 y:12352",
-        "Aerial Garden Monitor - x:-8832 y:12352","Aerial Garden Monitor - x:-8768 y:12416","Aerial Garden Monitor - x:-8768 y:12544","Aerial Garden Monitor - x:-8832 y:12608",
-        "Aerial Garden Monitor - x:-960 y:9984","Aerial Garden Monitor - x:-14176 y:-9504","Aerial Garden Monitor - x:-15168 y:-8768","Aerial Garden Monitor - x:-8896 y:-15520",
-        "Aerial Garden Monitor - x:-8960 y:12608","Aerial Garden Monitor - x:13792 y:-14816","Aerial Garden Monitor - x:13856 y:-14816","Aerial Garden Monitor - x:13856 y:-14752",
-        "Aerial Garden Monitor - x:13792 y:-14752","Aerial Garden Monitor - x:2336 y:21664","Aerial Garden Monitor - x:-4288 y:13248","Aerial Garden Monitor - x:-14816 y:1888",
-        "Aerial Garden Monitor - x:-10368 y:-8224","Aerial Garden Monitor - x:-10336 y:-8256","Aerial Garden Monitor - x:-7424 y:-8224","Aerial Garden Monitor - x:-7456 y:-8256",
-        "Aerial Garden Monitor - x:-8960 y:-8128","Aerial Garden Monitor - x:-8832 y:-8128","Aerial Garden Monitor - x:-960 y:9920","Aerial Garden Monitor - x:13184 y:-9792",
-        "Aerial Garden Monitor - x:8256 y:-16256","Aerial Garden Monitor - x:14752 y:-5984","Aerial Garden Monitor - x:6336 y:22528","Aerial Garden Monitor - x:7104 y:21696",
-        "Aerial Garden Monitor - x:2432 y:15424","Aerial Garden Monitor - x:8064 y:15424","Aerial Garden Monitor - x:832 y:4736","Aerial Garden Monitor - x:9632 y:5344",
-        "Aerial Garden Monitor - x:7104 y:21824","Aerial Garden Monitor - x:4864 y:15936","Aerial Garden Monitor - x:5632 y:15936","Aerial Garden Monitor - x:5184 y:12352",
-        "Aerial Garden Monitor - x:5312 y:12352","Aerial Garden Monitor - x:-9024 y:12544","Aerial Garden Monitor - x:-2304 y:-20160")
+        create_locs(regAGZ,"Aerial Garden Monitor - Triangle Hallway End 1","Aerial Garden Monitor - Triangle Hallway End 2",
+        "Aerial Garden Monitor - Path Left 5 Thin Platforms Top 2","Aerial Garden Monitor - Path Left 5 Thin Platforms Top 3","Aerial Garden Monitor - Path Right 1 Grass Platform",
+        "Aerial Garden Monitor - Near Heart Emblem 5","Aerial Garden Monitor - Near Heart Emblem 6","Aerial Garden Monitor - Near Heart Emblem 7",
+        "Aerial Garden Monitor - Near Heart Emblem 8","Aerial Garden Monitor - Near Heart Emblem 9","Aerial Garden Monitor - Near Heart Emblem 10",
+        "Aerial Garden Monitor - Near Heart Emblem 11","Aerial Garden Monitor - Near Heart Emblem 12","Aerial Garden Monitor - Near Heart Emblem 13",
+        "Aerial Garden Monitor - Near Heart Emblem 14","Aerial Garden Monitor - Path Left 6 Waterfall Top 2","Aerial Garden Monitor - Path Left 3 Left Block Ledge",
+        "Aerial Garden Monitor - Path Left 3 Block On Grass","Aerial Garden Monitor - Block After First Conveyor","Aerial Garden Monitor - Near Heart Emblem 15",
+        "Aerial Garden Monitor - Path Left 1 Gap Between Pillars 2","Aerial Garden Monitor - Path Left 1 Gap Between Pillars 3","Aerial Garden Monitor - Path Left 1 Gap Between Pillars 4",
+        "Aerial Garden Monitor - Path Left 1 Gap Between Pillars 5","Aerial Garden Monitor - Underwater Path Below Token","Aerial Garden Monitor - Knuckles Path Tall Room On Pillar",
+        "Aerial Garden Monitor - Path Left 4 Before Triangle Switch","Aerial Garden Monitor - Path Left 3 High Ledge 1","Aerial Garden Monitor - Path Left 3 High Ledge 2",
+        "Aerial Garden Monitor - Path Right 3 High Ledge 1","Aerial Garden Monitor - Path Right 3 High Ledge 2","Aerial Garden Monitor - Triangle Hallway Rafters 2",
+        "Aerial Garden Monitor - Triangle Hallway Rafters 3","Aerial Garden Monitor - Path Left 6 Waterfall Top 3","Aerial Garden Monitor - First Area Back Left",
+        "Aerial Garden Monitor - Second Area Left Low Ledge","Aerial Garden Monitor - First Area Flower Circle","Aerial Garden Monitor - Right Hallway Before Goal",
+        "Aerial Garden Monitor - Outside Star Gate 1","Aerial Garden Monitor - Final Elevator Top W","Aerial Garden Monitor - Final Elevator Top E",
+        "Aerial Garden Monitor - Split Path Room Left Pillars","Aerial Garden Monitor - Split Path Room Right Ledge","Aerial Garden Monitor - Outside Star Gate 2",
+        "Aerial Garden Monitor - Final Elevator Bottom 1","Aerial Garden Monitor - Final Elevator Bottom 2","Aerial Garden Monitor - Final Elevator Top S 2",
+        "Aerial Garden Monitor - Final Elevator Top S 3","Aerial Garden Monitor - Near Heart Emblem 16","Aerial Garden Monitor - Path Left 2 Near Fountain")
 
 
     regATZ = create_region("Azure Temple Zone", player, world)
@@ -599,18 +634,21 @@ def create_regions(world: MultiWorld, options: SRB2Options, player: int):
         "Azure Temple Monitor - Action Nospin Path Ledge After Spring")
 
     if options.superring_sanity:
-        create_locs(regATZ,"Azure Temple Monitor - x:-832 y:704","Azure Temple Monitor - x:1344 y:-288","Azure Temple Monitor - x:1248 y:2304",
-        "Azure Temple Monitor - x:-2592 y:2688","Azure Temple Monitor - x:0 y:6048","Azure Temple Monitor - x:-4448 y:2240","Azure Temple Monitor - x:-4448 y:2208",
-        "Azure Temple Monitor - x:-352 y:7520","Azure Temple Monitor - x:-928 y:8256","Azure Temple Monitor - x:-736 y:6112","Azure Temple Monitor - x:-4000 y:10080",
-        "Azure Temple Monitor - x:-3936 y:10080","Azure Temple Monitor - x:-3328 y:10752","Azure Temple Monitor - x:2848 y:9312","Azure Temple Monitor - x:512 y:13952",
-        "Azure Temple Monitor - x:2752 y:11008","Azure Temple Monitor - x:-1184 y:11104","Azure Temple Monitor - x:672 y:12544","Azure Temple Monitor - x:224 y:12576",
-        "Azure Temple Monitor - x:512 y:14080","Azure Temple Monitor - x:-2272 y:10432","Azure Temple Monitor - x:-2944 y:13344","Azure Temple Monitor - x:-3232 y:14048",
-        "Azure Temple Monitor - x:-3232 y:14176","Azure Temple Monitor - x:1248 y:14432","Azure Temple Monitor - x:-3968 y:16768","Azure Temple Monitor - x:384 y:9568",
-        "Azure Temple Monitor - x:320 y:9568","Azure Temple Monitor - x:-3040 y:17888","Azure Temple Monitor - x:-2976 y:17952","Azure Temple Monitor - x:-2752 y:18432",
-        "Azure Temple Monitor - x:4192 y:12320","Azure Temple Monitor - x:4096 y:12416","Azure Temple Monitor - x:4064 y:25248","Azure Temple Monitor - x:2208 y:22560",
-        "Azure Temple Monitor - x:2208 y:22624","Azure Temple Monitor - x:3424 y:16528","Azure Temple Monitor - x:-2976 y:20320","Azure Temple Monitor - x:3600 y:25696",
-        "Azure Temple Monitor - x:3696 y:25696","Azure Temple Monitor - x:-4768 y:9600","Azure Temple Monitor - x:-800 y:9312","Azure Temple Monitor - x:1952 y:11552",
-        "Azure Temple Monitor - x:6112 y:22560")
+        create_locs(regATZ,"Azure Temple Monitor - Behind Left Starting Pillar","Azure Temple Monitor - Right Starting Ledge",
+        "Azure Temple Monitor - Right Path Behind Corner","Azure Temple Monitor - Left Path First Ledge","Azure Temple Monitor - After First Checkpoint",
+        "Azure Temple Monitor - Left Path Rocky Ledge 1","Azure Temple Monitor - Left Path Rocky Ledge 2","Azure Temple Monitor - Upper Main Path Behind Corner",
+        "Azure Temple Monitor - Knuckles Path Start","Azure Temple Monitor - First Checkpoint Behind Stairs","Azure Temple Monitor - Top Path Gap After First Statue Hallway 1",
+        "Azure Temple Monitor - Top Path Gap After First Statue Hallway 2","Azure Temple Monitor - Top Path Bubbles Before Checkpoint","Azure Temple Monitor - Bottom Path First Statue Hallway",
+        "Azure Temple Monitor - Rafters Near Spade Emblem 2","Azure Temple Monitor - Bottom Path Metal Bars","Azure Temple Monitor - Knuckles Path Before Second Climb",
+        "Azure Temple Monitor - Knuckles Path End","Azure Temple Monitor - Spade Emblem Room Knuckles Path Drop","Azure Temple Monitor - Rafters Near Spade Emblem 3",
+        "Azure Temple Monitor - Top Path Corner After Checkpoint","Azure Temple Monitor - Top Path Behind Metal Bars","Azure Temple Monitor - Top Path Near Spiked Platform Ledge 2",
+        "Azure Temple Monitor - Top Path Near Spiked Platform Ledge 3","Azure Temple Monitor - Bottom Path Buggle Room Corner","Azure Temple Monitor - Puzzle Path First Room",
+        "Azure Temple Monitor - Bottom Path First Hallway Wall Gap 1","Azure Temple Monitor - Bottom Path First Hallway Wall Gap 2","Azure Temple Monitor - Puzzle Path Corner 2",
+        "Azure Temple Monitor - Puzzle Path Corner 3","Azure Temple Monitor - Action Path First Room Ledge","Azure Temple Monitor - Near Heart Emblem 2",
+        "Azure Temple Monitor - Near Heart Emblem 3","Azure Temple Monitor - Action Path Final Room First Ledge","Azure Temple Monitor - Near Diamond Emblem 1",
+        "Azure Temple Monitor - Near Diamond Emblem 2","Azure Temple Monitor - Bottom Path Buggle Room Behind Statues","Azure Temple Monitor - Puzzle Path Final Room",
+        "Azure Temple Monitor - Action Path Rafters 2","Azure Temple Monitor - Action Path Rafters 3","Azure Temple Monitor - Top Path First Hallway Secret",
+        "Azure Temple Monitor - Knuckles Path First Rocky Ledge","Azure Temple Monitor - Knuckles Path Second Rocky Ledge","Azure Temple Monitor - Action Nospin Path Pillar")
 
     if options.nights_maps:
 

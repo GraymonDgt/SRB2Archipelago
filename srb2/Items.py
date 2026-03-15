@@ -6,7 +6,6 @@ from BaseClasses import Item, ItemClassification
 class SRB2Item(Item):
     game: str = "Sonic Robo Blast 2"
 
-
 class SRB2ItemData(NamedTuple):
     code: int | None = None
     classification: ItemClassification = ItemClassification.progression
@@ -30,10 +29,10 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
     "Double Rings": SRB2ItemData(84, ItemClassification.filler),
 
 
-    "Extended Invincibility": SRB2ItemData(90, ItemClassification.useful),
-    "Extended Super Sneakers": SRB2ItemData(91, ItemClassification.useful),
-    "Max Drill Increase": SRB2ItemData(92, ItemClassification.useful),
-
+    #"Extended Invincibility": SRB2ItemData(90, ItemClassification.useful),
+    #"Extended Super Sneakers": SRB2ItemData(91, ItemClassification.useful),
+    #"Max Drill Increase": SRB2ItemData(92, ItemClassification.useful),
+}
 
 # reversed controls
 # super ring drain - drains rings and kills you when you run out
@@ -46,50 +45,43 @@ generic_item_data_table: dict[str, SRB2ItemData] = {
 # eggman virus
 
 # play credits
-# flashbang
-
-
 
 # no character ability - no thok, no flying, no player.charability
 # get made fun of - hud element that makes fun of you
 
 
+# Spindash //prog roll WILL work because rolling down slopes
 
-
-
-# progressive force shield
-# shield spike protection (shields now protect from spikes)
-
-# knuckles break strength (allows knuckles to break walls)
-
-# Spindash // progressive roll
-# Amy's hammer
-# Fang's Tail
+# something to nerf knuckles
+# progressive tails flight
 # Fang's Popgun
-
-# Tails' Flight
-# sonic's thok
-# knuckles' glide
 # metal sonic's booster
 
-#object locks
-    # zoom tubes
-    # rope hangs
-    # mace swing
-    # minecarts
-    # rollout rocks
-    # thz slime
-
 #wacky ideas
-    # springs
-    # monitors
+# monitors
+# checkpoints
+# goal posts
+# Emerald tokens
+# ideya capsules
+# floating mines (prog trap?)
+# TNT barrels (prog trap?)
+
+# shield upgrades
+# force - +1 hit | no knockback on hit
+# attract - can target monitors/springs | doesnt short out in water
+# wind - gets rid of smog | extra jump
+# armageddon - deflects projectiles (helps with atz club)
+# elemental - spike protection | electric protection | better fire trail
+
+
+# pity -
+# flame - liquids dont destroy it
+# bubble - anti fire?
+# lightning - extra jump
 
 
 
 
-
-
-}
 traps_item_data_table:dict[str, SRB2ItemData] = {
 
     "Forced Gravity Boots": SRB2ItemData(5, ItemClassification.trap),
@@ -102,9 +94,9 @@ traps_item_data_table:dict[str, SRB2ItemData] = {
     "Self-Propelled Bomb": SRB2ItemData(81, ItemClassification.trap),
     "Shrink Monitor": SRB2ItemData(82, ItemClassification.trap),
     "Grow Monitor": SRB2ItemData(83, ItemClassification.trap),
-    "Reversed Controls": SRB2ItemData(85, ItemClassification.trap),
+    #"Reversed Controls": SRB2ItemData(85, ItemClassification.trap),
     "Jumpscare": SRB2ItemData(86, ItemClassification.trap)
-
+#Slip trap
 
 }
 objects_item_table: dict[str, SRB2ItemData] = {
@@ -119,12 +111,14 @@ objects_item_table: dict[str, SRB2ItemData] = {
     "Dust Devils": SRB2ItemData(158),#object acz1 acz2
     "Yellow Springs": SRB2ItemData(159),#object
     "Red Springs": SRB2ItemData(160),#object
-    "Blue Springs": SRB2ItemData(161),#object
+    "Blue Springs": SRB2ItemData(161,ItemClassification.useful),#object
 
-
-
-
-
+    #"NiGHTS Bumpers": SRB2ItemData(162),  # object
+    #"Ideya Capsules": SRB2ItemData(163),  # object
+    #"Starposts": SRB2ItemData(164),  # object (probably a bad idea)
+    #"Signposts": SRB2ItemData(165),  # object (probably a bad idea)
+    #"Floating Mines": SRB2ItemData(166, ItemClassification.progression | ItemClassification.trap),  # object
+    #"TNT Barrels": SRB2ItemData(167, ItemClassification.progression | ItemClassification.trap),  # object
 }
 
 zones_item_data_table: dict[str, SRB2ItemData] = {

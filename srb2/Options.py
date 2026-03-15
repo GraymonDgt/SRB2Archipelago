@@ -52,6 +52,7 @@ class LogicDifficulty(Choice):
     option_hard = 1
     option_custom = 2
     default = 0
+    display_name = "Logic Difficulty"
 
 class MPMaps(Toggle):
     """Enable Ringslinger Maps as items/locations"""
@@ -73,7 +74,7 @@ class ActSanity(Toggle):
 
 class ObjectLocking(Toggle):
     """Shuffles certain objects like springs, slime, zoom tubes etc
-    LOGIC DOES NOT CURRENTLY WORK WITH MONITORS"""
+    DOES NOT CURRENTLY WORK WITH MATCH MAPS + RING MONITORS"""
 
 class BlackCoreEmblemCost(Range):
     """PERCENTAGE of emblems needed for black core zone to be unlocked
@@ -154,7 +155,11 @@ class RingLink(Choice):
     option_easy = 1
     option_normal = 2
     option_hard = 3
+    display_name = "Ring Link"
 
+#class LocalRingReset(DefaultOnToggle):
+#    """Reset rings locally on zone exit/entry"""
+#    display_name = "Reset Rings Locally"
 
 srb2_options_groups = [
     OptionGroup("Emblem Toggles", [

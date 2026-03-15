@@ -76,6 +76,22 @@ ConditionSet 3
 Condition1 = Trigger 3
 
 
+Unlockable 7
+Type = SoundTest
+Name = Sound Test
+ConditionSet = 3
+
+ConditionSet 4
+Condition1 = MapBeaten 50
+
+
+Unlockable 8
+Type = NightsMode
+Name = NiGHTS Mode
+ConditionSet = 4
+
+
+
 
 ExtraEmblem 1
 Name = Good Ending
@@ -386,7 +402,7 @@ Levelname = Black Core
 Act = 1
 Keywords = BCZ1
 Music = BCZ1
-NextLevel = 26
+NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,Competition,Race
 SkyNum = 22
 RecordAttack = true
@@ -404,7 +420,7 @@ Keywords = BCZ2
 Music = VSMETL
 MusicPostBoss = BCZ2
 TypeOfLevel = Singleplayer,Co-op
-NextLevel = 27
+NextLevel = 125
 SkyNum = 22
 RecordAttack = true
 LevelSelect = 1
@@ -440,7 +456,6 @@ Keywords = FHZ
 Music = FHZ
 NextLevel = 125
 RecordAttack = true
-Unlockable = 21
 TypeOfLevel = Singleplayer,Co-op,Competition,Race
 SkyNum = 30
 LevelSelect = 2
@@ -455,7 +470,6 @@ Music = MARIO1
 TypeOfLevel = Singleplayer,Co-op,Competition,Race,Mario
 NextLevel = 125
 RecordAttack = true
-Unlockable = 22
 SkyNum = 31
 LevelSelect = 2
 SelectHeading = Bonus Stages
@@ -469,7 +483,6 @@ NextLevel = 125
 SkyNum = 20
 Weather = 3
 RecordAttack = true
-Unlockable = 25
 LevelSelect = 2
 SelectHeading = Bonus Stages
 SkyboxScale = 64
@@ -483,7 +496,6 @@ TypeOfLevel = Singleplayer,Co-op,Competition,Race
 NextLevel = 125
 SkyNum = 2
 RecordAttack = true
-Unlockable = 27
 NoReload = 1
 LevelSelect = 2
 SelectHeading = Bonus Stages
@@ -500,7 +512,6 @@ music = HAUNTD
 skynum = 172
 nextlevel = 125
 RecordAttack = true
-Unlockable = 4
 LevelSelect = 2
 SelectHeading = Challenge Stages
 typeoflevel = Solo,Co-op,Competition,Race
@@ -515,7 +526,6 @@ TypeOfLevel = Singleplayer,Co-op,Competition,Race
 NextLevel = 125
 SkyNum = 40
 RecordAttack = true
-Unlockable = 5
 LevelSelect = 2
 SelectHeading = Challenge Stages
 SaveGame = true
@@ -530,7 +540,6 @@ TypeOfLevel = Singleplayer,Co-op,Competition,Race
 NextLevel = 125
 SkyNum = 35
 RecordAttack = true
-Unlockable = 6
 LevelSelect = 2
 SelectHeading = Challenge Stages
 SaveGame = true
@@ -545,8 +554,9 @@ NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 SkyNum = 1
+Hidden = true
 Grades1 = 0,20000,30000,90000,180000,260000
 
 Level 51
@@ -558,8 +568,9 @@ TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 BonusType = NiGHTS
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 SkyNum = 6
+Hidden = true
 Grades1 = 0,35000,50000,100000,190000,300000
 
 
@@ -571,8 +582,9 @@ NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 SkyNum = 8
+Hidden = true
 Grades1 = 0,70000,90000,180000,270000,360000
 
 Level 53
@@ -583,9 +595,10 @@ NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 Weather = 1
 SkyNum = 10
+Hidden = true
 Grades1 = 0,40000,60000,140000,240000,300000
 
 Level 54
@@ -596,8 +609,9 @@ NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 SkyNum = 15
+Hidden = true
 Grades1 = 0,35000,50000,80000,120000,150000
 
 Level 55
@@ -608,8 +622,9 @@ NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 SkyNum = 20
+Hidden = true
 Grades1 = 0,30000,45000,60000,90000,110000
 
 Level 56
@@ -620,8 +635,9 @@ NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 SkyNum = 22
+Hidden = true
 Grades1 = 0,60000,70000,80000,90000,140000
 
 Level 57
@@ -632,9 +648,8 @@ NextLevel = 125
 TypeOfLevel = Singleplayer,Co-op,NiGHTS
 NiGHTSAttack = true
 SelectHeading = Special Stages
-NoVisitNeeded = true
+NoVisitNeeded = false
 SkyNum = 99
-Unlockable = 16
 Hidden = true
 Grades1 = 0,50000,60000,70000,80000,140000
 
@@ -650,8 +665,7 @@ Hidden = true
 LevelSelect = 2
 SelectHeading = NiGHTS Bonus Stages
 NiGHTSAttack = true
-NoVisitNeeded = true
-Unlockable = 15
+NoVisitNeeded = false
 BonusType = NiGHTS
 MaxBonusLives = 0
 Grades1 = 0,30000,40000,60000,90000,110000
@@ -671,8 +685,7 @@ Hidden = true
 LevelSelect = 2
 SelectHeading = NiGHTS Bonus Stages
 NiGHTSAttack = true
-NoVisitNeeded = true
-Unlockable = 12
+NoVisitNeeded = false
 Grades1 = 0,10000,15000,50000,80000,120000
 Grades2 = 0,5000,10000,30000,40000,60000
 Grades3 = 0,10000,15000,40000,50000,60000
@@ -694,8 +707,7 @@ Hidden = true
 LevelSelect = 2
 SelectHeading = NiGHTS Bonus Stages
 NiGHTSAttack = true
-NoVisitNeeded = true
-Unlockable = 13
+NoVisitNeeded = false
 BONUSTYPE = NIGHTS
 MAXBONUSLIVES = 0
 MIXNIGHTSCOUNTDOWN = 1
@@ -714,8 +726,7 @@ Hidden = true
 LevelSelect = 2
 SelectHeading = NiGHTS Bonus Stages
 NiGHTSAttack = true
-NoVisitNeeded = true
-Unlockable = 14
+NoVisitNeeded = false
 BONUSTYPE = NIGHTS
 MAXBONUSLIVES = 0
 MIXNIGHTSCOUNTDOWN = 1

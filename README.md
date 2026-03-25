@@ -24,6 +24,12 @@ C:\ProgramData\Archipelago\custom_worlds\ or C:\ProgramData\MultiworldGG\custom_
 
 - Move SL_ArchipelagoSRB2_Vxxx.pk3 into the addons folder of your desired SRB2 installation.
 
+Extra steps for linux setup:
+
+- in your SRB2 directory go to or create the directory "luafiles/archipelago" and inside create an empty file named "APTranslator.dat"
+
+  (this is a known bug that will hopefully be fixed soon)
+
 ## Joining a Multiworld Game
 
 - After opening the Archipelago/MultiworldGG client, there will be an option labeled "Sonic Robo Blast 2 Client".

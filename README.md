@@ -7,7 +7,7 @@ https://discord.gg/kkH4wBUmG9
 
 ## Required Software
 
-- Sonic Robo Blast 2 (https://www.srb2.org/download/)
+- Sonic Robo Blast 2 v2.2.15 (https://www.srb2.org/download/)
 
 - The most recent Archipelago client or the most recent MultiworldGG client
 
@@ -18,7 +18,7 @@ https://discord.gg/kkH4wBUmG9
 
 - Download SL_ArchipelagoSRB2_Vxxx.pk3 and srb2.apworld from releases (https://github.com/GraymonDgt/SRB2Archipelago/releases)
 
-- Install srb2.apworld by opening it or moving it to either
+- Install the srb2.apworld by opening it or moving it to either
 
 C:\ProgramData\Archipelago\custom_worlds\ or C:\ProgramData\MultiworldGG\custom_worlds\ .
 
@@ -60,11 +60,15 @@ Extra steps for linux setup:
 
 - Something something can't read APTranslator.dat.
   
-  I swear I'm working on fixing that, keep restarting the client until it works.
+  I swear I'm working on fixing that, keep restarting the client until it works or see the above linux step.
 
 - SRB2 was closed, do I have to restart the client?
 
   No, you can reopen SRB2 and reload the AP mod without any issues.
+
+- The heavily lags after loading the pk3.
+
+  Make sure you aren't running SRB2 off of an external drive that may have a slow file transfer speed.
 
 # ADDITIONAL NOTES
 

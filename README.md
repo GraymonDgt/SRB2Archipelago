@@ -47,8 +47,9 @@ Extra steps for linux setup:
 
 - Do modded characters work?
   
-  Currently, 16 different modded characters are supported and can be enabled in the yaml settings. The AP addon does not contain these characters by default, so you will have to download them seperately (links in addition notes)
-  If you want to use non-supported modded characters with no logic issues, include all vanilla characters as your starting character in the yaml settings.
+  Currently, 16 different modded characters are supported and can be enabled in the yaml settings. The AP addon does not contain these characters by default, so you will have to download them seperately (links in additional notes)
+  
+  If you want to use non-supported modded characters with no logic issues, include all vanilla characters for your starting characters in the yaml settings.
 
 - Do modded level packs work?
 

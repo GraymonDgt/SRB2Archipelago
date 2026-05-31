@@ -47,8 +47,8 @@ Extra steps for linux setup:
 
 - Do modded characters work?
   
-  While you can use modded characters, logic doesn't currently account for them and there's no way to switch to them in the hub.
-  If you want to use a modded character with no logic issues, select 'All' for your starting character in the yaml settings.
+  Currently, 16 different modded characters are supported and can be enabled in the yaml settings. The AP addon does not contain these characters by default, so you will have to download them seperately (links in addition notes)
+  If you want to use non-supported modded characters with no logic issues, include all vanilla characters as your starting character in the yaml settings.
 
 - Do modded level packs work?
 
@@ -75,3 +75,15 @@ Extra steps for linux setup:
 Type "hub" into the console to return to the hub at any time.
 
 Contact me in the #sonic-robo-blast-2 channel in the discord above if you run into any issues!
+
+Links to all supported custom characters:
+
+https://mb.srb2.org/addons/metal-knuckles-tails-doll-sonic-r-characters.587/
+https://mb.srb2.org/addons/the-chaotix.5734/
+https://mb.srb2.org/threads/modern-sonic-v5-12.27514/
+https://mb.srb2.org/addons/shadow-the-hedgehog.517/
+https://mb.srb2.org/addons/silver-the-hedgehog.503/
+https://mb.srb2.org/addons/ray-the-flying-squirrel.6348/
+https://mb.srb2.org/addons/the-werehog-v2-3.505/
+https://mb.srb2.org/addons/super-mario-bros.3420/
+https://mb.srb2.org/addons/yoshi.687/

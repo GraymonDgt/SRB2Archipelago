@@ -79,11 +79,19 @@ Contact me in the #sonic-robo-blast-2 channel in the discord above if you run in
 Links to all supported custom characters:
 
 https://mb.srb2.org/addons/metal-knuckles-tails-doll-sonic-r-characters.587/
+
 https://mb.srb2.org/addons/the-chaotix.5734/
+
 https://mb.srb2.org/threads/modern-sonic-v5-12.27514/
+
 https://mb.srb2.org/addons/shadow-the-hedgehog.517/
+
 https://mb.srb2.org/addons/silver-the-hedgehog.503/
+
 https://mb.srb2.org/addons/ray-the-flying-squirrel.6348/
+
 https://mb.srb2.org/addons/the-werehog-v2-3.505/
+
 https://mb.srb2.org/addons/super-mario-bros.3420/
+
 https://mb.srb2.org/addons/yoshi.687/

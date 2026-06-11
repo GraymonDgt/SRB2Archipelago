@@ -96,3 +96,15 @@ https://mb.srb2.org/addons/the-werehog-v2-3.505/
 https://mb.srb2.org/addons/super-mario-bros.3420/
 
 https://mb.srb2.org/addons/yoshi.687/
+
+https://mb.srb2.org/addons/bean-the-dynamite.2816/
+
+https://mb.srb2.org/addons/adventure-sonic-v1-9.3589/
+
+https://mb.srb2.org/threads/eggpack-remake-v2-6.27515/
+
+https://mb.srb2.org/addons/tangle-the-lemur.2670/
+
+https://mb.srb2.org/addons/rushchars-blaze-and-marine.3831/
+
+https://mb.srb2.org/addons/silverhorn.5936/

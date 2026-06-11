@@ -14,7 +14,9 @@ end)
 
 
 
-
+COM_AddCommand("apinfo", function(player)
+print("‡Archipelago is a multiworld randomizer. This means we recieve zones, characters, objects and shields from other people and in return we are collecting emblems to find other peoples' items. The person sending messages in chat is showing what is being sent.")
+end)
  
 
 --addHook("MobjSpawn", function(object)
@@ -35,9 +37,13 @@ local lastknownrings = 0
 local unlockedchars = {}
 local manualringlink = 0
 local lastknowngamemap = 0
+local supportedchars = {"sonic","tails","knuckles","amy","fang","metalsonic","mario","luigi","yoshi","ray","silver","shadow","modernsonic","werehog","metalknuckles","tailsdoll","espio","mighty","charmy","vector","heavy","bomb","bean","eggman","adventuresonic","tangle","blaze","marine","inazuma","aether"}
+
+
+
 
 --local bytes = {}
-rawset(_G,"bytes",{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
+rawset(_G,"bytes",{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
 rawset(_G,"num_images",5)
 local syncfile = 0
 local downloading = 0
@@ -72,6 +78,15 @@ monitorid = 0
 end)
 addHook("MapLoad", function() --thanks to Vadapega for this FDZ death fix
 monitorid = 0
+
+if solchars then
+for player in players.iterate() do
+player.solemeralds = emeralds //temporary because no ap item exists
+end
+end
+
+
+
 
 if bytes[30] == 3 then
 for player in players.iterate() do
@@ -399,7 +414,7 @@ if (c1held) then
 		else
 		S_StartSound(object, sfx_menu1)
 		end
-		if skins[unlockedchars[player.selected]] and skins[unlockedchars[player.selected]].valid then
+		if skins[unlockedchars[player.selected]] then
 		if player.mo.skin != unlockedchars[player.selected] then
 		R_SetPlayerSkin(player, unlockedchars[player.selected])
 		end
@@ -456,9 +471,9 @@ local function switcherhud(v,player)
 	local offset = 0
 	if player.selected > 20 then
 	if player.selected < #unlockedchars - 2 then 
-	offset = (player.selected-14)*8*v.dupy()
+	offset = (player.selected-20)*8
 	else
-	offset = (#unlockedchars-16)*8*v.dupy()
+	offset = (#unlockedchars-22)*8
 	end
 	end
 	
@@ -874,10 +889,31 @@ for player in players.iterate() do
 
 
 if downloading == 0 then
+
+
+local result = pcall(function()
+	local f = assert(io.openlocal("archipelago/APTranslator.dat","r+b"))
+    return true
+end)
+if result == false then
+error("€Couldn't find APTranslator.dat. Run the AP client before loading this addon. If you are using linux, you must create .srb2/luafiles/archipelago/APTranslator.dat manually before running the client")
+end
 local f = assert(io.openlocal("archipelago/APTranslator.dat","r+b"))
+
+local file_flag = false
 if f then
+result = pcall(function()
+	f:seek("set",24)
+    file_flag = string.byte(f:read(1))
+    return true
+end)
+if result == true then
 f:seek("set",24)
-local file_flag = string.byte(f:read(1))
+file_flag = string.byte(f:read(1))
+else
+error("€FILE READ ERROR This is likely a result of APTranslator.dat being read before opening the AP client. Ensure you selected the right folder for the AP client and run it before loading the addon.")
+return
+end
 
 
 if bytes[30] > 0 then --ring link
@@ -1420,7 +1456,7 @@ if (bytes[11] & 32) == 32 then
 end
   --emeralds = emeralds | bytes[15]
   --emeralds = emeralds & bytes[15]
-emeralds = bytes[17]
+emeralds = bytes[31]
 end
 
 
@@ -1506,6 +1542,38 @@ if (bytes[16] & 128) != 0 then
 table.insert(unlockedchars,"bomb")
 end
 
+if (bytes[17] & 1) != 0 then
+table.insert(unlockedchars,"bean")
+end
+if (bytes[17] & 2) != 0 then
+table.insert(unlockedchars,"eggman")
+end
+if (bytes[17] & 4) != 0 then
+table.insert(unlockedchars,"adventuresonic")
+end
+if (bytes[17] & 8) != 0 then
+table.insert(unlockedchars,"tangle")
+end
+if (bytes[17] & 16) != 0 then
+table.insert(unlockedchars,"blaze")
+end
+if (bytes[17] & 32) != 0 then
+table.insert(unlockedchars,"marine")
+end
+if (bytes[17] & 64) != 0 then
+table.insert(unlockedchars,"inazuma")
+end
+if (bytes[17] & 128) != 0 then
+table.insert(unlockedchars,"aether")
+end
+
+
+
+
+
+
+
+
 for player in players.iterate() do
 if player.mo then
 if player.bot == BOT_NONE then
@@ -1517,7 +1585,14 @@ for _,v in pairs(unlockedchars) do
 	break
   end
 end
-if temp == false then
+local temp2 = false
+for _,v in pairs(supportedchars) do
+  if v == player.mo.skin then
+	temp2 = true
+	break
+  end
+end
+if temp == false and temp2 == true then
 if skins[unlockedchars[1]] then
 R_SetPlayerSkin(player, unlockedchars[1])
 else

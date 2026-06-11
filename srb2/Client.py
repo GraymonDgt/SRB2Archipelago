@@ -82,6 +82,11 @@ class SRB2ClientCommandProcessor(ClientCommandProcessor):
         """Toggles Ringlink"""
         if isinstance(self.ctx, SRB2Context):
             async_start(self.ctx.toggle_tag("RingLink"))
+    def _cmd_debuglogging(self):
+        """Toggles Debug logging for issues with deathlink"""
+        if isinstance(self.ctx, SRB2Context):
+            async_start(self.ctx.toggle_debug)
+
 
 
 class SRB2Context(CommonContext):
@@ -102,6 +107,7 @@ class SRB2Context(CommonContext):
         self.ring_link: bool = False
         self.previous_rings = 0
         self.ring_link_rings = 0
+        self.debug_logging = False
         self.goal_type: int = 0
         self.bcz_emblems: int = 0
         self.goal_type = 0
@@ -180,6 +186,10 @@ class SRB2Context(CommonContext):
             #asyncio.create_task(self.receive_item())#probably important
     #def on_ringlink(self, rings) -> None:
     #   self.rings = rings
+    async def toggle_debug(self, tag: str):
+        self.debug_logging = not self.debug_logging
+
+
 
     async def toggle_tag(self, tag: str):
         if self.connected:
@@ -358,7 +368,7 @@ async def item_handler(ctx, file_path):
     # dont need to zero anything out because the first write will overwrite everything wrong
 
     locs_received = []
-    received_bytes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    received_bytes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     numreceived = 0
     currenttrap = 0
@@ -742,7 +752,22 @@ async def item_handler(ctx, file_path):
                 if id == 315:  # bomb
                     received_bytes[13] = received_bytes[13] | 128
 
-
+                if id == 316:  # bean
+                    received_bytes[14] = received_bytes[14] | 1
+                if id == 317:  # eggman
+                    received_bytes[14] = received_bytes[14] | 2
+                if id == 318:  # adventure sonic
+                    received_bytes[14] = received_bytes[14] | 4
+                if id == 319:  # tangle
+                    received_bytes[14] = received_bytes[14] | 8
+                if id == 320:  # blaze
+                    received_bytes[14] = received_bytes[14] | 16
+                if id == 321:  # marine
+                    received_bytes[14] = received_bytes[14] | 32
+                if id == 323:  # inazuma
+                    received_bytes[14] = received_bytes[14] | 64
+                if id == 324:  # aether
+                    received_bytes[14] = received_bytes[14] | 128
 
 
                 #received_bytes[11] = received_bytes[11] | 128 #deathlink toggle
@@ -795,7 +820,7 @@ async def item_handler(ctx, file_path):
 
             if emeralds > 7:
                 emeralds = 7
-            f.seek(0x11)
+            f.seek(0x1F)
 
             if emeralds == 0:
                 f.write(0x00.to_bytes(1, byteorder="little"))  # this sucks
@@ -894,6 +919,8 @@ async def item_handler(ctx, file_path):
                 if ctx.death_link_lockout + 4 <= time.time():
 
                     if ctx.activate_death == True:
+                        if ctx.debug_logging:
+                            logger.info("received deathlink")
                         f.seek(0x00)  # received deathlink
                         f.write(0x01.to_bytes(1, byteorder="little"))
                         f.seek(0x18)
@@ -902,6 +929,8 @@ async def item_handler(ctx, file_path):
                         ctx.activate_death = False
 
                     elif is_dead != b'\x00':  # outgoing deathlink
+                        if ctx.debug_logging:
+                            logger.info("sent deathlink")
                         f.seek(0x01)
                         f.write(0x00.to_bytes(1, byteorder="little"))
                         message = ctx.player_names[ctx.slot] + " wasn't able to retry in time"
@@ -910,6 +939,8 @@ async def item_handler(ctx, file_path):
                         ctx.death_link_lockout = time.time()
 
                 else:
+                    if ctx.debug_logging:
+                        logger.info("in deathlink lockout")
                     ctx.activate_death = False
                     # write 0s to both slots if conditions havent been met
                     f.seek(0x00)
@@ -1210,15 +1241,15 @@ async def file_watcher(ctx, file_path):
 ##    cfg.write("addfile addons/SL_ArchipelagoSRB2_v134.pk3")
 ##    cfg.close()
 ##    os.chdir(file_path)
-    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v170.pk3"):
+    if os.path.exists(file_path+"/addons/SL_ArchipelagoSRB2_v171.pk3"):
         try:
-            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v170.pk3"], cwd=file_path)
+            subprocess.Popen([file_path + "/srb2win.exe", "-file", "/addons/SL_ArchipelagoSRB2_v171.pk3"], cwd=file_path)
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
     else:
         try:
             subprocess.Popen([file_path + "/srb2win.exe"], cwd=file_path)
-            logger.info('Could not find SL_ArchipelagoSRB2_v170.pk3 in the addons folder. You must load the addon manually')
+            logger.info('Could not find SL_ArchipelagoSRB2_v171.pk3 in the addons folder. You must load the addon manually')
         except:
             logger.info('Could not open srb2win.exe. Open the game and load the addon manually')
 

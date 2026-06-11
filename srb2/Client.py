@@ -85,7 +85,7 @@ class SRB2ClientCommandProcessor(ClientCommandProcessor):
     def _cmd_debuglogging(self):
         """Toggles Debug logging for issues with deathlink"""
         if isinstance(self.ctx, SRB2Context):
-            async_start(self.ctx.toggle_debug)
+            async_start(self.ctx.toggle_debug())
 
 
 
@@ -186,7 +186,7 @@ class SRB2Context(CommonContext):
             #asyncio.create_task(self.receive_item())#probably important
     #def on_ringlink(self, rings) -> None:
     #   self.rings = rings
-    async def toggle_debug(self, tag: str):
+    async def toggle_debug(self):
         self.debug_logging = not self.debug_logging
 
 

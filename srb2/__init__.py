@@ -489,8 +489,11 @@ class SRB2World(World):
     def generate_basic(self): #use to force items in a specific location
         if self.options.exclude_annoying:
             for name in annoying_locations:
-                location = self.multiworld.get_location(name, self.player)
-                location.progress_type = LocationProgressType.EXCLUDED
+                try:
+                    location = self.multiworld.get_location(name, self.player)
+                    location.progress_type = LocationProgressType.EXCLUDED
+                except:
+                    continue
         return
            #self.multiworld.get_location("BoB: Bob-omb Buddy", self.player).place_locked_item(self.create_item("Cannon Unlock BoB"))
 

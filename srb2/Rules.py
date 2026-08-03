@@ -4610,7 +4610,7 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
     elif options.completion_type == 3:
         world.completion_condition[player] = lambda state: state.can_reach_location("Black Core (Act 3) Clear",player) and state.can_reach_location("Black Core (Act 2) Clear", player) and state.can_reach_location("Black Core (Act 1) Clear", player)and state.can_reach_location("Arid Canyon (Act 3) Clear", player) and state.can_reach_location("Castle Eggman (Act 3) Clear", player)and state.can_reach_location("Deep Sea (Act 3) Clear", player)and state.can_reach_location("Techno Hill (Act 3) Clear", player)and state.can_reach_location("Greenflower (Act 3) Clear", player)
     else:
-        world.completion_condition[player] = lambda state: state.count("Chaos Emerald", player) > 6 and state.has("Inazuma", player) and state.has("Blue Springs", player)#lazy but i cba to ensure you can get to the end of acts w/ 50 rings as inazuma
+        world.completion_condition[player] = lambda state: state.count("Chaos Emerald", player) > 6 and state.has("Inazuma", player)#lazy but i cba to ensure you can get to the end of acts w/ 50 rings as inazuma
 
 
 

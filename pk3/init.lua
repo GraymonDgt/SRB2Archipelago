@@ -14,6 +14,53 @@ end)
 
 
 
+
+
+
+-- custom deltachars dialouge when using them in archipelago and attempting
+-- to switch when one isnt unlocked
+/*
+DB.AddEvent({
+	tag = "iapswap",
+	flags = DF.STASIS, -- what is this
+	preCondition = function() -- rewrite this
+		return not (gamecomplete or vars.beatBrak)
+	end,
+	script = {
+	
+		talk("ralsei", 21, "Oh yeah, I should probably mention something..."),
+		talk("ralsei", 3, "You have to unlock each of us individually before you can swap between us."),
+		--talk("ralsei", 17, "I'm sure we will all be together soon!"),
+	
+	    --talk("susie", 6, "Hurry up and unlock me so I can smash stuff!!"),
+	}
+})
+
+
+DB.AddEvent({ -- susie attempting to hint herself if you get to your goal without having her unlocked
+	tag = "susiehint",
+	preCondition = function() -- rewrite this
+		return not (gamecomplete or vars.beatBrak)
+	end,
+	script = {
+	
+	talk("susie", 18, "Ok this is TAKING TOO LONG"),
+	talk("susie", 18, "WE'RE ALMOST DONE AND I HAVEN'T GOTTEN A GO YET!!"),
+	
+	talk("ralsei", 33, "Wait... SUSIE WHAT ARE YOU DOING!?"),
+	
+	-- function here to hint for susie
+	talk(nil, nil, "!hint Susie"),
+	
+	talk("susie", 3, "There, now go and unlock me!!")
+
+	}
+})
+
+
+
+
+*/
 COM_AddCommand("apinfo", function(player)
 print("‡Archipelago is a multiworld randomizer. This means we recieve zones, characters, objects and shields from other people and in return we are collecting emblems to find other peoples' items. The person sending messages in chat is showing what is being sent.")
 end)
@@ -38,9 +85,9 @@ local unlockedchars = {}
 local manualringlink = 0
 local lastknowngamemap = 0
 local supportedchars = {"sonic","tails","knuckles","amy","fang","metalsonic","mario","luigi","yoshi","ray","silver","shadow","modernsonic","werehog","metalknuckles","tailsdoll","espio","mighty","charmy","vector","heavy","bomb","bean","eggman","adventuresonic","tangle","blaze","marine","inazuma","aether"}
-
-
-
+local updategamemap = false
+local flushfile = false
+local wrotevictory = false
 
 --local bytes = {}
 rawset(_G,"bytes",{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
@@ -63,11 +110,21 @@ print(string)
 end)
 COM_AddCommand("setrings",function(player, setrings)
 for player in players.iterate() do
+if tonumber(setrings) > 9999 then
+setrings = 9999
+end
+if tonumber(setrings) < 0 then
+setrings = 0
+end
 player.rings = setrings
 player.prevrings = setrings
 end
 lastknownrings = setrings
 end,COM_ADMIN)
+
+
+
+
 
 
 addHook("MapChange", function()
@@ -84,6 +141,13 @@ for player in players.iterate() do
 player.solemeralds = emeralds //temporary because no ap item exists
 end
 end
+--remove MS_BEATMINDSCAPE at some point to ensure no early goal on files which already have completed it
+
+
+
+
+
+
 
 
 
@@ -96,12 +160,21 @@ end
 
 
 if lastknowngamemap != gamemap then//map change;
+
+
+
+
+
+
+updategamemap = true
+
+
 if bytes[30] != 0 then
 if (bytes[20] & 64) == 64 then
 lastknownrings = bytes[23]*5
 for player in players.iterate() do
 
-player.rings = 0
+player.rings = mapheaderinfo[gamemap].startrings + bytes[23]*5
 player.prevrings = 0
 manualringlink = 0
 end
@@ -148,8 +221,6 @@ end)
 
 
 
-
-
 addHook("TouchSpecial", function(object,toucher)
 if object.collected then 
 object.collected = object.collected +1
@@ -163,7 +234,44 @@ P_SetOrigin(object,players[0].mo.x,players[0].mo.y,players[0].mo.z)
 
 end,MT_EMBLEM)
 
+
+
+
+
 addHook("ThinkFrame", function()
+
+if gamemap == 746 then
+for player in players.iterate() do
+if player.lives < 1 then
+player.lives = 1
+end
+
+
+if fixtrunc(player.mo.x) == FRACUNIT*16576 and fixtrunc(player.mo.y) == FRACUNIT*15168 and wrotevictory == false then
+
+-- if player is in the right gamemap at the right coordinates trigger goal
+
+-- idfk how else to do it everything ive tried has failed
+if isserver or not multiplayer then
+local f = assert(io.openlocal("archipelago/APTokens.txt","a"))
+f:write("MindscapeVictory")
+local stringma = [[ 
+]]
+f:write(stringma)
+
+f:close()
+wrotevictory = true
+end
+end
+end
+
+end
+
+
+
+
+
+
 if gamemap >49 and gamemap <60 then
 G_SetCustomExitVars(125, 0)
 end
@@ -175,19 +283,23 @@ monitorid = 0 end
 end)
 
 
-addHook("TouchSpecial", function(object,toucher)
+addHook("MobjSpawn", function(object,toucher)
 if not isServer and multiplayer then return false end
-if enabledrill == 0 then
+if bytes[10] & 32 != 32 then
 P_RemoveMobj(object)
-return false end
+end
 end,MT_NIGHTSDRILLREFILL)
 
-addHook("TouchSpecial", function(object,toucher)
+addHook("MobjThinker", function(object,toucher)
 if not isServer and multiplayer then return false end
-if enabletime == 0 then
+if bytes[10] & 16 != 16 then
 P_RemoveMobj(object)
-return false end
+end
 end,MT_NIGHTSEXTRATIME)
+
+
+
+
 
 addHook("PlayerThink", function(player)-- stupid dumb idiot code
 if player.shrinktrap and player.mo then
@@ -810,9 +922,9 @@ if bytes[30] > 0 then
 for player in players.iterate() do
 if player.bot == BOT_NONE then
 
-if player.nightstime > 0 and player.rings == 0 and lastknownrings!=0 then 
-player.rings = lastknownrings
-end
+//if player.nightstime > 0 and player.rings == 0 and lastknownrings!=0 then 
+//player.rings = lastknownrings
+//end
 
 collectivedifference = $ + player.rings - player.prevrings
 end
@@ -875,7 +987,7 @@ if isserver or not multiplayer then
 
 for player in players.iterate() do
         if player and player.valid and player.mo then
-            if player.deadtimer == 1 and player.bot == BOT_NONE then --send a deathlink
+            if player.deadtimer == 2 and player.bot == BOT_NONE then --send a deathlink
 		if bytes[30] > 1 then
 			
 		player.rings = 0
@@ -921,56 +1033,45 @@ if bytes[30] > 0 then --ring link
 
         if players[0] and players[0].valid and players[0].mo and players[0].bot == BOT_NONE then
 		local player = players[0]
-		f:seek("set",26)--rings set to file
+		
+		
+		
+				f:seek("set",26)--rings set to file
 		local low_byte = string.byte(f:read(1))
-		local fullrings = string.byte(f:read(1))*256 + low_byte
+		local fullrings2 = string.byte(f:read(1))*256 + low_byte
 
 
 
-		if fullrings != 0 then //rings need to be received
-		if fullrings >= 0x8000 then
-			fullrings = fullrings - 0x10000//convert to signed
+		if fullrings2 != 0 then //rings need to be received
+		if fullrings2 >= 0x8000 then
+			fullrings2 = fullrings2 - 0x10000//convert to signed
+		end
+		//print("incoming: " ..fullrings2)
+		COM_BufInsertText(player, "setrings "..lastknownrings + fullrings2)
+		f:seek("set",26)//write 0 to file
+		f:write("\0\0")
+		f:flush()
 		end
 		
-		player.rings = $ + fullrings
-		COM_BufInsertText(player, "setrings "..player.rings)
-		f:seek("set",26)//write 0 to file
-		f:write("\0")
-		f:write("\0")
-		end
-
-
-
 		if collectivedifference != 0 then//outgoing rings
+		//print("outgoing: " ..collectivedifference)
 			f:seek("set",28)
 			local low_byte = string.byte(f:read(1))
 			local fullrings = string.byte(f:read(1))*256 + low_byte
-			player.rings = lastknownrings
 			-- run setrings for multiplayer purposes
-			COM_BufInsertText(player, "setrings "..player.rings)
-			
+			COM_BufInsertText(player, "setrings "..lastknownrings)
 			f:seek("set",28)
 			local rings16bit = (fullrings + collectivedifference) & 0xFFFF
 			f:write(string.char(rings16bit&0xFF,(rings16bit>>8)&0xFF))
 			f:flush()--love working with binary file why cant i just write an int
 			end
+		
+		
+		
+		
 
-		if manualringlink != 0 then 
-		f:seek("set",28)
-			local low_byte = string.byte(f:read(1))
-			local fullrings = string.byte(f:read(1))*256 + low_byte
-			
-			
-		f:seek("set",28)
-			local rings16bit = (fullrings-manualringlink) & 0xFFFF
-			f:write(string.char(rings16bit&0xFF,(rings16bit>>8)&0xFF))
-			f:flush()--love working with binary file why cant i just write an int
-			
-		COM_BufInsertText(player, "setrings "..player.rings-manualringlink)
-			
-		manualringlink = 0
-			
-		end
+
+
 
 
 
@@ -1000,7 +1101,7 @@ end
 end
 f:seek("set",24)
 f:write("\0")
-f:flush()
+flushfile = true
 bytes[24] = 0
 
 end
@@ -1009,15 +1110,26 @@ f:seek("set",2)
 f:write("\0")
 f:seek("set",0)
 f:write("\0")
-f:flush()
+flushfile = true
 end
+if updategamemap == true then
+f:seek("set",32)
+f:write(string.char(gamemap&0xFF))
+flushfile = true
+updategamemap = false
+end
+
+
 if senddeath then
 f:seek("set",1)
 f:write("x")
-f:flush()
+flushfile = true
 senddeath = false
 end
-
+if flushfile then
+f:flush()
+flushfile = false
+end
 
 
 f:close()
@@ -1081,10 +1193,7 @@ for player in players.iterate() do
         end
     end
 end
-if bytes[10] & 16 != 16 then
-enabletime = 1
 
-end
 if bytes[10] & 32 != 32 then
 enabledrill = 1
 end
@@ -1215,14 +1324,20 @@ if bytes[14] & 4 != 4 then --buoyant slime
 for player in players.iterate() do
         if player and player.valid and player.mo then
 			for fuck in player.mo.subsector.sector.ffloors()
-				if fuck.master.special == 120 and player.mo.z<fuck.sector.ceilingheight then
+				if fuck.master.special == 120 and player.mo.z<fuck.sector.ceilingheight and player.mo.z>fuck.sector.floorheight then
 				--P_DoPlayerPain(player)
 				--player.powers[pw_flashing] = 0
-				if gamemap == 4 or gamemap == 5 or gamemap == 40 or gamemap == 533 then--stupidhack
-					    player.powers[pw_invulnerability] = 0
+				if gamemap == 4 or gamemap == 5 or gamemap == 40 or gamemap == 533 or gamemap == 51 then--stupidhack
+						player.nightstime = 0
+						player.powers[pw_invulnerability] = 0
 						player.powers[pw_super] = 0
+						
 						P_DamageMobj(player.mo, nil, nil, 1, DMG_INSTAKILL)
-						print("Buoyant Slime not unlocked")
+						if player.deadtimer <2 then print("Buoyant Slime not unlocked") end
+					    if gamemap == 51 then
+						player.deadtimer = 2
+						P_SetOrigin(player.mo,FRACUNIT*-4089,FRACUNIT*-768,FRACUNIT*416)//hacky way to prevent softlock
+						end
 						end
 				end
 				end

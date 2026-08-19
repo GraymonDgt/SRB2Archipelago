@@ -248,10 +248,15 @@ custom_item_data_table: dict[str, SRB2ItemData] = {
     "Marine": SRB2ItemData(321),
     "Inazuma": SRB2ItemData(323),
     "Aether": SRB2ItemData(324),
-
-
-
-
+    "Dirk": SRB2ItemData(325),
+    "Whirl": SRB2ItemData(326),
+    "Vesola": SRB2ItemData(327),
+    "Skip": SRB2ItemData(328),
+    "Jana": SRB2ItemData(329),
+    "Kou": SRB2ItemData(330),
+    "Echoes & Abyss": SRB2ItemData(331),
+    "Cacee": SRB2ItemData(332),
+    "Whisper": SRB2ItemData(333),
 
 }
 

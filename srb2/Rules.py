@@ -92,7 +92,17 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
                       'Inazuma': [115,115,'weak_walls', 'spin_walls',"strong_walls",'strong_floors',"breaks_spikes","soft_jump","attacks_though_thin_walls","skims_water","water_run"],  #
                       'Aether': [900,900,'weak_walls', 'spin_walls',"strong_walls",'strong_floors',"free_flyer","breaks_spikes","soft_jump","attacks_though_thin_walls"],  #
 
+                      'Dirk': [1088,'weak_walls','roll','fits_under_gaps','instant_speed','free_flyer','badnik_bounce','can_spindash','can_use_shields','skims_water',], #
+                      'Whirl': [616,'weak_walls','strong_walls','strong_floors','free_flyer','breaks_spikes','pounds_springs','soft_jump','can_stomp','badnik_bounce'], #
+                      'Vesola': [1128,'strong_floors','free_flyer','low_grav','soft_jump','can_stomp','pounds_springs','attacks_though_thin_walls','badnik_bounce'], #
 
+                      'Skip': [296,'weak_walls','roll','fits_under_gaps','midair_speed','can_spindash'], #
+                      'Jana': [160,320,'spin_walls','strong_walls','strong_floors','instant_speed','wall_jump','breaks_spikes','pounds_springs','soft_jump','can_stomp','shoots_player_blockers','attacks_though_thin_walls'], #
+                      'Kou': [144,'weak_walls','spin_walls','strong_walls','stronger_walls','midair_speed','climbs_walls','breaks_spikes','pounds_springs','soft_jump','attacks_though_thin_walls'], #
+                      'Echoes & Abyss': [1344,'weak_walls','spin_walls','strong_floors','midair_speed','free_flyer','breaks_spikes','pounds_springs','can_stomp','soft_jump','attacks_though_thin_walls'], #
+                      
+					  'Cacee': [384,'weak_walls','strong_walls','stronger_walls','strong_floors','midair_speed','breaks_spikes','pounds_springs','soft_jump'],  #
+                      'Whisper': [240,740,'weak_walls','strong_walls','stronger_walls','strong_floors','instant_speed','free_flyer','climbs_walls','breaks_spikes','pounds_springs','can_stomp','soft_jump','downward_projectile','attacks_though_thin_walls','attacks_though_thin_walls'],
 
 
 
@@ -103,8 +113,6 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
 
 
                         #
-
-                      'Cacee': [350],  #
 
                       'Surge': [],  #
 

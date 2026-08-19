@@ -35,9 +35,11 @@ class CharacterList(OptionList):
     RChars: 'Metal Knuckles', 'Tails Doll'
     Rush Chars: 'Blaze', 'Marine'
     Silverhorn: 'Inazuma', 'Aether'
-    Misc characters: 'Yoshi', 'Ray', 'Silver', 'Shadow', 'Modern Sonic', 'Werehog', 'Bean', 'Dr. Eggman', 'Adventure Sonic', 'Tangle'"""
+    Team Kinetic: 'Dirk', 'Whirl', 'Vesola'
+    StephCharsOC: 'Skip', 'Jana', 'Kou', 'Echoes & Abyss'
+    Misc characters: 'Yoshi', 'Ray', 'Silver', 'Shadow', 'Modern Sonic', 'Werehog', 'Bean', 'Dr. Eggman', 'Adventure Sonic', 'Tangle', 'Cacee', 'Whisper'
     display_name = "Character List"
-    valid_keys = {"Sonic","Tails","Knuckles","Amy","Fang","Metal Sonic","Mario","Luigi","Yoshi","Ray","Silver","Shadow","Modern Sonic","Werehog","Metal Knuckles","Tails Doll","Espio","Mighty","Charmy Bee","Vector","Heavy","Bomb", "Bean", "Dr. Eggman", "Adventure Sonic", "Tangle", "Blaze", "Marine","Inazuma", "Aether"}
+    valid_keys = {"Sonic","Tails","Knuckles","Amy","Fang","Metal Sonic","Mario","Luigi","Yoshi","Ray","Silver","Shadow","Modern Sonic","Werehog","Metal Knuckles","Tails Doll","Espio","Mighty","Charmy Bee","Vector","Heavy","Bomb", "Bean", "Dr. Eggman", "Adventure Sonic", "Tangle", "Blaze", "Marine","Inazuma", "Aether", "Dirk", "Whirl", "Vesola", "Skip", "Jana", "Kou", "Echoes & Abyss", "Cacee", "Whisper"}
     default = ["Sonic","Tails","Knuckles","Amy","Fang","Metal Sonic"]
 
 class StartingCharacter(OptionList):
@@ -45,7 +47,7 @@ class StartingCharacter(OptionList):
     Tails/Knuckles are recommended if you don't know where all the emblems are
     You may also select any valid custom character"""
     display_name = "Starting Character"
-    valid_keys = {"Sonic","Tails","Knuckles","Amy","Fang","Metal Sonic","Mario","Luigi","Yoshi","Ray","Silver","Shadow","Modern Sonic","Werehog","Metal Knuckles","Tails Doll","Espio","Mighty","Charmy Bee","Vector","Heavy","Bomb", "Bean", "Dr. Eggman", "Adventure Sonic", "Tangle", "Blaze", "Marine","Inazuma", "Aether"}
+    valid_keys = {"Sonic","Tails","Knuckles","Amy","Fang","Metal Sonic","Mario","Luigi","Yoshi","Ray","Silver","Shadow","Modern Sonic","Werehog","Metal Knuckles","Tails Doll","Espio","Mighty","Charmy Bee","Vector","Heavy","Bomb", "Bean", "Dr. Eggman", "Adventure Sonic", "Tangle", "Blaze", "Marine","Inazuma", "Aether", "Dirk", "Whirl", "Vesola", "Skip", "Jana", "Kou", "Echoes & Abyss", "Cacee", "Whisper"}
     default = ["Sonic"]
 
 class RandomStartChar(Toggle):

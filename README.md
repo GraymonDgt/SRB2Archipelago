@@ -71,6 +71,10 @@ Extra steps for linux setup:
 
   Make sure you aren't running SRB2 off of an external drive that may have a slow file transfer speed.
 
+- APTranslator.dat can't be found/ apgamedat.dat can't be found
+
+  If you have ever used the installer to install SRB2 and not the zip archive, search all your drives (likely just your C Drive) for the file "apgamedat.dat" and delete the srb2 directory.
+
 # ADDITIONAL NOTES
 
 Type "hub" into the console to return to the hub at any time.

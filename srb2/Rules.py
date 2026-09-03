@@ -28,29 +28,6 @@ def fix_reg(entrance_map: Dict[SRB2Zones, str], entrance: SRB2Zones, invalid_reg
 
 
 
-
-
-
-
-
-#can_break_weak_walls
-#can_break_strong_walls
-#can_break_floors
-#can_pound_springs
-#can_climb_walls
-#can_break_spikes
-#can_fit_under_roll_gaps
-#can_generate_speed (spindash)
-#jump_height_includes_flying
-#makes_hard_stages_easy
-
-#jump_height
-#hover_length
-
-
-
-
-
 def set_rules(world, options: SRB2Options, player: int, area_connections: dict, move_rando_bitvec: int):
 
     #set up info array
@@ -169,7 +146,9 @@ def set_rules(world, options: SRB2Options, player: int, area_connections: dict, 
     #homing_attack
     #blast_linedefs (can break the tnt walls in acz1/floating mine walls in dsz1)
 
-    #not_hydrophobic (water doesnt kill/ immobilize you) (x sonic)
+    #bad tags
+    #hydrophobic (water kills/immobilizes you) (x sonic)
+    #no_strong_air (can only break strong walls that are grounded)
 
     def char_needs_tags(state: CollectionState,tag_list,jump_height,straight_up=False):
         for i in character_info:
